@@ -1,0 +1,24 @@
+{
+  "name": "@maturion/foreman",
+  "version": "0.1.0",
+  "description": "Governance, architecture enforcement, and AI routing for Maturion ISMS ecosystem",
+  "main": "index.js",
+  "scripts": {
+    "foreman:check": "ts-node foreman/scripts/run-checks.ts"
+  },
+  "keywords": [
+    "governance",
+    "architecture",
+    "qa",
+    "watchdog",
+    "ai-routing"
+  ],
+  "author": "Maturion ISMS",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
+  }
+}
