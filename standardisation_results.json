@@ -1,0 +1,1038 @@
+{
+  "metadata": {
+    "standardised_at": "2025-12-03T17:20:53.100033",
+    "repo_root": "/home/runner/work/maturion-ai-foreman/maturion-ai-foreman"
+  },
+  "modules": {
+    "COURSE_CRAFTER": {
+      "name": "COURSE_CRAFTER",
+      "path": "/home/runner/work/maturion-ai-foreman/maturion-ai-foreman/maturion-isms/apps/course-crafter",
+      "exists": true,
+      "files": {
+        "TRUE_NORTH": [
+          {
+            "path": "maturion-isms/apps/course-crafter/architecture/COURSE_CRAFTER_TRUE_NORTH_v1.0.md",
+            "version": "1.0",
+            "size": 17258
+          }
+        ],
+        "ARCHITECTURE": [
+          {
+            "path": "maturion-isms/apps/course-crafter/architecture/COURSE_CRAFTER_ARCHITECTURE_v0.1.md",
+            "version": "0.1",
+            "size": 10236
+          }
+        ]
+      },
+      "missing": [
+        "Missing: INTEGRATION_SPEC",
+        "Missing: DATABASE_SCHEMA",
+        "Missing: FRONTEND_COMPONENT_MAP",
+        "Missing: WIREFRAMES",
+        "Missing: QA_IMPLEMENTATION_PLAN",
+        "Missing: IMPLEMENTATION_GUIDE",
+        "Missing: SPRINT_PLAN",
+        "Missing: CHANGELOG",
+        "Missing: EDGE_FUNCTIONS (required for COURSE_CRAFTER)",
+        "Missing: EXPORT_SPEC (required for COURSE_CRAFTER)"
+      ],
+      "version_spread": {
+        "TRUE_NORTH": [
+          "1.0"
+        ],
+        "ARCHITECTURE": [
+          "0.1"
+        ]
+      },
+      "completeness_score": 16.7,
+      "compliance_coverage": {},
+      "dependencies": [],
+      "qa_linkage": true,
+      "compliance_linkage": false,
+      "total_required": 12,
+      "present_count": 2
+    },
+    "ERM": {
+      "name": "ERM",
+      "path": "/home/runner/work/maturion-ai-foreman/maturion-ai-foreman/maturion-isms/apps/erm",
+      "exists": true,
+      "files": {
+        "TRUE_NORTH": [
+          {
+            "path": "maturion-isms/apps/erm/architecture/ERM_TRUE_NORTH_v1.0.md",
+            "version": "1.0",
+            "size": 9869
+          }
+        ]
+      },
+      "missing": [
+        "Missing: ARCHITECTURE",
+        "Missing: INTEGRATION_SPEC",
+        "Missing: DATABASE_SCHEMA",
+        "Missing: FRONTEND_COMPONENT_MAP",
+        "Missing: WIREFRAMES",
+        "Missing: QA_IMPLEMENTATION_PLAN",
+        "Missing: IMPLEMENTATION_GUIDE",
+        "Missing: SPRINT_PLAN",
+        "Missing: CHANGELOG",
+        "Missing: EDGE_FUNCTIONS (required for ERM)",
+        "Missing: EXPORT_SPEC (required for ERM)"
+      ],
+      "version_spread": {
+        "TRUE_NORTH": [
+          "1.0"
+        ]
+      },
+      "completeness_score": 8.3,
+      "compliance_coverage": {},
+      "dependencies": [
+        "WRAC",
+        "PIT"
+      ],
+      "qa_linkage": true,
+      "compliance_linkage": false,
+      "total_required": 12,
+      "present_count": 1
+    },
+    "PIT": {
+      "name": "PIT",
+      "path": "/home/runner/work/maturion-ai-foreman/maturion-ai-foreman/maturion-isms/apps/pit",
+      "exists": true,
+      "files": {
+        "TRUE_NORTH": [
+          {
+            "path": "maturion-isms/apps/pit/architecture/PIT_TRUE_NORTH_v1.0.md",
+            "version": "1.0",
+            "size": 10331
+          }
+        ],
+        "ARCHITECTURE": [
+          {
+            "path": "maturion-isms/apps/pit/architecture/PIT_ARCHITECTURE_v0.1.md",
+            "version": "0.1",
+            "size": 10828
+          }
+        ]
+      },
+      "missing": [
+        "Missing: INTEGRATION_SPEC",
+        "Missing: DATABASE_SCHEMA",
+        "Missing: FRONTEND_COMPONENT_MAP",
+        "Missing: WIREFRAMES",
+        "Missing: QA_IMPLEMENTATION_PLAN",
+        "Missing: IMPLEMENTATION_GUIDE",
+        "Missing: SPRINT_PLAN",
+        "Missing: CHANGELOG",
+        "Missing: EDGE_FUNCTIONS (required for PIT)",
+        "Missing: WATCHDOG_LOGIC (required for PIT)",
+        "Missing: MODEL_ROUTING_SPEC (required for PIT)"
+      ],
+      "version_spread": {
+        "TRUE_NORTH": [
+          "1.0"
+        ],
+        "ARCHITECTURE": [
+          "0.1"
+        ]
+      },
+      "completeness_score": 15.4,
+      "compliance_coverage": {},
+      "dependencies": [
+        "WRAC"
+      ],
+      "qa_linkage": true,
+      "compliance_linkage": false,
+      "total_required": 13,
+      "present_count": 2
+    },
+    "THREAT": {
+      "name": "THREAT",
+      "path": "/home/runner/work/maturion-ai-foreman/maturion-ai-foreman/maturion-isms/apps/threat",
+      "exists": true,
+      "files": {
+        "TRUE_NORTH": [
+          {
+            "path": "maturion-isms/apps/threat/architecture/THREAT_TRUE_NORTH_v1.0.md",
+            "version": "1.0",
+            "size": 10160
+          },
+          {
+            "path": "maturion-isms/apps/threat/architecture/RISK_THREAT_MODULE_TRUE_NORTH_v0.1.md",
+            "version": "0.1",
+            "size": 15942
+          }
+        ]
+      },
+      "missing": [
+        "Missing: ARCHITECTURE",
+        "Missing: INTEGRATION_SPEC",
+        "Missing: DATABASE_SCHEMA",
+        "Missing: FRONTEND_COMPONENT_MAP",
+        "Missing: WIREFRAMES",
+        "Missing: QA_IMPLEMENTATION_PLAN",
+        "Missing: IMPLEMENTATION_GUIDE",
+        "Missing: SPRINT_PLAN",
+        "Missing: CHANGELOG",
+        "Missing: EDGE_FUNCTIONS (required for THREAT)",
+        "Missing: WATCHDOG_LOGIC (required for THREAT)",
+        "Missing: MODEL_ROUTING_SPEC (required for THREAT)"
+      ],
+      "version_spread": {
+        "TRUE_NORTH": [
+          "1.0",
+          "0.1"
+        ]
+      },
+      "completeness_score": 7.7,
+      "compliance_coverage": {},
+      "dependencies": [
+        "ERM",
+        "WRAC",
+        "PIT",
+        "VULNERABILITY"
+      ],
+      "qa_linkage": true,
+      "compliance_linkage": false,
+      "total_required": 13,
+      "present_count": 1
+    },
+    "VULNERABILITY": {
+      "name": "VULNERABILITY",
+      "path": "/home/runner/work/maturion-ai-foreman/maturion-ai-foreman/maturion-isms/apps/vulnerability",
+      "exists": true,
+      "files": {
+        "TRUE_NORTH": [
+          {
+            "path": "maturion-isms/apps/vulnerability/architecture/VULNERABILITY_TRUE_NORTH_v1.0.md",
+            "version": "1.0",
+            "size": 11069
+          },
+          {
+            "path": "maturion-isms/apps/vulnerability/architecture/VULNERABILITY_MODULE_TRUE_NORTH_ARCHITECTURE_v0.1.md",
+            "version": "0.1",
+            "size": 2006
+          }
+        ]
+      },
+      "missing": [
+        "Missing: ARCHITECTURE",
+        "Missing: INTEGRATION_SPEC",
+        "Missing: DATABASE_SCHEMA",
+        "Missing: FRONTEND_COMPONENT_MAP",
+        "Missing: WIREFRAMES",
+        "Missing: QA_IMPLEMENTATION_PLAN",
+        "Missing: IMPLEMENTATION_GUIDE",
+        "Missing: SPRINT_PLAN",
+        "Missing: CHANGELOG",
+        "Missing: EDGE_FUNCTIONS (required for VULNERABILITY)",
+        "Missing: WATCHDOG_LOGIC (required for VULNERABILITY)",
+        "Missing: MODEL_ROUTING_SPEC (required for VULNERABILITY)"
+      ],
+      "version_spread": {
+        "TRUE_NORTH": [
+          "1.0",
+          "0.1"
+        ]
+      },
+      "completeness_score": 7.7,
+      "compliance_coverage": {},
+      "dependencies": [
+        "PIT",
+        "THREAT",
+        "ERM",
+        "WRAC"
+      ],
+      "qa_linkage": true,
+      "compliance_linkage": false,
+      "total_required": 13,
+      "present_count": 1
+    },
+    "RISK_ASSESSMENT": {
+      "name": "RISK_ASSESSMENT",
+      "path": "/home/runner/work/maturion-ai-foreman/maturion-ai-foreman/maturion-isms/apps/risk-assessment",
+      "exists": true,
+      "files": {
+        "TRUE_NORTH": [
+          {
+            "path": "maturion-isms/apps/risk-assessment/architecture/RISK_ASSESSMENT_TRUE_NORTH_v1.1.md",
+            "version": "1.1",
+            "size": 9808
+          },
+          {
+            "path": "maturion-isms/apps/risk-assessment/architecture/RISK_ASSESSMENT_TRUE_NORTH_v0.1.md",
+            "version": "0.1",
+            "size": 5980
+          }
+        ]
+      },
+      "missing": [
+        "QA plans directory missing",
+        "Missing: ARCHITECTURE",
+        "Missing: INTEGRATION_SPEC",
+        "Missing: DATABASE_SCHEMA",
+        "Missing: FRONTEND_COMPONENT_MAP",
+        "Missing: WIREFRAMES",
+        "Missing: QA_IMPLEMENTATION_PLAN",
+        "Missing: IMPLEMENTATION_GUIDE",
+        "Missing: SPRINT_PLAN",
+        "Missing: CHANGELOG",
+        "Missing: EXPORT_SPEC (required for RISK_ASSESSMENT)"
+      ],
+      "version_spread": {
+        "TRUE_NORTH": [
+          "1.1",
+          "0.1"
+        ]
+      },
+      "completeness_score": 9.1,
+      "compliance_coverage": {},
+      "dependencies": [
+        "ERM",
+        "WRAC",
+        "PIT"
+      ],
+      "qa_linkage": false,
+      "compliance_linkage": false,
+      "total_required": 11,
+      "present_count": 1
+    },
+    "WRAC": {
+      "name": "WRAC",
+      "path": "/home/runner/work/maturion-ai-foreman/maturion-ai-foreman/maturion-isms/apps/wrac",
+      "exists": true,
+      "files": {
+        "TRUE_NORTH": [
+          {
+            "path": "maturion-isms/apps/wrac/architecture/WRAC_TRUE_NORTH_v0.1.md",
+            "version": "0.1",
+            "size": 11000
+          }
+        ]
+      },
+      "missing": [
+        "Missing: ARCHITECTURE",
+        "Missing: INTEGRATION_SPEC",
+        "Missing: DATABASE_SCHEMA",
+        "Missing: FRONTEND_COMPONENT_MAP",
+        "Missing: WIREFRAMES",
+        "Missing: QA_IMPLEMENTATION_PLAN",
+        "Missing: IMPLEMENTATION_GUIDE",
+        "Missing: SPRINT_PLAN",
+        "Missing: CHANGELOG"
+      ],
+      "version_spread": {
+        "TRUE_NORTH": [
+          "0.1"
+        ]
+      },
+      "completeness_score": 10.0,
+      "compliance_coverage": {},
+      "dependencies": [
+        "PIT"
+      ],
+      "qa_linkage": true,
+      "compliance_linkage": false,
+      "total_required": 10,
+      "present_count": 1
+    }
+  },
+  "missing_components": [
+    {
+      "module": "COURSE_CRAFTER",
+      "severity": "MEDIUM",
+      "issue": "Missing: INTEGRATION_SPEC",
+      "component": "INTEGRATION_SPEC",
+      "action": "Generate placeholder INTEGRATION_SPEC document"
+    },
+    {
+      "module": "COURSE_CRAFTER",
+      "severity": "MEDIUM",
+      "issue": "Missing: DATABASE_SCHEMA",
+      "component": "DATABASE_SCHEMA",
+      "action": "Generate placeholder DATABASE_SCHEMA document"
+    },
+    {
+      "module": "COURSE_CRAFTER",
+      "severity": "MEDIUM",
+      "issue": "Missing: FRONTEND_COMPONENT_MAP",
+      "component": "FRONTEND_COMPONENT_MAP",
+      "action": "Generate placeholder FRONTEND_COMPONENT_MAP document"
+    },
+    {
+      "module": "COURSE_CRAFTER",
+      "severity": "MEDIUM",
+      "issue": "Missing: WIREFRAMES",
+      "component": "WIREFRAMES",
+      "action": "Generate placeholder WIREFRAMES document"
+    },
+    {
+      "module": "COURSE_CRAFTER",
+      "severity": "MEDIUM",
+      "issue": "Missing: QA_IMPLEMENTATION_PLAN",
+      "component": "QA_IMPLEMENTATION_PLAN",
+      "action": "Generate placeholder QA_IMPLEMENTATION_PLAN document"
+    },
+    {
+      "module": "COURSE_CRAFTER",
+      "severity": "MEDIUM",
+      "issue": "Missing: IMPLEMENTATION_GUIDE",
+      "component": "IMPLEMENTATION_GUIDE",
+      "action": "Generate placeholder IMPLEMENTATION_GUIDE document"
+    },
+    {
+      "module": "COURSE_CRAFTER",
+      "severity": "MEDIUM",
+      "issue": "Missing: SPRINT_PLAN",
+      "component": "SPRINT_PLAN",
+      "action": "Generate placeholder SPRINT_PLAN document"
+    },
+    {
+      "module": "COURSE_CRAFTER",
+      "severity": "MEDIUM",
+      "issue": "Missing: CHANGELOG",
+      "component": "CHANGELOG",
+      "action": "Generate placeholder CHANGELOG document"
+    },
+    {
+      "module": "COURSE_CRAFTER",
+      "severity": "MEDIUM",
+      "issue": "Missing: EDGE_FUNCTIONS (required for COURSE_CRAFTER)",
+      "component": "EDGE_FUNCTIONS",
+      "action": "Generate placeholder EDGE_FUNCTIONS document"
+    },
+    {
+      "module": "COURSE_CRAFTER",
+      "severity": "MEDIUM",
+      "issue": "Missing: EXPORT_SPEC (required for COURSE_CRAFTER)",
+      "component": "EXPORT_SPEC",
+      "action": "Generate placeholder EXPORT_SPEC document"
+    },
+    {
+      "module": "ERM",
+      "severity": "HIGH",
+      "issue": "Missing: ARCHITECTURE",
+      "component": "ARCHITECTURE",
+      "action": "Generate placeholder ARCHITECTURE document"
+    },
+    {
+      "module": "ERM",
+      "severity": "MEDIUM",
+      "issue": "Missing: INTEGRATION_SPEC",
+      "component": "INTEGRATION_SPEC",
+      "action": "Generate placeholder INTEGRATION_SPEC document"
+    },
+    {
+      "module": "ERM",
+      "severity": "MEDIUM",
+      "issue": "Missing: DATABASE_SCHEMA",
+      "component": "DATABASE_SCHEMA",
+      "action": "Generate placeholder DATABASE_SCHEMA document"
+    },
+    {
+      "module": "ERM",
+      "severity": "MEDIUM",
+      "issue": "Missing: FRONTEND_COMPONENT_MAP",
+      "component": "FRONTEND_COMPONENT_MAP",
+      "action": "Generate placeholder FRONTEND_COMPONENT_MAP document"
+    },
+    {
+      "module": "ERM",
+      "severity": "MEDIUM",
+      "issue": "Missing: WIREFRAMES",
+      "component": "WIREFRAMES",
+      "action": "Generate placeholder WIREFRAMES document"
+    },
+    {
+      "module": "ERM",
+      "severity": "MEDIUM",
+      "issue": "Missing: QA_IMPLEMENTATION_PLAN",
+      "component": "QA_IMPLEMENTATION_PLAN",
+      "action": "Generate placeholder QA_IMPLEMENTATION_PLAN document"
+    },
+    {
+      "module": "ERM",
+      "severity": "MEDIUM",
+      "issue": "Missing: IMPLEMENTATION_GUIDE",
+      "component": "IMPLEMENTATION_GUIDE",
+      "action": "Generate placeholder IMPLEMENTATION_GUIDE document"
+    },
+    {
+      "module": "ERM",
+      "severity": "MEDIUM",
+      "issue": "Missing: SPRINT_PLAN",
+      "component": "SPRINT_PLAN",
+      "action": "Generate placeholder SPRINT_PLAN document"
+    },
+    {
+      "module": "ERM",
+      "severity": "MEDIUM",
+      "issue": "Missing: CHANGELOG",
+      "component": "CHANGELOG",
+      "action": "Generate placeholder CHANGELOG document"
+    },
+    {
+      "module": "ERM",
+      "severity": "MEDIUM",
+      "issue": "Missing: EDGE_FUNCTIONS (required for ERM)",
+      "component": "EDGE_FUNCTIONS",
+      "action": "Generate placeholder EDGE_FUNCTIONS document"
+    },
+    {
+      "module": "ERM",
+      "severity": "MEDIUM",
+      "issue": "Missing: EXPORT_SPEC (required for ERM)",
+      "component": "EXPORT_SPEC",
+      "action": "Generate placeholder EXPORT_SPEC document"
+    },
+    {
+      "module": "PIT",
+      "severity": "MEDIUM",
+      "issue": "Missing: INTEGRATION_SPEC",
+      "component": "INTEGRATION_SPEC",
+      "action": "Generate placeholder INTEGRATION_SPEC document"
+    },
+    {
+      "module": "PIT",
+      "severity": "MEDIUM",
+      "issue": "Missing: DATABASE_SCHEMA",
+      "component": "DATABASE_SCHEMA",
+      "action": "Generate placeholder DATABASE_SCHEMA document"
+    },
+    {
+      "module": "PIT",
+      "severity": "MEDIUM",
+      "issue": "Missing: FRONTEND_COMPONENT_MAP",
+      "component": "FRONTEND_COMPONENT_MAP",
+      "action": "Generate placeholder FRONTEND_COMPONENT_MAP document"
+    },
+    {
+      "module": "PIT",
+      "severity": "MEDIUM",
+      "issue": "Missing: WIREFRAMES",
+      "component": "WIREFRAMES",
+      "action": "Generate placeholder WIREFRAMES document"
+    },
+    {
+      "module": "PIT",
+      "severity": "MEDIUM",
+      "issue": "Missing: QA_IMPLEMENTATION_PLAN",
+      "component": "QA_IMPLEMENTATION_PLAN",
+      "action": "Generate placeholder QA_IMPLEMENTATION_PLAN document"
+    },
+    {
+      "module": "PIT",
+      "severity": "MEDIUM",
+      "issue": "Missing: IMPLEMENTATION_GUIDE",
+      "component": "IMPLEMENTATION_GUIDE",
+      "action": "Generate placeholder IMPLEMENTATION_GUIDE document"
+    },
+    {
+      "module": "PIT",
+      "severity": "MEDIUM",
+      "issue": "Missing: SPRINT_PLAN",
+      "component": "SPRINT_PLAN",
+      "action": "Generate placeholder SPRINT_PLAN document"
+    },
+    {
+      "module": "PIT",
+      "severity": "MEDIUM",
+      "issue": "Missing: CHANGELOG",
+      "component": "CHANGELOG",
+      "action": "Generate placeholder CHANGELOG document"
+    },
+    {
+      "module": "PIT",
+      "severity": "MEDIUM",
+      "issue": "Missing: EDGE_FUNCTIONS (required for PIT)",
+      "component": "EDGE_FUNCTIONS",
+      "action": "Generate placeholder EDGE_FUNCTIONS document"
+    },
+    {
+      "module": "PIT",
+      "severity": "MEDIUM",
+      "issue": "Missing: WATCHDOG_LOGIC (required for PIT)",
+      "component": "WATCHDOG_LOGIC",
+      "action": "Generate placeholder WATCHDOG_LOGIC document"
+    },
+    {
+      "module": "PIT",
+      "severity": "MEDIUM",
+      "issue": "Missing: MODEL_ROUTING_SPEC (required for PIT)",
+      "component": "MODEL_ROUTING_SPEC",
+      "action": "Generate placeholder MODEL_ROUTING_SPEC document"
+    },
+    {
+      "module": "THREAT",
+      "severity": "HIGH",
+      "issue": "Missing: ARCHITECTURE",
+      "component": "ARCHITECTURE",
+      "action": "Generate placeholder ARCHITECTURE document"
+    },
+    {
+      "module": "THREAT",
+      "severity": "MEDIUM",
+      "issue": "Missing: INTEGRATION_SPEC",
+      "component": "INTEGRATION_SPEC",
+      "action": "Generate placeholder INTEGRATION_SPEC document"
+    },
+    {
+      "module": "THREAT",
+      "severity": "MEDIUM",
+      "issue": "Missing: DATABASE_SCHEMA",
+      "component": "DATABASE_SCHEMA",
+      "action": "Generate placeholder DATABASE_SCHEMA document"
+    },
+    {
+      "module": "THREAT",
+      "severity": "MEDIUM",
+      "issue": "Missing: FRONTEND_COMPONENT_MAP",
+      "component": "FRONTEND_COMPONENT_MAP",
+      "action": "Generate placeholder FRONTEND_COMPONENT_MAP document"
+    },
+    {
+      "module": "THREAT",
+      "severity": "MEDIUM",
+      "issue": "Missing: WIREFRAMES",
+      "component": "WIREFRAMES",
+      "action": "Generate placeholder WIREFRAMES document"
+    },
+    {
+      "module": "THREAT",
+      "severity": "MEDIUM",
+      "issue": "Missing: QA_IMPLEMENTATION_PLAN",
+      "component": "QA_IMPLEMENTATION_PLAN",
+      "action": "Generate placeholder QA_IMPLEMENTATION_PLAN document"
+    },
+    {
+      "module": "THREAT",
+      "severity": "MEDIUM",
+      "issue": "Missing: IMPLEMENTATION_GUIDE",
+      "component": "IMPLEMENTATION_GUIDE",
+      "action": "Generate placeholder IMPLEMENTATION_GUIDE document"
+    },
+    {
+      "module": "THREAT",
+      "severity": "MEDIUM",
+      "issue": "Missing: SPRINT_PLAN",
+      "component": "SPRINT_PLAN",
+      "action": "Generate placeholder SPRINT_PLAN document"
+    },
+    {
+      "module": "THREAT",
+      "severity": "MEDIUM",
+      "issue": "Missing: CHANGELOG",
+      "component": "CHANGELOG",
+      "action": "Generate placeholder CHANGELOG document"
+    },
+    {
+      "module": "THREAT",
+      "severity": "MEDIUM",
+      "issue": "Missing: EDGE_FUNCTIONS (required for THREAT)",
+      "component": "EDGE_FUNCTIONS",
+      "action": "Generate placeholder EDGE_FUNCTIONS document"
+    },
+    {
+      "module": "THREAT",
+      "severity": "MEDIUM",
+      "issue": "Missing: WATCHDOG_LOGIC (required for THREAT)",
+      "component": "WATCHDOG_LOGIC",
+      "action": "Generate placeholder WATCHDOG_LOGIC document"
+    },
+    {
+      "module": "THREAT",
+      "severity": "MEDIUM",
+      "issue": "Missing: MODEL_ROUTING_SPEC (required for THREAT)",
+      "component": "MODEL_ROUTING_SPEC",
+      "action": "Generate placeholder MODEL_ROUTING_SPEC document"
+    },
+    {
+      "module": "VULNERABILITY",
+      "severity": "HIGH",
+      "issue": "Missing: ARCHITECTURE",
+      "component": "ARCHITECTURE",
+      "action": "Generate placeholder ARCHITECTURE document"
+    },
+    {
+      "module": "VULNERABILITY",
+      "severity": "MEDIUM",
+      "issue": "Missing: INTEGRATION_SPEC",
+      "component": "INTEGRATION_SPEC",
+      "action": "Generate placeholder INTEGRATION_SPEC document"
+    },
+    {
+      "module": "VULNERABILITY",
+      "severity": "MEDIUM",
+      "issue": "Missing: DATABASE_SCHEMA",
+      "component": "DATABASE_SCHEMA",
+      "action": "Generate placeholder DATABASE_SCHEMA document"
+    },
+    {
+      "module": "VULNERABILITY",
+      "severity": "MEDIUM",
+      "issue": "Missing: FRONTEND_COMPONENT_MAP",
+      "component": "FRONTEND_COMPONENT_MAP",
+      "action": "Generate placeholder FRONTEND_COMPONENT_MAP document"
+    },
+    {
+      "module": "VULNERABILITY",
+      "severity": "MEDIUM",
+      "issue": "Missing: WIREFRAMES",
+      "component": "WIREFRAMES",
+      "action": "Generate placeholder WIREFRAMES document"
+    },
+    {
+      "module": "VULNERABILITY",
+      "severity": "MEDIUM",
+      "issue": "Missing: QA_IMPLEMENTATION_PLAN",
+      "component": "QA_IMPLEMENTATION_PLAN",
+      "action": "Generate placeholder QA_IMPLEMENTATION_PLAN document"
+    },
+    {
+      "module": "VULNERABILITY",
+      "severity": "MEDIUM",
+      "issue": "Missing: IMPLEMENTATION_GUIDE",
+      "component": "IMPLEMENTATION_GUIDE",
+      "action": "Generate placeholder IMPLEMENTATION_GUIDE document"
+    },
+    {
+      "module": "VULNERABILITY",
+      "severity": "MEDIUM",
+      "issue": "Missing: SPRINT_PLAN",
+      "component": "SPRINT_PLAN",
+      "action": "Generate placeholder SPRINT_PLAN document"
+    },
+    {
+      "module": "VULNERABILITY",
+      "severity": "MEDIUM",
+      "issue": "Missing: CHANGELOG",
+      "component": "CHANGELOG",
+      "action": "Generate placeholder CHANGELOG document"
+    },
+    {
+      "module": "VULNERABILITY",
+      "severity": "MEDIUM",
+      "issue": "Missing: EDGE_FUNCTIONS (required for VULNERABILITY)",
+      "component": "EDGE_FUNCTIONS",
+      "action": "Generate placeholder EDGE_FUNCTIONS document"
+    },
+    {
+      "module": "VULNERABILITY",
+      "severity": "MEDIUM",
+      "issue": "Missing: WATCHDOG_LOGIC (required for VULNERABILITY)",
+      "component": "WATCHDOG_LOGIC",
+      "action": "Generate placeholder WATCHDOG_LOGIC document"
+    },
+    {
+      "module": "VULNERABILITY",
+      "severity": "MEDIUM",
+      "issue": "Missing: MODEL_ROUTING_SPEC (required for VULNERABILITY)",
+      "component": "MODEL_ROUTING_SPEC",
+      "action": "Generate placeholder MODEL_ROUTING_SPEC document"
+    },
+    {
+      "module": "RISK_ASSESSMENT",
+      "severity": "MEDIUM",
+      "issue": "QA plans directory missing",
+      "component": "QA plans directory missing",
+      "action": "Generate placeholder QA plans directory missing document"
+    },
+    {
+      "module": "RISK_ASSESSMENT",
+      "severity": "HIGH",
+      "issue": "Missing: ARCHITECTURE",
+      "component": "ARCHITECTURE",
+      "action": "Generate placeholder ARCHITECTURE document"
+    },
+    {
+      "module": "RISK_ASSESSMENT",
+      "severity": "MEDIUM",
+      "issue": "Missing: INTEGRATION_SPEC",
+      "component": "INTEGRATION_SPEC",
+      "action": "Generate placeholder INTEGRATION_SPEC document"
+    },
+    {
+      "module": "RISK_ASSESSMENT",
+      "severity": "MEDIUM",
+      "issue": "Missing: DATABASE_SCHEMA",
+      "component": "DATABASE_SCHEMA",
+      "action": "Generate placeholder DATABASE_SCHEMA document"
+    },
+    {
+      "module": "RISK_ASSESSMENT",
+      "severity": "MEDIUM",
+      "issue": "Missing: FRONTEND_COMPONENT_MAP",
+      "component": "FRONTEND_COMPONENT_MAP",
+      "action": "Generate placeholder FRONTEND_COMPONENT_MAP document"
+    },
+    {
+      "module": "RISK_ASSESSMENT",
+      "severity": "MEDIUM",
+      "issue": "Missing: WIREFRAMES",
+      "component": "WIREFRAMES",
+      "action": "Generate placeholder WIREFRAMES document"
+    },
+    {
+      "module": "RISK_ASSESSMENT",
+      "severity": "MEDIUM",
+      "issue": "Missing: QA_IMPLEMENTATION_PLAN",
+      "component": "QA_IMPLEMENTATION_PLAN",
+      "action": "Generate placeholder QA_IMPLEMENTATION_PLAN document"
+    },
+    {
+      "module": "RISK_ASSESSMENT",
+      "severity": "MEDIUM",
+      "issue": "Missing: IMPLEMENTATION_GUIDE",
+      "component": "IMPLEMENTATION_GUIDE",
+      "action": "Generate placeholder IMPLEMENTATION_GUIDE document"
+    },
+    {
+      "module": "RISK_ASSESSMENT",
+      "severity": "MEDIUM",
+      "issue": "Missing: SPRINT_PLAN",
+      "component": "SPRINT_PLAN",
+      "action": "Generate placeholder SPRINT_PLAN document"
+    },
+    {
+      "module": "RISK_ASSESSMENT",
+      "severity": "MEDIUM",
+      "issue": "Missing: CHANGELOG",
+      "component": "CHANGELOG",
+      "action": "Generate placeholder CHANGELOG document"
+    },
+    {
+      "module": "RISK_ASSESSMENT",
+      "severity": "MEDIUM",
+      "issue": "Missing: EXPORT_SPEC (required for RISK_ASSESSMENT)",
+      "component": "EXPORT_SPEC",
+      "action": "Generate placeholder EXPORT_SPEC document"
+    },
+    {
+      "module": "WRAC",
+      "severity": "HIGH",
+      "issue": "Missing: ARCHITECTURE",
+      "component": "ARCHITECTURE",
+      "action": "Generate placeholder ARCHITECTURE document"
+    },
+    {
+      "module": "WRAC",
+      "severity": "MEDIUM",
+      "issue": "Missing: INTEGRATION_SPEC",
+      "component": "INTEGRATION_SPEC",
+      "action": "Generate placeholder INTEGRATION_SPEC document"
+    },
+    {
+      "module": "WRAC",
+      "severity": "MEDIUM",
+      "issue": "Missing: DATABASE_SCHEMA",
+      "component": "DATABASE_SCHEMA",
+      "action": "Generate placeholder DATABASE_SCHEMA document"
+    },
+    {
+      "module": "WRAC",
+      "severity": "MEDIUM",
+      "issue": "Missing: FRONTEND_COMPONENT_MAP",
+      "component": "FRONTEND_COMPONENT_MAP",
+      "action": "Generate placeholder FRONTEND_COMPONENT_MAP document"
+    },
+    {
+      "module": "WRAC",
+      "severity": "MEDIUM",
+      "issue": "Missing: WIREFRAMES",
+      "component": "WIREFRAMES",
+      "action": "Generate placeholder WIREFRAMES document"
+    },
+    {
+      "module": "WRAC",
+      "severity": "MEDIUM",
+      "issue": "Missing: QA_IMPLEMENTATION_PLAN",
+      "component": "QA_IMPLEMENTATION_PLAN",
+      "action": "Generate placeholder QA_IMPLEMENTATION_PLAN document"
+    },
+    {
+      "module": "WRAC",
+      "severity": "MEDIUM",
+      "issue": "Missing: IMPLEMENTATION_GUIDE",
+      "component": "IMPLEMENTATION_GUIDE",
+      "action": "Generate placeholder IMPLEMENTATION_GUIDE document"
+    },
+    {
+      "module": "WRAC",
+      "severity": "MEDIUM",
+      "issue": "Missing: SPRINT_PLAN",
+      "component": "SPRINT_PLAN",
+      "action": "Generate placeholder SPRINT_PLAN document"
+    },
+    {
+      "module": "WRAC",
+      "severity": "MEDIUM",
+      "issue": "Missing: CHANGELOG",
+      "component": "CHANGELOG",
+      "action": "Generate placeholder CHANGELOG document"
+    }
+  ],
+  "version_issues": [
+    {
+      "module": "THREAT",
+      "component": "TRUE_NORTH",
+      "versions": [
+        "1.0",
+        "0.1"
+      ],
+      "issue": "Multiple versions exist",
+      "action": "Consolidate to single latest version"
+    },
+    {
+      "module": "VULNERABILITY",
+      "component": "TRUE_NORTH",
+      "versions": [
+        "1.0",
+        "0.1"
+      ],
+      "issue": "Multiple versions exist",
+      "action": "Consolidate to single latest version"
+    },
+    {
+      "module": "RISK_ASSESSMENT",
+      "component": "TRUE_NORTH",
+      "versions": [
+        "1.1",
+        "0.1"
+      ],
+      "issue": "Multiple versions exist",
+      "action": "Consolidate to single latest version"
+    }
+  ],
+  "dependency_issues": [
+    {
+      "type": "CIRCULAR",
+      "chain": [
+        "WRAC",
+        "PIT",
+        "WRAC"
+      ],
+      "severity": "HIGH",
+      "action": "Refactor to remove circular dependency"
+    },
+    {
+      "type": "CIRCULAR",
+      "chain": [
+        "THREAT",
+        "VULNERABILITY",
+        "THREAT"
+      ],
+      "severity": "HIGH",
+      "action": "Refactor to remove circular dependency"
+    }
+  ],
+  "compliance_gaps": [
+    {
+      "module": "COURSE_CRAFTER",
+      "has_architecture": true,
+      "has_qa": true,
+      "has_compliance": false,
+      "action": "Establish complete linkage chain"
+    },
+    {
+      "module": "ERM",
+      "has_architecture": true,
+      "has_qa": true,
+      "has_compliance": false,
+      "action": "Establish complete linkage chain"
+    },
+    {
+      "module": "PIT",
+      "has_architecture": true,
+      "has_qa": true,
+      "has_compliance": false,
+      "action": "Establish complete linkage chain"
+    },
+    {
+      "module": "THREAT",
+      "has_architecture": true,
+      "has_qa": true,
+      "has_compliance": false,
+      "action": "Establish complete linkage chain"
+    },
+    {
+      "module": "VULNERABILITY",
+      "has_architecture": true,
+      "has_qa": true,
+      "has_compliance": false,
+      "action": "Establish complete linkage chain"
+    },
+    {
+      "module": "RISK_ASSESSMENT",
+      "has_architecture": true,
+      "has_qa": false,
+      "has_compliance": false,
+      "action": "Establish complete linkage chain"
+    },
+    {
+      "module": "WRAC",
+      "has_architecture": true,
+      "has_qa": true,
+      "has_compliance": false,
+      "action": "Establish complete linkage chain"
+    }
+  ],
+  "readiness_summary": {
+    "COURSE_CRAFTER": {
+      "score": 16.7,
+      "status": "NOT_READY"
+    },
+    "ERM": {
+      "score": 8.3,
+      "status": "NOT_READY"
+    },
+    "PIT": {
+      "score": 15.4,
+      "status": "NOT_READY"
+    },
+    "THREAT": {
+      "score": 7.7,
+      "status": "NOT_READY"
+    },
+    "VULNERABILITY": {
+      "score": 7.7,
+      "status": "NOT_READY"
+    },
+    "RISK_ASSESSMENT": {
+      "score": 9.1,
+      "status": "NOT_READY"
+    },
+    "WRAC": {
+      "score": 10.0,
+      "status": "NOT_READY"
+    }
+  },
+  "dependency_graph": {
+    "COURSE_CRAFTER": [],
+    "ERM": [
+      "WRAC",
+      "PIT"
+    ],
+    "PIT": [
+      "WRAC"
+    ],
+    "THREAT": [
+      "ERM",
+      "WRAC",
+      "PIT",
+      "VULNERABILITY"
+    ],
+    "VULNERABILITY": [
+      "PIT",
+      "THREAT",
+      "ERM",
+      "WRAC"
+    ],
+    "RISK_ASSESSMENT": [
+      "ERM",
+      "WRAC",
+      "PIT"
+    ],
+    "WRAC": [
+      "PIT"
+    ]
+  }
+}
