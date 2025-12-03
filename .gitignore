@@ -16,14 +16,17 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
 
 # Virtual environments
 venv/
-env/
 ENV/
+env/
+.venv
 
 # IDE
 .vscode/
@@ -36,10 +39,13 @@ ENV/
 .DS_Store
 Thumbs.db
 
-# Testing
+# Temporary files
+*.tmp
+*.bak
+*.log
+/tmp/
+
+# Test artifacts
 .pytest_cache/
 .coverage
 htmlcov/
-
-# Logs
-*.log
