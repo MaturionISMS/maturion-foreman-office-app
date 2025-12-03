@@ -1,1 +1,54 @@
-
+{
+  "version": "1.0",
+  "description": "Compliance Control Library mapping ISMS controls to international standards",
+  "last_updated": "2025-12-03",
+  "standards": {
+    "ISO_27001": {
+      "name": "ISO/IEC 27001:2022 - Information Security Management",
+      "controls": []
+    },
+    "ISO_27005": {
+      "name": "ISO/IEC 27005:2022 - Information Security Risk Management",
+      "controls": []
+    },
+    "ISO_31000": {
+      "name": "ISO 31000:2018 - Risk Management Guidelines",
+      "controls": []
+    },
+    "ISO_22301": {
+      "name": "ISO 22301:2019 - Business Continuity Management",
+      "controls": []
+    },
+    "NIST_CSF": {
+      "name": "NIST Cybersecurity Framework",
+      "controls": []
+    },
+    "NIST_800_53": {
+      "name": "NIST SP 800-53 - Security and Privacy Controls",
+      "controls": []
+    },
+    "COBIT": {
+      "name": "COBIT 2019 - Control Objectives for Information Technologies",
+      "controls": []
+    },
+    "GDPR": {
+      "name": "General Data Protection Regulation",
+      "articles": []
+    },
+    "POPIA": {
+      "name": "Protection of Personal Information Act",
+      "conditions": []
+    },
+    "OWASP_ASVS": {
+      "name": "OWASP Application Security Verification Standard",
+      "controls": []
+    },
+    "OWASP_TOP_10": {
+      "name": "OWASP Top 10 Web Application Security Risks",
+      "risks": []
+    }
+  },
+  "control_mappings": {
+    "note": "Control mappings will be populated as modules implement compliance requirements"
+  }
+}
