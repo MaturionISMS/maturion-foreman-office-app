@@ -8,11 +8,19 @@ import json
 import os
 import sys
 from pathlib import Path
-from typing import Dict, List, Tuple, Set
+from typing import Dict, List, Tuple
 import re
 
 class RepositoryValidator:
     """Validates the Maturion AI Foreman repository structure and specifications"""
+    
+    # Define which specifications are optional for which modules
+    OPTIONAL_SPECS = {
+        'WATCHDOG_LOGIC': {'required_for': ['PIT', 'THREAT', 'VULNERABILITY']},
+        'MODEL_ROUTING_SPEC': {'required_for': ['PIT', 'THREAT', 'VULNERABILITY']},
+        'INTEGRATION_MAP': {'optional_for': ['COURSE_CRAFTER', 'WRAC', 'RISK_ASSESSMENT']},
+        'EXPORT_SPEC': {'optional_for': ['RISK_ASSESSMENT', 'WRAC']}
+    }
     
     def __init__(self, repo_root: str):
         self.repo_root = Path(repo_root)
@@ -77,6 +85,34 @@ class RepositoryValidator:
         
         print(f"  ✓ Checked {len(required_dirs)} required directories\n")
     
+    def _is_optional_spec(self, spec: str, module: str) -> bool:
+        """Check if a specification is optional for a given module"""
+        if spec not in self.OPTIONAL_SPECS:
+            return False
+        
+        spec_config = self.OPTIONAL_SPECS[spec]
+        
+        # If spec has 'required_for' list, it's optional for modules NOT in that list
+        if 'required_for' in spec_config:
+            return module not in spec_config['required_for']
+        
+        # If spec has 'optional_for' list, it's optional for modules IN that list
+        if 'optional_for' in spec_config:
+            return module in spec_config['optional_for']
+        
+        return False
+    
+    def _get_latest_version_file(self, files: List[Path]) -> Path:
+        """Get the file with the latest version number"""
+        def extract_version(path: Path) -> Tuple[int, int]:
+            """Extract major.minor version from filename"""
+            match = re.search(r'_v(\d+)\.(\d+)\.md$', path.name)
+            if match:
+                return (int(match.group(1)), int(match.group(2)))
+            return (0, 0)
+        
+        return max(files, key=extract_version)
+    
     def validate_specification_files(self):
         """Validate Phase 1-5 specification files for each module"""
         print("📋 Validating Specification Files (Phase 1-5)...")
@@ -125,8 +161,8 @@ class RepositoryValidator:
                     matching_files = list(self.repo_root.glob(pattern))
                     
                     if matching_files:
-                        # Get latest version
-                        latest_file = max(matching_files, key=lambda p: p.name)
+                        # Get latest version by extracting version numbers
+                        latest_file = self._get_latest_version_file(matching_files)
                         phase_results.append({
                             'spec': spec,
                             'status': 'PASS',
@@ -134,11 +170,7 @@ class RepositoryValidator:
                         })
                     else:
                         # Check if this is required or optional
-                        is_optional = (
-                            (spec in ['WATCHDOG_LOGIC', 'MODEL_ROUTING_SPEC'] and module not in ['PIT', 'THREAT', 'VULNERABILITY']) or
-                            (spec == 'INTEGRATION_MAP' and module in ['COURSE_CRAFTER', 'WRAC', 'RISK_ASSESSMENT']) or
-                            (spec == 'EXPORT_SPEC' and module in ['RISK_ASSESSMENT', 'WRAC'])
-                        )
+                        is_optional = self._is_optional_spec(spec, module)
                         
                         phase_results.append({
                             'spec': spec,
@@ -700,9 +732,9 @@ class RepositoryValidator:
 
 def main():
     """Main execution function"""
-    repo_root = os.path.dirname(os.path.abspath(__file__))
+    repo_root = Path(__file__).parent.absolute()
     
-    validator = RepositoryValidator(repo_root)
+    validator = RepositoryValidator(str(repo_root))
     validator.validate_all()
     
     report = validator.generate_report()
