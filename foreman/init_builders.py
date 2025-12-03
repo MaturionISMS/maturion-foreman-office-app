@@ -83,7 +83,9 @@ class BuilderRegistry:
     def validate_spec_files(self):
         """Validate that each spec file corresponds to a builder in the manifest."""
         if not self.manifest.get('agents'):
-            self.errors.append("✗ ERROR: No agents defined in manifest")
+            # Only error if we have spec files but no agents
+            if len(self.spec_files) > 0:
+                self.errors.append("✗ ERROR: No agents defined in manifest but spec files exist")
             return
         
         manifest_agents = set(self.manifest['agents'].keys())
@@ -110,11 +112,13 @@ class BuilderRegistry:
     
     def validate_capability_alignment(self):
         """Validate that capabilities align with manifest agents."""
-        if not self.capabilities.get('capabilities'):
-            self.errors.append("✗ ERROR: No capabilities defined")
+        if not self.manifest.get('agents'):
             return
         
-        if not self.manifest.get('agents'):
+        if not self.capabilities.get('capabilities'):
+            # Only error if there are agents but no capabilities section
+            if len(self.manifest.get('agents', {})) > 0:
+                self.errors.append("✗ ERROR: No capabilities defined")
             return
         
         manifest_agents = set(self.manifest['agents'].keys())
@@ -142,11 +146,13 @@ class BuilderRegistry:
     
     def validate_permission_alignment(self):
         """Validate that permissions align with manifest agents."""
-        if not self.permissions.get('builders'):
-            self.errors.append("✗ ERROR: No permissions defined")
+        if not self.manifest.get('agents'):
             return
         
-        if not self.manifest.get('agents'):
+        if not self.permissions.get('builders'):
+            # Only error if there are agents but no permissions section
+            if len(self.manifest.get('agents', {})) > 0:
+                self.errors.append("✗ ERROR: No permissions defined")
             return
         
         manifest_agents = set(self.manifest['agents'].keys())

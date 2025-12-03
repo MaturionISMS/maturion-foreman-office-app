@@ -59,15 +59,15 @@ VALIDATION RESULTS
 ✓ Spec file validated for 'integration-builder'
 ✓ Spec file validated for 'schema-builder'
 ✓ Spec file validated for 'ui-builder'
-✓ Capability alignment validated for 'qa-builder': 3 capabilities
 ✓ Capability alignment validated for 'api-builder': 4 capabilities
-✓ Capability alignment validated for 'schema-builder': 3 capabilities
 ✓ Capability alignment validated for 'ui-builder': 4 capabilities
+✓ Capability alignment validated for 'qa-builder': 3 capabilities
+✓ Capability alignment validated for 'schema-builder': 3 capabilities
 ✓ Capability alignment validated for 'integration-builder': 3 capabilities
-✓ Permission alignment validated for 'qa-builder': 1 read, 1 write
 ✓ Permission alignment validated for 'api-builder': 1 read, 1 write
-✓ Permission alignment validated for 'schema-builder': 1 read, 1 write
 ✓ Permission alignment validated for 'ui-builder': 1 read, 1 write
+✓ Permission alignment validated for 'qa-builder': 1 read, 1 write
+✓ Permission alignment validated for 'schema-builder': 1 read, 1 write
 ✓ Permission alignment validated for 'integration-builder': 1 read, 1 write
 
 STATUS

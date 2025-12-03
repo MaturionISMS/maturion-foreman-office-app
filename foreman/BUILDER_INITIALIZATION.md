@@ -86,7 +86,15 @@ Each builder agent must have a corresponding specification file that documents:
 ### Running the Initialization
 
 ```bash
-python3 foreman/init-builders.py
+python3 foreman/init_builders.py
+```
+
+### Running Tests
+
+To verify the initialization logic with comprehensive test coverage:
+
+```bash
+python3 foreman/test-init-builders.py
 ```
 
 ### Validation Checks
@@ -249,6 +257,45 @@ The initialization process is the first step in the builder workflow:
    - QA Builder runs tests
    - Foreman performs QA-of-QA
    - Human validation (final approval)
+
+## Testing
+
+The builder initialization includes comprehensive test coverage:
+
+### Test Suite
+
+Run the test suite with:
+```bash
+python3 foreman/test-init-builders.py
+```
+
+### Test Coverage
+
+The test suite validates:
+
+1. **Valid Configuration** - Proper initialization with all files correctly configured
+2. **Missing Files** - Detection of missing configuration files
+3. **Missing Specifications** - Detection of agents without spec files
+4. **Capability Misalignment** - Detection of capability configuration issues
+5. **Permission Misalignment** - Detection of permission configuration issues
+6. **Invalid JSON** - Proper handling of malformed JSON files
+7. **Orphaned Specifications** - Detection of spec files without corresponding agents
+
+### Test Results
+
+All tests must pass before deploying changes to the builder registry. The test suite provides:
+- Clear success/failure indicators
+- Detailed error messages
+- Exit code 0 for success, 1 for failure (suitable for CI/CD)
+
+### Continuous Integration
+
+The test suite can be integrated into CI/CD pipelines:
+```bash
+# In your CI/CD script
+python3 foreman/test-init-builders.py || exit 1
+python3 foreman/init_builders.py || exit 1
+```
 
 ## References
 
