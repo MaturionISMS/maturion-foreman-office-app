@@ -312,6 +312,54 @@ This repo supports Copilot issue assignment:
 
 Foreman supervises Copilot PRs using governance rules.
 
+## 📊 ISMS Architecture Indexing
+
+The repository includes a comprehensive architecture indexing system:
+
+### Architecture Indexing Tool
+
+```bash
+python3 index-isms-architecture.py
+```
+
+**Generates:**
+- `ARCHITECTURE_INDEX_REPORT.md` - Human-readable comprehensive report
+- `ARCHITECTURE_INDEX.json` - Machine-readable structured index
+
+**Features:**
+- Complete module inventory (9 modules, 87+ architecture files)
+- True North architecture index
+- Module dependency mapping
+- Compliance coverage tracking (11 international standards)
+- Missing element identification
+- Architectural inconsistency detection
+- Architecture health scoring
+
+**Use Cases:**
+- Pre-build validation
+- Compliance audits
+- Dependency analysis
+- Gap identification
+- Architecture governance
+
+See `ARCHITECTURE_INDEXING_README.md` for full documentation.
+
+### Repository Validation Tool
+
+```bash
+python3 validate-repository.py
+```
+
+**Validates:**
+- Governance structure
+- Specification completeness
+- QA coverage
+- JSON file integrity
+- Builder agent configurations
+
+**Use Together:**
+Both `validate-repository.py` and `index-isms-architecture.py` should be run as part of architectural governance to ensure complete validation and indexing.
+
 ## 🧠 Conclusion
 
 Maturion is the permanent AI intelligence running the entire Maturion ISMS ecosystem.
