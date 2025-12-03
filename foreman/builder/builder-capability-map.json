@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "capabilities": {
+    "ui-builder": ["ui", "frontend", "components", "styling"],
+    "api-builder": ["api", "backend", "logic", "routes"],
+    "schema-builder": ["schema", "models", "migrations"],
+    "integration-builder": ["integration", "inter-module", "events"],
+    "qa-builder": ["testing", "coverage", "qa-of-qa"]
+  }
+}
