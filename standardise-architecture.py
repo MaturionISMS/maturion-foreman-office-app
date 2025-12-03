@@ -262,8 +262,10 @@ class ArchitectureStandardiser:
                                 module_data['compliance_coverage'][standard] = []
                             module_data['compliance_coverage'][standard].append(qa_file.name)
                             module_data['compliance_linkage'] = True
-                except Exception as e:
+                except (UnicodeDecodeError, FileNotFoundError) as e:
                     print(f"    ⚠️  Could not read {qa_file.name}: {e}")
+                except Exception as e:
+                    print(f"    ⚠️  Unexpected error reading {qa_file.name}: {e}")
     
     def _calculate_module_completeness(self, module: str, module_data: dict):
         """Calculate completeness score for a module"""
@@ -314,12 +316,21 @@ class ArchitectureStandardiser:
             for missing in data['missing']:
                 severity = 'HIGH' if 'TRUE_NORTH' in missing or 'ARCHITECTURE' in missing else 'MEDIUM'
                 
+                # Clean up the missing component description
+                component = missing.replace('Missing: ', '').split(' (')[0]
+                action_verb = "Generate placeholder"
+                
+                # Special handling for directory issues
+                if 'directory' in missing.lower():
+                    action_verb = "Create"
+                    component = component.replace(' missing', '')
+                
                 self.results['missing_components'].append({
                     'module': module,
                     'severity': severity,
                     'issue': missing,
-                    'component': missing.replace('Missing: ', '').split(' (')[0],
-                    'action': f"Generate placeholder {missing.replace('Missing: ', '').split(' (')[0]} document"
+                    'component': component,
+                    'action': f"{action_verb} {component}"
                 })
         
         print(f"  ✓ Identified {len(self.results['missing_components'])} missing components\n")
@@ -403,8 +414,16 @@ class ArchitectureStandardiser:
         try:
             content = file_path.read_text(encoding='utf-8')
             
+            # Try to determine the module this file belongs to from the path
+            current_module = None
             for module in self.MODULES:
-                if module == file_path.parts[-3].upper().replace('-', '_'):
+                module_name = module.lower().replace('_', '-')
+                if module_name in str(file_path).lower():
+                    current_module = module
+                    break
+            
+            for module in self.MODULES:
+                if module == current_module:
                     continue  # Skip self-reference
                 
                 # Look for module references
@@ -412,8 +431,12 @@ class ArchitectureStandardiser:
                 if re.search(pattern, content):
                     dependencies.add(module)
         
+        except (UnicodeDecodeError, FileNotFoundError) as e:
+            # Log specific file reading errors but continue
+            print(f"    ⚠️  Could not read {file_path.name}: {e}")
         except Exception as e:
-            pass
+            # Catch other unexpected errors but don't fail
+            print(f"    ⚠️  Unexpected error reading {file_path.name}: {e}")
         
         return dependencies
     
@@ -443,8 +466,8 @@ class ArchitectureStandardiser:
             path.append(node)
             
             for neighbor in graph.get(node, set()):
-                if dfs(neighbor, path.copy()):
-                    pass  # Continue checking other neighbors
+                # Check each neighbor for cycles
+                dfs(neighbor, path.copy())
             
             rec_stack.remove(node)
             return False
@@ -674,20 +697,34 @@ Exists: {'✅' if data['exists'] else '❌'}
 
 """
         
+        # Generate unique, prioritized recommendations
         priority_actions = []
+        action_set = set()  # Track unique actions to avoid duplicates
+        action_counter = 1
+        
         for missing in data['missing']:
-            if 'TRUE_NORTH' in missing:
-                priority_actions.append(f"1. **CRITICAL**: Create {module} True North document")
-            elif 'ARCHITECTURE' in missing:
-                priority_actions.append(f"2. **HIGH**: Create {module} Architecture specification")
-            elif 'QA' in missing:
-                priority_actions.append(f"3. **HIGH**: Create QA Implementation Plan")
+            if 'TRUE_NORTH' in missing and 'true_north' not in action_set:
+                priority_actions.append(f"{action_counter}. **CRITICAL**: Create {module} True North document")
+                action_set.add('true_north')
+                action_counter += 1
+            elif 'ARCHITECTURE' in missing and 'architecture' not in action_set:
+                priority_actions.append(f"{action_counter}. **HIGH**: Create {module} Architecture specification")
+                action_set.add('architecture')
+                action_counter += 1
+            elif 'QA' in missing and 'qa_plan' not in action_set:
+                priority_actions.append(f"{action_counter}. **HIGH**: Create QA Implementation Plan")
+                action_set.add('qa_plan')
+                action_counter += 1
         
-        if not data['qa_linkage']:
-            priority_actions.append("4. **MEDIUM**: Establish QA linkage to architecture")
+        if not data['qa_linkage'] and 'qa_linkage' not in action_set:
+            priority_actions.append(f"{action_counter}. **MEDIUM**: Establish QA linkage to architecture")
+            action_set.add('qa_linkage')
+            action_counter += 1
         
-        if not data['compliance_linkage']:
-            priority_actions.append("5. **MEDIUM**: Add compliance mappings to QA specs")
+        if not data['compliance_linkage'] and 'compliance_linkage' not in action_set:
+            priority_actions.append(f"{action_counter}. **MEDIUM**: Add compliance mappings to QA specs")
+            action_set.add('compliance_linkage')
+            action_counter += 1
         
         if priority_actions:
             for action in priority_actions:
