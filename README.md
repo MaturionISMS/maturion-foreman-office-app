@@ -302,6 +302,48 @@ See:
 
 Foreman validates architecture → creates builder plan → triggers QA → begins build cycle.
 
+## 🔍 Validation and Activation Scripts
+
+### Repository Validation
+
+Validate the entire repository structure, specifications, and governance:
+
+```bash
+python3 validate-repository.py
+```
+
+**Checks:**
+- Folder structure completeness
+- Specification files for all modules (Phase 1-5)
+- Governance file completeness
+- QA and QA-of-QA specifications
+- Compliance reference map and control library
+- Innovation, survey, and admin specifications
+- Builder agent specifications
+- JSON file integrity
+
+### Compliance Engine Activation
+
+Activate and validate the Compliance Engine:
+
+```bash
+python3 activate-compliance-engine.py
+```
+
+**Performs:**
+- Loads all compliance governance files
+- Validates compliance file structure and integrity
+- Analyzes standards coverage
+- Identifies missing mappings
+- Calculates compliance coverage percentage
+- Generates comprehensive readiness report
+
+**Output:**
+- `foreman/compliance-engine-readiness-report.md` - Detailed compliance status
+
+**Reference:**
+- `foreman/compliance-engine-initialization.md` - Compliance Engine operational framework
+
 ## 🔧 GitHub Copilot Integration
 
 This repo supports Copilot issue assignment:
