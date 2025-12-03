@@ -7,7 +7,7 @@ Maturion ISMS ecosystem. It ensures proper configuration alignment and
 generates a comprehensive validation report.
 
 Usage:
-    python3 foreman/init-builders.py
+    python3 foreman/init_builders.py
 """
 
 import json

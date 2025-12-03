@@ -187,7 +187,7 @@ To add a new builder agent to the registry:
 
 5. **Run Initialization**
    ```bash
-   python3 foreman/init-builders.py
+   python3 foreman/init_builders.py
    ```
 
 6. **Verify Report**
