@@ -1,0 +1,456 @@
+{
+  "manifest_version": "1.0",
+  "last_updated": "2025-12-03",
+  "managed_by": "Maturion Foreman",
+  "description": "Registry of all builder agents managed by Maturion Foreman, including their responsibilities, specializations, and operational boundaries",
+  
+  "builder_agents": [
+    {
+      "agent_id": "builder-course-crafter",
+      "name": "Course Crafter Builder",
+      "specialization": "Course Crafter Module",
+      "primary_responsibilities": [
+        "Implement Course Crafter module features",
+        "Develop E1-E4 content generation workflows",
+        "Create and maintain course templates",
+        "Implement export functionality for training materials",
+        "Develop user interfaces for course creation"
+      ],
+      "technical_expertise": [
+        "Content management systems",
+        "Training material generation",
+        "Educational content workflows",
+        "Export format handling (SCORM, PDF, etc.)"
+      ],
+      "module_boundaries": {
+        "owns": ["apps/course-crafter"],
+        "can_read": ["architecture/integration-maps", "apps/erm/schemas"],
+        "cannot_modify": ["apps/erm", "apps/pit", "apps/threat", "apps/vulnerability", "apps/risk-assessment", "apps/wrac"]
+      },
+      "delegation_criteria": {
+        "when_to_use": [
+          "Course Crafter feature implementation",
+          "Training content generation",
+          "E1-E4 workflow development",
+          "Course Crafter UI/UX changes"
+        ],
+        "when_not_to_use": [
+          "Cross-module architecture changes",
+          "Database schema modifications in other modules",
+          "Risk assessment logic",
+          "Threat or vulnerability tracking"
+        ]
+      },
+      "integration_restrictions": [
+        "Must use published APIs for ERM integration",
+        "Cannot directly access other module databases",
+        "Must follow INTEGRATED_ISMS_MODULE_INTEGRATION_MAP_v1.0.md patterns"
+      ],
+      "quality_requirements": {
+        "required_qa_checklist": "COURSE_CRAFTER_QA_IMPLEMENTATION_PLAN_v1.1.md",
+        "true_north_alignment": "COURSE_CRAFTER_TRUE_NORTH_v1.0.md",
+        "test_coverage_minimum": "80%",
+        "documentation_required": true
+      }
+    },
+    {
+      "agent_id": "builder-erm",
+      "name": "ERM Builder",
+      "specialization": "Enterprise Risk Management Module",
+      "primary_responsibilities": [
+        "Implement ERM module features",
+        "Develop risk matrix and heatmap functionality",
+        "Create risk assessment workflows",
+        "Implement risk appetite and tolerance settings",
+        "Develop risk reporting and analytics"
+      ],
+      "technical_expertise": [
+        "Risk management methodologies",
+        "Data visualization (heatmaps, matrices)",
+        "Statistical analysis",
+        "Reporting and dashboard development"
+      ],
+      "module_boundaries": {
+        "owns": ["apps/erm"],
+        "can_read": ["architecture/integration-maps", "apps/risk-assessment/schemas", "apps/threat/schemas", "apps/vulnerability/schemas"],
+        "cannot_modify": ["apps/course-crafter", "apps/pit", "apps/threat", "apps/vulnerability", "apps/risk-assessment", "apps/wrac"]
+      },
+      "delegation_criteria": {
+        "when_to_use": [
+          "ERM feature implementation",
+          "Risk matrix development",
+          "Risk heatmap visualization",
+          "Risk reporting functionality"
+        ],
+        "when_not_to_use": [
+          "Threat intelligence gathering",
+          "Vulnerability scanning",
+          "Project tracking",
+          "Training content creation"
+        ]
+      },
+      "integration_restrictions": [
+        "Must use published APIs for risk assessment integration",
+        "Must use published APIs for threat and vulnerability data",
+        "Cannot bypass integration layer",
+        "Must follow INTEGRATED_ISMS_MODULE_INTEGRATION_MAP_v1.0.md patterns"
+      ],
+      "quality_requirements": {
+        "required_qa_checklist": "ERM_QA_IMPLEMENTATION_PLAN_v1.1.md",
+        "true_north_alignment": "ERM_TRUE_NORTH_v1.0.md",
+        "test_coverage_minimum": "85%",
+        "documentation_required": true
+      }
+    },
+    {
+      "agent_id": "builder-pit",
+      "name": "PIT Builder",
+      "specialization": "Project & Issues Tracker Module",
+      "primary_responsibilities": [
+        "Implement PIT module features",
+        "Develop project tracking workflows",
+        "Create issue management functionality",
+        "Implement watchdog logic for project monitoring",
+        "Develop AI routing for automated task assignment"
+      ],
+      "technical_expertise": [
+        "Project management systems",
+        "Issue tracking workflows",
+        "Watchdog pattern implementation",
+        "AI task routing and orchestration"
+      ],
+      "module_boundaries": {
+        "owns": ["apps/pit"],
+        "can_read": ["architecture/integration-maps", "apps/threat/schemas", "apps/vulnerability/schemas"],
+        "cannot_modify": ["apps/course-crafter", "apps/erm", "apps/threat", "apps/vulnerability", "apps/risk-assessment", "apps/wrac"]
+      },
+      "delegation_criteria": {
+        "when_to_use": [
+          "PIT feature implementation",
+          "Project tracking workflows",
+          "Issue management features",
+          "PIT watchdog logic",
+          "PIT AI routing configuration"
+        ],
+        "when_not_to_use": [
+          "Threat analysis",
+          "Vulnerability assessment",
+          "Risk calculations",
+          "Training content"
+        ]
+      },
+      "integration_restrictions": [
+        "Must use published APIs for threat and vulnerability data",
+        "Cannot modify watchdog logic in other modules",
+        "Must follow PIT_WATCHDOG_LOGIC_v1.0.md specifications",
+        "Must follow PIT_MODEL_ROUTING_SPEC_v1.0.md for AI routing"
+      ],
+      "quality_requirements": {
+        "required_qa_checklist": "PIT_QA_IMPLEMENTATION_PLAN_v1.1.md",
+        "true_north_alignment": "PIT_TRUE_NORTH_v1.0.md",
+        "test_coverage_minimum": "85%",
+        "documentation_required": true
+      }
+    },
+    {
+      "agent_id": "builder-threat",
+      "name": "Threat Module Builder",
+      "specialization": "Threat Intelligence Module",
+      "primary_responsibilities": [
+        "Implement Threat module features",
+        "Develop threat intelligence gathering workflows",
+        "Create threat assessment functionality",
+        "Implement watchdog logic for threat monitoring",
+        "Develop AI routing for threat analysis"
+      ],
+      "technical_expertise": [
+        "Threat intelligence methodologies",
+        "Security threat analysis",
+        "Watchdog pattern implementation",
+        "AI-assisted threat assessment"
+      ],
+      "module_boundaries": {
+        "owns": ["apps/threat"],
+        "can_read": ["architecture/integration-maps", "apps/vulnerability/schemas", "apps/erm/schemas"],
+        "cannot_modify": ["apps/course-crafter", "apps/erm", "apps/pit", "apps/vulnerability", "apps/risk-assessment", "apps/wrac"]
+      },
+      "delegation_criteria": {
+        "when_to_use": [
+          "Threat module feature implementation",
+          "Threat intelligence workflows",
+          "Threat assessment logic",
+          "Threat watchdog implementation",
+          "Threat AI routing configuration"
+        ],
+        "when_not_to_use": [
+          "Vulnerability scanning",
+          "Risk scoring",
+          "Project management",
+          "Training development"
+        ]
+      },
+      "integration_restrictions": [
+        "Must use published APIs for vulnerability data",
+        "Must use published APIs for risk data integration",
+        "Must follow THREAT_WATCHDOG_LOGIC_v1.0.md specifications",
+        "Must follow THREAT_MODEL_ROUTING_SPEC_v1.0.md for AI routing"
+      ],
+      "quality_requirements": {
+        "required_qa_checklist": "THREAT_QA_IMPLEMENTATION_PLAN_v1.1.md",
+        "true_north_alignment": "THREAT_TRUE_NORTH_v1.0.md",
+        "test_coverage_minimum": "85%",
+        "documentation_required": true
+      }
+    },
+    {
+      "agent_id": "builder-vulnerability",
+      "name": "Vulnerability Module Builder",
+      "specialization": "Vulnerability Management Module",
+      "primary_responsibilities": [
+        "Implement Vulnerability module features",
+        "Develop vulnerability scanning integration",
+        "Create vulnerability assessment workflows",
+        "Implement watchdog logic for vulnerability monitoring",
+        "Develop AI routing for vulnerability prioritization"
+      ],
+      "technical_expertise": [
+        "Vulnerability management",
+        "Security scanning integration",
+        "CVSS scoring",
+        "Watchdog pattern implementation",
+        "AI-assisted vulnerability prioritization"
+      ],
+      "module_boundaries": {
+        "owns": ["apps/vulnerability"],
+        "can_read": ["architecture/integration-maps", "apps/threat/schemas", "apps/erm/schemas"],
+        "cannot_modify": ["apps/course-crafter", "apps/erm", "apps/pit", "apps/threat", "apps/risk-assessment", "apps/wrac"]
+      },
+      "delegation_criteria": {
+        "when_to_use": [
+          "Vulnerability module feature implementation",
+          "Vulnerability scanning workflows",
+          "Vulnerability assessment logic",
+          "Vulnerability watchdog implementation",
+          "Vulnerability AI routing configuration"
+        ],
+        "when_not_to_use": [
+          "Threat intelligence gathering",
+          "Risk matrix calculations",
+          "Project tracking",
+          "Course content creation"
+        ]
+      },
+      "integration_restrictions": [
+        "Must use published APIs for threat correlation",
+        "Must use published APIs for risk scoring",
+        "Must follow VULNERABILITY_WATCHDOG_LOGIC_v1.0.md specifications",
+        "Must follow VULNERABILITY_MODEL_ROUTING_SPEC_v1.0.md for AI routing"
+      ],
+      "quality_requirements": {
+        "required_qa_checklist": "VULNERABILITY_QA_IMPLEMENTATION_PLAN_v1.1.md",
+        "true_north_alignment": "VULNERABILITY_TRUE_NORTH_v1.0.md",
+        "test_coverage_minimum": "85%",
+        "documentation_required": true
+      }
+    },
+    {
+      "agent_id": "builder-risk-assessment",
+      "name": "Risk Assessment Builder",
+      "specialization": "Risk Assessment Module",
+      "primary_responsibilities": [
+        "Implement Risk Assessment module features",
+        "Develop risk assessment workflows",
+        "Create assessment templates and methodologies",
+        "Implement risk scoring logic",
+        "Develop assessment reporting"
+      ],
+      "technical_expertise": [
+        "Risk assessment methodologies",
+        "Assessment workflow design",
+        "Risk scoring algorithms",
+        "Compliance frameworks (ISO, NIST, etc.)"
+      ],
+      "module_boundaries": {
+        "owns": ["apps/risk-assessment"],
+        "can_read": ["architecture/integration-maps", "apps/erm/schemas", "apps/threat/schemas", "apps/vulnerability/schemas"],
+        "cannot_modify": ["apps/course-crafter", "apps/erm", "apps/pit", "apps/threat", "apps/vulnerability", "apps/wrac"]
+      },
+      "delegation_criteria": {
+        "when_to_use": [
+          "Risk Assessment module implementation",
+          "Assessment workflow development",
+          "Risk scoring logic",
+          "Assessment template creation"
+        ],
+        "when_not_to_use": [
+          "Risk matrix visualization (ERM responsibility)",
+          "Threat intelligence (Threat module responsibility)",
+          "Vulnerability scanning (Vulnerability module responsibility)"
+        ]
+      },
+      "integration_restrictions": [
+        "Must use published APIs for ERM integration",
+        "Must use published APIs for threat and vulnerability data",
+        "Must follow INTEGRATED_ISMS_MODULE_INTEGRATION_MAP_v1.0.md patterns"
+      ],
+      "quality_requirements": {
+        "required_qa_checklist": "RISK_ASSESSMENT_QA_IMPLEMENTATION_PLAN_v0.1.md",
+        "true_north_alignment": "RISK_ASSESSMENT_TRUE_NORTH_v1.1.md",
+        "test_coverage_minimum": "80%",
+        "documentation_required": true
+      }
+    },
+    {
+      "agent_id": "builder-wrac",
+      "name": "WRAC Builder",
+      "specialization": "Workplace Risk Assessment & Control Module",
+      "primary_responsibilities": [
+        "Implement WRAC module features",
+        "Develop workplace safety assessment workflows",
+        "Create control measure tracking",
+        "Implement workplace incident reporting",
+        "Develop safety compliance tracking"
+      ],
+      "technical_expertise": [
+        "Workplace safety standards",
+        "Occupational health and safety",
+        "Incident management",
+        "Control effectiveness measurement"
+      ],
+      "module_boundaries": {
+        "owns": ["apps/wrac"],
+        "can_read": ["architecture/integration-maps", "architecture/control-models"],
+        "cannot_modify": ["apps/course-crafter", "apps/erm", "apps/pit", "apps/threat", "apps/vulnerability", "apps/risk-assessment"]
+      },
+      "delegation_criteria": {
+        "when_to_use": [
+          "WRAC module implementation",
+          "Workplace safety workflows",
+          "Control measure tracking",
+          "Incident reporting features"
+        ],
+        "when_not_to_use": [
+          "Cyber security threats",
+          "IT vulnerabilities",
+          "Enterprise risk management",
+          "Digital risk assessments"
+        ]
+      },
+      "integration_restrictions": [
+        "Must use published APIs for control library integration",
+        "Must follow INTEGRATED_ISMS_MODULE_INTEGRATION_MAP_v1.0.md patterns"
+      ],
+      "quality_requirements": {
+        "required_qa_checklist": "WRAC_QA_IMPLEMENTATION_PLAN_v0.1.md",
+        "true_north_alignment": "WRAC_TRUE_NORTH_v0.1.md",
+        "test_coverage_minimum": "80%",
+        "documentation_required": true
+      }
+    },
+    {
+      "agent_id": "builder-architecture",
+      "name": "Architecture Builder",
+      "specialization": "System Architecture and Integration",
+      "primary_responsibilities": [
+        "Design cross-module integrations",
+        "Maintain integration maps",
+        "Design API contracts",
+        "Ensure architectural consistency",
+        "Design system-level components"
+      ],
+      "technical_expertise": [
+        "System architecture design",
+        "API design and integration patterns",
+        "Microservices architecture",
+        "Data flow design",
+        "Performance optimization"
+      ],
+      "module_boundaries": {
+        "owns": ["architecture/integration-maps", "architecture/system-architecture"],
+        "can_read": ["all modules"],
+        "cannot_modify": ["module internals without approval"]
+      },
+      "delegation_criteria": {
+        "when_to_use": [
+          "Cross-module integration design",
+          "System-level architecture changes",
+          "API contract definition",
+          "Integration pattern design"
+        ],
+        "when_not_to_use": [
+          "Module-specific feature implementation",
+          "UI/UX design",
+          "Business logic implementation"
+        ]
+      },
+      "integration_restrictions": [
+        "Must maintain backward compatibility",
+        "Must document all integration changes",
+        "Must update INTEGRATED_ISMS_MODULE_INTEGRATION_MAP_v1.0.md"
+      ],
+      "quality_requirements": {
+        "required_qa_checklist": "Architecture review checklist",
+        "true_north_alignment": "SRMF_MASTER_BUILD_REFERENCE_v1.0.md",
+        "test_coverage_minimum": "N/A (design role)",
+        "documentation_required": true
+      }
+    }
+  ],
+  
+  "delegation_rules": {
+    "general_principles": [
+      "Always delegate to the most specialized builder for the task",
+      "Ensure builder has appropriate authority for the requested changes",
+      "Verify task aligns with builder's module boundaries",
+      "Provide clear instructions using command grammar",
+      "Set explicit quality gates and success criteria"
+    ],
+    "conflict_resolution": [
+      "When task spans multiple modules, Architecture Builder coordinates",
+      "When builders disagree, Maturion Foreman arbitrates",
+      "When boundaries are unclear, escalate to Maturion Foreman",
+      "When quality gates fail, builder must revise before resubmission"
+    ],
+    "escalation_triggers": [
+      "Builder cannot complete task within boundaries",
+      "Task requires changes to SRMF Master Build Reference",
+      "Cross-module changes affecting multiple builders",
+      "Architectural drift detected",
+      "Quality gate failures after multiple attempts"
+    ]
+  },
+  
+  "inter_module_restrictions": {
+    "database_access": "Modules can only access their own database directly. Cross-module data access must use published APIs.",
+    "code_modifications": "Builders cannot modify code in modules they don't own. Integration must be through APIs.",
+    "schema_changes": "Database schema changes must be reviewed by Maturion Foreman and affected module builders.",
+    "api_contracts": "API contracts cannot be changed without approval from both provider and consumer builders.",
+    "watchdog_logic": "Watchdog logic can only be modified by the module's designated builder (PIT, Threat, Vulnerability).",
+    "ai_routing": "AI routing rules can only be modified by the module's designated builder and must align with MODEL_ROUTING_SPEC."
+  },
+  
+  "quality_standards": {
+    "all_builders_must": [
+      "Follow One-Time Build + Zero Regression philosophy",
+      "Achieve minimum test coverage specified for their module",
+      "Align with module True North document",
+      "Update documentation for all changes",
+      "Pass module-specific QA checklist",
+      "Submit work for Maturion Foreman review before deployment"
+    ],
+    "code_standards": [
+      "Follow module-specific coding standards",
+      "Include comprehensive error handling",
+      "Implement proper logging",
+      "Follow security best practices",
+      "Write self-documenting code with clear comments"
+    ],
+    "documentation_standards": [
+      "Update API documentation for interface changes",
+      "Maintain True North alignment documentation",
+      "Document architectural decisions",
+      "Update integration maps for cross-module changes",
+      "Include inline code documentation"
+    ]
+  }
+}
