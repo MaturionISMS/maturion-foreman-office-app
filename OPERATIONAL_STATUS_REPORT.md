@@ -231,11 +231,14 @@ Maturion Foreman has successfully entered Active Operational Mode. All core syst
 
 ### 5.4 Builder Specifications
 **Location**: `foreman/builder/`
-- ✅ `ui-builder-spec.md` - (if exists)
+- ✅ `ui-builder-spec.md` - LOADED
 - ✅ `api-builder-spec.md` - LOADED
 - ✅ `schema-builder-spec.md` - LOADED
 - ✅ `integration-builder-spec.md` - LOADED
 - ✅ `qa-builder-spec.md` - LOADED
+- ✅ `builder-permission-policy.json` - LOADED
+- ✅ `builder-capability-map.json` - LOADED
+- ✅ `builder-collaboration-rules.md` - LOADED
 
 **Status**: ✅ Builder agents INITIALIZED and ready for task assignment
 
@@ -249,8 +252,8 @@ Maturion Foreman has successfully entered Active Operational Mode. All core syst
 **Status**: OPERATIONAL
 
 ### 6.1 Master Architecture Files
-- ✅ `SRMF_MASTER_BUILD_REFERENCE_v1.0.md` - INDEXED (117,499 bytes - verified via `wc -c`)
-- ✅ `Integrated_ISMS_Architecture_v1.1.md` - INDEXED (10,105 bytes)
+- ✅ `SRMF_MASTER_BUILD_REFERENCE_v1.0.md` - INDEXED
+- ✅ `Integrated_ISMS_Architecture_v1.1.md` - INDEXED
 - ✅ `foreman/system-map.md` - INDEXED (comprehensive module mapping)
 
 ### 6.2 Module True North Documents
@@ -310,7 +313,9 @@ Maturion Foreman has successfully entered Active Operational Mode. All core syst
 - ✅ Training Content Generation: Course Crafter ← ERM
 - ✅ Project Context: PIT ← (Threat + Vulnerability)
 
-**Status**: ✅ Architecture FULLY INDEXED with 7 modules, 10 True North documents (verified via ls count), 182 total markdown documentation files (verified via `find . -name "*.md" -type f | grep -vE "^\./(\.git|uploads)" | wc -l` - includes architecture, governance, and specification files), and comprehensive integration maps
+**Status**: ✅ Architecture FULLY INDEXED with 7 modules, 10 True North documents (verified via ls count),  
+182 total markdown documentation files (verified via find command - includes architecture, governance,  
+and specification files), and comprehensive integration maps
 
 **Verification Method**: File count, size verification, and system map review  
 **Last Updated**: 2025-12-03
@@ -541,10 +546,12 @@ Maturion Foreman has successfully entered Active Operational Mode. All core syst
 ### Total Standards Covered: 11
 
 **Note on File Counts**: All counts verified using automated shell commands:
-- Foreman directory files: `find foreman/ -type f | wc -l` (all files in governance directory)
-- Markdown documentation: `find . -name "*.md" -type f | grep -vE "^\./(\.git|uploads)" | wc -l` (all .md files)
+- Foreman directory files: `find foreman/ -type f | wc -l`  
+  (all files in governance directory)
+- Markdown documentation: `find . -name "*.md" -type f | grep -vE "^\./(\.git|uploads)" | wc -l`  
+  (all .md files)
 - True North documents: `ls -1 *TRUE_NORTH*.md | wc -l`
-- SRMF file size: `wc -c SRMF_MASTER_BUILD_REFERENCE_v1.0.md`
+- SRMF file verification: `wc -c SRMF_MASTER_BUILD_REFERENCE_v1.0.md`
 
 ---
 
