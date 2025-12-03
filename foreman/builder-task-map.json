@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "taskMap": {
+    "architecture": [],
+    "data": ["schema-builder"],
+    "frontend": ["ui-builder"],
+    "backend": ["api-builder", "edge-builder"],
+    "integration": ["integration-builder"],
+    "qa": ["qa-builder"],
+    "sequence": ["foreman"]
+  }
+}

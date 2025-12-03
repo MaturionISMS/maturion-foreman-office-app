@@ -1,86 +1,409 @@
-# Maturion AI Foreman
+# Maturion – AI Foreman & Platform Agent
 
-This is the Foreman repository that is responsible for managing all builder agents and maintaining the complete architecture documentation for the Maturion Integrated Security Management System (ISMS).
+The AI Governance, Architecture Enforcement, Compliance, QA, and Innovation Engine
+for the Maturion Integrated Security Management System (ISMS).
 
-## What is the Foreman?
+Maturion is the permanent intelligence layer of the Maturion platform.
+He enforces architecture, coordinates builders, ensures full compliance,
+monitors platform behaviour, and evolves the ecosystem safely over time.
 
-The Maturion Foreman is an AI-powered orchestration system that:
-- Manages and coordinates builder agents for ISMS module development
-- Maintains architectural integrity across all modules
-- Enforces quality standards and compliance
-- Provides centralized architecture documentation
+Maturion operates in two continuous modes:
 
-## Repository Structure
+## 🔧 1. Build-Time Foreman
 
-### `/foreman/` - Foreman Core Systems
-Builder agent management, initialization, and operational frameworks.
+Responsible for:
+
+- Enforcing architecture and module boundaries
+- Interpreting the SRMF Master Build Reference
+- Ensuring all requirements are complete and unambiguous
+- Running QA and QA-of-QA before any build
+- Sequencing tasks for builder agents
+- Validating builder PRs
+- Ensuring one-time correctness & zero regression
+- Preventing architectural drift
+- Maintaining inter-module integration correctness
+
+Maturion does not write production code.
+He governs and orchestrates all builder agents.
+
+## 🌐 2. Run-Time Platform Agent
+
+After deployment, Maturion becomes the live platform intelligence, responsible for:
+
+- Monitoring system health
+- Detecting anomalies, threats, vulnerabilities, and drifts
+- Ensuring privacy and tenant isolation
+- Enforcing ISO/NIST/COBIT/OWASP compliance
+- Auto-fixing small issues within guardrails
+- Raising escalations for high-risk issues
+- Generating intelligent admin insights
+- Learning safely from anonymized patterns
+- Managing platform-wide innovation and user-driven enhancements
+
+## 🎯 Core Purpose
+
+Maturion's purpose is to ensure:
+
+- One-Time Build Correctness
+- Zero Regression
+- Architectural Fidelity
+- Cross-Module Integration
+- Compliance with International Standards
+- Platform Stability and Safety
+- Continuous User-Driven Improvement
+- Enterprise-Grade Governance & Auditability
+
+Maturion is designed to outlive development cycles, chat sessions, and deployments.
+
+He is the single source of truth and the permanent intelligence behind the Maturion ecosystem.
+
+## 🧱 Architectural Foundations
+
+Maturion enforces alignment with:
+
+- SRMF Master Build Reference (Master architecture)
+- Integrated ISMS Architecture
+- Module True North Documents
+- Build Philosophy (One-Time Build, Zero Regression)
+- Minimum Architecture Template (MARS)
+- Versioning Rules
+- QA Requirements
+- QA-of-QA Requirements
+- Compliance Mapping to ISO / NIST / COBIT / OWASP
+- Platform Governance Standards
+- Innovation Engine Rules
+
+## 📁 Repository Structure
+
+```
+maturion-ai-foreman/
+│
+├── foreman/
+│   ├── identity.md
+│   ├── roles-and-duties.md
+│   ├── memory-model.md
+│   ├── privacy-guardrails.md
+│   ├── command-grammar.md
+│   ├── runtime-agent-plan.md
+│   ├── builder-manifest.json
+│   ├── system-map.md
+│   ├── architecture-governance.md
+│   ├── qa-governance.md
+│   ├── qa-of-qa.md
+│   ├── architecture-naming-conventions.md
+│   ├── architecture-folder-structure.md
+│   ├── versioning-rules.md
+│   ├── minimum-architecture-template.md
+│   ├── architecture-validation-checklist.md
+│   ├── qa-minimum-coverage-requirements.md
+│   ├── module-readiness-report-template.md
+│   ├── task-distribution-rules.md
+│   │
+│   ├── platform/
+│   │   ├── qa-dashboard-spec.md
+│   │   ├── governance-qa-dashboard-spec.md
+│   │   ├── watchdog-standard-spec.md
+│   │   ├── privacy-leak-detection-spec.md
+│   │   ├── security-escalation-policy.md
+│   │   ├── ai-performance-metrics-spec.md
+│   │   ├── ai-cost-optimization-policy.md
+│   │   ├── ai-usage-analytics-spec.md
+│   │   ├── ui-branding-standard.md
+│   │   ├── ui-theme-overrides.md
+│   │   ├── ui-navigation-spec.md
+│   │   ├── image-generation-policy.md
+│   │   ├── image-model-routing-spec.md
+│   │   ├── ui-asset-generation-guidelines.md
+│   │   ├── ui-multiwindow-spec.md
+│   │   ├── ui-ai-edit-session-spec.md
+│   │
+│   ├── compliance/
+│   │   ├── compliance-reference-map.md
+│   │   ├── compliance-control-library.json
+│   │   ├── compliance-qa-spec.md
+│   │   ├── compliance-watchdog-spec.md
+│   │   ├── compliance-dashboard-spec.md
+│   │
+│   ├── innovation/
+│   │   ├── idea-submission-spec.md
+│   │   ├── idea-summarisation-rules.md
+│   │   ├── idea-voting-policy.md
+│   │   ├── innovation-workflow-spec.md
+│   │   ├── threshold-policy.md
+│   │   ├── innovation-dashboard-spec.md
+│   │   ├── roadmap-generation-spec.md
+│   │
+│   ├── surveys/
+│   │   ├── survey-engine-spec.md
+│   │   ├── survey-ai-analysis-spec.md
+│   │
+│   ├── admin/
+│       ├── enhancement-parking-lot-spec.md
+│       ├── admin-innovation-chat-spec.md
+│       ├── ai-self-improvement-spec.md
+│
+└── .github/
+    ├── copilot-instructions.md
+    └── ISSUE_TEMPLATE/
+```
+
+## 🔍 What Maturion Governs
+
+### 📘 Architecture
+
+- All modules
+- All requirements
+- Data models
+- Inter-module dependencies
+- Integration specs
+- Naming & folder standards
+- MARS template
+- Versioning rules
+
+### 🟦 QA & QA-of-QA
+
+- Test coverage
+- Test execution
+- Test category breakdown
+- Architecture ↔ QA traceability
+- Governance QA
+- Compliance QA
+- Performance QA
+
+### 🔐 Compliance
+
+Mapped to global international standards:
+
+- ISO 27001
+- ISO 27005
+- ISO 31000
+- NIST CSF
+- COBIT
+- GDPR & POPIA
+- OWASP
+
+### 🔥 Watchdogs
+
+- Privacy leak detection
+- Cross-tenant anomaly detection
+- Security events
+- Behavioural anomalies
+- Compliance drift
+- Performance degradation
+
+### 🌟 Innovation Engine
+
+- User idea submissions
+- Maturion summaries
+- Multi-tenant voting
+- Threshold triggers (50/70/80/90/95%)
+- Automated roadmap generation
+- Architecture handoff to Foreman
+- Builder sprint integration
+
+### 📊 Surveys
+
+- UX
+- Feature requests
+- Module performance
+- Risk maturity
+- AI helpfulness
+
+### 🧠 Admin Tools
+
+- AI editing session
+- Enhancement parking lot
+- Admin-level innovation chat
+- AI performance and cost dashboards
+
+## 🧩 Builder Agent Ecosystem
+
+Builder agents implement code under Maturion's governance:
+
+- UI Builder
+- API Builder
+- Schema Builder
+- Integration Builder
+- QA Builder
+
+Every task is sequenced and validated by Maturion before execution.
+
+All work must pass:
+
+- QA
+- QA-of-QA
+- Integration checks
+- Governance checks
+- Your final approval
+
+## 🛡️ Tenant Isolation and Security
 
 See:
-- [Builder Initialization](foreman/BUILDER_INITIALIZATION.md)
-- [Builder Registry Quick Reference](foreman/BUILDER_REGISTRY_QUICK_REFERENCE.md)
-- [Implementation Summary](foreman/IMPLEMENTATION_SUMMARY.md)
 
-### `/maturion-isms/` - Complete ISMS Architecture
-All architecture documentation organized by:
-- **System-level architecture** (`/architecture/`) - System-wide specifications  
-- **Application modules** (`/apps/`) - Module-specific documentation
+- `privacy-guardrails.md`
+- `privacy-leak-detection-spec.md`
+- `security-escalation-policy.md`
+- `compliance-qa-spec.md`
 
-For detailed information about the organization and contents, see [ARCHITECTURE_ORGANIZATION.md](maturion-isms/ARCHITECTURE_ORGANIZATION.md).
+Maturion enforces:
 
-### Architecture Indexing & Search
-- [Architecture Indexing System](ARCHITECTURE_INDEXING_README.md) - Automated architecture document indexing
-- [Architecture Index](ARCHITECTURE_INDEX.json) - Searchable index of all architecture files
-- [Quick Start Guide](ARCHITECTURE_INDEX_QUICK_START.md) - Get started with architecture search
-- [Index Report](ARCHITECTURE_INDEX_REPORT.md) - Latest indexing results
+- Zero cross-tenant leakage
+- Zero sensitive data exposure
+- Zero unauthorised model usage
+- Full compliance with POPIA, GDPR, ISO 27001
 
-### Validation & QA Tools
-- [Repository Validation Tool](VALIDATION_TOOL_README.md) - Automated repository validation
-- [Validation Report](VALIDATION_REPORT.md) - Latest validation results
-- [Validation Summary](VALIDATION_SUMMARY.md) - Validation overview
+## 🤖 AI Behaviour, Safety, and Self-Improvement
 
-## Quick Navigation
+Maturion is:
 
-### Foreman Operations
-- [Builder Agent Registry](foreman/builder-registry-report.md)
-- [Builder Initialization](foreman/init_builders.py)
-- [Architecture Indexing](index-isms-architecture.py) - Index and search architecture documents
-- [QA Engine Documentation](foreman/qa/) (if applicable)
+- Permanent
+- Version-controlled
+- Auditable
+- Governed
+- Non-self-modifying
+- Human-approved
+- Multi-tenant safe
+- Architecture-aware
+- Context-aware (time, user, tenant, module)
 
-### System Architecture
-- [Integrated ISMS Architecture](maturion-isms/architecture/system-architecture/Integrated_ISMS_Architecture_v1.1.md)
-- [Module Integration Map](maturion-isms/architecture/integration-maps/INTEGRATED_ISMS_MODULE_INTEGRATION_MAP_v1.0.md)
-- [Control Library](maturion-isms/architecture/control-models/CONTROL_LIBRARY_v0.1.md)
+Self-improvement requires:
 
-### Application Modules
-- [Course Crafter](maturion-isms/apps/course-crafter/) - Video course production platform
-- [ERM](maturion-isms/apps/erm/) - Enterprise Risk Management
-- [PIT](maturion-isms/apps/pit/) - Project Implementation Tracker
-- [Risk Assessment](maturion-isms/apps/risk-assessment/) - Risk assessment module
-- [Threat](maturion-isms/apps/threat/) - Threat management module
-- [Vulnerability](maturion-isms/apps/vulnerability/) - Vulnerability management module
-- [WRAC](maturion-isms/apps/wrac/) - Workplace Risk Assessment & Controls
+- Admin initiation
+- AI Editing Session
+- Approval
+- PR generation
+- Governance QA
+- Merge
 
-## Architecture Organization
+See:
 
-All 114 architecture documents have been organized into a structured hierarchy:
-- System-level documents in `/maturion-isms/architecture/`
-- Module-specific documents in `/maturion-isms/apps/{module-name}/`
+- `ai-self-improvement-spec.md`
+- `ui-ai-edit-session-spec.md`
 
-Each module contains:
-- Architecture (True North documents)
-- Schemas (Database, APIs, Edge Functions)
-- QA Plans
-- Implementation Guides
-- Frontend Specifications (Component Maps, Wireframes)
-- Sprint Plans
-- Special features (Watchdog logic, AI routing where applicable)
+## 🚀 Using Maturion
 
-For complete details, see the [Architecture Organization Guide](maturion-isms/ARCHITECTURE_ORGANIZATION.md).
+### Step 1 — Read identity
 
-## Getting Started
+`foreman/identity.md`
 
-1. **For Builder Agents**: See [Builder Initialization](foreman/BUILDER_INITIALIZATION.md)
-2. **For Architecture Review**: Start with [Architecture Organization](maturion-isms/ARCHITECTURE_ORGANIZATION.md)
-3. **For Architecture Search**: Use the [Architecture Indexing System](ARCHITECTURE_INDEXING_README.md) or run `python index-isms-architecture.py`
-4. **For Repository Validation**: Run `python validate-repository.py`
-5. **For Module Development**: Review the specific module's True North document in `maturion-isms/apps/{module}/architecture/`
+### Step 2 — Learn command grammar
+
+`foreman/command-grammar.md`
+
+### Step 3 — Understand architecture guidelines
+
+`foreman/minimum-architecture-template.md`
+
+### Step 4 — Create module architecture
+
+(Using the standard)
+
+### Step 5 — Assign Foreman an issue
+
+Foreman validates architecture → creates builder plan → triggers QA → begins build cycle.
+
+## 🔍 Validation and Activation Scripts
+
+### Repository Validation
+
+Validate the entire repository structure, specifications, and governance:
+
+```bash
+python3 validate-repository.py
+```
+
+**Checks:**
+- Folder structure completeness
+- Specification files for all modules (Phase 1-5)
+- Governance file completeness
+- QA and QA-of-QA specifications
+- Compliance reference map and control library
+- Innovation, survey, and admin specifications
+- Builder agent specifications
+- JSON file integrity
+
+### Compliance Engine Activation
+
+Activate and validate the Compliance Engine:
+
+```bash
+python3 activate-compliance-engine.py
+```
+
+**Performs:**
+- Loads all compliance governance files
+- Validates compliance file structure and integrity
+- Analyzes standards coverage
+- Identifies missing mappings
+- Calculates compliance coverage percentage
+- Generates comprehensive readiness report
+
+**Output:**
+- `foreman/compliance-engine-readiness-report.md` - Detailed compliance status
+
+**Reference:**
+- `foreman/compliance-engine-initialization.md` - Compliance Engine operational framework
+
+## 🔧 GitHub Copilot Integration
+
+This repo supports Copilot issue assignment:
+
+- Open any issue
+- Click Assignee
+- Select Copilot to propose a PR
+
+Foreman supervises Copilot PRs using governance rules.
+
+## 📊 ISMS Architecture Indexing
+
+The repository includes a comprehensive architecture indexing system:
+
+### Architecture Indexing Tool
+
+```bash
+python3 index-isms-architecture.py
+```
+
+**Generates:**
+- `ARCHITECTURE_INDEX_REPORT.md` - Human-readable comprehensive report
+- `ARCHITECTURE_INDEX.json` - Machine-readable structured index
+
+**Features:**
+- Complete module inventory (9 modules, 87+ architecture files)
+- True North architecture index
+- Module dependency mapping
+- Compliance coverage tracking (11 international standards)
+- Missing element identification
+- Architectural inconsistency detection
+- Architecture health scoring
+
+**Use Cases:**
+- Pre-build validation
+- Compliance audits
+- Dependency analysis
+- Gap identification
+- Architecture governance
+
+See `ARCHITECTURE_INDEXING_README.md` for full documentation.
+
+### Repository Validation Tool
+
+```bash
+python3 validate-repository.py
+```
+
+**Validates:**
+- Governance structure
+- Specification completeness
+- QA coverage
+- JSON file integrity
+- Builder agent configurations
+
+**Use Together:**
+Both `validate-repository.py` and `index-isms-architecture.py` should be run as part of architectural governance to ensure complete validation and indexing.
+
+## 🧠 Conclusion
+
+Maturion is the permanent AI intelligence running the entire Maturion ISMS ecosystem.
+
+He enforces your standards, evolves the platform, protects tenants, maintains compliance, orchestrates builders, and becomes your long-term second-in-command.

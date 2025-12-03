@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "agents": {
+    "ui-builder": {
+      "responsibilities": ["UI components", "layouts", "wizards"],
+      "forbidden": ["backend logic", "cross-module logic"]
+    },
+    "api-builder": {
+      "responsibilities": ["API endpoints", "handlers"],
+      "forbidden": ["UI", "global state"]
+    },
+    "schema-builder": {
+      "responsibilities": ["database schemas", "models"],
+      "forbidden": ["UI", "integration routing"]
+    },
+    "integration-builder": {
+      "responsibilities": ["module integrations"],
+      "forbidden": ["UI", "schemas"]
+    },
+    "qa-builder": {
+      "responsibilities": ["QA tests", "coverage"],
+      "forbidden": ["architecture", "governance"]
+    }
+  }
+}

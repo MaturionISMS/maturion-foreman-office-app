@@ -1,0 +1,24 @@
+{
+  "builders": {
+    "ui-builder": {
+      "write": ["apps/*/frontend/*"],
+      "read": ["foreman/*"]
+    },
+    "api-builder": {
+      "write": ["apps/*/backend/*"],
+      "read": ["foreman/*"]
+    },
+    "schema-builder": {
+      "write": ["apps/*/data/*"],
+      "read": ["foreman/*"]
+    },
+    "integration-builder": {
+      "write": ["apps/*/integration/*"],
+      "read": ["foreman/*"]
+    },
+    "qa-builder": {
+      "write": ["apps/*/qa/*"],
+      "read": ["foreman/*"]
+    }
+  }
+}
