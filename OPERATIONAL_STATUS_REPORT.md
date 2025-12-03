@@ -109,7 +109,7 @@ Maturion Foreman has successfully entered Active Operational Mode. All core syst
 - ✅ `platform-awareness.md` - LOADED
 - ✅ `runtime-agent-plan.md` - LOADED
 
-**Total Governance Files**: 68 files indexed and loaded (verified via file count in foreman/ directory)
+**Total Governance Files**: 68 files indexed and loaded (verified via `find foreman/ -type f | wc -l` - includes all files in foreman/ directory and subdirectories)
 
 ---
 
@@ -214,7 +214,7 @@ Maturion Foreman has successfully entered Active Operational Mode. All core syst
 - ✅ Architecture tasks: (Foreman direct)
 - ✅ Data tasks → `schema-builder`
 - ✅ Frontend tasks → `ui-builder`
-- ✅ Backend tasks → `api-builder`, `edge-builder`
+- ✅ Backend tasks → `api-builder`
 - ✅ Integration tasks → `integration-builder`
 - ✅ QA tasks → `qa-builder`
 - ✅ Sequence tasks → `foreman`
@@ -249,23 +249,24 @@ Maturion Foreman has successfully entered Active Operational Mode. All core syst
 **Status**: OPERATIONAL
 
 ### 6.1 Master Architecture Files
-- ✅ `SRMF_MASTER_BUILD_REFERENCE_v1.0.md` - INDEXED (117,499 bytes verified)
+- ✅ `SRMF_MASTER_BUILD_REFERENCE_v1.0.md` - INDEXED (117,499 bytes - verified via `wc -c`)
 - ✅ `Integrated_ISMS_Architecture_v1.1.md` - INDEXED (10,105 bytes)
 - ✅ `foreman/system-map.md` - INDEXED (comprehensive module mapping)
 
 ### 6.2 Module True North Documents
-**Total Count**: 10 True North documents (verified via file count)
+**Total Count**: 10 True North documents (verified via `ls -1 *TRUE_NORTH*.md | wc -l`)
 
-**Primary Module True North Documents**:
-- ✅ `COURSE_CRAFTER_TRUE_NORTH_v1.0.md`
-- ✅ `ERM_TRUE_NORTH_v1.0.md`
-- ✅ `PIT_TRUE_NORTH_v1.0.md`
-- ✅ `THREAT_TRUE_NORTH_v1.0.md`
-- ✅ `VULNERABILITY_TRUE_NORTH_v1.0.md`
-- ✅ `RISK_ASSESSMENT_TRUE_NORTH_v1.1.md` (also v0.1)
-- ✅ `WRAC_TRUE_NORTH_v0.1.md`
-- ✅ `VULNERABILITY_MODULE_TRUE_NORTH_ARCHITECTURE_v0.1.md`
-- ✅ `RISK_THREAT_MODULE_TRUE_NORTH_v0.1.md`
+**Complete List of True North Documents**:
+1. ✅ `COURSE_CRAFTER_TRUE_NORTH_v1.0.md`
+2. ✅ `ERM_TRUE_NORTH_v1.0.md`
+3. ✅ `PIT_TRUE_NORTH_v1.0.md`
+4. ✅ `THREAT_TRUE_NORTH_v1.0.md`
+5. ✅ `VULNERABILITY_TRUE_NORTH_v1.0.md`
+6. ✅ `RISK_ASSESSMENT_TRUE_NORTH_v0.1.md`
+7. ✅ `RISK_ASSESSMENT_TRUE_NORTH_v1.1.md`
+8. ✅ `WRAC_TRUE_NORTH_v0.1.md`
+9. ✅ `VULNERABILITY_MODULE_TRUE_NORTH_ARCHITECTURE_v0.1.md`
+10. ✅ `RISK_THREAT_MODULE_TRUE_NORTH_v0.1.md`
 
 ### 6.3 Module-Level Architecture
 **For each module, the following architecture files are indexed**:
@@ -309,7 +310,7 @@ Maturion Foreman has successfully entered Active Operational Mode. All core syst
 - ✅ Training Content Generation: Course Crafter ← ERM
 - ✅ Project Context: PIT ← (Threat + Vulnerability)
 
-**Status**: ✅ Architecture FULLY INDEXED with 7 modules, 10 True North documents (verified), 182 total architecture markdown files, and comprehensive integration maps
+**Status**: ✅ Architecture FULLY INDEXED with 7 modules, 10 True North documents (verified via ls count), 182 total architecture markdown files (verified via `find . -name "*.md" -type f | grep -vE "^\./(\.git|uploads)" | wc -l`), and comprehensive integration maps
 
 **Verification Method**: File count, size verification, and system map review  
 **Last Updated**: 2025-12-03
@@ -533,11 +534,17 @@ Maturion Foreman has successfully entered Active Operational Mode. All core syst
 | Survey Engine | ✅ READY | 2 | YES |
 | Admin Tools | ✅ READY | 11+ | YES |
 
-### Total Governance Files: 68 (verified)
-### Total Architecture Files: 182 (verified)
+### Total Governance Files: 68 (verified via find command)
+### Total Architecture Files: 182 (verified via find command)
 ### Total Indexed Modules: 7
 ### Total Builder Agents: 5
 ### Total Standards Covered: 11
+
+**Note on File Counts**: All counts verified using automated shell commands:
+- Governance files: `find foreman/ -type f | wc -l`
+- Architecture files: `find . -name "*.md" -type f | grep -vE "^\./(\.git|uploads)" | wc -l`
+- True North documents: `ls -1 *TRUE_NORTH*.md | wc -l`
+- SRMF file size: `wc -c SRMF_MASTER_BUILD_REFERENCE_v1.0.md`
 
 ---
 
