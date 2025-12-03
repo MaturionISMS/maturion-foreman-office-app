@@ -1,8 +1,4 @@
-✅ FINAL README.md FOR maturion-ai-foreman (FULL SYSTEM SPEC)
-
-Copy/paste below into your repository README.md.
-
-Maturion – AI Foreman & Platform Agent
+# Maturion – AI Foreman & Platform Agent
 
 The AI Governance, Architecture Enforcement, Compliance, QA, and Innovation Engine
 for the Maturion Integrated Security Management System (ISMS).
@@ -13,104 +9,73 @@ monitors platform behaviour, and evolves the ecosystem safely over time.
 
 Maturion operates in two continuous modes:
 
-🔧 1. Build-Time Foreman
+## 🔧 1. Build-Time Foreman
 
 Responsible for:
 
-Enforcing architecture and module boundaries
-
-Interpreting the SRMF Master Build Reference
-
-Ensuring all requirements are complete and unambiguous
-
-Running QA and QA-of-QA before any build
-
-Sequencing tasks for builder agents
-
-Validating builder PRs
-
-Ensuring one-time correctness & zero regression
-
-Preventing architectural drift
-
-Maintaining inter-module integration correctness
+- Enforcing architecture and module boundaries
+- Interpreting the SRMF Master Build Reference
+- Ensuring all requirements are complete and unambiguous
+- Running QA and QA-of-QA before any build
+- Sequencing tasks for builder agents
+- Validating builder PRs
+- Ensuring one-time correctness & zero regression
+- Preventing architectural drift
+- Maintaining inter-module integration correctness
 
 Maturion does not write production code.
 He governs and orchestrates all builder agents.
 
-🌐 2. Run-Time Platform Agent
+## 🌐 2. Run-Time Platform Agent
 
 After deployment, Maturion becomes the live platform intelligence, responsible for:
 
-Monitoring system health
+- Monitoring system health
+- Detecting anomalies, threats, vulnerabilities, and drifts
+- Ensuring privacy and tenant isolation
+- Enforcing ISO/NIST/COBIT/OWASP compliance
+- Auto-fixing small issues within guardrails
+- Raising escalations for high-risk issues
+- Generating intelligent admin insights
+- Learning safely from anonymized patterns
+- Managing platform-wide innovation and user-driven enhancements
 
-Detecting anomalies, threats, vulnerabilities, and drifts
+## 🎯 Core Purpose
 
-Ensuring privacy and tenant isolation
+Maturion's purpose is to ensure:
 
-Enforcing ISO/NIST/COBIT/OWASP compliance
-
-Auto-fixing small issues within guardrails
-
-Raising escalations for high-risk issues
-
-Generating intelligent admin insights
-
-Learning safely from anonymized patterns
-
-Managing platform-wide innovation and user-driven enhancements
-
-🎯 Core Purpose
-
-Maturion’s purpose is to ensure:
-
-One-Time Build Correctness
-
-Zero Regression
-
-Architectural Fidelity
-
-Cross-Module Integration
-
-Compliance with International Standards
-
-Platform Stability and Safety
-
-Continuous User-Driven Improvement
-
-Enterprise-Grade Governance & Auditability
+- One-Time Build Correctness
+- Zero Regression
+- Architectural Fidelity
+- Cross-Module Integration
+- Compliance with International Standards
+- Platform Stability and Safety
+- Continuous User-Driven Improvement
+- Enterprise-Grade Governance & Auditability
 
 Maturion is designed to outlive development cycles, chat sessions, and deployments.
 
 He is the single source of truth and the permanent intelligence behind the Maturion ecosystem.
 
-🧱 Architectural Foundations
+## 🧱 Architectural Foundations
 
 Maturion enforces alignment with:
 
-SRMF Master Build Reference (Master architecture)
+- SRMF Master Build Reference (Master architecture)
+- Integrated ISMS Architecture
+- Module True North Documents
+- Build Philosophy (One-Time Build, Zero Regression)
+- Minimum Architecture Template (MARS)
+- Versioning Rules
+- QA Requirements
+- QA-of-QA Requirements
+- Compliance Mapping to ISO / NIST / COBIT / OWASP
+- Platform Governance Standards
+- Innovation Engine Rules
 
-Integrated ISMS Architecture
+## 📁 Repository Structure
 
-Module True North Documents
-
-Build Philosophy (One-Time Build, Zero Regression)
-
-Minimum Architecture Template (MARS)
-
-Versioning Rules
-
-QA Requirements
-
-QA-of-QA Requirements
-
-Compliance Mapping to ISO / NIST / COBIT / OWASP
-
-Platform Governance Standards
-
-Innovation Engine Rules
-
-📁 Repository Structure
+```
 maturion-ai-foreman/
 │
 ├── foreman/
@@ -180,238 +145,174 @@ maturion-ai-foreman/
 └── .github/
     ├── copilot-instructions.md
     └── ISSUE_TEMPLATE/
+```
 
-🔍 What Maturion Governs
-📘 Architecture
+## 🔍 What Maturion Governs
 
-All modules
+### 📘 Architecture
 
-All requirements
+- All modules
+- All requirements
+- Data models
+- Inter-module dependencies
+- Integration specs
+- Naming & folder standards
+- MARS template
+- Versioning rules
 
-Data models
+### 🟦 QA & QA-of-QA
 
-Inter-module dependencies
+- Test coverage
+- Test execution
+- Test category breakdown
+- Architecture ↔ QA traceability
+- Governance QA
+- Compliance QA
+- Performance QA
 
-Integration specs
-
-Naming & folder standards
-
-MARS template
-
-Versioning rules
-
-🟦 QA & QA-of-QA
-
-Test coverage
-
-Test execution
-
-Test category breakdown
-
-Architecture ↔ QA traceability
-
-Governance QA
-
-Compliance QA
-
-Performance QA
-
-🔐 Compliance
+### 🔐 Compliance
 
 Mapped to global international standards:
 
-ISO 27001
+- ISO 27001
+- ISO 27005
+- ISO 31000
+- NIST CSF
+- COBIT
+- GDPR & POPIA
+- OWASP
 
-ISO 27005
+### 🔥 Watchdogs
 
-ISO 31000
+- Privacy leak detection
+- Cross-tenant anomaly detection
+- Security events
+- Behavioural anomalies
+- Compliance drift
+- Performance degradation
 
-NIST CSF
+### 🌟 Innovation Engine
 
-COBIT
+- User idea submissions
+- Maturion summaries
+- Multi-tenant voting
+- Threshold triggers (50/70/80/90/95%)
+- Automated roadmap generation
+- Architecture handoff to Foreman
+- Builder sprint integration
 
-GDPR & POPIA
+### 📊 Surveys
 
-OWASP
+- UX
+- Feature requests
+- Module performance
+- Risk maturity
+- AI helpfulness
 
-🔥 Watchdogs
+### 🧠 Admin Tools
 
-Privacy leak detection
+- AI editing session
+- Enhancement parking lot
+- Admin-level innovation chat
+- AI performance and cost dashboards
 
-Cross-tenant anomaly detection
+## 🧩 Builder Agent Ecosystem
 
-Security events
+Builder agents implement code under Maturion's governance:
 
-Behavioural anomalies
-
-Compliance drift
-
-Performance degradation
-
-🌟 Innovation Engine
-
-User idea submissions
-
-Maturion summaries
-
-Multi-tenant voting
-
-Threshold triggers (50/70/80/90/95%)
-
-Automated roadmap generation
-
-Architecture handoff to Foreman
-
-Builder sprint integration
-
-📊 Surveys
-
-UX
-
-Feature requests
-
-Module performance
-
-Risk maturity
-
-AI helpfulness
-
-🧠 Admin Tools
-
-AI editing session
-
-Enhancement parking lot
-
-Admin-level innovation chat
-
-AI performance and cost dashboards
-
-🧩 Builder Agent Ecosystem
-
-Builder agents implement code under Maturion’s governance:
-
-UI Builder
-
-API Builder
-
-Schema Builder
-
-Integration Builder
-
-QA Builder
+- UI Builder
+- API Builder
+- Schema Builder
+- Integration Builder
+- QA Builder
 
 Every task is sequenced and validated by Maturion before execution.
 
 All work must pass:
 
-QA
+- QA
+- QA-of-QA
+- Integration checks
+- Governance checks
+- Your final approval
 
-QA-of-QA
-
-Integration checks
-
-Governance checks
-
-Your final approval
-
-🛡️ Tenant Isolation and Security
+## 🛡️ Tenant Isolation and Security
 
 See:
 
-privacy-guardrails.md
-
-privacy-leak-detection-spec.md
-
-security-escalation-policy.md
-
-compliance-qa-spec.md
+- `privacy-guardrails.md`
+- `privacy-leak-detection-spec.md`
+- `security-escalation-policy.md`
+- `compliance-qa-spec.md`
 
 Maturion enforces:
 
-Zero cross-tenant leakage
+- Zero cross-tenant leakage
+- Zero sensitive data exposure
+- Zero unauthorised model usage
+- Full compliance with POPIA, GDPR, ISO 27001
 
-Zero sensitive data exposure
-
-Zero unauthorised model usage
-
-Full compliance with POPIA, GDPR, ISO 27001
-
-🤖 AI Behaviour, Safety, and Self-Improvement
+## 🤖 AI Behaviour, Safety, and Self-Improvement
 
 Maturion is:
 
-Permanent
-
-Version-controlled
-
-Auditable
-
-Governed
-
-Non-self-modifying
-
-Human-approved
-
-Multi-tenant safe
-
-Architecture-aware
-
-Context-aware (time, user, tenant, module)
+- Permanent
+- Version-controlled
+- Auditable
+- Governed
+- Non-self-modifying
+- Human-approved
+- Multi-tenant safe
+- Architecture-aware
+- Context-aware (time, user, tenant, module)
 
 Self-improvement requires:
 
-Admin initiation
-
-AI Editing Session
-
-Approval
-
-PR generation
-
-Governance QA
-
-Merge
+- Admin initiation
+- AI Editing Session
+- Approval
+- PR generation
+- Governance QA
+- Merge
 
 See:
 
-ai-self-improvement-spec.md
+- `ai-self-improvement-spec.md`
+- `ui-ai-edit-session-spec.md`
 
-ui-ai-edit-session-spec.md
+## 🚀 Using Maturion
 
-🚀 Using Maturion
-Step 1 — Read identity
+### Step 1 — Read identity
 
-foreman/identity.md
+`foreman/identity.md`
 
-Step 2 — Learn command grammar
+### Step 2 — Learn command grammar
 
-foreman/command-grammar.md
+`foreman/command-grammar.md`
 
-Step 3 — Understand architecture guidelines
+### Step 3 — Understand architecture guidelines
 
-foreman/minimum-architecture-template.md
+`foreman/minimum-architecture-template.md`
 
-Step 4 — Create module architecture
+### Step 4 — Create module architecture
 
 (Using the standard)
 
-Step 5 — Assign Foreman an issue
+### Step 5 — Assign Foreman an issue
 
 Foreman validates architecture → creates builder plan → triggers QA → begins build cycle.
 
-🔧 GitHub Copilot Integration
+## 🔧 GitHub Copilot Integration
 
 This repo supports Copilot issue assignment:
 
-Open any issue
-
-Click Assignee
-
-Select Copilot to propose a PR
+- Open any issue
+- Click Assignee
+- Select Copilot to propose a PR
 
 Foreman supervises Copilot PRs using governance rules.
 
-🧠 Conclusion
+## 🧠 Conclusion
 
 Maturion is the permanent AI intelligence running the entire Maturion ISMS ecosystem.
 
