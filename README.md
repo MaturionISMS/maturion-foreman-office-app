@@ -27,6 +27,12 @@ All architecture documentation organized by:
 
 For detailed information about the organization and contents, see [ARCHITECTURE_ORGANIZATION.md](maturion-isms/ARCHITECTURE_ORGANIZATION.md).
 
+### Architecture Indexing & Search
+- [Architecture Indexing System](ARCHITECTURE_INDEXING_README.md) - Automated architecture document indexing
+- [Architecture Index](ARCHITECTURE_INDEX.json) - Searchable index of all architecture files
+- [Quick Start Guide](ARCHITECTURE_INDEX_QUICK_START.md) - Get started with architecture search
+- [Index Report](ARCHITECTURE_INDEX_REPORT.md) - Latest indexing results
+
 ### Validation & QA Tools
 - [Repository Validation Tool](VALIDATION_TOOL_README.md) - Automated repository validation
 - [Validation Report](VALIDATION_REPORT.md) - Latest validation results
@@ -37,6 +43,7 @@ For detailed information about the organization and contents, see [ARCHITECTURE_
 ### Foreman Operations
 - [Builder Agent Registry](foreman/builder-registry-report.md)
 - [Builder Initialization](foreman/init_builders.py)
+- [Architecture Indexing](index-isms-architecture.py) - Index and search architecture documents
 - [QA Engine Documentation](foreman/qa/) (if applicable)
 
 ### System Architecture
@@ -74,5 +81,6 @@ For complete details, see the [Architecture Organization Guide](maturion-isms/AR
 
 1. **For Builder Agents**: See [Builder Initialization](foreman/BUILDER_INITIALIZATION.md)
 2. **For Architecture Review**: Start with [Architecture Organization](maturion-isms/ARCHITECTURE_ORGANIZATION.md)
-3. **For Repository Validation**: Run `python validate-repository.py`
-4. **For Module Development**: Review the specific module's True North document in `maturion-isms/apps/{module}/architecture/`
+3. **For Architecture Search**: Use the [Architecture Indexing System](ARCHITECTURE_INDEXING_README.md) or run `python index-isms-architecture.py`
+4. **For Repository Validation**: Run `python validate-repository.py`
+5. **For Module Development**: Review the specific module's True North document in `maturion-isms/apps/{module}/architecture/`
