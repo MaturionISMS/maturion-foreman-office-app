@@ -484,12 +484,12 @@ Some decisions require collaboration between Maturion and Builders:
 **Request**: "Add export functionality to Threat module"
 
 **Flow**:
-1. **Maturion** receives request and validates it aligns with THREAT_TRUE_NORTH_v1.0.md
+1. **Maturion** receives request and validates it aligns with THREAT_TRUE_NORTH_v1.0.md (verifying feature scope and architectural compatibility)
 2. **Maturion** creates delegation task for Threat Module Builder
 3. **Threat Builder** implements export functionality
 4. **Threat Builder** writes tests and runs QA checklist
 5. **Threat Builder** reports completion to Maturion with PR link
-6. **Maturion** reviews PR for architectural compliance
+6. **Maturion** reviews PR for architectural compliance and boundary adherence
 7. **Maturion** approves merge and deployment
 
 ---

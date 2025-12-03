@@ -227,8 +227,9 @@ the same approach for you."
 ```
 User from Organization B: "How do I configure exports?"
 
-Maturion: "I can help you configure exports. According to the EXPORT_SPEC documents, 
-you can export in PDF or CSV format. Which format do you need?"
+Maturion: "I can help you configure exports. According to module-specific export 
+specifications (e.g., ERM_EXPORT_SPEC_v1.0.md, THREAT_EXPORT_SPEC_v1.0.md), 
+you can export in PDF or CSV format. Which module and format do you need?"
 ```
 
 ---
