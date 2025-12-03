@@ -1,10 +1,11 @@
-# Maturion Foreman Command Grammar
+# Maturion Command Grammar
 
 ## Purpose
 
 This document defines the precise instruction formats for:
-1. **User → Maturion Foreman**: How users should communicate with Maturion Foreman
-2. **Maturion Foreman → Builder Agents**: How Maturion Foreman instructs builder agents
+1. **Johan and Admins → Maturion**: How administrators should communicate with Maturion
+2. **Users → Maturion**: How end-users should communicate with Maturion
+3. **Maturion → Builder Agents**: How Maturion instructs builder agents
 
 Clear, structured command grammar ensures:
 - Unambiguous instructions
@@ -15,7 +16,84 @@ Clear, structured command grammar ensures:
 
 ---
 
-## Part 1: User → Maturion Foreman Instructions
+## Part 1: Admin → Maturion Instructions (Johan and Future Admins)
+
+Administrators (Johan and future admin users) can use natural language commands prefixed with **"Maturion"** or structured formats for complex requests.
+
+### Quick Command Format (Natural Language)
+
+Admins can use simple, direct commands:
+
+```
+Maturion, [action] [target] [optional details]
+```
+
+**Examples**:
+```
+Maturion, start Threat module build.
+Maturion, inspect PIT integration for drift.
+Maturion, show me open QA failures across modules.
+Maturion, validate the latest ERM pull request.
+Maturion, create a ticket for the vulnerability export bug.
+Maturion, summarize platform health for the last 24 hours.
+Maturion, what's the status of Course Crafter deployment?
+```
+
+### Structured Admin Commands
+
+For more complex requests, admins can use structured formats:
+
+#### Admin Governance Command
+```
+Maturion, [GOVERNANCE]
+Action: [Review | Approve | Reject | Update]
+Target: [Architecture | Module Boundary | Integration | QA Rule]
+Details: [Specific request or change]
+```
+
+**Example**:
+```
+Maturion, [GOVERNANCE]
+Action: Review
+Target: Module Boundary
+Details: Evaluate if PIT module should access Threat database directly or via API
+```
+
+#### Admin Monitoring Command
+```
+Maturion, [MONITOR]
+Scope: [Platform-wide | Module-specific | Tenant-specific]
+Target: [Module name or "All"]
+Timeframe: [Last hour | Last 24h | Last 7 days]
+```
+
+**Example**:
+```
+Maturion, [MONITOR]
+Scope: Module-specific
+Target: Threat module
+Timeframe: Last 24h
+```
+
+#### Admin Build Command
+```
+Maturion, [BUILD]
+Action: [Start | Inspect | Deploy | Rollback]
+Module: [Module name]
+Priority: [Critical | High | Normal]
+```
+
+**Example**:
+```
+Maturion, [BUILD]
+Action: Start
+Module: Threat
+Priority: High
+```
+
+---
+
+## Part 2: User → Maturion Instructions
 
 ### Instruction Format Categories
 
@@ -40,7 +118,7 @@ Relevant Documents: INTEGRATED_ISMS_MODULE_INTEGRATION_MAP_v1.0.md, ERM_TRUE_NOR
 ```
 
 #### 2. Validation Request Format
-**Purpose**: Request Maturion Foreman to validate proposed changes
+**Purpose**: Request Maturion to validate proposed changes
 
 ```
 [VALIDATION REQUEST]
@@ -64,7 +142,7 @@ Attachments: /docs/pit-threat-watchdog-proposal.md
 ```
 
 #### 3. Delegation Instruction Format
-**Purpose**: Request Maturion Foreman to delegate work to builder agents
+**Purpose**: Request Maturion to delegate work to builder agents
 
 ```
 [DELEGATION REQUEST]
@@ -90,7 +168,7 @@ Deadline: End of Sprint 3
 ```
 
 #### 4. Architecture Review Format
-**Purpose**: Request Maturion Foreman to review architectural changes
+**Purpose**: Request Maturion to review architectural changes
 
 ```
 [ARCHITECTURE REVIEW]
@@ -116,7 +194,7 @@ Review Requested By: 2025-12-10
 ```
 
 #### 5. Issue Escalation Format
-**Purpose**: Escalate issues requiring Maturion Foreman's attention
+**Purpose**: Escalate issues requiring Maturion's attention
 
 ```
 [ISSUE ESCALATION]
@@ -141,7 +219,7 @@ Urgency: Within 24h
 
 ---
 
-## Part 2: Maturion Foreman → Builder Agent Instructions
+## Part 3: Maturion → Builder Agent Instructions
 
 ### Instruction Format for Builder Agents
 
@@ -179,7 +257,7 @@ Quality Gates:
 - [ ] Zero regression on existing functionality
 - [ ] Documentation updated
 
-Validation: Maturion Foreman will review before approval
+Validation: Maturion will review before approval
 Deadline: [Target date]
 ```
 
@@ -208,7 +286,7 @@ Format Standards:
 - Follow: [Template or format specification]
 - Include: [Required sections]
 
-Validation: Maturion Foreman will review for accuracy and completeness
+Validation: Maturion will review for accuracy and completeness
 Deadline: [Target date]
 ```
 
@@ -239,9 +317,9 @@ Deliverables:
 - [ ] Risk assessment
 
 Review Process:
-1. Initial design review by Maturion Foreman
+1. Initial design review by Maturion
 2. Revisions if needed
-3. Final approval by Maturion Foreman
+3. Final approval by Maturion
 
 Deadline: [Target date]
 ```
@@ -269,7 +347,7 @@ Success Criteria:
 - Coverage meets requirements
 - No regression detected
 
-Validation: Maturion Foreman will review test completeness
+Validation: Maturion will review test completeness
 Deadline: [Target date]
 ```
 
@@ -301,18 +379,18 @@ Validation Points:
 - [ ] Performance acceptable
 - [ ] Documentation updated
 
-Approval: Maturion Foreman must approve before deployment
+Approval: Maturion must approve before deployment
 Deadline: [Target date]
 ```
 
 ---
 
-## Part 3: Response Formats
+## Part 4: Response Formats
 
-### Foreman Response to User
+### Maturion Response to User
 
 ```
-[FOREMAN RESPONSE]
+[MATURION RESPONSE]
 Request Type: [Query | Validation | Review | Escalation]
 Status: [Approved | Rejected | Conditionally Approved | Needs More Info]
 
@@ -334,7 +412,7 @@ Conditions (if applicable):
 - [Condition 2]
 ```
 
-### Builder Agent Response to Foreman
+### Builder Agent Response to Maturion
 
 ```
 [BUILDER RESPONSE]
@@ -365,23 +443,23 @@ Request for Review: [Yes/No]
 
 ---
 
-## Part 4: Best Practices
+## Part 5: Best Practices
 
-### For Users Communicating with Maturion Foreman
+### For Users Communicating with Maturion
 1. **Be Specific**: Provide clear context and specific questions
 2. **Reference Documents**: Cite relevant True North or SRMF documents
 3. **State Assumptions**: Make assumptions explicit
 4. **Provide Rationale**: Explain why you're requesting something
 5. **Include Impact**: Describe known or suspected impacts
 
-### For Maturion Foreman Instructing Builders
+### For Maturion Instructing Builders
 1. **Be Explicit**: Leave no room for interpretation
 2. **Provide Context**: Explain the "why" behind the task
 3. **Reference Standards**: Point to applicable governance rules
 4. **Set Clear Success Criteria**: Define what "done" means
 5. **Include Validation Points**: Specify quality gates
 
-### For Builder Agents Responding to Foreman
+### For Builder Agents Responding to Maturion
 1. **Be Transparent**: Report both successes and issues
 2. **Provide Evidence**: Link to deliverables and test results
 3. **Ask Questions**: Escalate ambiguities immediately
@@ -392,11 +470,11 @@ Request for Review: [Yes/No]
 
 ## Version Control
 
-**Document Version**: 1.0  
+**Document Version**: 1.1  
 **Last Updated**: 2025-12-03  
-**Maintained By**: Maturion Foreman  
+**Maintained By**: Maturion  
 **Review Cycle**: Quarterly or when command patterns evolve
 
 ---
 
-**Maturion Foreman** - Clear Communication, Precise Execution, Excellent Outcomes
+**Maturion** - Clear Communication, Precise Execution, Excellent Outcomes
