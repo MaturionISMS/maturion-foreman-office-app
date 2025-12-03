@@ -1,1152 +1,19 @@
 {
   "metadata": {
-    "indexed_at": "2025-12-03T14:28:40.159367",
+    "indexed_at": "2025-12-03T17:16:07.007150",
     "repo_root": "/home/runner/work/maturion-ai-foreman/maturion-ai-foreman",
-    "total_modules": 9,
-    "total_files": 87
+    "total_modules": 0,
+    "total_files": 0
   },
-  "modules": {
-    "COURSE_CRAFTER": {
-      "name": "COURSE_CRAFTER",
-      "files": {
-        "EDGE_FUNCTIONS": {
-          "path": "COURSE_CRAFTER_EDGE_FUNCTIONS_v1.0.md",
-          "version": "1.0",
-          "description": "Backend API",
-          "size": 10046,
-          "all_versions": [
-            "COURSE_CRAFTER_EDGE_FUNCTIONS_v1.0.md"
-          ]
-        },
-        "TRUE_NORTH": {
-          "path": "COURSE_CRAFTER_TRUE_NORTH_v1.0.md",
-          "version": "1.0",
-          "description": "Module Architecture",
-          "size": 17258,
-          "all_versions": [
-            "COURSE_CRAFTER_TRUE_NORTH_v1.0.md"
-          ]
-        },
-        "IMPLEMENTATION_GUIDE": {
-          "path": "COURSE_CRAFTER_IMPLEMENTATION_GUIDE_v1.0.md",
-          "version": "1.0",
-          "description": "Implementation",
-          "size": 9346,
-          "all_versions": [
-            "COURSE_CRAFTER_IMPLEMENTATION_GUIDE_v1.0.md"
-          ]
-        },
-        "SPRINT_PLAN": {
-          "path": "COURSE_CRAFTER_SPRINT_PLAN_v1.0.md",
-          "version": "1.0",
-          "description": "Development Plan",
-          "size": 9236,
-          "all_versions": [
-            "COURSE_CRAFTER_SPRINT_PLAN_v1.0.md"
-          ]
-        },
-        "ARCHITECTURE": {
-          "path": "COURSE_CRAFTER_ARCHITECTURE_v0.1.md",
-          "version": "0.1",
-          "description": "Architecture Design",
-          "size": 10236,
-          "all_versions": [
-            "COURSE_CRAFTER_ARCHITECTURE_v0.1.md"
-          ]
-        },
-        "WIREFRAMES": {
-          "path": "COURSE_CRAFTER_WIREFRAMES_v1.0.md",
-          "version": "1.0",
-          "description": "UI Design",
-          "size": 22228,
-          "all_versions": [
-            "COURSE_CRAFTER_WIREFRAMES_v1.0.md"
-          ]
-        },
-        "FRONTEND_COMPONENT_MAP": {
-          "path": "COURSE_CRAFTER_FRONTEND_COMPONENT_MAP_v1.0.md",
-          "version": "1.0",
-          "description": "UI Components",
-          "size": 9388,
-          "all_versions": [
-            "COURSE_CRAFTER_FRONTEND_COMPONENT_MAP_v1.0.md"
-          ]
-        },
-        "CHANGELOG": {
-          "path": "COURSE_CRAFTER_CHANGELOG_v1.0.md",
-          "version": "1.0",
-          "description": "Version History",
-          "size": 5715,
-          "all_versions": [
-            "COURSE_CRAFTER_CHANGELOG_v1.0.md"
-          ]
-        },
-        "EXPORT_SPEC": {
-          "path": "COURSE_CRAFTER_EXPORT_SPEC_v1.0.md",
-          "version": "1.0",
-          "description": "Data Export",
-          "size": 7224,
-          "all_versions": [
-            "COURSE_CRAFTER_EXPORT_SPEC_v1.0.md"
-          ]
-        },
-        "DATABASE_SCHEMA": {
-          "path": "COURSE_CRAFTER_DATABASE_SCHEMA_v1.0.md",
-          "version": "1.0",
-          "description": "Data Model",
-          "size": 14414,
-          "all_versions": [
-            "COURSE_CRAFTER_DATABASE_SCHEMA_v1.0.md"
-          ]
-        },
-        "QA_IMPLEMENTATION_PLAN": {
-          "path": "COURSE_CRAFTER_QA_IMPLEMENTATION_PLAN_v1.1.md",
-          "version": "1.1",
-          "description": "Quality Assurance",
-          "size": 9193,
-          "all_versions": [
-            "COURSE_CRAFTER_QA_IMPLEMENTATION_PLAN_v0.1.md",
-            "COURSE_CRAFTER_QA_IMPLEMENTATION_PLAN_v1.1.md"
-          ]
-        }
-      },
-      "versions": {},
-      "completeness": {
-        "percentage": 78.6,
-        "present": 11,
-        "total": 14,
-        "missing": [
-          "INTEGRATION_MAP",
-          "WATCHDOG_LOGIC",
-          "MODEL_ROUTING_SPEC"
-        ]
-      },
-      "file_count": 11
-    },
-    "ERM": {
-      "name": "ERM",
-      "files": {
-        "FRONTEND_COMPONENT_MAP": {
-          "path": "ERM_FRONTEND_COMPONENT_MAP_v1.1.md",
-          "version": "1.1",
-          "description": "UI Components",
-          "size": 8828,
-          "all_versions": [
-            "ERM_FRONTEND_COMPONENT_MAP_v1.1.md"
-          ]
-        },
-        "CHANGELOG": {
-          "path": "ERM_CHANGELOG_v1.0.md",
-          "version": "1.0",
-          "description": "Version History",
-          "size": 6224,
-          "all_versions": [
-            "ERM_CHANGELOG_v1.0.md"
-          ]
-        },
-        "QA_IMPLEMENTATION_PLAN": {
-          "path": "ERM_QA_IMPLEMENTATION_PLAN_v1.1.md",
-          "version": "1.1",
-          "description": "Quality Assurance",
-          "size": 9778,
-          "all_versions": [
-            "ERM_QA_IMPLEMENTATION_PLAN_v1.1.md"
-          ]
-        },
-        "DATABASE_SCHEMA": {
-          "path": "ERM_DATABASE_SCHEMA_v1.1.md",
-          "version": "1.1",
-          "description": "Data Model",
-          "size": 8175,
-          "all_versions": [
-            "ERM_DATABASE_SCHEMA_v1.1.md"
-          ]
-        },
-        "TRUE_NORTH": {
-          "path": "ERM_TRUE_NORTH_v1.0.md",
-          "version": "1.0",
-          "description": "Module Architecture",
-          "size": 9869,
-          "all_versions": [
-            "ERM_TRUE_NORTH_v1.0.md"
-          ]
-        },
-        "SPRINT_PLAN": {
-          "path": "ERM_SPRINT_PLAN_v1.0.md",
-          "version": "1.0",
-          "description": "Development Plan",
-          "size": 8454,
-          "all_versions": [
-            "ERM_SPRINT_PLAN_v1.0.md"
-          ]
-        },
-        "EDGE_FUNCTIONS": {
-          "path": "ERM_EDGE_FUNCTIONS_v1.1.md",
-          "version": "1.1",
-          "description": "Backend API",
-          "size": 12643,
-          "all_versions": [
-            "ERM_EDGE_FUNCTIONS_v1.1.md"
-          ]
-        },
-        "WIREFRAMES": {
-          "path": "ERM_WIREFRAMES_v1.1.md",
-          "version": "1.1",
-          "description": "UI Design",
-          "size": 28239,
-          "all_versions": [
-            "ERM_WIREFRAMES_v1.1.md"
-          ]
-        },
-        "IMPLEMENTATION_GUIDE": {
-          "path": "ERM_IMPLEMENTATION_GUIDE_v1.0.md",
-          "version": "1.0",
-          "description": "Implementation",
-          "size": 8985,
-          "all_versions": [
-            "ERM_IMPLEMENTATION_GUIDE_v1.0.md"
-          ]
-        },
-        "EXPORT_SPEC": {
-          "path": "ERM_EXPORT_SPEC_v1.0.md",
-          "version": "1.0",
-          "description": "Data Export",
-          "size": 7963,
-          "all_versions": [
-            "ERM_EXPORT_SPEC_v1.0.md"
-          ]
-        }
-      },
-      "versions": {},
-      "completeness": {
-        "percentage": 71.4,
-        "present": 10,
-        "total": 14,
-        "missing": [
-          "ARCHITECTURE",
-          "INTEGRATION_MAP",
-          "WATCHDOG_LOGIC",
-          "MODEL_ROUTING_SPEC"
-        ]
-      },
-      "file_count": 10
-    },
-    "PIT": {
-      "name": "PIT",
-      "files": {
-        "EDGE_FUNCTIONS": {
-          "path": "PIT_EDGE_FUNCTIONS_v1.1.md",
-          "version": "1.1",
-          "description": "Backend API",
-          "size": 9143,
-          "all_versions": [
-            "PIT_EDGE_FUNCTIONS_v0.1.md",
-            "PIT_EDGE_FUNCTIONS_v1.1.md"
-          ]
-        },
-        "MODEL_ROUTING_SPEC": {
-          "path": "PIT_MODEL_ROUTING_SPEC_v1.0.md",
-          "version": "1.0",
-          "description": "AI Routing",
-          "size": 8344,
-          "all_versions": [
-            "PIT_MODEL_ROUTING_SPEC_v1.0.md"
-          ]
-        },
-        "WIREFRAMES": {
-          "path": "PIT_WIREFRAMES_v1.1.md",
-          "version": "1.1",
-          "description": "UI Design",
-          "size": 19123,
-          "all_versions": [
-            "PIT_UI_WIREFRAMES_v0.1.md",
-            "PIT_WIREFRAMES_v1.1.md"
-          ]
-        },
-        "TRUE_NORTH": {
-          "path": "PIT_TRUE_NORTH_v1.0.md",
-          "version": "1.0",
-          "description": "Module Architecture",
-          "size": 10331,
-          "all_versions": [
-            "PIT_TRUE_NORTH_v1.0.md"
-          ]
-        },
-        "QA_IMPLEMENTATION_PLAN": {
-          "path": "PIT_QA_IMPLEMENTATION_PLAN_v1.1.md",
-          "version": "1.1",
-          "description": "Quality Assurance",
-          "size": 9837,
-          "all_versions": [
-            "PIT_QA_IMPLEMENTATION_PLAN_v0.1.md",
-            "PIT_QA_IMPLEMENTATION_PLAN_v1.1.md"
-          ]
-        },
-        "FRONTEND_COMPONENT_MAP": {
-          "path": "PIT_FRONTEND_COMPONENT_MAP_v1.1.md",
-          "version": "1.1",
-          "description": "UI Components",
-          "size": 9718,
-          "all_versions": [
-            "PIT_FRONTEND_COMPONENT_MAP_v1.1.md",
-            "PIT_FRONTEND_COMPONENT_MAP_v0.1.md"
-          ]
-        },
-        "EXPORT_SPEC": {
-          "path": "PIT_EXPORT_SPEC_v1.0.md",
-          "version": "1.0",
-          "description": "Data Export",
-          "size": 7976,
-          "all_versions": [
-            "PIT_EXPORT_SPEC_v1.0.md"
-          ]
-        },
-        "DATABASE_SCHEMA": {
-          "path": "PIT_DATABASE_SCHEMA_v1.1.md",
-          "version": "1.1",
-          "description": "Data Model",
-          "size": 16630,
-          "all_versions": [
-            "PIT_DATABASE_SCHEMA_v0.1.md",
-            "PIT_DATABASE_SCHEMA_v1.1.md"
-          ]
-        },
-        "IMPLEMENTATION_GUIDE": {
-          "path": "PIT_IMPLEMENTATION_GUIDE_v1.0.md",
-          "version": "1.0",
-          "description": "Implementation",
-          "size": 9385,
-          "all_versions": [
-            "PIT_IMPLEMENTATION_GUIDE_v1.0.md"
-          ]
-        },
-        "CHANGELOG": {
-          "path": "PIT_CHANGELOG_v1.0.md",
-          "version": "1.0",
-          "description": "Version History",
-          "size": 6261,
-          "all_versions": [
-            "PIT_CHANGELOG_v1.0.md"
-          ]
-        },
-        "SPRINT_PLAN": {
-          "path": "PIT_SPRINT_PLAN_v1.0.md",
-          "version": "1.0",
-          "description": "Development Plan",
-          "size": 7713,
-          "all_versions": [
-            "PIT_SPRINT_PLAN_v1.0.md",
-            "PIT_DEVELOPMENT_SPRINT_PLAN_v0.1.md"
-          ]
-        },
-        "WATCHDOG_LOGIC": {
-          "path": "PIT_WATCHDOG_LOGIC_v1.0.md",
-          "version": "1.0",
-          "description": "Monitoring",
-          "size": 8971,
-          "all_versions": [
-            "PIT_WATCHDOG_LOGIC_v1.0.md"
-          ]
-        },
-        "INTEGRATION_MAP": {
-          "path": "PIT_INTEGRATION_MAP_v1.0.md",
-          "version": "1.0",
-          "description": "Module Integration",
-          "size": 13178,
-          "all_versions": [
-            "PIT_INTEGRATION_MAP_v1.0.md"
-          ]
-        },
-        "ARCHITECTURE": {
-          "path": "PIT_ARCHITECTURE_v0.1.md",
-          "version": "0.1",
-          "description": "Architecture Design",
-          "size": 10828,
-          "all_versions": [
-            "PIT_ARCHITECTURE_v0.1.md"
-          ]
-        }
-      },
-      "versions": {},
-      "completeness": {
-        "percentage": 100.0,
-        "present": 14,
-        "total": 14,
-        "missing": []
-      },
-      "file_count": 14
-    },
-    "THREAT": {
-      "name": "THREAT",
-      "files": {
-        "IMPLEMENTATION_GUIDE": {
-          "path": "THREAT_IMPLEMENTATION_GUIDE_v1.0.md",
-          "version": "1.0",
-          "description": "Implementation",
-          "size": 8134,
-          "all_versions": [
-            "THREAT_IMPLEMENTATION_GUIDE_v1.0.md"
-          ]
-        },
-        "QA_IMPLEMENTATION_PLAN": {
-          "path": "THREAT_QA_IMPLEMENTATION_PLAN_v1.1.md",
-          "version": "1.1",
-          "description": "Quality Assurance",
-          "size": 8381,
-          "all_versions": [
-            "THREAT_QA_IMPLEMENTATION_PLAN_v1.1.md"
-          ]
-        },
-        "WIREFRAMES": {
-          "path": "THREAT_WIREFRAMES_v1.1.md",
-          "version": "1.1",
-          "description": "UI Design",
-          "size": 17434,
-          "all_versions": [
-            "THREAT_WIREFRAMES_v1.1.md"
-          ]
-        },
-        "INTEGRATION_MAP": {
-          "path": "THREAT_INTEGRATION_MAP_v1.0.md",
-          "version": "1.0",
-          "description": "Module Integration",
-          "size": 9287,
-          "all_versions": [
-            "THREAT_INTEGRATION_MAP_v1.0.md"
-          ]
-        },
-        "EXPORT_SPEC": {
-          "path": "THREAT_EXPORT_SPEC_v1.0.md",
-          "version": "1.0",
-          "description": "Data Export",
-          "size": 8377,
-          "all_versions": [
-            "THREAT_EXPORT_SPEC_v1.0.md"
-          ]
-        },
-        "TRUE_NORTH": {
-          "path": "THREAT_TRUE_NORTH_v1.0.md",
-          "version": "1.0",
-          "description": "Module Architecture",
-          "size": 10160,
-          "all_versions": [
-            "THREAT_TRUE_NORTH_v1.0.md"
-          ]
-        },
-        "DATABASE_SCHEMA": {
-          "path": "THREAT_DATABASE_SCHEMA_v1.1.md",
-          "version": "1.1",
-          "description": "Data Model",
-          "size": 9187,
-          "all_versions": [
-            "THREAT_DATABASE_SCHEMA_v1.1.md"
-          ]
-        },
-        "WATCHDOG_LOGIC": {
-          "path": "THREAT_WATCHDOG_LOGIC_v1.0.md",
-          "version": "1.0",
-          "description": "Monitoring",
-          "size": 8691,
-          "all_versions": [
-            "THREAT_WATCHDOG_LOGIC_v1.0.md"
-          ]
-        },
-        "FRONTEND_COMPONENT_MAP": {
-          "path": "THREAT_FRONTEND_COMPONENT_MAP_v1.1.md",
-          "version": "1.1",
-          "description": "UI Components",
-          "size": 12549,
-          "all_versions": [
-            "THREAT_FRONTEND_COMPONENT_MAP_v1.1.md"
-          ]
-        },
-        "EDGE_FUNCTIONS": {
-          "path": "THREAT_EDGE_FUNCTIONS_v1.1.md",
-          "version": "1.1",
-          "description": "Backend API",
-          "size": 9427,
-          "all_versions": [
-            "THREAT_EDGE_FUNCTIONS_v1.1.md"
-          ]
-        },
-        "SPRINT_PLAN": {
-          "path": "THREAT_SPRINT_PLAN_v1.1.md",
-          "version": "1.1",
-          "description": "Development Plan",
-          "size": 8064,
-          "all_versions": [
-            "THREAT_SPRINT_PLAN_v1.1.md"
-          ]
-        },
-        "MODEL_ROUTING_SPEC": {
-          "path": "THREAT_MODEL_ROUTING_SPEC_v1.0.md",
-          "version": "1.0",
-          "description": "AI Routing",
-          "size": 8081,
-          "all_versions": [
-            "THREAT_MODEL_ROUTING_SPEC_v1.0.md"
-          ]
-        },
-        "CHANGELOG": {
-          "path": "THREAT_CHANGELOG_v1.0.md",
-          "version": "1.0",
-          "description": "Version History",
-          "size": 6020,
-          "all_versions": [
-            "THREAT_CHANGELOG_v1.0.md"
-          ]
-        }
-      },
-      "versions": {},
-      "completeness": {
-        "percentage": 92.9,
-        "present": 13,
-        "total": 14,
-        "missing": [
-          "ARCHITECTURE"
-        ]
-      },
-      "file_count": 13
-    },
-    "VULNERABILITY": {
-      "name": "VULNERABILITY",
-      "files": {
-        "TRUE_NORTH": {
-          "path": "VULNERABILITY_TRUE_NORTH_v1.0.md",
-          "version": "1.0",
-          "description": "Module Architecture",
-          "size": 11069,
-          "all_versions": [
-            "VULNERABILITY_TRUE_NORTH_v1.0.md",
-            "VULNERABILITY_MODULE_TRUE_NORTH_ARCHITECTURE_v0.1.md"
-          ]
-        },
-        "EXPORT_SPEC": {
-          "path": "VULNERABILITY_EXPORT_SPEC_v1.0.md",
-          "version": "1.0",
-          "description": "Data Export",
-          "size": 9210,
-          "all_versions": [
-            "VULNERABILITY_EXPORT_SPEC_v1.0.md"
-          ]
-        },
-        "MODEL_ROUTING_SPEC": {
-          "path": "VULNERABILITY_MODEL_ROUTING_SPEC_v1.0.md",
-          "version": "1.0",
-          "description": "AI Routing",
-          "size": 9036,
-          "all_versions": [
-            "VULNERABILITY_MODEL_ROUTING_SPEC_v1.0.md"
-          ]
-        },
-        "FRONTEND_COMPONENT_MAP": {
-          "path": "VULNERABILITY_FRONTEND_COMPONENT_MAP_v1.1.md",
-          "version": "1.1",
-          "description": "UI Components",
-          "size": 8767,
-          "all_versions": [
-            "VULNERABILITY_FRONTEND_COMPONENT_MAP_v1.1.md"
-          ]
-        },
-        "WATCHDOG_LOGIC": {
-          "path": "VULNERABILITY_WATCHDOG_LOGIC_v1.0.md",
-          "version": "1.0",
-          "description": "Monitoring",
-          "size": 7649,
-          "all_versions": [
-            "VULNERABILITY_WATCHDOG_LOGIC_v1.0.md"
-          ]
-        },
-        "WIREFRAMES": {
-          "path": "VULNERABILITY_WIREFRAMES_v1.1.md",
-          "version": "1.1",
-          "description": "UI Design",
-          "size": 13827,
-          "all_versions": [
-            "VULNERABILITY_WIREFRAMES_v1.1.md"
-          ]
-        },
-        "INTEGRATION_MAP": {
-          "path": "VULNERABILITY_INTEGRATION_MAP_v1.0.md",
-          "version": "1.0",
-          "description": "Module Integration",
-          "size": 11905,
-          "all_versions": [
-            "VULNERABILITY_INTEGRATION_MAP_v1.0.md"
-          ]
-        },
-        "CHANGELOG": {
-          "path": "VULNERABILITY_CHANGELOG_v1.0.md",
-          "version": "1.0",
-          "description": "Version History",
-          "size": 6225,
-          "all_versions": [
-            "VULNERABILITY_CHANGELOG_v1.0.md"
-          ]
-        },
-        "QA_IMPLEMENTATION_PLAN": {
-          "path": "VULNERABILITY_QA_IMPLEMENTATION_PLAN_v1.1.md",
-          "version": "1.1",
-          "description": "Quality Assurance",
-          "size": 8319,
-          "all_versions": [
-            "VULNERABILITY_QA_IMPLEMENTATION_PLAN_v1.1.md"
-          ]
-        },
-        "SPRINT_PLAN": {
-          "path": "VULNERABILITY_SPRINT_PLAN_v1.0.md",
-          "version": "1.0",
-          "description": "Development Plan",
-          "size": 6920,
-          "all_versions": [
-            "VULNERABILITY_SPRINT_PLAN_v1.0.md"
-          ]
-        },
-        "DATABASE_SCHEMA": {
-          "path": "VULNERABILITY_DATABASE_SCHEMA_v1.1.md",
-          "version": "1.1",
-          "description": "Data Model",
-          "size": 8042,
-          "all_versions": [
-            "VULNERABILITY_DATABASE_SCHEMA_v1.1.md"
-          ]
-        },
-        "IMPLEMENTATION_GUIDE": {
-          "path": "VULNERABILITY_IMPLEMENTATION_GUIDE_v1.0.md",
-          "version": "1.0",
-          "description": "Implementation",
-          "size": 8833,
-          "all_versions": [
-            "VULNERABILITY_IMPLEMENTATION_GUIDE_v1.0.md"
-          ]
-        },
-        "EDGE_FUNCTIONS": {
-          "path": "VULNERABILITY_EDGE_FUNCTIONS_v1.1.md",
-          "version": "1.1",
-          "description": "Backend API",
-          "size": 9213,
-          "all_versions": [
-            "VULNERABILITY_EDGE_FUNCTIONS_v1.1.md"
-          ]
-        }
-      },
-      "versions": {},
-      "completeness": {
-        "percentage": 92.9,
-        "present": 13,
-        "total": 14,
-        "missing": [
-          "ARCHITECTURE"
-        ]
-      },
-      "file_count": 13
-    },
-    "RISK_ASSESSMENT": {
-      "name": "RISK_ASSESSMENT",
-      "files": {
-        "FRONTEND_COMPONENT_MAP": {
-          "path": "RISK_ASSESSMENT_FRONTEND_COMPONENT_MAP_v1.1.md",
-          "version": "1.1",
-          "description": "UI Components",
-          "size": 8500,
-          "all_versions": [
-            "RISK_ASSESSMENT_FRONTEND_COMPONENT_MAP_v0.1.md",
-            "RISK_ASSESSMENT_FRONTEND_COMPONENT_MAP_v1.1.md"
-          ]
-        },
-        "EDGE_FUNCTIONS": {
-          "path": "RISK_ASSESSMENT_EDGE_FUNCTIONS_v1.1.md",
-          "version": "1.1",
-          "description": "Backend API",
-          "size": 9263,
-          "all_versions": [
-            "RISK_ASSESSMENT_EDGE_FUNCTIONS_v1.1.md",
-            "RISK_ASSESSMENT_EDGE_FUNCTIONS_v0.1.md"
-          ]
-        },
-        "WIREFRAMES": {
-          "path": "RISK_ASSESSMENT_WIREFRAMES_v1.1.md",
-          "version": "1.1",
-          "description": "UI Design",
-          "size": 27195,
-          "all_versions": [
-            "RISK_ASSESSMENT_WIREFRAMES_v0.1.md",
-            "RISK_ASSESSMENT_WIREFRAMES_v1.1.md"
-          ]
-        },
-        "DATABASE_SCHEMA": {
-          "path": "RISK_ASSESSMENT_DATABASE_SCHEMA_v1.1.md",
-          "version": "1.1",
-          "description": "Data Model",
-          "size": 7803,
-          "all_versions": [
-            "RISK_ASSESSMENT_DATABASE_SCHEMA_v1.1.md",
-            "RISK_ASSESSMENT_DATABASE_SCHEMA_v0.1.md"
-          ]
-        },
-        "SPRINT_PLAN": {
-          "path": "RISK_ASSESSMENT_SPRINT_PLAN_v0.1.md",
-          "version": "0.1",
-          "description": "Development Plan",
-          "size": 759,
-          "all_versions": [
-            "RISK_ASSESSMENT_SPRINT_PLAN_v0.1.md"
-          ]
-        },
-        "TRUE_NORTH": {
-          "path": "RISK_ASSESSMENT_TRUE_NORTH_v1.1.md",
-          "version": "1.1",
-          "description": "Module Architecture",
-          "size": 9808,
-          "all_versions": [
-            "RISK_ASSESSMENT_TRUE_NORTH_v1.1.md",
-            "RISK_ASSESSMENT_TRUE_NORTH_v0.1.md"
-          ]
-        }
-      },
-      "versions": {},
-      "completeness": {
-        "percentage": 42.9,
-        "present": 6,
-        "total": 14,
-        "missing": [
-          "ARCHITECTURE",
-          "INTEGRATION_MAP",
-          "EXPORT_SPEC",
-          "QA_IMPLEMENTATION_PLAN",
-          "IMPLEMENTATION_GUIDE",
-          "CHANGELOG",
-          "WATCHDOG_LOGIC",
-          "MODEL_ROUTING_SPEC"
-        ]
-      },
-      "file_count": 6
-    },
-    "WRAC": {
-      "name": "WRAC",
-      "files": {
-        "TRUE_NORTH": {
-          "path": "WRAC_TRUE_NORTH_v0.1.md",
-          "version": "0.1",
-          "description": "Module Architecture",
-          "size": 11000,
-          "all_versions": [
-            "WRAC_TRUE_NORTH_v0.1.md"
-          ]
-        },
-        "QA_IMPLEMENTATION_PLAN": {
-          "path": "WRAC_QA_IMPLEMENTATION_PLAN_v0.1.md",
-          "version": "0.1",
-          "description": "Quality Assurance",
-          "size": 9311,
-          "all_versions": [
-            "WRAC_QA_IMPLEMENTATION_PLAN_v0.1.md"
-          ]
-        },
-        "FRONTEND_COMPONENT_MAP": {
-          "path": "WRAC_FRONTEND_COMPONENT_MAP_v0.1.md",
-          "version": "0.1",
-          "description": "UI Components",
-          "size": 15579,
-          "all_versions": [
-            "WRAC_FRONTEND_COMPONENT_MAP_v0.1.md"
-          ]
-        },
-        "EDGE_FUNCTIONS": {
-          "path": "WRAC_EDGE_FUNCTIONS_v0.1.md",
-          "version": "0.1",
-          "description": "Backend API",
-          "size": 16211,
-          "all_versions": [
-            "WRAC_EDGE_FUNCTIONS_v0.1.md"
-          ]
-        },
-        "EXPORT_SPEC": {
-          "path": "WRAC_EXPORT_SPEC_v0.1.md",
-          "version": "0.1",
-          "description": "Data Export",
-          "size": 8544,
-          "all_versions": [
-            "WRAC_EXPORT_SPEC_v0.1.md"
-          ]
-        },
-        "SPRINT_PLAN": {
-          "path": "WRAC_SPRINT_PLAN_v0.1.md",
-          "version": "0.1",
-          "description": "Development Plan",
-          "size": 8578,
-          "all_versions": [
-            "WRAC_SPRINT_PLAN_v0.1.md"
-          ]
-        },
-        "DATABASE_SCHEMA": {
-          "path": "WRAC_DATABASE_SCHEMA_v0.1.md",
-          "version": "0.1",
-          "description": "Data Model",
-          "size": 8972,
-          "all_versions": [
-            "WRAC_DATABASE_SCHEMA_v0.1.md"
-          ]
-        },
-        "IMPLEMENTATION_GUIDE": {
-          "path": "WRAC_IMPLEMENTATION_GUIDE_v0.1.md",
-          "version": "0.1",
-          "description": "Implementation",
-          "size": 5530,
-          "all_versions": [
-            "WRAC_IMPLEMENTATION_GUIDE_v0.1.md"
-          ]
-        },
-        "CHANGELOG": {
-          "path": "WRAC_CHANGELOG_v0.1.md",
-          "version": "0.1",
-          "description": "Version History",
-          "size": 3127,
-          "all_versions": [
-            "WRAC_CHANGELOG_v0.1.md"
-          ]
-        },
-        "WIREFRAMES": {
-          "path": "WRAC_WIREFRAMES_v0.1.md",
-          "version": "0.1",
-          "description": "UI Design",
-          "size": 20608,
-          "all_versions": [
-            "WRAC_WIREFRAMES_v0.1.md"
-          ]
-        }
-      },
-      "versions": {},
-      "completeness": {
-        "percentage": 71.4,
-        "present": 10,
-        "total": 14,
-        "missing": [
-          "ARCHITECTURE",
-          "INTEGRATION_MAP",
-          "WATCHDOG_LOGIC",
-          "MODEL_ROUTING_SPEC"
-        ]
-      },
-      "file_count": 10
-    },
-    "RISK_THREAT": {
-      "name": "RISK_THREAT",
-      "files": {
-        "QA_IMPLEMENTATION_PLAN": {
-          "path": "RISK_THREAT_QA_IMPLEMENTATION_PLAN_v0.1.md",
-          "version": "0.1",
-          "description": "Quality Assurance",
-          "size": 13106,
-          "all_versions": [
-            "RISK_THREAT_QA_IMPLEMENTATION_PLAN_v0.1.md"
-          ]
-        },
-        "SPRINT_PLAN": {
-          "path": "RISK_THREAT_SPRINT_PLAN_v0.1.md",
-          "version": "0.1",
-          "description": "Development Plan",
-          "size": 6765,
-          "all_versions": [
-            "RISK_THREAT_SPRINT_PLAN_v0.1.md"
-          ]
-        },
-        "DATABASE_SCHEMA": {
-          "path": "RISK_THREAT_DATABASE_SCHEMA_v0.1.md",
-          "version": "0.1",
-          "description": "Data Model",
-          "size": 11153,
-          "all_versions": [
-            "RISK_THREAT_DATABASE_SCHEMA_v0.1.md"
-          ]
-        },
-        "TRUE_NORTH": {
-          "path": "RISK_THREAT_MODULE_TRUE_NORTH_v0.1.md",
-          "version": "0.1",
-          "description": "Module Architecture",
-          "size": 15942,
-          "all_versions": [
-            "RISK_THREAT_MODULE_TRUE_NORTH_v0.1.md"
-          ]
-        },
-        "FRONTEND_COMPONENT_MAP": {
-          "path": "RISK_THREAT_FRONTEND_COMPONENT_MAP_v0.1.md",
-          "version": "0.1",
-          "description": "UI Components",
-          "size": 8230,
-          "all_versions": [
-            "RISK_THREAT_FRONTEND_COMPONENT_MAP_v0.1.md"
-          ]
-        }
-      },
-      "versions": {},
-      "completeness": {
-        "percentage": 35.7,
-        "present": 5,
-        "total": 14,
-        "missing": [
-          "ARCHITECTURE",
-          "WIREFRAMES",
-          "EDGE_FUNCTIONS",
-          "INTEGRATION_MAP",
-          "EXPORT_SPEC",
-          "IMPLEMENTATION_GUIDE",
-          "CHANGELOG",
-          "WATCHDOG_LOGIC",
-          "MODEL_ROUTING_SPEC"
-        ]
-      },
-      "file_count": 5
-    },
-    "RISK_VULNERABILITY": {
-      "name": "RISK_VULNERABILITY",
-      "files": {
-        "DATABASE_SCHEMA": {
-          "path": "RISK_VULNERABILITY_DATABASE_SCHEMA_v0.1.md",
-          "version": "0.1",
-          "description": "Data Model",
-          "size": 8723,
-          "all_versions": [
-            "RISK_VULNERABILITY_DATABASE_SCHEMA_v0.1.md"
-          ]
-        },
-        "EDGE_FUNCTIONS": {
-          "path": "RISK_VULNERABILITY_EDGE_FUNCTIONS_v0.1.md",
-          "version": "0.1",
-          "description": "Backend API",
-          "size": 7834,
-          "all_versions": [
-            "RISK_VULNERABILITY_EDGE_FUNCTIONS_v0.1.md"
-          ]
-        },
-        "WIREFRAMES": {
-          "path": "RISK_VULNERABILITY_ASCII_WIREFRAMES_v0.1.md",
-          "version": "0.1",
-          "description": "UI Design",
-          "size": 17731,
-          "all_versions": [
-            "RISK_VULNERABILITY_ASCII_WIREFRAMES_v0.1.md"
-          ]
-        },
-        "FRONTEND_COMPONENT_MAP": {
-          "path": "RISK_VULNERABILITY_FRONTEND_COMPONENT_MAP_v0.1.md",
-          "version": "0.1",
-          "description": "UI Components",
-          "size": 7617,
-          "all_versions": [
-            "RISK_VULNERABILITY_FRONTEND_COMPONENT_MAP_v0.1.md"
-          ]
-        },
-        "SPRINT_PLAN": {
-          "path": "RISK_VULNERABILITY_SPRINT_PLAN_v0.1.md",
-          "version": "0.1",
-          "description": "Development Plan",
-          "size": 7234,
-          "all_versions": [
-            "RISK_VULNERABILITY_SPRINT_PLAN_v0.1.md"
-          ]
-        }
-      },
-      "versions": {},
-      "completeness": {
-        "percentage": 35.7,
-        "present": 5,
-        "total": 14,
-        "missing": [
-          "TRUE_NORTH",
-          "ARCHITECTURE",
-          "INTEGRATION_MAP",
-          "EXPORT_SPEC",
-          "QA_IMPLEMENTATION_PLAN",
-          "IMPLEMENTATION_GUIDE",
-          "CHANGELOG",
-          "WATCHDOG_LOGIC",
-          "MODEL_ROUTING_SPEC"
-        ]
-      },
-      "file_count": 5
-    }
-  },
-  "true_north_index": {
-    "COURSE_CRAFTER": {
-      "module": "COURSE_CRAFTER",
-      "path": "COURSE_CRAFTER_TRUE_NORTH_v1.0.md",
-      "version": "1.0",
-      "size": 17258,
-      "exists": true,
-      "sections": 0,
-      "has_purpose": true,
-      "has_architecture": true,
-      "has_data_model": false,
-      "has_integration": true
-    },
-    "WRAC": {
-      "module": "WRAC",
-      "path": "WRAC_TRUE_NORTH_v0.1.md",
-      "version": "0.1",
-      "size": 11000,
-      "exists": true,
-      "sections": 0,
-      "has_purpose": true,
-      "has_architecture": true,
-      "has_data_model": true,
-      "has_integration": true
-    },
-    "VULNERABILITY": {
-      "module": "VULNERABILITY",
-      "path": "VULNERABILITY_MODULE_TRUE_NORTH_ARCHITECTURE_v0.1.md",
-      "version": "0.1",
-      "size": 2006,
-      "exists": true,
-      "sections": 0,
-      "has_purpose": false,
-      "has_architecture": true,
-      "has_data_model": true,
-      "has_integration": true
-    },
-    "PIT": {
-      "module": "PIT",
-      "path": "PIT_TRUE_NORTH_v1.0.md",
-      "version": "1.0",
-      "size": 10331,
-      "exists": true,
-      "sections": 0,
-      "has_purpose": true,
-      "has_architecture": true,
-      "has_data_model": true,
-      "has_integration": true
-    },
-    "THREAT": {
-      "module": "THREAT",
-      "path": "THREAT_TRUE_NORTH_v1.0.md",
-      "version": "1.0",
-      "size": 10160,
-      "exists": true,
-      "sections": 0,
-      "has_purpose": true,
-      "has_architecture": true,
-      "has_data_model": true,
-      "has_integration": true
-    },
-    "RISK_THREAT": {
-      "module": "RISK_THREAT",
-      "path": "RISK_THREAT_MODULE_TRUE_NORTH_v0.1.md",
-      "version": "0.1",
-      "size": 15942,
-      "exists": true,
-      "sections": 0,
-      "has_purpose": true,
-      "has_architecture": false,
-      "has_data_model": true,
-      "has_integration": true
-    },
-    "ERM": {
-      "module": "ERM",
-      "path": "ERM_TRUE_NORTH_v1.0.md",
-      "version": "1.0",
-      "size": 9869,
-      "exists": true,
-      "sections": 0,
-      "has_purpose": true,
-      "has_architecture": true,
-      "has_data_model": true,
-      "has_integration": true
-    },
-    "RISK_ASSESSMENT": {
-      "module": "RISK_ASSESSMENT",
-      "path": "RISK_ASSESSMENT_TRUE_NORTH_v0.1.md",
-      "version": "0.1",
-      "size": 5980,
-      "exists": true,
-      "sections": 23,
-      "has_purpose": true,
-      "has_architecture": true,
-      "has_data_model": false,
-      "has_integration": true
-    }
-  },
+  "modules": {},
+  "true_north_index": {},
   "dependency_map": {
-    "master_integration_map": {
-      "path": "INTEGRATED_ISMS_MODULE_INTEGRATION_MAP_v1.0.md",
-      "size": 9182,
-      "has_hub_spoke_diagram": true,
-      "has_workflow_map": true
-    },
-    "modules": {
-      "COURSE_CRAFTER": {
-        "depends_on": [
-          "WRAC"
-        ],
-        "dependency_count": 1
-      },
-      "ERM": {
-        "depends_on": [
-          "PIT",
-          "WRAC"
-        ],
-        "dependency_count": 2
-      },
-      "PIT": {
-        "depends_on": [
-          "WRAC"
-        ],
-        "dependency_count": 1
-      },
-      "THREAT": {
-        "depends_on": [
-          "ERM",
-          "PIT",
-          "VULNERABILITY",
-          "WRAC"
-        ],
-        "dependency_count": 4
-      },
-      "VULNERABILITY": {
-        "depends_on": [
-          "ERM",
-          "PIT",
-          "THREAT",
-          "WRAC"
-        ],
-        "dependency_count": 4
-      },
-      "RISK_ASSESSMENT": {
-        "depends_on": [
-          "ERM",
-          "PIT",
-          "THREAT",
-          "WRAC"
-        ],
-        "dependency_count": 4
-      },
-      "WRAC": {
-        "depends_on": [
-          "ERM",
-          "PIT",
-          "THREAT"
-        ],
-        "dependency_count": 3
-      },
-      "RISK_THREAT": {
-        "depends_on": [
-          "PIT",
-          "THREAT"
-        ],
-        "dependency_count": 2
-      },
-      "RISK_VULNERABILITY": {
-        "depends_on": [
-          "PIT",
-          "VULNERABILITY"
-        ],
-        "dependency_count": 2
-      }
-    },
+    "modules": {},
     "statistics": {
-      "total_dependencies": 23,
-      "average_per_module": 2.56,
-      "most_dependent": "THREAT",
-      "most_referenced": "PIT"
+      "total_dependencies": 0,
+      "average_per_module": 0,
+      "most_dependent": null,
+      "most_referenced": null
     }
   },
   "compliance_mapping": {
@@ -1157,258 +24,133 @@
     "coverage_by_standard": {
       "ISO 27001": {
         "modules_covered": 0,
-        "total_modules": 9,
-        "coverage_percentage": 0.0,
+        "total_modules": 0,
+        "coverage_percentage": 0,
         "modules": []
       },
       "ISO 27005": {
         "modules_covered": 0,
-        "total_modules": 9,
-        "coverage_percentage": 0.0,
+        "total_modules": 0,
+        "coverage_percentage": 0,
         "modules": []
       },
       "ISO 31000": {
-        "modules_covered": 1,
-        "total_modules": 9,
-        "coverage_percentage": 11.1,
-        "modules": [
-          "RISK_THREAT"
-        ]
+        "modules_covered": 0,
+        "total_modules": 0,
+        "coverage_percentage": 0,
+        "modules": []
       },
       "ISO 22301": {
         "modules_covered": 0,
-        "total_modules": 9,
-        "coverage_percentage": 0.0,
+        "total_modules": 0,
+        "coverage_percentage": 0,
         "modules": []
       },
       "NIST CSF": {
         "modules_covered": 0,
-        "total_modules": 9,
-        "coverage_percentage": 0.0,
+        "total_modules": 0,
+        "coverage_percentage": 0,
         "modules": []
       },
       "NIST 800-53": {
         "modules_covered": 0,
-        "total_modules": 9,
-        "coverage_percentage": 0.0,
+        "total_modules": 0,
+        "coverage_percentage": 0,
         "modules": []
       },
       "COBIT": {
         "modules_covered": 0,
-        "total_modules": 9,
-        "coverage_percentage": 0.0,
+        "total_modules": 0,
+        "coverage_percentage": 0,
         "modules": []
       },
       "GDPR": {
-        "modules_covered": 1,
-        "total_modules": 9,
-        "coverage_percentage": 11.1,
-        "modules": [
-          "THREAT"
-        ]
+        "modules_covered": 0,
+        "total_modules": 0,
+        "coverage_percentage": 0,
+        "modules": []
       },
       "POPIA": {
-        "modules_covered": 1,
-        "total_modules": 9,
-        "coverage_percentage": 11.1,
-        "modules": [
-          "THREAT"
-        ]
+        "modules_covered": 0,
+        "total_modules": 0,
+        "coverage_percentage": 0,
+        "modules": []
       },
       "OWASP ASVS": {
         "modules_covered": 0,
-        "total_modules": 9,
-        "coverage_percentage": 0.0,
+        "total_modules": 0,
+        "coverage_percentage": 0,
         "modules": []
       },
       "OWASP Top 10": {
         "modules_covered": 0,
-        "total_modules": 9,
-        "coverage_percentage": 0.0,
+        "total_modules": 0,
+        "coverage_percentage": 0,
         "modules": []
       }
     },
-    "module_references": {
-      "GDPR": {
-        "THREAT": [
-          "Referenced",
-          "Referenced"
-        ]
-      },
-      "POPIA": {
-        "THREAT": [
-          "Referenced",
-          "Referenced"
-        ]
-      },
-      "ISO 31000": {
-        "RISK_THREAT": [
-          "Referenced"
-        ]
-      }
-    },
+    "module_references": {},
     "overall": {
-      "average_coverage": 3.0,
+      "average_coverage": 0.0,
       "standards_tracked": 11,
       "fully_covered_standards": 0
     }
   },
   "missing_elements": [
     {
-      "type": "specification",
-      "module": "RISK_ASSESSMENT",
-      "specification": "ARCHITECTURE",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_ASSESSMENT",
-      "specification": "INTEGRATION_MAP",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_ASSESSMENT",
-      "specification": "EXPORT_SPEC",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_ASSESSMENT",
-      "specification": "QA_IMPLEMENTATION_PLAN",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_ASSESSMENT",
-      "specification": "IMPLEMENTATION_GUIDE",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_ASSESSMENT",
-      "specification": "CHANGELOG",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_ASSESSMENT",
-      "specification": "WATCHDOG_LOGIC",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_ASSESSMENT",
-      "specification": "MODEL_ROUTING_SPEC",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_THREAT",
-      "specification": "ARCHITECTURE",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_THREAT",
-      "specification": "WIREFRAMES",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_THREAT",
-      "specification": "EDGE_FUNCTIONS",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_THREAT",
-      "specification": "INTEGRATION_MAP",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_THREAT",
-      "specification": "EXPORT_SPEC",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_THREAT",
-      "specification": "IMPLEMENTATION_GUIDE",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_THREAT",
-      "specification": "CHANGELOG",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_THREAT",
-      "specification": "WATCHDOG_LOGIC",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_THREAT",
-      "specification": "MODEL_ROUTING_SPEC",
-      "severity": "medium"
-    },
-    {
-      "type": "specification",
-      "module": "RISK_VULNERABILITY",
-      "specification": "TRUE_NORTH",
+      "type": "master_document",
+      "name": "SRMF_MASTER_BUILD_REFERENCE_v1.0.md",
       "severity": "critical"
     },
     {
-      "type": "specification",
-      "module": "RISK_VULNERABILITY",
-      "specification": "ARCHITECTURE",
-      "severity": "medium"
+      "type": "master_document",
+      "name": "Integrated_ISMS_Architecture_v1.1.md",
+      "severity": "critical"
     },
     {
-      "type": "specification",
-      "module": "RISK_VULNERABILITY",
-      "specification": "INTEGRATION_MAP",
-      "severity": "medium"
+      "type": "master_document",
+      "name": "INTEGRATED_ISMS_MODULE_INTEGRATION_MAP_v1.0.md",
+      "severity": "critical"
     },
     {
-      "type": "specification",
-      "module": "RISK_VULNERABILITY",
-      "specification": "EXPORT_SPEC",
-      "severity": "medium"
+      "type": "true_north",
+      "module": "COURSE_CRAFTER",
+      "severity": "critical"
     },
     {
-      "type": "specification",
-      "module": "RISK_VULNERABILITY",
-      "specification": "QA_IMPLEMENTATION_PLAN",
-      "severity": "medium"
+      "type": "true_north",
+      "module": "ERM",
+      "severity": "critical"
     },
     {
-      "type": "specification",
-      "module": "RISK_VULNERABILITY",
-      "specification": "IMPLEMENTATION_GUIDE",
-      "severity": "medium"
+      "type": "true_north",
+      "module": "PIT",
+      "severity": "critical"
     },
     {
-      "type": "specification",
-      "module": "RISK_VULNERABILITY",
-      "specification": "CHANGELOG",
-      "severity": "medium"
+      "type": "true_north",
+      "module": "THREAT",
+      "severity": "critical"
     },
     {
-      "type": "specification",
-      "module": "RISK_VULNERABILITY",
-      "specification": "WATCHDOG_LOGIC",
-      "severity": "medium"
+      "type": "true_north",
+      "module": "VULNERABILITY",
+      "severity": "critical"
     },
     {
-      "type": "specification",
-      "module": "RISK_VULNERABILITY",
-      "specification": "MODEL_ROUTING_SPEC",
-      "severity": "medium"
+      "type": "true_north",
+      "module": "RISK_ASSESSMENT",
+      "severity": "critical"
+    },
+    {
+      "type": "true_north",
+      "module": "WRAC",
+      "severity": "critical"
+    },
+    {
+      "type": "true_north",
+      "module": "RISK_THREAT",
+      "severity": "critical"
     },
     {
       "type": "true_north",
@@ -1416,70 +158,5 @@
       "severity": "critical"
     }
   ],
-  "inconsistencies": [
-    {
-      "type": "circular_dependency",
-      "modules": [
-        "ERM",
-        "WRAC"
-      ],
-      "severity": "high"
-    },
-    {
-      "type": "circular_dependency",
-      "modules": [
-        "PIT",
-        "WRAC"
-      ],
-      "severity": "high"
-    },
-    {
-      "type": "circular_dependency",
-      "modules": [
-        "THREAT",
-        "VULNERABILITY"
-      ],
-      "severity": "high"
-    },
-    {
-      "type": "circular_dependency",
-      "modules": [
-        "THREAT",
-        "WRAC"
-      ],
-      "severity": "high"
-    },
-    {
-      "type": "circular_dependency",
-      "modules": [
-        "VULNERABILITY",
-        "THREAT"
-      ],
-      "severity": "high"
-    },
-    {
-      "type": "circular_dependency",
-      "modules": [
-        "WRAC",
-        "ERM"
-      ],
-      "severity": "high"
-    },
-    {
-      "type": "circular_dependency",
-      "modules": [
-        "WRAC",
-        "PIT"
-      ],
-      "severity": "high"
-    },
-    {
-      "type": "circular_dependency",
-      "modules": [
-        "WRAC",
-        "THREAT"
-      ],
-      "severity": "high"
-    }
-  ]
+  "inconsistencies": []
 }
