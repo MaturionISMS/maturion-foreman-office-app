@@ -109,7 +109,7 @@ Maturion Foreman has successfully entered Active Operational Mode. All core syst
 - ✅ `platform-awareness.md` - LOADED
 - ✅ `runtime-agent-plan.md` - LOADED
 
-**Total Governance Files**: 68 files indexed and loaded (verified via `find foreman/ -type f | wc -l` - includes all files in foreman/ directory and subdirectories)
+**Total Foreman Directory Files**: 68 files indexed and loaded (verified via `find foreman/ -type f | wc -l` - includes all governance, specification, and configuration files in foreman/ directory and subdirectories)
 
 ---
 
@@ -310,7 +310,7 @@ Maturion Foreman has successfully entered Active Operational Mode. All core syst
 - ✅ Training Content Generation: Course Crafter ← ERM
 - ✅ Project Context: PIT ← (Threat + Vulnerability)
 
-**Status**: ✅ Architecture FULLY INDEXED with 7 modules, 10 True North documents (verified via ls count), 182 total architecture markdown files (verified via `find . -name "*.md" -type f | grep -vE "^\./(\.git|uploads)" | wc -l`), and comprehensive integration maps
+**Status**: ✅ Architecture FULLY INDEXED with 7 modules, 10 True North documents (verified via ls count), 182 total markdown documentation files (verified via `find . -name "*.md" -type f | grep -vE "^\./(\.git|uploads)" | wc -l` - includes architecture, governance, and specification files), and comprehensive integration maps
 
 **Verification Method**: File count, size verification, and system map review  
 **Last Updated**: 2025-12-03
@@ -525,24 +525,24 @@ Maturion Foreman has successfully entered Active Operational Mode. All core syst
 | System | Status | Files Loaded | Ready |
 |--------|--------|--------------|-------|
 | Identity | ✅ OPERATIONAL | 1 | YES |
-| Governance | ✅ OPERATIONAL | 14+ | YES |
+| Governance | ✅ OPERATIONAL | 68 foreman files | YES |
 | QA Systems | ✅ ACTIVE | 8 | YES |
 | Compliance | ✅ ACTIVE | 5 | YES |
-| Builder Agents | ✅ INITIALIZED | 7 (5 active) | YES |
-| Architecture | ✅ INDEXED | 182 verified | YES |
+| Builder Agents | ✅ INITIALIZED | 5 active | YES |
+| Architecture | ✅ INDEXED | 182 .md docs | YES |
 | Innovation Engine | ✅ READY | 7 | YES |
 | Survey Engine | ✅ READY | 2 | YES |
 | Admin Tools | ✅ READY | 11+ | YES |
 
-### Total Governance Files: 68 (verified via find command)
-### Total Architecture Files: 182 (verified via find command)
+### Total Foreman Directory Files: 68 (all governance, spec, and config files)
+### Total Markdown Documentation Files: 182 (architecture, governance, specs)
 ### Total Indexed Modules: 7
 ### Total Builder Agents: 5
 ### Total Standards Covered: 11
 
 **Note on File Counts**: All counts verified using automated shell commands:
-- Governance files: `find foreman/ -type f | wc -l`
-- Architecture files: `find . -name "*.md" -type f | grep -vE "^\./(\.git|uploads)" | wc -l`
+- Foreman directory files: `find foreman/ -type f | wc -l` (all files in governance directory)
+- Markdown documentation: `find . -name "*.md" -type f | grep -vE "^\./(\.git|uploads)" | wc -l` (all .md files)
 - True North documents: `ls -1 *TRUE_NORTH*.md | wc -l`
 - SRMF file size: `wc -c SRMF_MASTER_BUILD_REFERENCE_v1.0.md`
 
@@ -595,11 +595,11 @@ Maturion Foreman has successfully entered Active Operational Mode. All core syst
 **I, Maturion Foreman, hereby confirm:**
 
 ✅ **Identity**: LOADED and OPERATIONAL  
-✅ **Governance**: LOADED and ACTIVE  
+✅ **Governance**: LOADED and ACTIVE (68 foreman directory files)  
 ✅ **QA Systems**: INITIALIZED and ACTIVE  
 ✅ **Compliance Systems**: LOADED and ACTIVE  
 ✅ **Builder Agents**: INITIALIZED and READY  
-✅ **Architecture**: FULLY INDEXED (7 modules, 182 files verified)  
+✅ **Architecture**: FULLY INDEXED (7 modules, 182 markdown docs verified)  
 ✅ **Innovation Engine**: OPERATIONAL and READY  
 ✅ **Survey Engine**: OPERATIONAL and READY  
 ✅ **Admin Tools**: LOADED and READY  
