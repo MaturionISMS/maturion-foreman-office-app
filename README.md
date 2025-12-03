@@ -2,23 +2,49 @@
 
 This is the Foreman repository that is responsible for managing all builder agents and maintaining the complete architecture documentation for the Maturion Integrated Security Management System (ISMS).
 
+## What is the Foreman?
+
+The Maturion Foreman is an AI-powered orchestration system that:
+- Manages and coordinates builder agents for ISMS module development
+- Maintains architectural integrity across all modules
+- Enforces quality standards and compliance
+- Provides centralized architecture documentation
+
 ## Repository Structure
 
+### `/foreman/` - Foreman Core Systems
+Builder agent management, initialization, and operational frameworks.
+
+See:
+- [Builder Initialization](foreman/BUILDER_INITIALIZATION.md)
+- [Builder Registry Quick Reference](foreman/BUILDER_REGISTRY_QUICK_REFERENCE.md)
+- [Implementation Summary](foreman/IMPLEMENTATION_SUMMARY.md)
+
 ### `/maturion-isms/` - Complete ISMS Architecture
-This directory contains all architecture documentation organized by:
-- **System-level architecture** (`/architecture/`) - System-wide specifications
+All architecture documentation organized by:
+- **System-level architecture** (`/architecture/`) - System-wide specifications  
 - **Application modules** (`/apps/`) - Module-specific documentation
 
 For detailed information about the organization and contents, see [ARCHITECTURE_ORGANIZATION.md](maturion-isms/ARCHITECTURE_ORGANIZATION.md).
 
-### Quick Navigation
+### Validation & QA Tools
+- [Repository Validation Tool](VALIDATION_TOOL_README.md) - Automated repository validation
+- [Validation Report](VALIDATION_REPORT.md) - Latest validation results
+- [Validation Summary](VALIDATION_SUMMARY.md) - Validation overview
 
-#### System Architecture
+## Quick Navigation
+
+### Foreman Operations
+- [Builder Agent Registry](foreman/builder-registry-report.md)
+- [Builder Initialization](foreman/init_builders.py)
+- [QA Engine Documentation](foreman/qa/) (if applicable)
+
+### System Architecture
 - [Integrated ISMS Architecture](maturion-isms/architecture/system-architecture/Integrated_ISMS_Architecture_v1.1.md)
 - [Module Integration Map](maturion-isms/architecture/integration-maps/INTEGRATED_ISMS_MODULE_INTEGRATION_MAP_v1.0.md)
 - [Control Library](maturion-isms/architecture/control-models/CONTROL_LIBRARY_v0.1.md)
 
-#### Application Modules
+### Application Modules
 - [Course Crafter](maturion-isms/apps/course-crafter/) - Video course production platform
 - [ERM](maturion-isms/apps/erm/) - Enterprise Risk Management
 - [PIT](maturion-isms/apps/pit/) - Project Implementation Tracker
@@ -43,3 +69,10 @@ Each module contains:
 - Special features (Watchdog logic, AI routing where applicable)
 
 For complete details, see the [Architecture Organization Guide](maturion-isms/ARCHITECTURE_ORGANIZATION.md).
+
+## Getting Started
+
+1. **For Builder Agents**: See [Builder Initialization](foreman/BUILDER_INITIALIZATION.md)
+2. **For Architecture Review**: Start with [Architecture Organization](maturion-isms/ARCHITECTURE_ORGANIZATION.md)
+3. **For Repository Validation**: Run `python validate-repository.py`
+4. **For Module Development**: Review the specific module's True North document in `maturion-isms/apps/{module}/architecture/`
