@@ -282,12 +282,23 @@ class ArchitectureStandardiser:
         for spec_type, spec_info in self.BACKEND_SPECS.items():
             if module in spec_info.get('required_for', []):
                 total_required += 1
-                if spec_type in module_data['files'] and module_data['files'][spec_type]:
+                has_backend_spec = (
+                    spec_type in module_data['files'] and 
+                    module_data['files'][spec_type]
+                )
+                if has_backend_spec:
                     present_count += 1
                 else:
-                    module_data['missing'].append(f"Missing: {spec_type} (required for {module})")
+                    missing_msg = f"Missing: {spec_type} (required for {module})"
+                    module_data['missing'].append(missing_msg)
         
-        module_data['completeness_score'] = round((present_count / total_required) * 100, 1) if total_required > 0 else 0
+        # Calculate completeness score
+        if total_required > 0:
+            completeness = (present_count / total_required) * 100
+            module_data['completeness_score'] = round(completeness, 1)
+        else:
+            module_data['completeness_score'] = 0
+        
         module_data['total_required'] = total_required
         module_data['present_count'] = present_count
     
@@ -403,7 +414,11 @@ class ArchitectureStandardiser:
             print("  ✓ No circular dependencies detected")
         
         # Store dependency graph
-        self.results['dependency_graph'] = {k: list(v) for k, v in dependency_graph.items()}
+        dependency_graph_list = {
+            module: list(deps) 
+            for module, deps in dependency_graph.items()
+        }
+        self.results['dependency_graph'] = dependency_graph_list
         
         print()
     
@@ -431,7 +446,7 @@ class ArchitectureStandardiser:
                 if re.search(pattern, content):
                     dependencies.add(module)
         
-        except (UnicodeDecodeError, FileNotFoundError) as e:
+        except (UnicodeDecodeError, FileNotFoundError, PermissionError) as e:
             # Log specific file reading errors but continue
             print(f"    ⚠️  Could not read {file_path.name}: {e}")
         except Exception as e:
@@ -463,11 +478,10 @@ class ArchitectureStandardiser:
             
             visited.add(node)
             rec_stack.add(node)
-            path.append(node)
             
             for neighbor in graph.get(node, set()):
-                # Check each neighbor for cycles
-                dfs(neighbor, path.copy())
+                # Check each neighbor for cycles - use immutable path extension
+                dfs(neighbor, path + [node])
             
             rec_stack.remove(node)
             return False
@@ -1005,7 +1019,7 @@ Once critical gaps are addressed:
         for module, data in json_results['modules'].items():
             data['dependencies'] = list(data['dependencies'])
         
-        with open(json_path, 'w') as f:
+        with open(json_path, 'w', encoding='utf-8') as f:
             json.dump(json_results, f, indent=2)
         
         print(f"  ✓ Generated STANDARDISATION_REPORT.md\n")

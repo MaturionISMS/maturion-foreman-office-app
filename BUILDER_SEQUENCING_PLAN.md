@@ -1,6 +1,6 @@
 # Builder Agent Sequencing Plan
 
-**Generated**: 2025-12-03 17:26:35  
+**Generated**: 2025-12-03 17:28:54  
 **Based On**: Architecture Standardisation Analysis
 
 ---
@@ -58,7 +58,7 @@ Build these modules after their dependencies are complete:
 
 ### ERM (Readiness: 8.3% - NOT_READY)
 
-**Dependencies**: WRAC, PIT (2 modules)
+**Dependencies**: PIT, WRAC (2 modules)
 
 **Status**: ⚠️ Architecture work required
 
@@ -69,7 +69,7 @@ Build these modules after their dependencies are complete:
 
 ### RISK_ASSESSMENT (Readiness: 9.1% - NOT_READY)
 
-**Dependencies**: WRAC, ERM, PIT (3 modules)
+**Dependencies**: PIT, WRAC, ERM (3 modules)
 
 **Status**: ⚠️ Architecture work required
 
@@ -80,7 +80,7 @@ Build these modules after their dependencies are complete:
 
 ### THREAT (Readiness: 7.7% - NOT_READY)
 
-**Dependencies**: WRAC, ERM, PIT, VULNERABILITY (4 modules)
+**Dependencies**: VULNERABILITY, PIT, WRAC, ERM (4 modules)
 
 **Status**: ⚠️ Architecture work required
 
@@ -91,7 +91,7 @@ Build these modules after their dependencies are complete:
 
 ### VULNERABILITY (Readiness: 7.7% - NOT_READY)
 
-**Dependencies**: THREAT, ERM, WRAC, PIT (4 modules)
+**Dependencies**: THREAT, PIT, WRAC, ERM (4 modules)
 
 **Status**: ⚠️ Architecture work required
 

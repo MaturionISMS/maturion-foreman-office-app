@@ -1,6 +1,6 @@
 # Architecture Standardisation Report
 
-**Generated**: 2025-12-03 17:26:35  
+**Generated**: 2025-12-03 17:28:54  
 **Standardisation Agent**: Maturion Foreman  
 **Repository**: /home/runner/work/maturion-ai-foreman/maturion-ai-foreman
 
@@ -68,7 +68,7 @@
 ### Dependency Analysis
 
 ⚠️ **2 circular dependency chains detected**
-- WRAC → PIT → WRAC
+- PIT → WRAC → PIT
 - THREAT → VULNERABILITY → THREAT
 
 ### Version Consistency

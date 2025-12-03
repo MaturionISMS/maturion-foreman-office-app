@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "standardised_at": "2025-12-03T17:26:35.413612",
+    "standardised_at": "2025-12-03T17:28:54.899193",
     "repo_root": "/home/runner/work/maturion-ai-foreman/maturion-ai-foreman"
   },
   "modules": {
@@ -86,8 +86,8 @@
       "completeness_score": 8.3,
       "compliance_coverage": {},
       "dependencies": [
-        "WRAC",
-        "PIT"
+        "PIT",
+        "WRAC"
       ],
       "qa_linkage": true,
       "compliance_linkage": false,
@@ -186,10 +186,10 @@
       "completeness_score": 7.7,
       "compliance_coverage": {},
       "dependencies": [
-        "WRAC",
-        "ERM",
+        "VULNERABILITY",
         "PIT",
-        "VULNERABILITY"
+        "WRAC",
+        "ERM"
       ],
       "qa_linkage": true,
       "compliance_linkage": false,
@@ -238,9 +238,9 @@
       "compliance_coverage": {},
       "dependencies": [
         "THREAT",
-        "ERM",
+        "PIT",
         "WRAC",
-        "PIT"
+        "ERM"
       ],
       "qa_linkage": true,
       "compliance_linkage": false,
@@ -287,9 +287,9 @@
       "completeness_score": 9.1,
       "compliance_coverage": {},
       "dependencies": [
+        "PIT",
         "WRAC",
-        "ERM",
-        "PIT"
+        "ERM"
       ],
       "qa_linkage": false,
       "compliance_linkage": false,
@@ -906,9 +906,9 @@
     {
       "type": "CIRCULAR",
       "chain": [
-        "WRAC",
         "PIT",
-        "WRAC"
+        "WRAC",
+        "PIT"
       ],
       "severity": "HIGH",
       "action": "Refactor to remove circular dependency"
@@ -1008,28 +1008,28 @@
   "dependency_graph": {
     "COURSE_CRAFTER": [],
     "ERM": [
-      "WRAC",
-      "PIT"
+      "PIT",
+      "WRAC"
     ],
     "PIT": [
       "WRAC"
     ],
     "THREAT": [
-      "WRAC",
-      "ERM",
+      "VULNERABILITY",
       "PIT",
-      "VULNERABILITY"
+      "WRAC",
+      "ERM"
     ],
     "VULNERABILITY": [
       "THREAT",
-      "ERM",
+      "PIT",
       "WRAC",
-      "PIT"
+      "ERM"
     ],
     "RISK_ASSESSMENT": [
+      "PIT",
       "WRAC",
-      "ERM",
-      "PIT"
+      "ERM"
     ],
     "WRAC": [
       "PIT"

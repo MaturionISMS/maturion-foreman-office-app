@@ -1,6 +1,6 @@
 # Architecture Standardisation Fix Backlog
 
-**Generated**: 2025-12-03 17:26:35  
+**Generated**: 2025-12-03 17:28:54  
 **Total Issues**: 88
 
 ---
@@ -255,7 +255,7 @@ None.
 
 ## Dependency Issues
 
-- [ ] **CIRCULAR**: WRAC → PIT → WRAC
+- [ ] **CIRCULAR**: PIT → WRAC → PIT
   - Severity: HIGH
   - Action: Refactor to remove circular dependency
 
