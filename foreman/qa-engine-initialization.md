@@ -357,6 +357,8 @@ Example:
 
 **When QA tests execute, generate:**
 
+*Example data structure (values shown are for illustration):*
+
 ```json
 {
   "summary": {
@@ -392,6 +394,8 @@ Example:
 ```
 
 ### 6.2 Governance Dashboard Data Structure
+
+*Example data structure (values shown are for illustration):*
 
 ```json
 {

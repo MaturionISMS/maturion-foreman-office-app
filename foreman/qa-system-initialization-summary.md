@@ -69,9 +69,9 @@
 - Missing data scenarios ✓
 
 ### 6. Performance Baselines
-- Simple: <300ms
-- Complex: <800ms
-- Analytics/Risk: <1500ms
+- Simple operations (e.g., single record fetch, simple queries): <300ms
+- Complex operations (e.g., multi-table joins, aggregations): <800ms
+- Analytics/Risk calculations (e.g., risk scoring, heatmap generation): <1500ms
 
 ### 7. Negative Tests
 - Invalid inputs ✓
