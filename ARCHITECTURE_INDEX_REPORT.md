@@ -1,7 +1,7 @@
 ====================================================================================================
 MATURION ISMS - ARCHITECTURE INDEX REPORT
 ====================================================================================================
-Generated: 2025-12-03T14:25:13.050913
+Generated: 2025-12-03T14:28:40.159367
 Repository: /home/runner/work/maturion-ai-foreman/maturion-ai-foreman
 
 📊 EXECUTIVE SUMMARY
@@ -11,7 +11,7 @@ Total Architecture Files: 87
 True North Documents: 8
 Overall Compliance Coverage: 3.0%
 Missing Critical Elements: 27
-Detected Inconsistencies: 14
+Detected Inconsistencies: 8
 
 📊 MODULE MAP
 ----------------------------------------------------------------------------------------------------
@@ -137,13 +137,13 @@ Module Dependencies:
   RISK_ASSESSMENT → ERM, PIT, THREAT, WRAC
   RISK_THREAT → PIT, THREAT
   RISK_VULNERABILITY → PIT, VULNERABILITY
-  THREAT → ERM, PIT, RISK_ASSESSMENT, VULNERABILITY, WRAC
+  THREAT → ERM, PIT, VULNERABILITY, WRAC
   VULNERABILITY → ERM, PIT, THREAT, WRAC
-  WRAC → ERM, PIT, RISK_ASSESSMENT, THREAT, VULNERABILITY
+  WRAC → ERM, PIT, THREAT
 
 Dependency Statistics:
-  Total Dependencies: 26
-  Average per Module: 2.89
+  Total Dependencies: 23
+  Average per Module: 2.56
   Most Dependent Module: THREAT
   Most Referenced Module: PIT
 
@@ -190,25 +190,19 @@ Medium Priority Missing Elements:
 High Severity:
   🔴 Circular dependency: ERM ↔ WRAC
   🔴 Circular dependency: PIT ↔ WRAC
-  🔴 Circular dependency: THREAT ↔ RISK_ASSESSMENT
   🔴 Circular dependency: THREAT ↔ VULNERABILITY
   🔴 Circular dependency: THREAT ↔ WRAC
   🔴 Circular dependency: VULNERABILITY ↔ THREAT
-  🔴 Circular dependency: VULNERABILITY ↔ WRAC
-  🔴 Circular dependency: RISK_ASSESSMENT ↔ THREAT
-  🔴 Circular dependency: RISK_ASSESSMENT ↔ WRAC
   🔴 Circular dependency: WRAC ↔ ERM
   🔴 Circular dependency: WRAC ↔ PIT
-  🔴 Circular dependency: WRAC ↔ RISK_ASSESSMENT
   🔴 Circular dependency: WRAC ↔ THREAT
-  🔴 Circular dependency: WRAC ↔ VULNERABILITY
 
 💡 RECOMMENDATIONS
 ----------------------------------------------------------------------------------------------------
 🔹 Complete architecture specifications for: COURSE_CRAFTER, ERM, RISK_ASSESSMENT, WRAC, RISK_THREAT, RISK_VULNERABILITY
 🔹 Create True North documents for: RISK_VULNERABILITY
 🔹 Improve compliance coverage for: ISO 27001, ISO 27005, ISO 31000, ISO 22301, NIST CSF, NIST 800-53, COBIT, GDPR, POPIA, OWASP ASVS, OWASP Top 10
-🔹 Resolve 14 circular dependencies
+🔹 Resolve 8 circular dependencies
 
 ====================================================================================================
 ARCHITECTURE HEALTH SCORE: 0.0/100

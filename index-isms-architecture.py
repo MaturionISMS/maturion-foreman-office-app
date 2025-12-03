@@ -17,6 +17,12 @@ from datetime import datetime
 class ISMSArchitectureIndexer:
     """Comprehensive indexing system for all ISMS architecture files"""
     
+    # Health score calculation constants
+    MISSING_ELEMENT_PENALTY = 5  # Points deducted per missing element
+    HIGH_SEVERITY_INCONSISTENCY_PENALTY = 10  # Points deducted per high severity issue
+    VERSION_SPREAD_THRESHOLD = 3  # Number of different versions before flagging
+    COMPLIANCE_REFERENCE_LENGTH_LIMIT = 100  # Max characters for compliance reference text
+    
     # Known modules in the ISMS ecosystem
     MODULES = [
         'COURSE_CRAFTER',
@@ -101,27 +107,40 @@ class ISMSArchitectureIndexer:
         return self.index
     
     def _extract_version(self, filename: str) -> Tuple[int, int]:
-        """Extract version number from filename"""
+        """
+        Extract version number from filename.
+        
+        Supports format: _vMAJOR.MINOR (e.g., _v1.0, _v2.1)
+        Returns (0, 0) for files without version or with non-standard version format.
+        This ensures unversioned files sort before versioned files.
+        """
         match = re.search(r'_v(\d+)\.(\d+)', filename)
         if match:
             return (int(match.group(1)), int(match.group(2)))
-        return (0, 0)
+        return (0, 0)  # Fallback for unversioned or non-standard formats
     
     def _get_latest_version(self, files: List[Path]) -> Path:
         """Get the file with the latest version"""
         return max(files, key=lambda f: self._extract_version(f.name))
     
     def _extract_dependencies_from_file(self, file_path: Path) -> Set[str]:
-        """Extract module dependencies from file content"""
+        """
+        Extract module dependencies from file content.
+        
+        Uses word boundary matching to avoid false positives from partial matches
+        (e.g., 'THREAT' within 'RISK_THREAT' or in URLs).
+        """
         dependencies = set()
         
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             
-            # Look for references to other modules
+            # Look for references to other modules with word boundaries
             for module in self.MODULES:
-                if module in content:
+                # Use word boundary pattern to avoid partial matches
+                pattern = r'\b' + re.escape(module) + r'\b'
+                if re.search(pattern, content):
                     dependencies.add(module)
             
             # Look for integration patterns
@@ -145,7 +164,12 @@ class ISMSArchitectureIndexer:
         return dependencies
     
     def _extract_compliance_references(self, file_path: Path) -> Dict[str, List[str]]:
-        """Extract compliance standard references from file"""
+        """
+        Extract compliance standard references from file.
+        
+        Limits reference text to COMPLIANCE_REFERENCE_LENGTH_LIMIT characters
+        to keep the index file manageable while preserving context.
+        """
         compliance_refs = defaultdict(list)
         
         try:
@@ -158,7 +182,7 @@ class ISMSArchitectureIndexer:
                 matches = re.finditer(pattern, content, re.IGNORECASE)
                 
                 for match in matches:
-                    reference = match.group(1).strip()[:100]  # Limit length
+                    reference = match.group(1).strip()[:self.COMPLIANCE_REFERENCE_LENGTH_LIMIT]
                     compliance_refs[standard].append(reference)
                 
                 # Simple presence check
@@ -522,12 +546,14 @@ class ISMSArchitectureIndexer:
                     print(f"  ⚠️  Orphaned module (no dependencies): {module}")
         
         # Check for version inconsistencies
+        # Flag modules with too many different versions as this may indicate
+        # incomplete migration or inconsistent versioning practices
         for module, module_data in self.index['modules'].items():
             versions = set()
             for spec_type, file_info in module_data['files'].items():
                 versions.add(file_info['version'])
             
-            if len(versions) > 3:  # More than 3 different versions
+            if len(versions) > self.VERSION_SPREAD_THRESHOLD:
                 self.index['inconsistencies'].append({
                     'type': 'version_spread',
                     'module': module,
@@ -761,10 +787,12 @@ class ISMSArchitectureIndexer:
         report.append("=" * 100)
         
         # Calculate overall health score
+        # Formula: Average of (completeness + compliance) minus penalties
+        # Penalties are configurable class constants to allow tuning
         completeness_score = sum(m['completeness']['percentage'] for m in self.index['modules'].values()) / len(self.index['modules']) if self.index['modules'] else 0
         compliance_score = self.index['compliance_mapping']['overall']['average_coverage']
-        missing_penalty = len(self.index['missing_elements']) * 5
-        inconsistency_penalty = len([i for i in self.index['inconsistencies'] if i['severity'] == 'high']) * 10
+        missing_penalty = len(self.index['missing_elements']) * self.MISSING_ELEMENT_PENALTY
+        inconsistency_penalty = len([i for i in self.index['inconsistencies'] if i['severity'] == 'high']) * self.HIGH_SEVERITY_INCONSISTENCY_PENALTY
         
         health_score = max(0, min(100, (completeness_score + compliance_score) / 2 - missing_penalty - inconsistency_penalty))
         

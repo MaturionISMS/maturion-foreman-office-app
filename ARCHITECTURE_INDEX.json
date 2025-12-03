@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "indexed_at": "2025-12-03T14:25:13.050913",
+    "indexed_at": "2025-12-03T14:28:40.159367",
     "repo_root": "/home/runner/work/maturion-ai-foreman/maturion-ai-foreman",
     "total_modules": 9,
     "total_files": 87
@@ -1096,11 +1096,10 @@
         "depends_on": [
           "ERM",
           "PIT",
-          "RISK_ASSESSMENT",
           "VULNERABILITY",
           "WRAC"
         ],
-        "dependency_count": 5
+        "dependency_count": 4
       },
       "VULNERABILITY": {
         "depends_on": [
@@ -1124,11 +1123,9 @@
         "depends_on": [
           "ERM",
           "PIT",
-          "RISK_ASSESSMENT",
-          "THREAT",
-          "VULNERABILITY"
+          "THREAT"
         ],
-        "dependency_count": 5
+        "dependency_count": 3
       },
       "RISK_THREAT": {
         "depends_on": [
@@ -1146,8 +1143,8 @@
       }
     },
     "statistics": {
-      "total_dependencies": 26,
-      "average_per_module": 2.89,
+      "total_dependencies": 23,
+      "average_per_module": 2.56,
       "most_dependent": "THREAT",
       "most_referenced": "PIT"
     }
@@ -1440,14 +1437,6 @@
       "type": "circular_dependency",
       "modules": [
         "THREAT",
-        "RISK_ASSESSMENT"
-      ],
-      "severity": "high"
-    },
-    {
-      "type": "circular_dependency",
-      "modules": [
-        "THREAT",
         "VULNERABILITY"
       ],
       "severity": "high"
@@ -1465,30 +1454,6 @@
       "modules": [
         "VULNERABILITY",
         "THREAT"
-      ],
-      "severity": "high"
-    },
-    {
-      "type": "circular_dependency",
-      "modules": [
-        "VULNERABILITY",
-        "WRAC"
-      ],
-      "severity": "high"
-    },
-    {
-      "type": "circular_dependency",
-      "modules": [
-        "RISK_ASSESSMENT",
-        "THREAT"
-      ],
-      "severity": "high"
-    },
-    {
-      "type": "circular_dependency",
-      "modules": [
-        "RISK_ASSESSMENT",
-        "WRAC"
       ],
       "severity": "high"
     },
@@ -1512,23 +1477,7 @@
       "type": "circular_dependency",
       "modules": [
         "WRAC",
-        "RISK_ASSESSMENT"
-      ],
-      "severity": "high"
-    },
-    {
-      "type": "circular_dependency",
-      "modules": [
-        "WRAC",
         "THREAT"
-      ],
-      "severity": "high"
-    },
-    {
-      "type": "circular_dependency",
-      "modules": [
-        "WRAC",
-        "VULNERABILITY"
       ],
       "severity": "high"
     }
