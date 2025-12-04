@@ -49,3 +49,7 @@ Thumbs.db
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Self-test generated reports (should be regenerated on each run)
+/self-test-report.json
+/self-test-report.md

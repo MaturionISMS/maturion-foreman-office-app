@@ -1,0 +1,294 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maturion Foreman Self-Test Report Schema",
+  "description": "Schema for Foreman self-test validation results",
+  "type": "object",
+  "required": [
+    "test_timestamp",
+    "foreman_version",
+    "overall_status",
+    "subsystems",
+    "summary"
+  ],
+  "properties": {
+    "test_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the test was executed"
+    },
+    "foreman_version": {
+      "type": "string",
+      "description": "Version of Maturion Foreman being tested",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "overall_status": {
+      "type": "string",
+      "enum": ["PASS", "WARN", "FAIL"],
+      "description": "Overall health status of the Foreman system"
+    },
+    "subsystems": {
+      "type": "array",
+      "description": "Validation results for each subsystem",
+      "items": {
+        "type": "object",
+        "required": [
+          "subsystem_name",
+          "status",
+          "details",
+          "files_checked",
+          "files_passed",
+          "files_failed",
+          "missing_files",
+          "invalid_files",
+          "risks",
+          "recommended_actions"
+        ],
+        "properties": {
+          "subsystem_name": {
+            "type": "string",
+            "description": "Name of the subsystem being validated",
+            "examples": [
+              "Core Governance System",
+              "Architecture System",
+              "Builder Agent System",
+              "Compliance Engine",
+              "QA & QA-of-QA System",
+              "Runtime & Continuity System",
+              "Change Management System",
+              "Upgrade & Continuity System",
+              "Test Environment System",
+              "Orchestration & Build Pipeline",
+              "Platform & UI Standards",
+              "Innovation & Admin Intelligence"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["PASS", "WARN", "FAIL"],
+            "description": "Status of this subsystem"
+          },
+          "details": {
+            "type": "string",
+            "description": "Detailed status message explaining the validation result"
+          },
+          "files_checked": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of files checked in this subsystem"
+          },
+          "files_passed": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of files that passed validation"
+          },
+          "files_failed": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of files that failed validation"
+          },
+          "missing_files": {
+            "type": "array",
+            "description": "List of required files that are missing",
+            "items": {
+              "type": "string",
+              "description": "Path to missing file"
+            }
+          },
+          "invalid_files": {
+            "type": "array",
+            "description": "List of files that are invalid or corrupted",
+            "items": {
+              "type": "object",
+              "required": ["file_path", "error"],
+              "properties": {
+                "file_path": {
+                  "type": "string",
+                  "description": "Path to the invalid file"
+                },
+                "error": {
+                  "type": "string",
+                  "description": "Description of the validation error"
+                }
+              }
+            }
+          },
+          "risks": {
+            "type": "array",
+            "description": "Risks identified in this subsystem",
+            "items": {
+              "type": "object",
+              "required": ["severity", "description"],
+              "properties": {
+                "severity": {
+                  "type": "string",
+                  "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
+                  "description": "Severity level of the risk"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description of the risk"
+                },
+                "impact": {
+                  "type": "string",
+                  "description": "Potential impact if risk is not addressed"
+                }
+              }
+            }
+          },
+          "recommended_actions": {
+            "type": "array",
+            "description": "Recommended actions to address issues",
+            "items": {
+              "type": "string",
+              "description": "Action recommendation"
+            }
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "total_subsystems",
+        "passed",
+        "warnings",
+        "failed",
+        "total_files_checked",
+        "missing_files_count",
+        "invalid_json_count"
+      ],
+      "properties": {
+        "total_subsystems": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of subsystems validated"
+        },
+        "passed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of subsystems with PASS status"
+        },
+        "warnings": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of subsystems with WARN status"
+        },
+        "failed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of subsystems with FAIL status"
+        },
+        "total_files_checked": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of files checked across all subsystems"
+        },
+        "missing_files_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of missing files"
+        },
+        "invalid_json_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of invalid JSON files"
+        }
+      }
+    },
+    "recommendations": {
+      "type": "array",
+      "description": "Overall recommendations for improving system health",
+      "items": {
+        "type": "string",
+        "description": "Recommendation text"
+      }
+    },
+    "change_records": {
+      "type": "array",
+      "description": "Pending change records that may require attention",
+      "items": {
+        "type": "object",
+        "properties": {
+          "cr_id": {
+            "type": "string",
+            "description": "Change record identifier"
+          },
+          "module": {
+            "type": "string",
+            "description": "Module affected by the change"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the change record"
+          }
+        }
+      }
+    },
+    "builder_readiness": {
+      "type": "object",
+      "description": "Readiness status of builder agents",
+      "properties": {
+        "ui_builder": {
+          "type": "string",
+          "enum": ["READY", "NOT_READY", "UNKNOWN"]
+        },
+        "api_builder": {
+          "type": "string",
+          "enum": ["READY", "NOT_READY", "UNKNOWN"]
+        },
+        "schema_builder": {
+          "type": "string",
+          "enum": ["READY", "NOT_READY", "UNKNOWN"]
+        },
+        "integration_builder": {
+          "type": "string",
+          "enum": ["READY", "NOT_READY", "UNKNOWN"]
+        },
+        "qa_builder": {
+          "type": "string",
+          "enum": ["READY", "NOT_READY", "UNKNOWN"]
+        }
+      }
+    },
+    "compliance_coverage": {
+      "type": "object",
+      "description": "Compliance standard coverage status",
+      "properties": {
+        "iso_27001": {
+          "type": "boolean",
+          "description": "ISO 27001 coverage present"
+        },
+        "nist_csf": {
+          "type": "boolean",
+          "description": "NIST CSF coverage present"
+        },
+        "cobit": {
+          "type": "boolean",
+          "description": "COBIT coverage present"
+        },
+        "owasp": {
+          "type": "boolean",
+          "description": "OWASP coverage present"
+        }
+      }
+    },
+    "runtime_readiness": {
+      "type": "object",
+      "description": "Runtime system readiness status",
+      "properties": {
+        "memory_spine_valid": {
+          "type": "boolean",
+          "description": "Memory spine JSON is valid"
+        },
+        "environment_map_valid": {
+          "type": "boolean",
+          "description": "Environment map JSON is valid"
+        },
+        "export_script_exists": {
+          "type": "boolean",
+          "description": "Runtime export script exists"
+        }
+      }
+    }
+  }
+}
