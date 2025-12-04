@@ -1,0 +1,27 @@
+{
+  "description": "Schema for recording all changes managed by Foreman/Maturion.",
+  "version": "1.0.0",
+  "fields": [
+    "change_id",
+    "title",
+    "created_at",
+    "created_by",
+    "status",
+    "risk_level",
+    "modules_impacted",
+    "environments",
+    "approval_state",
+    "implementation_summary",
+    "test_results_ref",
+    "rollback_used",
+    "lessons_ref"
+  ],
+  "status_values": [
+    "PROPOSED",
+    "APPROVED",
+    "IN_PROGRESS",
+    "ROLLED_BACK",
+    "RELEASED",
+    "CLOSED"
+  ]
+}

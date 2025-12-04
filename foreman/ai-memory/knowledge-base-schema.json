@@ -1,0 +1,94 @@
+{
+  "description": "Structure for long-lived knowledge items derived from runtime behaviour and user feedback.",
+  "version": "1.0.0",
+  "knowledge_categories": [
+    {
+      "category": "architectural_patterns",
+      "purpose": "Proven architecture patterns that work well in practice",
+      "retention": "permanent",
+      "examples": [
+        "Module integration patterns",
+        "Data flow patterns",
+        "Error handling patterns"
+      ]
+    },
+    {
+      "category": "common_issues",
+      "purpose": "Frequently encountered issues and their solutions",
+      "retention": "rolling_5_versions",
+      "examples": [
+        "Configuration mistakes",
+        "Common user errors",
+        "Integration pitfalls"
+      ]
+    },
+    {
+      "category": "performance_insights",
+      "purpose": "Performance optimization learnings",
+      "retention": "rolling_5_versions",
+      "examples": [
+        "Optimal query patterns",
+        "Caching strategies",
+        "Load handling patterns"
+      ]
+    },
+    {
+      "category": "compliance_learnings",
+      "purpose": "Compliance implementation insights",
+      "retention": "permanent",
+      "examples": [
+        "Audit trail patterns",
+        "Data retention strategies",
+        "Access control patterns"
+      ]
+    },
+    {
+      "category": "ai_behaviour_patterns",
+      "purpose": "AI interaction patterns and quality insights",
+      "retention": "rolling_5_versions",
+      "examples": [
+        "Effective prompt patterns",
+        "Common misconceptions",
+        "Quality indicators"
+      ]
+    }
+  ],
+  "knowledge_item_schema": {
+    "fields": [
+      "knowledge_id",
+      "category",
+      "title",
+      "description",
+      "evidence_refs",
+      "created_at",
+      "last_updated",
+      "version_introduced",
+      "status",
+      "impact_assessment",
+      "related_modules"
+    ],
+    "status_values": [
+      "ACTIVE",
+      "DEPRECATED",
+      "SUPERSEDED"
+    ]
+  },
+  "privacy_rules": {
+    "no_tenant_data": true,
+    "no_user_identifiers": true,
+    "aggregate_only": true,
+    "sanitization_required": true
+  },
+  "integration_points": {
+    "feeds_into": [
+      "foreman/builder/builder-guidance",
+      "foreman/qa-governance.md",
+      "foreman/ai-memory/architectural-lessons.md"
+    ],
+    "sourced_from": [
+      "foreman/runtime/behaviour-log-spec.md",
+      "foreman/runtime/incident-detection-spec.md",
+      "foreman/upgrade/runtime-export-spec.md"
+    ]
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "description": "Structure for lessons and signals that may trigger an upgrade cycle.",
+  "version": "1.0.0",
+  "insight_types": [
+    {
+      "type": "recurring_incidents",
+      "threshold": "3 similar incidents within 30 days",
+      "severity_filter": ["CRITICAL", "HIGH"],
+      "action": "trigger_upgrade_assessment"
+    },
+    {
+      "type": "user_feedback_trends",
+      "threshold": "10+ requests for same feature category",
+      "category_examples": ["missing_feature", "usability_issue", "performance_concern"],
+      "action": "add_to_roadmap"
+    },
+    {
+      "type": "performance_degradation",
+      "threshold": "P95 latency > 2x baseline for 7 days",
+      "affected_modules": [],
+      "action": "trigger_performance_review"
+    },
+    {
+      "type": "ai_drift_actionable",
+      "threshold": "3+ actionable drift events",
+      "drift_categories": ["behaviour_drift", "safety_drift"],
+      "action": "trigger_ai_review"
+    },
+    {
+      "type": "compliance_gap",
+      "threshold": "new compliance requirement identified",
+      "severity": "must comply within timeframe",
+      "action": "trigger_compliance_upgrade"
+    },
+    {
+      "type": "security_vulnerability",
+      "threshold": "any CRITICAL vulnerability",
+      "source": ["watchdog", "external_disclosure", "internal_audit"],
+      "action": "trigger_emergency_upgrade"
+    }
+  ],
+  "aggregation_rules": {
+    "review_frequency": "weekly",
+    "upgrade_decision_authority": ["foreman", "human_admin"],
+    "insights_retention": "5_versions"
+  },
+  "schema_fields": [
+    "insight_id",
+    "type",
+    "detected_at",
+    "severity",
+    "description",
+    "evidence_refs",
+    "proposed_action",
+    "status"
+  ]
+}
