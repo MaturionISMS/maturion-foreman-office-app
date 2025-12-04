@@ -1,0 +1,205 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Runtime Insights",
+  "description": "Aggregated insights collected from runtime monitoring, fed back to Build-Time Foreman for continuous improvement",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Schema version"
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when insights were generated"
+        },
+        "data_period": {
+          "type": "object",
+          "properties": {
+            "start_date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "end_date": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": ["start_date", "end_date"]
+        },
+        "total_insights": {
+          "type": "integer",
+          "description": "Total number of insights in this export"
+        }
+      },
+      "required": ["version", "generated_at", "data_period", "total_insights"]
+    },
+    "insights": {
+      "type": "array",
+      "description": "List of runtime insights",
+      "items": {
+        "type": "object",
+        "properties": {
+          "insight_id": {
+            "type": "string",
+            "description": "Unique identifier for this insight"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "performance",
+              "architecture",
+              "compliance",
+              "ux",
+              "security",
+              "qa",
+              "integration"
+            ],
+            "description": "Category of insight"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"],
+            "description": "Severity level of the issue or opportunity"
+          },
+          "title": {
+            "type": "string",
+            "description": "Brief title of the insight"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the insight"
+          },
+          "affected_modules": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of modules affected by this insight"
+          },
+          "root_cause": {
+            "type": "string",
+            "description": "Identified or suspected root cause"
+          },
+          "recommended_action": {
+            "type": "string",
+            "description": "Recommended action to address the insight"
+          },
+          "evidence": {
+            "type": "object",
+            "description": "Supporting data for the insight (anonymized, aggregated)",
+            "properties": {
+              "metric_name": {
+                "type": "string"
+              },
+              "current_value": {
+                "type": "number"
+              },
+              "baseline_value": {
+                "type": "number"
+              },
+              "delta": {
+                "type": "number"
+              },
+              "trend": {
+                "type": "string",
+                "enum": ["improving", "stable", "degrading"]
+              }
+            }
+          },
+          "frequency": {
+            "type": "integer",
+            "description": "How many times this issue was observed"
+          },
+          "first_observed": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When this insight was first detected"
+          },
+          "last_observed": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When this insight was last detected"
+          },
+          "cr_generated": {
+            "type": "boolean",
+            "description": "Whether an AI Change Request was generated"
+          },
+          "cr_id": {
+            "type": "string",
+            "description": "Change Request ID if generated"
+          }
+        },
+        "required": [
+          "insight_id",
+          "category",
+          "severity",
+          "title",
+          "description",
+          "affected_modules",
+          "recommended_action",
+          "frequency",
+          "first_observed",
+          "last_observed",
+          "cr_generated"
+        ]
+      }
+    },
+    "summary": {
+      "type": "object",
+      "description": "Summary statistics of insights",
+      "properties": {
+        "by_category": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "description": "Count of insights by category"
+        },
+        "by_severity": {
+          "type": "object",
+          "properties": {
+            "critical": {
+              "type": "integer"
+            },
+            "high": {
+              "type": "integer"
+            },
+            "medium": {
+              "type": "integer"
+            },
+            "low": {
+              "type": "integer"
+            }
+          },
+          "required": ["critical", "high", "medium", "low"]
+        },
+        "crs_generated": {
+          "type": "integer",
+          "description": "Number of Change Requests generated from insights"
+        },
+        "top_affected_modules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "module": {
+                "type": "string"
+              },
+              "insight_count": {
+                "type": "integer"
+              }
+            },
+            "required": ["module", "insight_count"]
+          },
+          "description": "Modules with most insights (top 5)"
+        }
+      },
+      "required": ["by_category", "by_severity", "crs_generated"]
+    }
+  },
+  "required": ["metadata", "insights", "summary"]
+}

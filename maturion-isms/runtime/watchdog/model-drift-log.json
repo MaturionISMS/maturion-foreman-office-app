@@ -1,0 +1,368 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Model Drift Log",
+  "description": "Log of AI model drift detection and tracking over time",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Schema version"
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When drift log was generated"
+        },
+        "model_name": {
+          "type": "string",
+          "description": "Name/identifier of AI model being monitored"
+        },
+        "baseline_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When baseline metrics were established"
+        }
+      },
+      "required": ["version", "generated_at", "model_name"]
+    },
+    "baseline_metrics": {
+      "type": "object",
+      "description": "Baseline performance metrics established at deployment or last recalibration",
+      "properties": {
+        "accuracy": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Baseline accuracy score"
+        },
+        "response_time_ms": {
+          "type": "number",
+          "description": "Baseline average response time"
+        },
+        "hallucination_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Baseline hallucination rate"
+        },
+        "escalation_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Baseline escalation rate"
+        },
+        "user_satisfaction": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Baseline user satisfaction score"
+        },
+        "privacy_violation_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Baseline privacy violation rate (should be 0)"
+        }
+      },
+      "required": ["accuracy", "response_time_ms", "hallucination_rate"]
+    },
+    "drift_measurements": {
+      "type": "array",
+      "description": "Periodic drift measurements",
+      "items": {
+        "type": "object",
+        "properties": {
+          "measurement_id": {
+            "type": "string",
+            "description": "Unique measurement identifier"
+          },
+          "measurement_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When measurement was taken"
+          },
+          "measurement_period": {
+            "type": "object",
+            "properties": {
+              "start_date": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "end_date": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": ["start_date", "end_date"],
+            "description": "Time period of data collection for this measurement"
+          },
+          "sample_size": {
+            "type": "integer",
+            "description": "Number of interactions in sample"
+          },
+          "current_metrics": {
+            "type": "object",
+            "properties": {
+              "accuracy": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "response_time_ms": {
+                "type": "number"
+              },
+              "hallucination_rate": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "escalation_rate": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "user_satisfaction": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "privacy_violation_rate": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "required": ["accuracy", "response_time_ms", "hallucination_rate"]
+          },
+          "drift_analysis": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "metric": {
+                  "type": "string",
+                  "description": "Name of metric"
+                },
+                "baseline_value": {
+                  "type": "number",
+                  "description": "Baseline value"
+                },
+                "current_value": {
+                  "type": "number",
+                  "description": "Current measured value"
+                },
+                "absolute_change": {
+                  "type": "number",
+                  "description": "Absolute change from baseline"
+                },
+                "percentage_change": {
+                  "type": "number",
+                  "description": "Percentage change from baseline"
+                },
+                "drift_threshold": {
+                  "type": "number",
+                  "description": "Threshold for drift detection (percentage)"
+                },
+                "drift_detected": {
+                  "type": "boolean",
+                  "description": "Whether drift threshold was exceeded"
+                },
+                "drift_direction": {
+                  "type": "string",
+                  "enum": ["improving", "degrading", "stable"],
+                  "description": "Direction of drift"
+                },
+                "severity": {
+                  "type": "string",
+                  "enum": ["acceptable", "minor", "moderate", "significant", "critical"],
+                  "description": "Severity of drift"
+                }
+              },
+              "required": [
+                "metric",
+                "baseline_value",
+                "current_value",
+                "percentage_change",
+                "drift_detected",
+                "drift_direction",
+                "severity"
+              ]
+            }
+          },
+          "overall_drift_status": {
+            "type": "string",
+            "enum": ["no_drift", "minor_drift", "moderate_drift", "significant_drift", "critical_drift"],
+            "description": "Overall drift assessment"
+          },
+          "contributing_factors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "factor": {
+                  "type": "string",
+                  "description": "Potential contributing factor to drift"
+                },
+                "likelihood": {
+                  "type": "string",
+                  "enum": ["low", "medium", "high"],
+                  "description": "Likelihood this factor is causing drift"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "Evidence supporting this factor"
+                }
+              },
+              "required": ["factor", "likelihood"]
+            },
+            "description": "Potential factors contributing to drift (e.g., data distribution change, model staleness)"
+          },
+          "recommended_actions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "action": {
+                  "type": "string",
+                  "description": "Recommended action to address drift"
+                },
+                "priority": {
+                  "type": "string",
+                  "enum": ["low", "medium", "high", "critical"]
+                },
+                "estimated_impact": {
+                  "type": "string",
+                  "description": "Expected impact if action is taken"
+                }
+              },
+              "required": ["action", "priority"]
+            },
+            "description": "Actions recommended to address drift"
+          },
+          "action_taken": {
+            "type": "object",
+            "properties": {
+              "action_id": {
+                "type": "string",
+                "description": "ID of action taken (links to risk actions or CR)"
+              },
+              "action_description": {
+                "type": "string",
+                "description": "What action was taken"
+              },
+              "action_date": {
+                "type": "string",
+                "format": "date-time",
+                "description": "When action was taken"
+              },
+              "effectiveness": {
+                "type": "string",
+                "enum": ["not_evaluated", "ineffective", "partially_effective", "effective"],
+                "description": "Effectiveness of action (evaluated in subsequent measurement)"
+              }
+            }
+          }
+        },
+        "required": [
+          "measurement_id",
+          "measurement_date",
+          "measurement_period",
+          "sample_size",
+          "current_metrics",
+          "drift_analysis",
+          "overall_drift_status"
+        ]
+      }
+    },
+    "trend_analysis": {
+      "type": "object",
+      "description": "Long-term trend analysis across all measurements",
+      "properties": {
+        "total_measurements": {
+          "type": "integer",
+          "description": "Total number of measurements taken"
+        },
+        "measurement_frequency": {
+          "type": "string",
+          "description": "How often measurements are taken (e.g., weekly, monthly)"
+        },
+        "trends": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "metric": {
+                "type": "string"
+              },
+              "trend_direction": {
+                "type": "string",
+                "enum": ["improving", "stable", "degrading", "volatile"]
+              },
+              "trend_strength": {
+                "type": "string",
+                "enum": ["weak", "moderate", "strong"],
+                "description": "How consistent the trend is"
+              },
+              "forecast": {
+                "type": "object",
+                "properties": {
+                  "next_30_days": {
+                    "type": "number",
+                    "description": "Forecast value for next 30 days"
+                  },
+                  "confidence": {
+                    "type": "string",
+                    "enum": ["low", "medium", "high"],
+                    "description": "Confidence in forecast"
+                  }
+                }
+              }
+            },
+            "required": ["metric", "trend_direction", "trend_strength"]
+          }
+        },
+        "recalibration_recommended": {
+          "type": "boolean",
+          "description": "Whether model recalibration is recommended based on trends"
+        },
+        "recalibration_reason": {
+          "type": "string",
+          "description": "Reason for recalibration recommendation"
+        }
+      },
+      "required": ["total_measurements", "trends"]
+    },
+    "calibration_history": {
+      "type": "array",
+      "description": "History of model recalibrations",
+      "items": {
+        "type": "object",
+        "properties": {
+          "calibration_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "calibration_reason": {
+            "type": "string"
+          },
+          "baseline_reset": {
+            "type": "boolean",
+            "description": "Whether baseline was reset after calibration"
+          },
+          "post_calibration_improvement": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            },
+            "description": "Improvement in metrics after calibration"
+          }
+        },
+        "required": ["calibration_date", "calibration_reason"]
+      }
+    }
+  },
+  "required": ["metadata", "baseline_metrics", "drift_measurements", "trend_analysis"]
+}

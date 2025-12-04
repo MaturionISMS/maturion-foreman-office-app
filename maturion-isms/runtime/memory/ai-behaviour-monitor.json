@@ -1,0 +1,339 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AI Behaviour Monitor",
+  "description": "Monitoring of Maturion AI behaviour, response quality, and self-improvement metrics",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Schema version"
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when monitor data was generated"
+        },
+        "monitoring_period": {
+          "type": "object",
+          "properties": {
+            "start_date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "end_date": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": ["start_date", "end_date"]
+        }
+      },
+      "required": ["version", "generated_at", "monitoring_period"]
+    },
+    "interactions": {
+      "type": "array",
+      "description": "Log of AI interactions (anonymized)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "interaction_id": {
+            "type": "string",
+            "description": "Unique identifier for this interaction"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When interaction occurred"
+          },
+          "user_type": {
+            "type": "string",
+            "enum": ["tenant_user", "tenant_admin", "johan_admin"],
+            "description": "Type of user interacting"
+          },
+          "interaction_type": {
+            "type": "string",
+            "enum": [
+              "question_answer",
+              "guidance",
+              "compliance_query",
+              "architecture_query",
+              "troubleshooting",
+              "escalation"
+            ],
+            "description": "Type of interaction"
+          },
+          "module_context": {
+            "type": "string",
+            "description": "Module context of the interaction (if applicable)"
+          },
+          "question_theme": {
+            "type": "string",
+            "description": "Categorized theme of the question (anonymized, no user-specific content)"
+          },
+          "response_quality": {
+            "type": "object",
+            "properties": {
+              "accuracy_validated": {
+                "type": "boolean",
+                "description": "Whether response accuracy was validated"
+              },
+              "accuracy_score": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+                "description": "Accuracy score if validated (0-1)"
+              },
+              "response_time_ms": {
+                "type": "integer",
+                "description": "Time to generate response in milliseconds"
+              },
+              "user_satisfaction": {
+                "type": "string",
+                "enum": ["positive", "neutral", "negative", "unknown"],
+                "description": "User satisfaction with response"
+              },
+              "followup_needed": {
+                "type": "boolean",
+                "description": "Whether user needed follow-up clarification"
+              }
+            },
+            "required": ["response_time_ms"]
+          },
+          "hallucination_check": {
+            "type": "object",
+            "properties": {
+              "checked": {
+                "type": "boolean",
+                "description": "Whether hallucination check was performed"
+              },
+              "hallucination_detected": {
+                "type": "boolean",
+                "description": "Whether hallucination was detected"
+              },
+              "hallucination_type": {
+                "type": "string",
+                "enum": ["factual_error", "policy_violation", "cross_tenant_leak", "none"],
+                "description": "Type of hallucination if detected"
+              },
+              "corrected": {
+                "type": "boolean",
+                "description": "Whether hallucination was corrected"
+              }
+            },
+            "required": ["checked", "hallucination_detected"]
+          },
+          "escalation": {
+            "type": "object",
+            "properties": {
+              "escalated": {
+                "type": "boolean",
+                "description": "Whether interaction was escalated to human"
+              },
+              "escalation_reason": {
+                "type": "string",
+                "description": "Reason for escalation"
+              },
+              "escalation_appropriate": {
+                "type": "boolean",
+                "description": "Whether escalation was appropriate (false positive check)"
+              }
+            },
+            "required": ["escalated"]
+          },
+          "compliance_context": {
+            "type": "object",
+            "properties": {
+              "compliance_related": {
+                "type": "boolean",
+                "description": "Whether interaction was compliance-related"
+              },
+              "standards_referenced": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Compliance standards referenced in response"
+              },
+              "accuracy_critical": {
+                "type": "boolean",
+                "description": "Whether compliance accuracy is critical (e.g., audit context)"
+              }
+            }
+          },
+          "privacy_check": {
+            "type": "object",
+            "properties": {
+              "tenant_isolation_verified": {
+                "type": "boolean",
+                "description": "Whether tenant isolation was maintained"
+              },
+              "pii_exposed": {
+                "type": "boolean",
+                "description": "Whether PII was inadvertently exposed"
+              },
+              "cross_tenant_leak": {
+                "type": "boolean",
+                "description": "Whether cross-tenant data leak occurred"
+              }
+            },
+            "required": ["tenant_isolation_verified", "pii_exposed", "cross_tenant_leak"]
+          }
+        },
+        "required": [
+          "interaction_id",
+          "timestamp",
+          "user_type",
+          "interaction_type",
+          "response_quality",
+          "hallucination_check",
+          "escalation",
+          "privacy_check"
+        ]
+      }
+    },
+    "performance_metrics": {
+      "type": "object",
+      "description": "Aggregated AI performance metrics",
+      "properties": {
+        "total_interactions": {
+          "type": "integer",
+          "description": "Total number of interactions in period"
+        },
+        "average_response_time_ms": {
+          "type": "number",
+          "description": "Average response time"
+        },
+        "accuracy_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Percentage of accurate responses"
+        },
+        "hallucination_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Percentage of interactions with hallucinations"
+        },
+        "escalation_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Percentage of interactions escalated"
+        },
+        "false_escalation_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Percentage of escalations that were false positives"
+        },
+        "user_satisfaction_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Average user satisfaction (0-1)"
+        },
+        "privacy_violation_count": {
+          "type": "integer",
+          "description": "Number of privacy violations detected"
+        },
+        "tenant_isolation_breach_count": {
+          "type": "integer",
+          "description": "Number of tenant isolation breaches detected"
+        }
+      },
+      "required": [
+        "total_interactions",
+        "average_response_time_ms",
+        "hallucination_rate",
+        "escalation_rate",
+        "privacy_violation_count",
+        "tenant_isolation_breach_count"
+      ]
+    },
+    "model_drift": {
+      "type": "object",
+      "description": "AI model drift detection",
+      "properties": {
+        "drift_detected": {
+          "type": "boolean",
+          "description": "Whether model drift was detected"
+        },
+        "drift_indicators": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "metric": {
+                "type": "string",
+                "description": "Metric showing drift (e.g., accuracy, response_time)"
+              },
+              "baseline_value": {
+                "type": "number",
+                "description": "Baseline value of metric"
+              },
+              "current_value": {
+                "type": "number",
+                "description": "Current value of metric"
+              },
+              "delta_percentage": {
+                "type": "number",
+                "description": "Percentage change from baseline"
+              },
+              "threshold_exceeded": {
+                "type": "boolean",
+                "description": "Whether drift threshold was exceeded"
+              }
+            },
+            "required": ["metric", "baseline_value", "current_value", "delta_percentage", "threshold_exceeded"]
+          }
+        },
+        "recommended_action": {
+          "type": "string",
+          "description": "Recommended action if drift detected (e.g., retrain, recalibrate)"
+        }
+      },
+      "required": ["drift_detected"]
+    },
+    "improvement_recommendations": {
+      "type": "array",
+      "description": "Recommendations for AI behaviour improvement",
+      "items": {
+        "type": "object",
+        "properties": {
+          "recommendation_id": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "accuracy",
+              "response_time",
+              "escalation_tuning",
+              "hallucination_prevention",
+              "privacy_enforcement",
+              "user_experience"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of recommended improvement"
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"]
+          },
+          "estimated_impact": {
+            "type": "string",
+            "description": "Expected impact if implemented"
+          }
+        },
+        "required": ["recommendation_id", "category", "description", "priority"]
+      }
+    }
+  },
+  "required": ["metadata", "interactions", "performance_metrics", "model_drift", "improvement_recommendations"]
+}

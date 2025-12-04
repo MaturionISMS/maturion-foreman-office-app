@@ -1,0 +1,201 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Platform Issues Log",
+  "description": "Log of platform issues detected during runtime, including errors, anomalies, and incidents",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Schema version"
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when log was generated"
+        },
+        "retention_period_days": {
+          "type": "integer",
+          "description": "Number of days this log is retained"
+        }
+      },
+      "required": ["version", "generated_at"]
+    },
+    "issues": {
+      "type": "array",
+      "description": "List of platform issues",
+      "items": {
+        "type": "object",
+        "properties": {
+          "issue_id": {
+            "type": "string",
+            "description": "Unique identifier for this issue"
+          },
+          "issue_type": {
+            "type": "string",
+            "enum": [
+              "error",
+              "exception",
+              "anomaly",
+              "performance_degradation",
+              "security_incident",
+              "compliance_violation",
+              "architecture_drift",
+              "integration_failure"
+            ],
+            "description": "Type of issue"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"],
+            "description": "Severity level"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["open", "investigating", "resolved", "closed", "wont_fix"],
+            "description": "Current status of the issue"
+          },
+          "detected_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When issue was first detected"
+          },
+          "resolved_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When issue was resolved (null if still open)"
+          },
+          "module": {
+            "type": "string",
+            "description": "Module where issue occurred"
+          },
+          "component": {
+            "type": "string",
+            "description": "Specific component (API endpoint, UI component, database table, etc.)"
+          },
+          "organisation_id": {
+            "type": "string",
+            "description": "Organisation affected (null for platform-wide issues, anonymized for cross-tenant aggregation)"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the issue"
+          },
+          "error_message": {
+            "type": "string",
+            "description": "Error message or stack trace (sanitized, no PII)"
+          },
+          "impact": {
+            "type": "object",
+            "properties": {
+              "users_affected": {
+                "type": "integer",
+                "description": "Number of users affected"
+              },
+              "organisations_affected": {
+                "type": "integer",
+                "description": "Number of organisations affected"
+              },
+              "downtime_minutes": {
+                "type": "number",
+                "description": "Downtime caused (if any)"
+              },
+              "data_loss": {
+                "type": "boolean",
+                "description": "Whether data loss occurred"
+              }
+            }
+          },
+          "root_cause": {
+            "type": "string",
+            "description": "Identified root cause (if known)"
+          },
+          "resolution": {
+            "type": "string",
+            "description": "How the issue was resolved"
+          },
+          "preventive_action": {
+            "type": "string",
+            "description": "Action taken to prevent recurrence"
+          },
+          "escalated_to": {
+            "type": "string",
+            "description": "Who the issue was escalated to (Johan, external support, etc.)"
+          },
+          "cr_id": {
+            "type": "string",
+            "description": "Change Request ID if issue led to CR"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tags for categorization and searching"
+          }
+        },
+        "required": [
+          "issue_id",
+          "issue_type",
+          "severity",
+          "status",
+          "detected_at",
+          "module",
+          "description"
+        ]
+      }
+    },
+    "summary": {
+      "type": "object",
+      "description": "Summary statistics of issues",
+      "properties": {
+        "total_issues": {
+          "type": "integer"
+        },
+        "open_issues": {
+          "type": "integer"
+        },
+        "resolved_issues": {
+          "type": "integer"
+        },
+        "by_severity": {
+          "type": "object",
+          "properties": {
+            "critical": {
+              "type": "integer"
+            },
+            "high": {
+              "type": "integer"
+            },
+            "medium": {
+              "type": "integer"
+            },
+            "low": {
+              "type": "integer"
+            }
+          }
+        },
+        "by_type": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "by_module": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "mean_time_to_resolution_hours": {
+          "type": "number",
+          "description": "Average time to resolve issues"
+        }
+      },
+      "required": ["total_issues", "open_issues", "resolved_issues"]
+    }
+  },
+  "required": ["metadata", "issues", "summary"]
+}

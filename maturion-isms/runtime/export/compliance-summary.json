@@ -1,0 +1,312 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Compliance Summary Export",
+  "description": "Compact runtime-ready summary of compliance framework for Runtime Maturion context",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Schema version"
+        },
+        "export_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this export was generated"
+        },
+        "compliance_version": {
+          "type": "string",
+          "description": "Current compliance framework version"
+        },
+        "export_source": {
+          "type": "string",
+          "description": "Source of export (e.g., export-runtime-context.py)"
+        }
+      },
+      "required": ["version", "export_date"]
+    },
+    "supported_standards": {
+      "type": "array",
+      "description": "All compliance standards supported by platform",
+      "items": {
+        "type": "object",
+        "properties": {
+          "standard_id": {
+            "type": "string",
+            "description": "Standard identifier (e.g., ISO_27001, NIST_CSF)"
+          },
+          "standard_name": {
+            "type": "string",
+            "description": "Full name of standard"
+          },
+          "version": {
+            "type": "string",
+            "description": "Version of standard (e.g., 2022 for ISO 27001:2022)"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "information_security",
+              "risk_management",
+              "business_continuity",
+              "data_privacy",
+              "application_security",
+              "governance"
+            ],
+            "description": "Category of standard"
+          },
+          "total_controls": {
+            "type": "integer",
+            "description": "Total number of controls in standard"
+          },
+          "mapped_controls": {
+            "type": "integer",
+            "description": "Number of controls mapped to ISMS modules"
+          },
+          "coverage_percentage": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Percentage of controls covered by platform"
+          }
+        },
+        "required": ["standard_id", "standard_name", "category"]
+      }
+    },
+    "control_mappings": {
+      "type": "array",
+      "description": "Mappings between controls and modules",
+      "items": {
+        "type": "object",
+        "properties": {
+          "control_id": {
+            "type": "string",
+            "description": "Control identifier (e.g., ISO_27001_A.5.1)"
+          },
+          "standard": {
+            "type": "string",
+            "description": "Standard the control belongs to"
+          },
+          "control_title": {
+            "type": "string",
+            "description": "Title of control"
+          },
+          "control_description": {
+            "type": "string",
+            "description": "Brief description of what control requires"
+          },
+          "mapped_modules": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Modules that implement this control"
+          },
+          "implementation_status": {
+            "type": "string",
+            "enum": ["implemented", "partially_implemented", "planned", "not_applicable"],
+            "description": "Status of control implementation"
+          },
+          "evidence_type": {
+            "type": "string",
+            "description": "Type of evidence for compliance (e.g., policy doc, system config, test results)"
+          }
+        },
+        "required": ["control_id", "standard", "control_title", "mapped_modules", "implementation_status"]
+      }
+    },
+    "compliance_coverage_by_module": {
+      "type": "array",
+      "description": "Compliance coverage summary per module",
+      "items": {
+        "type": "object",
+        "properties": {
+          "module_id": {
+            "type": "string"
+          },
+          "module_name": {
+            "type": "string"
+          },
+          "standards_supported": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "standard_id": {
+                  "type": "string"
+                },
+                "controls_implemented": {
+                  "type": "integer"
+                },
+                "coverage_percentage": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "total_controls_implemented": {
+            "type": "integer"
+          }
+        },
+        "required": ["module_id", "module_name", "standards_supported"]
+      }
+    },
+    "compliance_gaps": {
+      "type": "array",
+      "description": "Known compliance gaps requiring attention",
+      "items": {
+        "type": "object",
+        "properties": {
+          "gap_id": {
+            "type": "string"
+          },
+          "standard": {
+            "type": "string"
+          },
+          "control_id": {
+            "type": "string"
+          },
+          "control_title": {
+            "type": "string"
+          },
+          "gap_description": {
+            "type": "string",
+            "description": "What is missing or incomplete"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"],
+            "description": "Severity of gap"
+          },
+          "remediation_plan": {
+            "type": "string",
+            "description": "Plan to address gap"
+          },
+          "target_completion": {
+            "type": "string",
+            "format": "date",
+            "description": "Target date for gap closure"
+          }
+        },
+        "required": ["gap_id", "standard", "control_id", "gap_description", "severity"]
+      }
+    },
+    "watchdog_rules": {
+      "type": "array",
+      "description": "Compliance watchdog monitoring rules",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rule_id": {
+            "type": "string"
+          },
+          "standard": {
+            "type": "string"
+          },
+          "control_id": {
+            "type": "string"
+          },
+          "rule_description": {
+            "type": "string",
+            "description": "What the watchdog monitors"
+          },
+          "monitoring_frequency": {
+            "type": "string",
+            "enum": ["continuous", "hourly", "daily", "weekly"],
+            "description": "How often check is performed"
+          },
+          "alert_threshold": {
+            "type": "string",
+            "description": "Threshold for triggering alert"
+          },
+          "remediation_action": {
+            "type": "string",
+            "description": "Automatic or recommended action if rule violated"
+          }
+        },
+        "required": ["rule_id", "standard", "rule_description", "monitoring_frequency"]
+      }
+    },
+    "audit_requirements": {
+      "type": "object",
+      "description": "Requirements for compliance audits",
+      "properties": {
+        "evidence_retention_days": {
+          "type": "integer",
+          "description": "How long evidence must be retained (typically 7 years for ISO)"
+        },
+        "audit_trail_enabled": {
+          "type": "boolean",
+          "description": "Whether audit trails are enabled"
+        },
+        "required_documentation": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Documentation required for audits"
+        },
+        "certification_status": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "certified": {
+                "type": "boolean"
+              },
+              "certification_date": {
+                "type": "string",
+                "format": "date"
+              },
+              "expiry_date": {
+                "type": "string",
+                "format": "date"
+              },
+              "certifying_body": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Certification status per standard (e.g., ISO_27001: {certified: true, ...})"
+        }
+      },
+      "required": ["evidence_retention_days", "audit_trail_enabled"]
+    },
+    "compliance_dashboard_kpis": {
+      "type": "array",
+      "description": "Key compliance metrics for dashboards",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kpi_id": {
+            "type": "string"
+          },
+          "kpi_name": {
+            "type": "string"
+          },
+          "kpi_description": {
+            "type": "string"
+          },
+          "current_value": {
+            "type": "number"
+          },
+          "target_value": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string",
+            "description": "Unit of measurement (e.g., percentage, count)"
+          },
+          "trend": {
+            "type": "string",
+            "enum": ["improving", "stable", "degrading"]
+          }
+        },
+        "required": ["kpi_id", "kpi_name", "current_value"]
+      }
+    }
+  },
+  "required": ["metadata", "supported_standards", "control_mappings", "compliance_coverage_by_module", "watchdog_rules", "audit_requirements"]
+}
