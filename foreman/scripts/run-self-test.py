@@ -38,6 +38,12 @@ class ForemanSelfTest:
     
     FOREMAN_VERSION = "1.0.0"
     
+    # Validation constants
+    MIN_FILE_SIZE = 10  # Minimum bytes for a valid file
+    FAIL_THRESHOLD = 0.5  # If more than 50% of files fail, status is FAIL
+    MAX_SAMPLE_CR_FILES = 5  # Max change record files to sample during validation
+    MAX_DISPLAY_CR_RECORDS = 10  # Max change records to display in report
+    
     def __init__(self, repo_root: Path, output_dir: Path = None, verbose: bool = False):
         self.repo_root = repo_root
         self.output_dir = output_dir or repo_root
@@ -86,7 +92,7 @@ class ForemanSelfTest:
         try:
             with open(file_path, 'r') as f:
                 content = f.read()
-                if len(content) < 10:
+                if len(content) < self.MIN_FILE_SIZE:
                     return False, "File appears to be empty or too small"
             return True, "File exists and is readable"
         except Exception as e:
@@ -161,8 +167,8 @@ class ForemanSelfTest:
         
         # Determine status
         if subsystem["files_failed"] > 0:
-            # If more than 50% of critical files are missing, it's a FAIL
-            if subsystem["files_failed"] > subsystem["files_checked"] * 0.5:
+            # If more than FAIL_THRESHOLD of critical files are missing, it's a FAIL
+            if subsystem["files_failed"] > subsystem["files_checked"] * self.FAIL_THRESHOLD:
                 subsystem["status"] = "FAIL"
                 subsystem["details"] = f"Critical failures: {subsystem['files_failed']} of {subsystem['files_checked']} files failed"
             else:
@@ -391,7 +397,7 @@ class ForemanSelfTest:
             cr_files = list(cm_dir.glob("CR-*.json"))
             if cr_files:
                 subsystem["details"] += f". Found {len(cr_files)} change records"
-                for cr_file in cr_files[:5]:  # Sample first 5
+                for cr_file in cr_files[:self.MAX_SAMPLE_CR_FILES]:  # Sample first few
                     valid, msg, data = self.validate_json_file(cr_file)
                     if valid:
                         self.results["change_records"].append({
@@ -698,10 +704,10 @@ This self-test validates the health and readiness of all Maturion Foreman subsys
         # Change records section
         if self.results.get("change_records"):
             md += f"## Pending Change Records ({len(self.results['change_records'])})\n\n"
-            for cr in self.results["change_records"][:10]:  # Show first 10
+            for cr in self.results["change_records"][:self.MAX_DISPLAY_CR_RECORDS]:
                 md += f"- **{cr['cr_id']}** - Module: {cr['module']}, Status: {cr['status']}\n"
-            if len(self.results["change_records"]) > 10:
-                md += f"\n... and {len(self.results['change_records']) - 10} more\n"
+            if len(self.results["change_records"]) > self.MAX_DISPLAY_CR_RECORDS:
+                md += f"\n... and {len(self.results['change_records']) - self.MAX_DISPLAY_CR_RECORDS} more\n"
             md += "\n---\n\n"
         
         # Recommendations section
