@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated": "2025-12-04T06:52:39.861304",
+  "generated": "2025-12-04T07:06:35.277333",
   "build_wave": 1,
   "purpose": "Multi-Module Architecture Skeleton Build Tasks",
   "total_tasks": 88,
@@ -302,7 +302,9 @@
       ],
       "estimated_effort": "SMALL",
       "governance_checks": [
-        "QA follows QA governance rules"
+        "Test coverage meets minimum requirements",
+        "QA documentation standards followed",
+        "Test structure follows QA governance rules"
       ]
     },
     {
@@ -568,7 +570,9 @@
       ],
       "estimated_effort": "SMALL",
       "governance_checks": [
-        "QA follows QA governance rules"
+        "Test coverage meets minimum requirements",
+        "QA documentation standards followed",
+        "Test structure follows QA governance rules"
       ]
     },
     {
@@ -834,7 +838,9 @@
       ],
       "estimated_effort": "SMALL",
       "governance_checks": [
-        "QA follows QA governance rules"
+        "Test coverage meets minimum requirements",
+        "QA documentation standards followed",
+        "Test structure follows QA governance rules"
       ]
     },
     {
@@ -1100,7 +1106,9 @@
       ],
       "estimated_effort": "SMALL",
       "governance_checks": [
-        "QA follows QA governance rules"
+        "Test coverage meets minimum requirements",
+        "QA documentation standards followed",
+        "Test structure follows QA governance rules"
       ]
     },
     {
@@ -1366,7 +1374,9 @@
       ],
       "estimated_effort": "SMALL",
       "governance_checks": [
-        "QA follows QA governance rules"
+        "Test coverage meets minimum requirements",
+        "QA documentation standards followed",
+        "Test structure follows QA governance rules"
       ]
     },
     {
@@ -1632,7 +1642,9 @@
       ],
       "estimated_effort": "SMALL",
       "governance_checks": [
-        "QA follows QA governance rules"
+        "Test coverage meets minimum requirements",
+        "QA documentation standards followed",
+        "Test structure follows QA governance rules"
       ]
     },
     {
@@ -1898,7 +1910,9 @@
       ],
       "estimated_effort": "SMALL",
       "governance_checks": [
-        "QA follows QA governance rules"
+        "Test coverage meets minimum requirements",
+        "QA documentation standards followed",
+        "Test structure follows QA governance rules"
       ]
     },
     {
@@ -2164,7 +2178,9 @@
       ],
       "estimated_effort": "SMALL",
       "governance_checks": [
-        "QA follows QA governance rules"
+        "Test coverage meets minimum requirements",
+        "QA documentation standards followed",
+        "Test structure follows QA governance rules"
       ]
     },
     {
@@ -2430,7 +2446,9 @@
       ],
       "estimated_effort": "SMALL",
       "governance_checks": [
-        "QA follows QA governance rules"
+        "Test coverage meets minimum requirements",
+        "QA documentation standards followed",
+        "Test structure follows QA governance rules"
       ]
     },
     {
@@ -2696,7 +2714,9 @@
       ],
       "estimated_effort": "SMALL",
       "governance_checks": [
-        "QA follows QA governance rules"
+        "Test coverage meets minimum requirements",
+        "QA documentation standards followed",
+        "Test structure follows QA governance rules"
       ]
     },
     {
@@ -2962,7 +2982,9 @@
       ],
       "estimated_effort": "SMALL",
       "governance_checks": [
-        "QA follows QA governance rules"
+        "Test coverage meets minimum requirements",
+        "QA documentation standards followed",
+        "Test structure follows QA governance rules"
       ]
     }
   ],

@@ -152,7 +152,8 @@ class MultiModuleBuildPlanner:
         # Calculate dependency levels (topological sort)
         def calculate_level(module: str, visited: set) -> int:
             if module in visited:
-                return 0  # Circular dependency detected
+                # Circular dependency - return high level to push to end
+                return 999
             visited.add(module)
             
             deps = graph[module]['depends_on']

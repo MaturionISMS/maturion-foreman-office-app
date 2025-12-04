@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated": "2025-12-04T06:51:24.961867",
+  "generated": "2025-12-04T07:06:27.126495",
   "build_wave": 1,
   "purpose": "Multi-Module Architecture Skeleton Build",
   "modules": [
@@ -429,7 +429,7 @@
       "dependencies": [
         "WRAC"
       ],
-      "dependency_level": 2,
+      "dependency_level": 1001,
       "missing_components_count": 11,
       "ready_for_skeleton": true,
       "phases": [
@@ -509,7 +509,7 @@
       "dependencies": [
         "PIT"
       ],
-      "dependency_level": 2,
+      "dependency_level": 1001,
       "missing_components_count": 9,
       "ready_for_skeleton": true,
       "phases": [
@@ -590,7 +590,7 @@
         "PIT",
         "WRAC"
       ],
-      "dependency_level": 3,
+      "dependency_level": 1002,
       "missing_components_count": 11,
       "ready_for_skeleton": true,
       "phases": [
@@ -672,7 +672,7 @@
         "PIT",
         "WRAC"
       ],
-      "dependency_level": 4,
+      "dependency_level": 1003,
       "missing_components_count": 10,
       "ready_for_skeleton": true,
       "phases": [
@@ -755,7 +755,7 @@
         "VULNERABILITY",
         "WRAC"
       ],
-      "dependency_level": 5,
+      "dependency_level": 1004,
       "missing_components_count": 12,
       "ready_for_skeleton": true,
       "phases": [
@@ -838,7 +838,7 @@
         "THREAT",
         "WRAC"
       ],
-      "dependency_level": 5,
+      "dependency_level": 1004,
       "missing_components_count": 12,
       "ready_for_skeleton": true,
       "phases": [
@@ -923,7 +923,7 @@
         "VULNERABILITY",
         "WRAC"
       ],
-      "level": 2
+      "level": 1001
     },
     "ERM": {
       "depends_on": [
@@ -935,7 +935,7 @@
         "THREAT",
         "VULNERABILITY"
       ],
-      "level": 3
+      "level": 1002
     },
     "RISK_ASSESSMENT": {
       "depends_on": [
@@ -944,7 +944,7 @@
         "WRAC"
       ],
       "required_by": [],
-      "level": 4
+      "level": 1003
     },
     "THREAT": {
       "depends_on": [
@@ -956,7 +956,7 @@
       "required_by": [
         "VULNERABILITY"
       ],
-      "level": 5
+      "level": 1004
     },
     "VULNERABILITY": {
       "depends_on": [
@@ -968,7 +968,7 @@
       "required_by": [
         "THREAT"
       ],
-      "level": 5
+      "level": 1004
     },
     "WRAC": {
       "depends_on": [
@@ -981,7 +981,7 @@
         "THREAT",
         "VULNERABILITY"
       ],
-      "level": 2
+      "level": 1001
     },
     "COURSE_CRAFTER": {
       "depends_on": [],

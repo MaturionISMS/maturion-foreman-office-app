@@ -341,7 +341,9 @@ class MultiModuleBuildTaskGenerator:
             ],
             'estimated_effort': 'SMALL',
             'governance_checks': [
-                'QA follows QA governance rules'
+                'Test coverage meets minimum requirements',
+                'QA documentation standards followed',
+                'Test structure follows QA governance rules'
             ]
         })
         

@@ -211,7 +211,8 @@ class BuildWave1Summarizer:
             md.append(f"| {builder} | {task_count} | {module_count} |")
         
         md.append("")
-        md.append(f"**Total Tasks**: {self.build_tasks.get('total_tasks', 0)}")
+        total_tasks = self.build_tasks.get('total_tasks', len(self.build_tasks.get('tasks', [])))
+        md.append(f"**Total Tasks**: {total_tasks}")
         md.append("")
         md.append("---")
         md.append("")
