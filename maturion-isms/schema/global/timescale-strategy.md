@@ -130,7 +130,7 @@ SELECT create_hypertable('event_log', 'timestamp');
 
 ```sql
 CREATE TABLE audit_log (
-  id UUID NOT NULL, -- NOT PRIMARY KEY (see below)
+  id UUID NOT NULL, -- Part of composite primary key defined below
   organisation_id UUID NOT NULL REFERENCES organisations(id),
   
   -- Timestamp (PARTITION KEY)

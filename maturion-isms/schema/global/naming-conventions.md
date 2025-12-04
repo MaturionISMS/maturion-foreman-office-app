@@ -131,7 +131,7 @@ Examples:
 **Always** use `id` as the primary key column name:
 
 ```sql
-id UUID PRIMARY KEY DEFAULT gen_random_uuid()
+id UUID PRIMARY KEY DEFAULT generate_uuidv7()
 ```
 
 - Type: UUID (preferred) or BIGSERIAL

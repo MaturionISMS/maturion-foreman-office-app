@@ -110,7 +110,7 @@ All module-level schemas MUST align with this global architecture.
 ```sql
 -- organisations (tenant root)
 CREATE TABLE organisations (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id UUID PRIMARY KEY DEFAULT generate_uuidv7(),
   name TEXT NOT NULL,
   legal_name TEXT,
   industry TEXT,
@@ -123,7 +123,7 @@ CREATE TABLE organisations (
 
 -- organisation_settings
 CREATE TABLE organisation_settings (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id UUID PRIMARY KEY DEFAULT generate_uuidv7(),
   organisation_id UUID NOT NULL REFERENCES organisations(id),
   setting_key TEXT NOT NULL,
   setting_value JSONB NOT NULL,
@@ -138,7 +138,7 @@ CREATE TABLE organisation_settings (
 ```sql
 -- users
 CREATE TABLE users (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id UUID PRIMARY KEY DEFAULT generate_uuidv7(),
   organisation_id UUID NOT NULL REFERENCES organisations(id),
   email TEXT NOT NULL,
   full_name TEXT NOT NULL,
@@ -152,7 +152,7 @@ CREATE TABLE users (
 
 -- user_permissions
 CREATE TABLE user_permissions (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id UUID PRIMARY KEY DEFAULT generate_uuidv7(),
   organisation_id UUID NOT NULL REFERENCES organisations(id),
   user_id UUID NOT NULL REFERENCES users(id),
   module TEXT NOT NULL,
@@ -168,7 +168,7 @@ CREATE TABLE user_permissions (
 ```sql
 -- audit_log (TimescaleDB hypertable)
 CREATE TABLE audit_log (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id UUID NOT NULL,
   organisation_id UUID NOT NULL REFERENCES organisations(id),
   timestamp TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   user_id UUID REFERENCES users(id),
@@ -178,7 +178,10 @@ CREATE TABLE audit_log (
   action TEXT NOT NULL, -- created, updated, deleted, viewed
   changes JSONB,
   ip_address INET,
-  user_agent TEXT
+  user_agent TEXT,
+  
+  -- Composite primary key (timestamp + id) for TimescaleDB
+  PRIMARY KEY (timestamp, id)
 );
 
 -- Convert to TimescaleDB hypertable
@@ -190,7 +193,7 @@ SELECT create_hypertable('audit_log', 'timestamp');
 ```sql
 -- event_log (TimescaleDB hypertable)
 CREATE TABLE event_log (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id UUID NOT NULL,
   organisation_id UUID NOT NULL REFERENCES organisations(id),
   timestamp TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   event_type TEXT NOT NULL,
@@ -201,7 +204,10 @@ CREATE TABLE event_log (
   target_entity_type TEXT,
   target_entity_id UUID,
   payload JSONB,
-  processed_at TIMESTAMPTZ
+  processed_at TIMESTAMPTZ,
+  
+  -- Composite primary key (timestamp + id) for TimescaleDB
+  PRIMARY KEY (timestamp, id)
 );
 
 -- Convert to TimescaleDB hypertable
