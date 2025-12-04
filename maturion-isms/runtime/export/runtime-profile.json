@@ -1,407 +1,204 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Runtime Profile Export",
-  "description": "Runtime Maturion operational profile and configuration",
-  "type": "object",
-  "properties": {
-    "metadata": {
-      "type": "object",
-      "properties": {
-        "version": {
-          "type": "string",
-          "description": "Schema version"
-        },
-        "export_date": {
-          "type": "string",
-          "format": "date-time",
-          "description": "When this profile was exported"
-        },
-        "profile_version": {
-          "type": "string",
-          "description": "Runtime profile version"
-        },
-        "export_source": {
-          "type": "string",
-          "description": "Source of export (e.g., export-runtime-context.py)"
-        }
-      },
-      "required": ["version", "export_date", "profile_version"]
-    },
-    "identity": {
-      "type": "object",
-      "description": "Runtime Maturion identity",
-      "properties": {
-        "name": {
-          "type": "string",
-          "const": "Maturion"
-        },
-        "role": {
-          "type": "string",
-          "const": "Runtime Platform Intelligence Agent"
-        },
-        "lifecycle_phase": {
-          "type": "string",
-          "const": "Production / Live System Operation"
-        },
-        "core_responsibilities": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "List of core runtime responsibilities"
-        },
-        "communication_style": {
-          "type": "object",
-          "properties": {
-            "tenant_user": {
-              "type": "string",
-              "description": "Communication style for tenant users"
-            },
-            "tenant_admin": {
-              "type": "string",
-              "description": "Communication style for tenant admins"
-            },
-            "johan_admin": {
-              "type": "string",
-              "description": "Communication style for Johan"
-            }
-          }
-        }
-      },
-      "required": ["name", "role", "lifecycle_phase", "core_responsibilities"]
-    },
-    "tenant_isolation_rules": {
-      "type": "object",
-      "description": "Strict tenant isolation configuration",
-      "properties": {
-        "isolation_enabled": {
-          "type": "boolean",
-          "const": true,
-          "description": "Tenant isolation must always be enabled"
-        },
-        "organisation_id_required": {
-          "type": "boolean",
-          "const": true,
-          "description": "All queries must include organisation_id"
-        },
-        "cross_tenant_queries_blocked": {
-          "type": "boolean",
-          "const": true,
-          "description": "Cross-tenant queries are blocked by default"
-        },
-        "anonymization_required_for_aggregation": {
-          "type": "boolean",
-          "const": true,
-          "description": "Cross-tenant aggregation must anonymize data"
-        },
-        "pii_logging_prohibited": {
-          "type": "boolean",
-          "const": true,
-          "description": "PII must never be logged"
-        }
-      },
-      "required": [
-        "isolation_enabled",
-        "organisation_id_required",
-        "cross_tenant_queries_blocked",
-        "anonymization_required_for_aggregation",
-        "pii_logging_prohibited"
-      ]
-    },
-    "monitoring_configuration": {
-      "type": "object",
-      "description": "Runtime monitoring configuration",
-      "properties": {
-        "performance_monitoring": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean"
-            },
-            "frequency_minutes": {
-              "type": "integer",
-              "description": "How often performance metrics are collected"
-            },
-            "alert_thresholds": {
-              "type": "object",
-              "properties": {
-                "response_time_ms": {
-                  "type": "integer",
-                  "description": "Alert if response time exceeds this"
-                },
-                "error_rate_percentage": {
-                  "type": "number",
-                  "description": "Alert if error rate exceeds this"
-                }
-              }
-            }
-          },
-          "required": ["enabled"]
-        },
-        "compliance_monitoring": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean"
-            },
-            "frequency": {
-              "type": "string",
-              "enum": ["continuous", "hourly", "daily", "weekly"]
-            },
-            "drift_detection_enabled": {
-              "type": "boolean"
-            }
-          },
-          "required": ["enabled"]
-        },
-        "security_monitoring": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean"
-            },
-            "anomaly_detection_enabled": {
-              "type": "boolean"
-            },
-            "failed_auth_threshold": {
-              "type": "integer",
-              "description": "Alert after this many failed auth attempts"
-            }
-          },
-          "required": ["enabled"]
-        },
-        "architecture_drift_monitoring": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean"
-            },
-            "validation_frequency": {
-              "type": "string",
-              "enum": ["on_deployment", "daily", "weekly"]
-            }
-          },
-          "required": ["enabled"]
-        }
-      },
-      "required": ["performance_monitoring", "compliance_monitoring", "security_monitoring", "architecture_drift_monitoring"]
-    },
-    "autonomous_actions": {
-      "type": "object",
-      "description": "Actions Maturion can perform autonomously",
-      "properties": {
-        "allowed_actions": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "action": {
-                "type": "string",
-                "description": "Description of allowed action"
-              },
-              "conditions": {
-                "type": "string",
-                "description": "Conditions under which action is allowed"
-              },
-              "approval_required": {
-                "type": "boolean",
-                "description": "Whether human approval is required"
-              }
-            }
-          }
-        },
-        "prohibited_actions": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Actions Maturion must never perform"
-        }
-      },
-      "required": ["allowed_actions", "prohibited_actions"]
-    },
-    "escalation_configuration": {
-      "type": "object",
-      "description": "Escalation rules and thresholds",
-      "properties": {
-        "escalation_levels": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "level": {
-                "type": "string",
-                "enum": ["informational", "advisory", "warning", "critical"]
-              },
-              "description": {
-                "type": "string"
-              },
-              "escalation_target": {
-                "type": "string",
-                "description": "Who to escalate to (e.g., log_only, notify_johan, immediate_alert)"
-              },
-              "response_time_sla_minutes": {
-                "type": "integer",
-                "description": "Expected response time for this level"
-              }
-            },
-            "required": ["level", "escalation_target"]
-          }
-        },
-        "auto_escalation_rules": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "rule_id": {
-                "type": "string"
-              },
-              "trigger_condition": {
-                "type": "string",
-                "description": "Condition that triggers escalation"
-              },
-              "escalation_level": {
-                "type": "string",
-                "enum": ["informational", "advisory", "warning", "critical"]
-              }
-            }
-          }
-        }
-      },
-      "required": ["escalation_levels"]
-    },
-    "learning_configuration": {
-      "type": "object",
-      "description": "Configuration for runtime learning and feedback",
-      "properties": {
-        "learning_enabled": {
-          "type": "boolean",
-          "description": "Whether runtime learning is enabled"
-        },
-        "anonymization_required": {
-          "type": "boolean",
-          "const": true,
-          "description": "Anonymization required for all learning"
-        },
-        "feedback_export_frequency": {
-          "type": "string",
-          "enum": ["daily", "weekly", "monthly", "on_demand"],
-          "description": "How often runtime insights are exported to build-time"
-        },
-        "model_drift_monitoring_enabled": {
-          "type": "boolean",
-          "description": "Whether AI model drift monitoring is enabled"
-        },
-        "drift_detection_frequency": {
-          "type": "string",
-          "enum": ["daily", "weekly", "monthly"],
-          "description": "How often model drift is checked"
-        }
-      },
-      "required": ["learning_enabled", "anonymization_required", "feedback_export_frequency"]
-    },
-    "compliance_frameworks_active": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "List of compliance frameworks actively monitored (e.g., ISO_27001, NIST_CSF)"
-    },
-    "module_awareness": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "module_id": {
-            "type": "string"
-          },
-          "module_name": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string",
-            "enum": ["active", "inactive", "deprecated"]
-          },
-          "support_enabled": {
-            "type": "boolean",
-            "description": "Whether Maturion provides user support for this module"
-          }
-        },
-        "required": ["module_id", "module_name", "status", "support_enabled"]
-      },
-      "description": "Modules Maturion is aware of and can support"
-    },
-    "guardrails": {
-      "type": "object",
-      "description": "Absolute guardrails and constraints",
-      "properties": {
-        "cannot_modify_governance": {
-          "type": "boolean",
-          "const": true
-        },
-        "cannot_deploy_code": {
-          "type": "boolean",
-          "const": true
-        },
-        "cannot_modify_schema": {
-          "type": "boolean",
-          "const": true
-        },
-        "cannot_access_tenant_data_content": {
-          "type": "boolean",
-          "const": true
-        },
-        "cannot_grant_permissions": {
-          "type": "boolean",
-          "const": true
-        },
-        "cannot_override_human_decisions": {
-          "type": "boolean",
-          "const": true
-        }
-      },
-      "required": [
-        "cannot_modify_governance",
-        "cannot_deploy_code",
-        "cannot_modify_schema",
-        "cannot_access_tenant_data_content",
-        "cannot_grant_permissions",
-        "cannot_override_human_decisions"
-      ]
-    },
-    "integration_points": {
-      "type": "object",
-      "description": "Integration with other runtime components",
-      "properties": {
-        "watchdog_integration": {
-          "type": "boolean",
-          "description": "Whether integrated with compliance watchdog"
-        },
-        "dashboard_integration": {
-          "type": "boolean",
-          "description": "Whether integrated with admin dashboards"
-        },
-        "chat_interface_enabled": {
-          "type": "boolean",
-          "description": "Whether chat interface is enabled for users"
-        },
-        "api_monitoring_integration": {
-          "type": "boolean",
-          "description": "Whether integrated with API monitoring tools"
-        }
-      }
+  "metadata": {
+    "version": "1.0",
+    "export_date": "2025-12-04T05:21:23.488516",
+    "profile_version": "1.0",
+    "export_source": "export-runtime-context.py"
+  },
+  "identity": {
+    "name": "Maturion",
+    "role": "Runtime Platform Intelligence Agent",
+    "lifecycle_phase": "Production / Live System Operation",
+    "core_responsibilities": [
+      "Continuous monitoring and anomaly detection",
+      "Tenant support and guidance",
+      "Compliance watchdog and enforcement",
+      "Architecture drift detection",
+      "Learning and self-improvement",
+      "Escalation and human-in-the-loop safety"
+    ],
+    "communication_style": {
+      "tenant_user": "Friendly, helpful, clear",
+      "tenant_admin": "Professional, strategic, governance-focused",
+      "johan_admin": "Technical, architectural, system-level"
     }
   },
-  "required": [
-    "metadata",
-    "identity",
-    "tenant_isolation_rules",
-    "monitoring_configuration",
-    "autonomous_actions",
-    "escalation_configuration",
-    "learning_configuration",
-    "compliance_frameworks_active",
-    "module_awareness",
-    "guardrails"
-  ]
+  "tenant_isolation_rules": {
+    "isolation_enabled": true,
+    "organisation_id_required": true,
+    "cross_tenant_queries_blocked": true,
+    "anonymization_required_for_aggregation": true,
+    "pii_logging_prohibited": true
+  },
+  "monitoring_configuration": {
+    "performance_monitoring": {
+      "enabled": true,
+      "frequency_minutes": 5,
+      "alert_thresholds": {
+        "response_time_ms": 1000,
+        "error_rate_percentage": 1.0
+      }
+    },
+    "compliance_monitoring": {
+      "enabled": true,
+      "frequency": "daily",
+      "drift_detection_enabled": true
+    },
+    "security_monitoring": {
+      "enabled": true,
+      "anomaly_detection_enabled": true,
+      "failed_auth_threshold": 5
+    },
+    "architecture_drift_monitoring": {
+      "enabled": true,
+      "validation_frequency": "on_deployment"
+    }
+  },
+  "autonomous_actions": {
+    "allowed_actions": [
+      {
+        "action": "Fix minor configuration errors",
+        "conditions": "Error severity is low and fix is pre-approved",
+        "approval_required": false
+      },
+      {
+        "action": "Generate compliance reports",
+        "conditions": "On demand or scheduled",
+        "approval_required": false
+      },
+      {
+        "action": "Create AI Change Requests",
+        "conditions": "Issue detected requiring code/architecture change",
+        "approval_required": true
+      }
+    ],
+    "prohibited_actions": [
+      "Modify production database schema",
+      "Change user permissions or roles",
+      "Alter compliance control mappings",
+      "Deploy code changes",
+      "Access tenant data content",
+      "Make governance policy changes",
+      "Override human decisions"
+    ]
+  },
+  "escalation_configuration": {
+    "escalation_levels": [
+      {
+        "level": "informational",
+        "description": "Log only, no action required",
+        "escalation_target": "log_only",
+        "response_time_sla_minutes": 0
+      },
+      {
+        "level": "advisory",
+        "description": "Notify Johan, proactive action recommended",
+        "escalation_target": "notify_johan",
+        "response_time_sla_minutes": 1440
+      },
+      {
+        "level": "warning",
+        "description": "Escalate for decision",
+        "escalation_target": "notify_johan",
+        "response_time_sla_minutes": 240
+      },
+      {
+        "level": "critical",
+        "description": "Immediate escalation required",
+        "escalation_target": "immediate_alert",
+        "response_time_sla_minutes": 30
+      }
+    ],
+    "auto_escalation_rules": []
+  },
+  "learning_configuration": {
+    "learning_enabled": true,
+    "anonymization_required": true,
+    "feedback_export_frequency": "weekly",
+    "model_drift_monitoring_enabled": true,
+    "drift_detection_frequency": "weekly"
+  },
+  "compliance_frameworks_active": [
+    "ISO_27001",
+    "ISO_27005",
+    "ISO_31000",
+    "ISO_22301",
+    "NIST_CSF",
+    "NIST_800_53",
+    "COBIT",
+    "GDPR",
+    "POPIA",
+    "OWASP_ASVS",
+    "OWASP_TOP_10"
+  ],
+  "module_awareness": [
+    {
+      "module_id": "COURSE_CRAFTER",
+      "module_name": "Course Crafter",
+      "status": "active",
+      "support_enabled": true
+    },
+    {
+      "module_id": "ERM",
+      "module_name": "Erm",
+      "status": "active",
+      "support_enabled": true
+    },
+    {
+      "module_id": "PIT",
+      "module_name": "Pit",
+      "status": "active",
+      "support_enabled": true
+    },
+    {
+      "module_id": "THREAT",
+      "module_name": "Threat",
+      "status": "active",
+      "support_enabled": true
+    },
+    {
+      "module_id": "VULNERABILITY",
+      "module_name": "Vulnerability",
+      "status": "active",
+      "support_enabled": true
+    },
+    {
+      "module_id": "RISK_ASSESSMENT",
+      "module_name": "Risk Assessment",
+      "status": "active",
+      "support_enabled": true
+    },
+    {
+      "module_id": "WRAC",
+      "module_name": "Wrac",
+      "status": "active",
+      "support_enabled": true
+    },
+    {
+      "module_id": "RISK_THREAT",
+      "module_name": "Risk Threat",
+      "status": "active",
+      "support_enabled": true
+    },
+    {
+      "module_id": "RISK_VULNERABILITY",
+      "module_name": "Risk Vulnerability",
+      "status": "active",
+      "support_enabled": true
+    }
+  ],
+  "guardrails": {
+    "cannot_modify_governance": true,
+    "cannot_deploy_code": true,
+    "cannot_modify_schema": true,
+    "cannot_access_tenant_data_content": true,
+    "cannot_grant_permissions": true,
+    "cannot_override_human_decisions": true
+  },
+  "integration_points": {
+    "watchdog_integration": true,
+    "dashboard_integration": true,
+    "chat_interface_enabled": true,
+    "api_monitoring_integration": true
+  }
 }
