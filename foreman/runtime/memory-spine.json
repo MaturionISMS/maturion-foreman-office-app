@@ -1,0 +1,58 @@
+{
+  "description": "Canonical description of long-lived memories shared between Build-time Foreman and Run-time Maturion.",
+  "version": "1.0.0",
+  "last_updated_by": "governance",
+  "layers": [
+    {
+      "id": "governance_knowledge",
+      "purpose": "Architecture, QA, compliance, and build philosophy knowledge that must persist across all versions.",
+      "source_documents": [
+        "foreman/identity.md",
+        "foreman/roles-and-duties.md",
+        "foreman/memory-model.md",
+        "foreman/privacy-guardrails.md",
+        "foreman/runtime-agent-plan.md",
+        "foreman/task-distribution-rules.md",
+        "foreman/qa-governance.md",
+        "foreman/qa-of-qa.md",
+        "foreman/compliance/compliance-engine-initialization.md"
+      ],
+      "retention_policy": "permanent",
+      "accessible_in": ["foreman_build_time", "maturion_runtime"],
+      "contains_tenant_data": false
+    },
+    {
+      "id": "architecture_index",
+      "purpose": "Indexed architecture metadata across all ISMS modules and versions.",
+      "source_documents": [
+        "ARCHITECTURE_INDEX.json",
+        "STANDARDISATION_REPORT.md"
+      ],
+      "retention_policy": "permanent",
+      "accessible_in": ["foreman_build_time"],
+      "contains_tenant_data": false
+    },
+    {
+      "id": "runtime_lessons",
+      "purpose": "Aggregated lessons from incidents, user feedback, performance trends and runtime behaviour.",
+      "source_documents": [
+        "foreman/ai-memory/knowledge-base-schema.json",
+        "foreman/ai-memory/reasoning-patterns-schema.json",
+        "foreman/ai-memory/historical-issues-schema.json",
+        "foreman/ai-memory/architectural-lessons.md"
+      ],
+      "retention_policy": "rolling_5_versions",
+      "accessible_in": ["foreman_build_time", "maturion_runtime"],
+      "contains_tenant_data": false
+    }
+  ],
+  "governance_rules": {
+    "no_raw_tenant_data": true,
+    "no_credentials_or_secrets": true,
+    "export_import_must_follow": [
+      "foreman/upgrade/runtime-export-spec.md",
+      "foreman/upgrade/foreman-import-spec.md",
+      "foreman/transition/continuity-protocol.md"
+    ]
+  }
+}

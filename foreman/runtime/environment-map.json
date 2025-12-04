@@ -1,0 +1,55 @@
+{
+  "description": "Logical map of environments and their allowed operations from Foreman/Maturion's perspective.",
+  "version": "1.0.0",
+  "environments": [
+    {
+      "id": "dev",
+      "label": "Development",
+      "allowed_operations": [
+        "experimental_features",
+        "non_production_data_only",
+        "builder_agent_testing"
+      ],
+      "ai_routing_policy": "lowest_sensitivity",
+      "contains_tenant_data": false
+    },
+    {
+      "id": "test",
+      "label": "Test / QA",
+      "allowed_operations": [
+        "release_candidate_validation",
+        "regression_testing",
+        "performance_baseline_testing"
+      ],
+      "ai_routing_policy": "similar_to_prod_but_masked_data",
+      "contains_tenant_data": false
+    },
+    {
+      "id": "staging",
+      "label": "Staging",
+      "allowed_operations": [
+        "pre_production_verification",
+        "limited_realistic_scenarios",
+        "monitoring_dry_run"
+      ],
+      "ai_routing_policy": "mirror_prod_models",
+      "contains_tenant_data": false
+    },
+    {
+      "id": "prod",
+      "label": "Production",
+      "allowed_operations": [
+        "tenant_operations",
+        "runtime_monitoring",
+        "watchdog_enforcement"
+      ],
+      "ai_routing_policy": "full_runtime_policy",
+      "contains_tenant_data": true
+    }
+  ],
+  "governance_links": {
+    "test_env": "foreman/test-environment/test-env-architecture.md",
+    "data_policy": "foreman/test-environment/test-env-data-policy.md",
+    "transition_protocol": "foreman/transition/continuity-protocol.md"
+  }
+}

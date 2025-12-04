@@ -1,0 +1,91 @@
+{
+  "description": "Structure for reasoning patterns such as common failure explanations and preferred solution paths.",
+  "version": "1.0.0",
+  "pattern_types": [
+    {
+      "type": "diagnostic_pattern",
+      "purpose": "Common failure modes and how to diagnose them",
+      "structure": {
+        "symptom": "Observable behaviour",
+        "likely_causes": ["List of common root causes"],
+        "diagnostic_steps": ["Steps to confirm diagnosis"],
+        "resolution_paths": ["Known solutions"]
+      }
+    },
+    {
+      "type": "solution_pattern",
+      "purpose": "Proven solution approaches for recurring problems",
+      "structure": {
+        "problem_category": "Type of problem",
+        "context": "When this pattern applies",
+        "approach": "Step-by-step solution",
+        "success_rate": "Historical effectiveness",
+        "alternatives": ["Other approaches if primary fails"]
+      }
+    },
+    {
+      "type": "quality_pattern",
+      "purpose": "Patterns that indicate quality or lack thereof",
+      "structure": {
+        "quality_indicator": "What to look for",
+        "positive_signals": ["Indicators of good quality"],
+        "negative_signals": ["Indicators of issues"],
+        "measurement": "How to quantify"
+      }
+    },
+    {
+      "type": "risk_pattern",
+      "purpose": "Patterns that suggest potential risks",
+      "structure": {
+        "risk_indicator": "Early warning sign",
+        "risk_category": "Type of risk",
+        "mitigation": "How to address",
+        "escalation_threshold": "When to escalate"
+      }
+    }
+  ],
+  "pattern_lifecycle": {
+    "discovery": "Identified from runtime behaviour",
+    "validation": "Confirmed across multiple instances",
+    "refinement": "Improved based on outcomes",
+    "deprecation": "Replaced by better pattern or no longer relevant"
+  },
+  "pattern_schema": {
+    "fields": [
+      "pattern_id",
+      "type",
+      "title",
+      "description",
+      "structure",
+      "confidence_score",
+      "evidence_count",
+      "first_observed",
+      "last_validated",
+      "success_rate",
+      "related_modules",
+      "status"
+    ],
+    "status_values": [
+      "CANDIDATE",
+      "VALIDATED",
+      "ACTIVE",
+      "DEPRECATED"
+    ]
+  },
+  "privacy_rules": {
+    "no_tenant_data": true,
+    "aggregate_observations_only": true,
+    "sanitize_examples": true
+  },
+  "integration_points": {
+    "feeds_into": [
+      "foreman/ai-memory/architectural-lessons.md",
+      "foreman/builder/builder-guidance",
+      "foreman/qa-of-qa.md"
+    ],
+    "sourced_from": [
+      "foreman/runtime/incident-detection-spec.md",
+      "foreman/ai-memory/historical-issues-schema.json"
+    ]
+  }
+}

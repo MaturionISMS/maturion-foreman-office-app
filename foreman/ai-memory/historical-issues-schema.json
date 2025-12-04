@@ -1,0 +1,104 @@
+{
+  "description": "Structure for storing historical issues, their root causes, and fixes.",
+  "version": "1.0.0",
+  "issue_schema": {
+    "fields": [
+      "issue_id",
+      "title",
+      "detected_at",
+      "resolved_at",
+      "severity",
+      "category",
+      "affected_modules",
+      "affected_environments",
+      "root_cause",
+      "symptoms",
+      "diagnosis_steps_taken",
+      "solution_applied",
+      "effectiveness",
+      "prevention_measures",
+      "related_incidents",
+      "lessons_learned",
+      "status"
+    ],
+    "severity_values": [
+      "CRITICAL",
+      "HIGH",
+      "MEDIUM",
+      "LOW"
+    ],
+    "category_values": [
+      "PERFORMANCE",
+      "SECURITY",
+      "COMPLIANCE",
+      "FUNCTIONALITY",
+      "INTEGRATION",
+      "AI_BEHAVIOUR",
+      "DATA_INTEGRITY",
+      "USER_EXPERIENCE"
+    ],
+    "status_values": [
+      "IDENTIFIED",
+      "DIAGNOSED",
+      "RESOLVED",
+      "PREVENTED",
+      "RECURRING"
+    ]
+  },
+  "recurrence_tracking": {
+    "purpose": "Identify patterns in recurring issues",
+    "fields": [
+      "original_issue_id",
+      "recurrence_count",
+      "recurrence_dates",
+      "pattern_analysis",
+      "prevention_effectiveness"
+    ],
+    "escalation_threshold": 3
+  },
+  "impact_assessment": {
+    "metrics": [
+      "downtime_duration",
+      "affected_tenant_count_category",
+      "data_integrity_impact",
+      "compliance_impact",
+      "user_experience_impact"
+    ],
+    "privacy_rule": "Use categories and ranges, never specific tenant counts or names"
+  },
+  "solution_repository": {
+    "purpose": "Build knowledge base of proven solutions",
+    "structure": {
+      "problem_pattern": "Description of problem type",
+      "solution_steps": ["Ordered solution steps"],
+      "prerequisites": ["What must be in place"],
+      "success_criteria": ["How to verify solution worked"],
+      "side_effects": ["Known impacts of solution"],
+      "time_to_resolve": "Typical duration category"
+    }
+  },
+  "privacy_rules": {
+    "no_tenant_identifiers": true,
+    "no_user_names": true,
+    "aggregate_impact_only": true,
+    "sanitize_all_examples": true
+  },
+  "integration_points": {
+    "feeds_into": [
+      "foreman/ai-memory/knowledge-base-schema.json",
+      "foreman/ai-memory/reasoning-patterns-schema.json",
+      "foreman/ai-memory/architectural-lessons.md",
+      "foreman/upgrade/upgrade-insights-schema.json"
+    ],
+    "sourced_from": [
+      "foreman/runtime/incident-detection-spec.md",
+      "foreman/runtime/behaviour-log-spec.md"
+    ]
+  },
+  "retention_policy": {
+    "critical_issues": "permanent",
+    "high_issues": "5_versions",
+    "medium_low_issues": "3_versions",
+    "resolved_no_recurrence": "1_version_after_resolution"
+  }
+}
