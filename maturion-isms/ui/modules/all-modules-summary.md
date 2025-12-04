@@ -47,7 +47,7 @@ All modules follow the same structural patterns defined in `README.md` with modu
 - `RiskHeatMap`: Visual risk matrix
 - `RiskCard`: Risk summary card
 - `ControlCard`: Control information card
-- `BowTieD iagram`: Cause-effect visualization
+- `BowTieDiagram`: Cause-effect visualization
 - `IncidentTimeline`: Incident history
 
 ---
