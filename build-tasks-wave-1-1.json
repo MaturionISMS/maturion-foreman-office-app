@@ -1,0 +1,330 @@
+{
+  "version": "1.0",
+  "generated": "2025-12-04T08:20:02.658214",
+  "build_wave": 1.1,
+  "purpose": "Global UI Shell and Layout System Build Tasks",
+  "total_tasks": 18,
+  "tasks": [
+    {
+      "task_id": "WAVE1.1-LAYOUT-T0001",
+      "title": "Layout - Header Component",
+      "component": "global-layout",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Create global header with logo, navigation, search, notifications, user menu",
+      "acceptance_criteria": [
+        "Header renders correctly",
+        "All sub-components functional",
+        "Responsive behavior",
+        "Accessibility compliant"
+      ],
+      "dependencies": [],
+      "estimated_hours": 6
+    },
+    {
+      "task_id": "WAVE1.1-LAYOUT-T0002",
+      "title": "Layout - Sidebar Component",
+      "component": "global-layout",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Create collapsible sidebar with module navigation",
+      "acceptance_criteria": [
+        "Sidebar renders",
+        "Collapse/expand works",
+        "Module menu functional",
+        "Mobile overlay works"
+      ],
+      "dependencies": [],
+      "estimated_hours": 6
+    },
+    {
+      "task_id": "WAVE1.1-LAYOUT-T0003",
+      "title": "Layout - Footer Component",
+      "component": "global-layout",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Create global footer with links and version info",
+      "acceptance_criteria": [
+        "Footer renders",
+        "Links functional",
+        "Responsive layout"
+      ],
+      "dependencies": [],
+      "estimated_hours": 6
+    },
+    {
+      "task_id": "WAVE1.1-LAYOUT-T0004",
+      "title": "Layout - Content Container Component",
+      "component": "global-layout",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Create main content area container with fluid width",
+      "acceptance_criteria": [
+        "Container renders",
+        "Padding correct",
+        "Scroll behavior correct"
+      ],
+      "dependencies": [],
+      "estimated_hours": 6
+    },
+    {
+      "task_id": "WAVE1.1-LAYOUT-T0005",
+      "title": "Layout - Responsive Grid System",
+      "component": "global-layout",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Implement 12-column responsive grid with breakpoints",
+      "acceptance_criteria": [
+        "Grid works across breakpoints",
+        "Gutters correct",
+        "Container max-widths correct"
+      ],
+      "dependencies": [],
+      "estimated_hours": 6
+    },
+    {
+      "task_id": "WAVE1.1-LAYOUT-T0006",
+      "title": "Layout - Layout Integration",
+      "component": "global-layout",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Integrate all layout components into cohesive system",
+      "acceptance_criteria": [
+        "All regions render together",
+        "Z-index correct",
+        "No layout conflicts"
+      ],
+      "dependencies": [],
+      "estimated_hours": 6
+    },
+    {
+      "task_id": "WAVE1.1-LAYOUT-T0007",
+      "title": "Layout - Layout Tests",
+      "component": "global-layout",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Write unit and integration tests for layout",
+      "acceptance_criteria": [
+        "Unit tests pass",
+        "Integration tests pass",
+        "Coverage > 80%"
+      ],
+      "dependencies": [],
+      "estimated_hours": 6
+    },
+    {
+      "task_id": "WAVE1.1-LAYOUT-T0008",
+      "title": "Layout - Layout Documentation",
+      "component": "global-layout",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Create Storybook stories and usage docs for layout",
+      "acceptance_criteria": [
+        "Storybook complete",
+        "Examples provided",
+        "API documented"
+      ],
+      "dependencies": [],
+      "estimated_hours": 6
+    },
+    {
+      "task_id": "WAVE1.1-THEME-T0009",
+      "title": "Theme - CSS Custom Properties Setup",
+      "component": "theme-system",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Define all CSS custom properties for theme system",
+      "acceptance_criteria": [
+        "All properties defined",
+        "Dark mode variants",
+        "Documentation complete"
+      ],
+      "dependencies": [],
+      "estimated_hours": 5
+    },
+    {
+      "task_id": "WAVE1.1-THEME-T0010",
+      "title": "Theme - APGI Default Theme",
+      "component": "theme-system",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Create APGI default theme with brand colors",
+      "acceptance_criteria": [
+        "Theme applies correctly",
+        "Colors match spec",
+        "Contrast ratios met"
+      ],
+      "dependencies": [],
+      "estimated_hours": 5
+    },
+    {
+      "task_id": "WAVE1.1-THEME-T0011",
+      "title": "Theme - Tenant Theme Loader",
+      "component": "theme-system",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Implement tenant theme loading and validation",
+      "acceptance_criteria": [
+        "Loads tenant themes",
+        "Validation works",
+        "Fallback to default"
+      ],
+      "dependencies": [],
+      "estimated_hours": 5
+    },
+    {
+      "task_id": "WAVE1.1-THEME-T0012",
+      "title": "Theme - Dark Mode Toggle",
+      "component": "theme-system",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Create dark mode toggle with persistence",
+      "acceptance_criteria": [
+        "Toggle works",
+        "Persists preference",
+        "Smooth transition"
+      ],
+      "dependencies": [],
+      "estimated_hours": 5
+    },
+    {
+      "task_id": "WAVE1.1-THEME-T0013",
+      "title": "Theme - Theme Validator",
+      "component": "theme-system",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Create contrast ratio and theme validation tool",
+      "acceptance_criteria": [
+        "Validates contrast",
+        "Checks all requirements",
+        "Reports issues"
+      ],
+      "dependencies": [],
+      "estimated_hours": 5
+    },
+    {
+      "task_id": "WAVE1.1-THEME-T0014",
+      "title": "Theme - Typography System",
+      "component": "theme-system",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Implement typography scale and font loading",
+      "acceptance_criteria": [
+        "Fonts load correctly",
+        "Scale consistent",
+        "Fallbacks work"
+      ],
+      "dependencies": [],
+      "estimated_hours": 5
+    },
+    {
+      "task_id": "WAVE1.1-THEME-T0015",
+      "title": "Theme - Color System",
+      "component": "theme-system",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Implement semantic color system",
+      "acceptance_criteria": [
+        "All colors defined",
+        "Semantic mapping correct",
+        "Dark mode works"
+      ],
+      "dependencies": [],
+      "estimated_hours": 5
+    },
+    {
+      "task_id": "WAVE1.1-THEME-T0016",
+      "title": "Theme - Spacing & Shadow System",
+      "component": "theme-system",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Implement spacing scale and shadow system",
+      "acceptance_criteria": [
+        "Spacing consistent",
+        "Shadows correct",
+        "Responsive spacing"
+      ],
+      "dependencies": [],
+      "estimated_hours": 5
+    },
+    {
+      "task_id": "WAVE1.1-THEME-T0017",
+      "title": "Theme - Theme Tests",
+      "component": "theme-system",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Write tests for theme system",
+      "acceptance_criteria": [
+        "Theme switching tested",
+        "Validation tested",
+        "Coverage > 80%"
+      ],
+      "dependencies": [],
+      "estimated_hours": 5
+    },
+    {
+      "task_id": "WAVE1.1-THEME-T0018",
+      "title": "Theme - Theme Documentation",
+      "component": "theme-system",
+      "builder": "ui-builder",
+      "phase": 1,
+      "priority": "CRITICAL",
+      "status": "NOT_STARTED",
+      "description": "Create theme usage documentation",
+      "acceptance_criteria": [
+        "Storybook complete",
+        "Tenant guide",
+        "API documented"
+      ],
+      "dependencies": [],
+      "estimated_hours": 5
+    }
+  ],
+  "statistics": {
+    "by_phase": {
+      "1": 18,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    "by_priority": {
+      "CRITICAL": 18,
+      "HIGH": 0,
+      "MEDIUM": 0
+    }
+  }
+}

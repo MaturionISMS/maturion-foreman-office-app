@@ -1,0 +1,331 @@
+{
+  "version": "1.0",
+  "generated": "2025-12-04T08:05:00.000000",
+  "build_wave": 1.1,
+  "purpose": "Global UI Shell and Layout System Build",
+  "description": "Establish the global front-end architecture, layout system, navigation, branding engine, and module UI shells for the Maturion ISMS platform",
+  "scope": {
+    "global_ui": {
+      "layout_system": true,
+      "theme_system": true,
+      "component_library": true,
+      "navigation_system": true,
+      "ai_panel": true
+    },
+    "module_ui_shells": {
+      "count": 11,
+      "modules": [
+        "PIT",
+        "ERM",
+        "RISK_ASSESSMENT",
+        "THREAT",
+        "VULNERABILITY",
+        "WRAC",
+        "COURSE_CRAFTER",
+        "POLICY_BUILDER",
+        "ANALYTICS_REMOTE_ASSURANCE",
+        "AUDITOR_MOBILE",
+        "SKILLS_DEVELOPMENT_PORTAL"
+      ]
+    }
+  },
+  "build_components": [
+    {
+      "id": "global-layout",
+      "name": "Global Layout System",
+      "description": "Header, sidebar, footer, content regions, responsive grid",
+      "specification": "maturion-isms/ui/global/layout.md",
+      "builder": "ui-builder",
+      "priority": "CRITICAL",
+      "dependencies": [],
+      "estimated_tasks": 8
+    },
+    {
+      "id": "theme-system",
+      "name": "Theme & Branding System",
+      "description": "APGI theme, tenant theming, dark mode, color system",
+      "specification": "maturion-isms/ui/global/theme-system.md",
+      "builder": "ui-builder",
+      "priority": "CRITICAL",
+      "dependencies": [],
+      "estimated_tasks": 10
+    },
+    {
+      "id": "component-library",
+      "name": "Global Component Library",
+      "description": "Reusable components (forms, data display, feedback, navigation)",
+      "specification": "maturion-isms/ui/global/component-library.md",
+      "builder": "ui-builder",
+      "priority": "CRITICAL",
+      "dependencies": ["theme-system"],
+      "estimated_tasks": 35
+    },
+    {
+      "id": "navigation-system",
+      "name": "ISMS Navigation System",
+      "description": "Sidebar navigation, breadcrumbs, global search, user menu",
+      "specification": "maturion-isms/ui/global/navigation-spec.md",
+      "builder": "ui-builder",
+      "priority": "CRITICAL",
+      "dependencies": ["global-layout", "component-library"],
+      "estimated_tasks": 12
+    },
+    {
+      "id": "ai-panel",
+      "name": "Maturion AI Panel",
+      "description": "AI assistant panel with 3 modes, chat, alerts, health, compliance",
+      "specification": "maturion-isms/ui/global/ai-panel-spec.md",
+      "builder": "ui-builder",
+      "priority": "HIGH",
+      "dependencies": ["global-layout", "component-library", "theme-system"],
+      "estimated_tasks": 15
+    },
+    {
+      "id": "module-shells",
+      "name": "Module UI Shells",
+      "description": "UI scaffolding for all 11 ISMS modules",
+      "specification": "maturion-isms/ui/modules/",
+      "builder": "ui-builder",
+      "priority": "HIGH",
+      "dependencies": ["global-layout", "navigation-system", "component-library"],
+      "estimated_tasks": 55
+    }
+  ],
+  "build_sequence": [
+    {
+      "phase": 1,
+      "name": "Foundation Layer",
+      "components": ["global-layout", "theme-system"],
+      "description": "Core layout and theming infrastructure",
+      "parallel_execution": true
+    },
+    {
+      "phase": 2,
+      "name": "Component Layer",
+      "components": ["component-library"],
+      "description": "Build reusable component library",
+      "parallel_execution": false
+    },
+    {
+      "phase": 3,
+      "name": "Navigation Layer",
+      "components": ["navigation-system"],
+      "description": "Implement navigation system",
+      "parallel_execution": false
+    },
+    {
+      "phase": 4,
+      "name": "Feature Layer",
+      "components": ["ai-panel", "module-shells"],
+      "description": "AI panel and module UI shells",
+      "parallel_execution": true
+    }
+  ],
+  "builders_required": [
+    {
+      "builder": "ui-builder",
+      "tasks": 135,
+      "percentage": 100
+    }
+  ],
+  "estimated_timeline": {
+    "total_tasks": 135,
+    "estimated_hours": 270,
+    "estimated_days": 34,
+    "buffer_days": 7,
+    "total_days": 41
+  },
+  "qa_requirements": {
+    "accessibility": {
+      "standard": "WCAG 2.1 Level AA",
+      "automated_testing": true,
+      "manual_testing": true,
+      "tools": ["axe", "WAVE", "Lighthouse"]
+    },
+    "performance": {
+      "lcp": "< 2.5s",
+      "fid": "< 100ms",
+      "cls": "< 0.1",
+      "bundle_size": "< 200KB (per module)"
+    },
+    "cross_browser": {
+      "chrome": "latest",
+      "firefox": "latest",
+      "safari": "latest",
+      "edge": "latest"
+    },
+    "responsive": {
+      "mobile": "< 768px",
+      "tablet": "768-1024px",
+      "desktop": "> 1024px"
+    },
+    "testing": {
+      "unit_tests": true,
+      "integration_tests": true,
+      "e2e_tests": true,
+      "visual_regression": true
+    }
+  },
+  "deliverables": [
+    {
+      "type": "component",
+      "name": "Global Layout System",
+      "files": [
+        "Header component",
+        "Sidebar component",
+        "Footer component",
+        "Content container component",
+        "Responsive grid system"
+      ]
+    },
+    {
+      "type": "component",
+      "name": "Theme System",
+      "files": [
+        "CSS custom properties",
+        "APGI default theme",
+        "Tenant theme loader",
+        "Dark mode toggle",
+        "Theme validator"
+      ]
+    },
+    {
+      "type": "component",
+      "name": "Component Library",
+      "files": [
+        "Form components (9 types)",
+        "Data display components (8 types)",
+        "Feedback components (6 types)",
+        "Navigation components (4 types)",
+        "Layout components (4 types)",
+        "Utility components (4 types)"
+      ]
+    },
+    {
+      "type": "component",
+      "name": "Navigation System",
+      "files": [
+        "Sidebar navigation",
+        "Module menu items",
+        "Breadcrumb navigation",
+        "Global search",
+        "User profile menu",
+        "Notification center"
+      ]
+    },
+    {
+      "type": "component",
+      "name": "Maturion AI Panel",
+      "files": [
+        "AI toggle button",
+        "AI panel container",
+        "Chat interface",
+        "Alerts tab",
+        "Health tab",
+        "Compliance tab"
+      ]
+    },
+    {
+      "type": "module-shell",
+      "name": "Module UI Shells",
+      "files": [
+        "11 module dashboards",
+        "11 × list views",
+        "11 × detail views",
+        "11 × settings views",
+        "11 × reports views",
+        "Module-specific components"
+      ]
+    },
+    {
+      "type": "documentation",
+      "name": "Documentation",
+      "files": [
+        "Storybook stories",
+        "Component API docs",
+        "Usage examples",
+        "Accessibility guidelines",
+        "Testing documentation"
+      ]
+    }
+  ],
+  "dependencies": {
+    "external": [
+      "React 18+",
+      "TypeScript 5+",
+      "React Router v6+",
+      "Heroicons",
+      "date-fns"
+    ],
+    "internal": [
+      "Architecture standards (foreman/)",
+      "QA requirements (foreman/qa-governance.md)",
+      "Privacy guardrails (foreman/privacy-guardrails.md)"
+    ]
+  },
+  "risks": [
+    {
+      "risk": "Component library scope creep",
+      "severity": "MEDIUM",
+      "mitigation": "Strict adherence to specification, no additional components without approval"
+    },
+    {
+      "risk": "Accessibility compliance delays",
+      "severity": "MEDIUM",
+      "mitigation": "Early accessibility testing, automated tools, expert review"
+    },
+    {
+      "risk": "Theme system complexity",
+      "severity": "LOW",
+      "mitigation": "Start with APGI theme, tenant theming as phase 2"
+    },
+    {
+      "risk": "AI panel integration complexity",
+      "severity": "MEDIUM",
+      "mitigation": "Mock AI responses initially, real integration in phase 2"
+    }
+  ],
+  "success_criteria": [
+    {
+      "criterion": "All global components implemented and tested",
+      "measurable": true,
+      "target": "100% completion"
+    },
+    {
+      "criterion": "WCAG 2.1 Level AA compliance",
+      "measurable": true,
+      "target": "0 violations, 0 serious issues"
+    },
+    {
+      "criterion": "Performance targets met",
+      "measurable": true,
+      "target": "LCP < 2.5s, FID < 100ms, CLS < 0.1"
+    },
+    {
+      "criterion": "Cross-browser compatibility",
+      "measurable": true,
+      "target": "100% feature parity across browsers"
+    },
+    {
+      "criterion": "All 11 module shells implemented",
+      "measurable": true,
+      "target": "100% completion"
+    }
+  ],
+  "governance_checks": {
+    "architecture_validation": true,
+    "qa_validation": true,
+    "compliance_validation": true,
+    "security_validation": true,
+    "performance_validation": true
+  },
+  "notes": [
+    "Build Wave 1.1 focuses on UI architecture and visual structure",
+    "No business logic implementation - structure only",
+    "All components must be theme-aware and responsive",
+    "Module shells are placeholders for future full implementation",
+    "AI panel includes UI only - backend integration deferred",
+    "Accessibility is non-negotiable - no exceptions",
+    "Performance budgets must be met for all components"
+  ]
+}
