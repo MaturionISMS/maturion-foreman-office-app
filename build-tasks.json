@@ -1,0 +1,476 @@
+{
+  "version": "1.0",
+  "generated": "2025-12-04T06:41:06.758755",
+  "module": "PIT",
+  "build_wave": 0,
+  "total_tasks": 14,
+  "tasks_by_builder": {
+    "schema-builder": 3,
+    "api-builder": 3,
+    "integration-builder": 2,
+    "ui-builder": 3,
+    "qa-builder": 3
+  },
+  "tasks": [
+    {
+      "task_id": "PIT-SCHEMA-BUILDER-P1-T001-SCHEMA",
+      "title": "PIT - Database Schema Design and Implementation",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "HIGH",
+      "status": "NOT_STARTED",
+      "description": "Design and implement the complete database schema for PIT module",
+      "acceptance_criteria": [
+        "All tables and relationships defined",
+        "Schema follows naming conventions",
+        "Foreign keys and constraints properly defined",
+        "Schema documentation complete",
+        "Schema passes validation tests"
+      ],
+      "dependencies": [],
+      "deliverables": [
+        "Database schema DDL",
+        "Schema diagram",
+        "Migration scripts",
+        "Schema documentation"
+      ],
+      "qa_gates": [
+        "Schema validation passes",
+        "No circular dependencies",
+        "Follows architecture standards",
+        "QA-of-QA review complete"
+      ],
+      "estimated_effort": "MEDIUM",
+      "governance_checks": [
+        "Must not access other module schemas directly",
+        "Must respect privacy guardrails",
+        "Must include organisation_id for multi-tenancy"
+      ]
+    },
+    {
+      "task_id": "PIT-SCHEMA-BUILDER-P1-T002-MODELS",
+      "title": "PIT - Model Definitions",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "HIGH",
+      "status": "NOT_STARTED",
+      "description": "Create TypeScript model definitions for all database entities",
+      "acceptance_criteria": [
+        "All models match schema",
+        "Type safety enforced",
+        "Models include validation logic",
+        "Models documented"
+      ],
+      "dependencies": [
+        "PIT-SCHEMA-BUILDER-P1-T001-SCHEMA"
+      ],
+      "deliverables": [
+        "TypeScript model files",
+        "Validation logic",
+        "Model tests"
+      ],
+      "qa_gates": [
+        "Type checking passes",
+        "Models align with schema",
+        "Validation tests pass"
+      ],
+      "estimated_effort": "MEDIUM"
+    },
+    {
+      "task_id": "PIT-SCHEMA-BUILDER-P1-T003-TESTS",
+      "title": "PIT - Schema Validation Tests",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "description": "Create comprehensive tests for schema validation",
+      "acceptance_criteria": [
+        "All constraints tested",
+        "Migration tests included",
+        "Edge cases covered",
+        "Test coverage >= 80%"
+      ],
+      "dependencies": [
+        "PIT-SCHEMA-BUILDER-P1-T002-MODELS"
+      ],
+      "deliverables": [
+        "Schema test suite",
+        "Migration tests",
+        "Test coverage report"
+      ],
+      "qa_gates": [
+        "All tests pass",
+        "Coverage threshold met"
+      ],
+      "estimated_effort": "MEDIUM"
+    },
+    {
+      "task_id": "PIT-API-BUILDER-P2-T004-EDGE",
+      "title": "PIT - Edge Functions Implementation",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "HIGH",
+      "status": "NOT_STARTED",
+      "description": "Implement all edge functions for PIT API",
+      "acceptance_criteria": [
+        "All CRUD operations implemented",
+        "Authentication and authorization included",
+        "Input validation implemented",
+        "Error handling complete",
+        "API follows REST conventions"
+      ],
+      "dependencies": [
+        "PIT-SCHEMA-BUILDER-P1-T001-SCHEMA",
+        "PIT-SCHEMA-BUILDER-P1-T002-MODELS",
+        "PIT-SCHEMA-BUILDER-P1-T003-TESTS"
+      ],
+      "deliverables": [
+        "Edge function implementations",
+        "API route definitions",
+        "Request/response schemas",
+        "API documentation"
+      ],
+      "qa_gates": [
+        "All API endpoints functional",
+        "Authentication tests pass",
+        "Input validation works",
+        "Error handling validated"
+      ],
+      "estimated_effort": "HIGH",
+      "governance_checks": [
+        "No direct database access outside models",
+        "Respects module boundaries",
+        "Includes tenant isolation"
+      ]
+    },
+    {
+      "task_id": "PIT-API-BUILDER-P2-T005-LOGIC",
+      "title": "PIT - Business Logic Implementation",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "HIGH",
+      "status": "NOT_STARTED",
+      "description": "Implement core business logic and workflows",
+      "acceptance_criteria": [
+        "All workflows implemented",
+        "State transitions validated",
+        "Business rules enforced",
+        "Logic properly tested"
+      ],
+      "dependencies": [
+        "PIT-API-BUILDER-P2-T004-EDGE"
+      ],
+      "deliverables": [
+        "Business logic modules",
+        "Workflow implementations",
+        "State management",
+        "Logic tests"
+      ],
+      "qa_gates": [
+        "Business rules validated",
+        "Workflow tests pass",
+        "State transitions correct"
+      ],
+      "estimated_effort": "HIGH"
+    },
+    {
+      "task_id": "PIT-API-BUILDER-P2-T006-TESTS",
+      "title": "PIT - API Test Suite",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "description": "Create comprehensive API test suite",
+      "acceptance_criteria": [
+        "All endpoints tested",
+        "Error scenarios covered",
+        "Authentication tests included",
+        "Test coverage >= 80%"
+      ],
+      "dependencies": [
+        "PIT-API-BUILDER-P2-T005-LOGIC"
+      ],
+      "deliverables": [
+        "API test suite",
+        "Integration tests",
+        "Coverage report"
+      ],
+      "qa_gates": [
+        "All tests pass",
+        "Coverage threshold met"
+      ],
+      "estimated_effort": "MEDIUM"
+    },
+    {
+      "task_id": "PIT-INTEGRATION-BUILDER-P3-T007-INTER",
+      "title": "PIT - Inter-Module Integration",
+      "builder": "integration-builder",
+      "phase": 3,
+      "priority": "HIGH",
+      "status": "NOT_STARTED",
+      "description": "Implement integrations between PIT and other ISMS modules",
+      "acceptance_criteria": [
+        "All integration points identified",
+        "Integration contracts defined",
+        "Event handlers implemented",
+        "Integration documented"
+      ],
+      "dependencies": [
+        "PIT-API-BUILDER-P2-T004-EDGE",
+        "PIT-API-BUILDER-P2-T005-LOGIC",
+        "PIT-API-BUILDER-P2-T006-TESTS"
+      ],
+      "deliverables": [
+        "Integration implementation",
+        "Event handlers",
+        "Integration contracts",
+        "Integration documentation"
+      ],
+      "qa_gates": [
+        "Integration tests pass",
+        "No tight coupling detected",
+        "Events properly handled"
+      ],
+      "estimated_effort": "MEDIUM",
+      "governance_checks": [
+        "No direct module-to-module calls",
+        "Uses event-driven architecture",
+        "Respects integration boundaries"
+      ]
+    },
+    {
+      "task_id": "PIT-INTEGRATION-BUILDER-P3-T008-TESTS",
+      "title": "PIT - Integration Test Suite",
+      "builder": "integration-builder",
+      "phase": 3,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "description": "Create integration test suite",
+      "acceptance_criteria": [
+        "All integrations tested",
+        "Event flows validated",
+        "Error handling tested",
+        "Coverage >= 80%"
+      ],
+      "dependencies": [
+        "PIT-INTEGRATION-BUILDER-P3-T007-INTER"
+      ],
+      "deliverables": [
+        "Integration test suite",
+        "Event flow tests",
+        "Coverage report"
+      ],
+      "qa_gates": [
+        "All tests pass",
+        "Integration contracts validated"
+      ],
+      "estimated_effort": "MEDIUM"
+    },
+    {
+      "task_id": "PIT-UI-BUILDER-P4-T009-COMPONENTS",
+      "title": "PIT - UI Components Implementation",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "HIGH",
+      "status": "NOT_STARTED",
+      "description": "Implement all UI components for PIT",
+      "acceptance_criteria": [
+        "All components match wireframes",
+        "Components are responsive",
+        "Accessibility standards met",
+        "Components properly tested"
+      ],
+      "dependencies": [
+        "PIT-API-BUILDER-P2-T004-EDGE",
+        "PIT-API-BUILDER-P2-T005-LOGIC",
+        "PIT-API-BUILDER-P2-T006-TESTS"
+      ],
+      "deliverables": [
+        "React components",
+        "Component styles",
+        "Component tests",
+        "Storybook stories"
+      ],
+      "qa_gates": [
+        "Components render correctly",
+        "Accessibility tests pass",
+        "Component tests pass"
+      ],
+      "estimated_effort": "HIGH",
+      "governance_checks": [
+        "No business logic in UI",
+        "Uses API calls for data",
+        "Follows UI component standards"
+      ]
+    },
+    {
+      "task_id": "PIT-UI-BUILDER-P4-T010-LAYOUTS",
+      "title": "PIT - Page Layouts",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "description": "Implement page layouts and navigation",
+      "acceptance_criteria": [
+        "All pages implemented",
+        "Navigation working",
+        "Layouts responsive",
+        "UX validated"
+      ],
+      "dependencies": [
+        "PIT-UI-BUILDER-P4-T009-COMPONENTS"
+      ],
+      "deliverables": [
+        "Page layouts",
+        "Navigation components",
+        "Route definitions"
+      ],
+      "qa_gates": [
+        "Navigation works correctly",
+        "Layouts match design",
+        "Responsive tests pass"
+      ],
+      "estimated_effort": "MEDIUM"
+    },
+    {
+      "task_id": "PIT-UI-BUILDER-P4-T011-TESTS",
+      "title": "PIT - UI Test Suite",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "description": "Create UI test suite",
+      "acceptance_criteria": [
+        "Component tests complete",
+        "E2E tests included",
+        "Visual regression tests",
+        "Coverage >= 70%"
+      ],
+      "dependencies": [
+        "PIT-UI-BUILDER-P4-T010-LAYOUTS"
+      ],
+      "deliverables": [
+        "Component test suite",
+        "E2E tests",
+        "Visual tests",
+        "Coverage report"
+      ],
+      "qa_gates": [
+        "All tests pass",
+        "Visual regression clean"
+      ],
+      "estimated_effort": "MEDIUM"
+    },
+    {
+      "task_id": "PIT-QA-BUILDER-P5-T012-E2E",
+      "title": "PIT - End-to-End Test Suite",
+      "builder": "qa-builder",
+      "phase": 5,
+      "priority": "HIGH",
+      "status": "NOT_STARTED",
+      "description": "Create comprehensive E2E test suite for PIT",
+      "acceptance_criteria": [
+        "All user journeys tested",
+        "Integration flows validated",
+        "Error scenarios covered",
+        "Performance benchmarks met"
+      ],
+      "dependencies": [
+        "PIT-SCHEMA-BUILDER-P1-T001-SCHEMA",
+        "PIT-SCHEMA-BUILDER-P1-T002-MODELS",
+        "PIT-SCHEMA-BUILDER-P1-T003-TESTS",
+        "PIT-API-BUILDER-P2-T004-EDGE",
+        "PIT-API-BUILDER-P2-T005-LOGIC",
+        "PIT-API-BUILDER-P2-T006-TESTS",
+        "PIT-INTEGRATION-BUILDER-P3-T007-INTER",
+        "PIT-INTEGRATION-BUILDER-P3-T008-TESTS",
+        "PIT-UI-BUILDER-P4-T009-COMPONENTS",
+        "PIT-UI-BUILDER-P4-T010-LAYOUTS",
+        "PIT-UI-BUILDER-P4-T011-TESTS"
+      ],
+      "deliverables": [
+        "E2E test suite",
+        "Performance tests",
+        "Load tests",
+        "Test report"
+      ],
+      "qa_gates": [
+        "All E2E tests pass",
+        "Performance acceptable",
+        "No critical bugs"
+      ],
+      "estimated_effort": "HIGH"
+    },
+    {
+      "task_id": "PIT-QA-BUILDER-P5-T013-QA-OF-QA",
+      "title": "PIT - QA-of-QA Validation",
+      "builder": "qa-builder",
+      "phase": 5,
+      "priority": "HIGH",
+      "status": "NOT_STARTED",
+      "description": "Validate completeness and quality of all QA artifacts",
+      "acceptance_criteria": [
+        "All QA plans executed",
+        "Test coverage validated",
+        "QA gaps identified",
+        "QA-of-QA report complete"
+      ],
+      "dependencies": [
+        "PIT-QA-BUILDER-P5-T012-E2E"
+      ],
+      "deliverables": [
+        "QA-of-QA report",
+        "Coverage analysis",
+        "Gap analysis",
+        "Recommendations"
+      ],
+      "qa_gates": [
+        "QA coverage >= 80%",
+        "No critical gaps",
+        "All QA checklists complete"
+      ],
+      "estimated_effort": "MEDIUM",
+      "governance_checks": [
+        "QA follows QA governance rules",
+        "QA-of-QA checklist completed",
+        "Architecture alignment validated"
+      ]
+    },
+    {
+      "task_id": "PIT-QA-BUILDER-P5-T014-COMPLIANCE",
+      "title": "PIT - Compliance Validation",
+      "builder": "qa-builder",
+      "phase": 5,
+      "priority": "HIGH",
+      "status": "NOT_STARTED",
+      "description": "Validate compliance with all relevant standards",
+      "acceptance_criteria": [
+        "All compliance controls validated",
+        "Security requirements met",
+        "Privacy requirements met",
+        "Compliance report complete"
+      ],
+      "dependencies": [
+        "PIT-QA-BUILDER-P5-T013-QA-OF-QA"
+      ],
+      "deliverables": [
+        "Compliance validation report",
+        "Security audit",
+        "Privacy audit",
+        "Recommendations"
+      ],
+      "qa_gates": [
+        "No compliance violations",
+        "Security tests pass",
+        "Privacy guardrails validated"
+      ],
+      "estimated_effort": "MEDIUM"
+    }
+  ],
+  "notes": [
+    "This is Build Wave 0 - tasks are for orchestration validation",
+    "Tasks follow builder capability boundaries",
+    "All tasks include QA gates and acceptance criteria",
+    "Dependencies ensure proper sequencing"
+  ]
+}
