@@ -1,0 +1,2976 @@
+{
+  "version": "1.0",
+  "generated": "2025-12-04T06:52:39.861304",
+  "build_wave": 1,
+  "purpose": "Multi-Module Architecture Skeleton Build Tasks",
+  "total_tasks": 88,
+  "total_modules": 11,
+  "tasks_by_module": {
+    "ANALYTICS_REMOTE_ASSURANCE": 8,
+    "AUDITOR_MOBILE_APP": 8,
+    "COURSE_CRAFTER": 8,
+    "POLICY_BUILDER": 8,
+    "SKILLS_DEVELOPMENT_PORTAL": 8,
+    "PIT": 8,
+    "WRAC": 8,
+    "ERM": 8,
+    "RISK_ASSESSMENT": 8,
+    "THREAT": 8,
+    "VULNERABILITY": 8
+  },
+  "tasks_by_builder": {
+    "schema-builder": 22,
+    "api-builder": 22,
+    "integration-builder": 11,
+    "ui-builder": 22,
+    "qa-builder": 11
+  },
+  "build_sequence": [
+    "ANALYTICS_REMOTE_ASSURANCE",
+    "AUDITOR_MOBILE_APP",
+    "COURSE_CRAFTER",
+    "POLICY_BUILDER",
+    "SKILLS_DEVELOPMENT_PORTAL",
+    "PIT",
+    "WRAC",
+    "ERM",
+    "RISK_ASSESSMENT",
+    "THREAT",
+    "VULNERABILITY"
+  ],
+  "tasks": [
+    {
+      "task_id": "WAVE1-ANALYTICS_REMOTE_ASSURANCE-SCHEMA-P1-T0001-SKELETON",
+      "title": "ANALYTICS_REMOTE_ASSURANCE - Database Schema Skeleton",
+      "module": "ANALYTICS_REMOTE_ASSURANCE",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create database schema skeleton for ANALYTICS_REMOTE_ASSURANCE module",
+      "acceptance_criteria": [
+        "Table definitions created (skeleton)",
+        "Basic relationships defined",
+        "Placeholder migrations created",
+        "Schema follows naming conventions"
+      ],
+      "dependencies": [],
+      "deliverables": [
+        "Schema definition files",
+        "Migration skeleton",
+        "Basic model interfaces"
+      ],
+      "qa_gates": [
+        "Schema structure valid",
+        "Follows architecture standards"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Must include organisation_id for multi-tenancy",
+        "Must respect privacy guardrails"
+      ],
+      "notes": [
+        "Skeleton only - no full implementation",
+        "Establishes structural foundation"
+      ]
+    },
+    {
+      "task_id": "WAVE1-ANALYTICS_REMOTE_ASSURANCE-SCHEMA-P1-T0002-MODELS",
+      "title": "ANALYTICS_REMOTE_ASSURANCE - Model Definition Skeletons",
+      "module": "ANALYTICS_REMOTE_ASSURANCE",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create TypeScript model definition skeletons",
+      "acceptance_criteria": [
+        "Model interfaces defined",
+        "Type definitions created",
+        "Basic validation placeholders"
+      ],
+      "dependencies": [
+        "WAVE1-ANALYTICS_REMOTE_ASSURANCE-SCHEMA-P1-T0001-SKELETON"
+      ],
+      "deliverables": [
+        "TypeScript model files",
+        "Type definition files"
+      ],
+      "qa_gates": [
+        "Type checking passes"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-ANALYTICS_REMOTE_ASSURANCE-API-P2-T0003-SKELETON",
+      "title": "ANALYTICS_REMOTE_ASSURANCE - API Route Skeletons",
+      "module": "ANALYTICS_REMOTE_ASSURANCE",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create API route skeletons for ANALYTICS_REMOTE_ASSURANCE",
+      "acceptance_criteria": [
+        "Route definitions created",
+        "Edge function placeholders created",
+        "Basic request/response types defined",
+        "Authentication placeholders included"
+      ],
+      "dependencies": [
+        "WAVE1-ANALYTICS_REMOTE_ASSURANCE-SCHEMA-P1-T0001-SKELETON",
+        "WAVE1-ANALYTICS_REMOTE_ASSURANCE-SCHEMA-P1-T0002-MODELS"
+      ],
+      "deliverables": [
+        "API route files",
+        "Edge function skeletons",
+        "Type definitions"
+      ],
+      "qa_gates": [
+        "Routes accessible",
+        "Type definitions valid"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Respects module boundaries",
+        "Includes tenant isolation placeholders"
+      ]
+    },
+    {
+      "task_id": "WAVE1-ANALYTICS_REMOTE_ASSURANCE-API-P2-T0004-HANDLERS",
+      "title": "ANALYTICS_REMOTE_ASSURANCE - Request Handler Placeholders",
+      "module": "ANALYTICS_REMOTE_ASSURANCE",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create request handler placeholder functions",
+      "acceptance_criteria": [
+        "Handler functions created",
+        "Basic error handling included",
+        "Placeholder responses defined"
+      ],
+      "dependencies": [
+        "WAVE1-ANALYTICS_REMOTE_ASSURANCE-API-P2-T0003-SKELETON"
+      ],
+      "deliverables": [
+        "Handler function files",
+        "Error handler placeholders"
+      ],
+      "qa_gates": [
+        "Functions callable"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-ANALYTICS_REMOTE_ASSURANCE-INTEGRATION-P3-T0005-CONTRACTS",
+      "title": "ANALYTICS_REMOTE_ASSURANCE - Integration Contract Definitions",
+      "module": "ANALYTICS_REMOTE_ASSURANCE",
+      "builder": "integration-builder",
+      "phase": 3,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define integration contracts for ANALYTICS_REMOTE_ASSURANCE",
+      "acceptance_criteria": [
+        "Integration points identified",
+        "Contract interfaces defined",
+        "Event definitions created"
+      ],
+      "dependencies": [
+        "WAVE1-ANALYTICS_REMOTE_ASSURANCE-API-P2-T0003-SKELETON",
+        "WAVE1-ANALYTICS_REMOTE_ASSURANCE-API-P2-T0004-HANDLERS"
+      ],
+      "deliverables": [
+        "Integration contract files",
+        "Event type definitions",
+        "Interface documentation"
+      ],
+      "qa_gates": [
+        "Contracts well-defined",
+        "No tight coupling"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Uses event-driven architecture",
+        "Respects integration boundaries"
+      ]
+    },
+    {
+      "task_id": "WAVE1-ANALYTICS_REMOTE_ASSURANCE-UI-P4-T0006-COMPONENTS",
+      "title": "ANALYTICS_REMOTE_ASSURANCE - UI Component Shells",
+      "module": "ANALYTICS_REMOTE_ASSURANCE",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create UI component shells for ANALYTICS_REMOTE_ASSURANCE",
+      "acceptance_criteria": [
+        "Component files created",
+        "Basic structure defined",
+        "Props interfaces defined"
+      ],
+      "dependencies": [
+        "WAVE1-ANALYTICS_REMOTE_ASSURANCE-API-P2-T0003-SKELETON",
+        "WAVE1-ANALYTICS_REMOTE_ASSURANCE-API-P2-T0004-HANDLERS"
+      ],
+      "deliverables": [
+        "React component files",
+        "Component type definitions",
+        "Placeholder layouts"
+      ],
+      "qa_gates": [
+        "Components render",
+        "No console errors"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "No business logic in UI",
+        "Uses API calls for data"
+      ]
+    },
+    {
+      "task_id": "WAVE1-ANALYTICS_REMOTE_ASSURANCE-UI-P4-T0007-ROUTING",
+      "title": "ANALYTICS_REMOTE_ASSURANCE - Route Definitions",
+      "module": "ANALYTICS_REMOTE_ASSURANCE",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define module routes",
+      "acceptance_criteria": [
+        "Routes defined",
+        "Navigation structure created",
+        "Route guards placeholders added"
+      ],
+      "dependencies": [
+        "WAVE1-ANALYTICS_REMOTE_ASSURANCE-UI-P4-T0006-COMPONENTS"
+      ],
+      "deliverables": [
+        "Route configuration files",
+        "Navigation components"
+      ],
+      "qa_gates": [
+        "Routes accessible"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-ANALYTICS_REMOTE_ASSURANCE-QA-P5-T0008-STRUCTURE",
+      "title": "ANALYTICS_REMOTE_ASSURANCE - QA Test Structure",
+      "module": "ANALYTICS_REMOTE_ASSURANCE",
+      "builder": "qa-builder",
+      "phase": 5,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create QA test structure for ANALYTICS_REMOTE_ASSURANCE",
+      "acceptance_criteria": [
+        "Test directory structure created",
+        "Test file placeholders created",
+        "QA documentation templates added"
+      ],
+      "dependencies": [
+        "WAVE1-ANALYTICS_REMOTE_ASSURANCE-SCHEMA-P1-T0001-SKELETON",
+        "WAVE1-ANALYTICS_REMOTE_ASSURANCE-SCHEMA-P1-T0002-MODELS",
+        "WAVE1-ANALYTICS_REMOTE_ASSURANCE-API-P2-T0003-SKELETON",
+        "WAVE1-ANALYTICS_REMOTE_ASSURANCE-API-P2-T0004-HANDLERS",
+        "WAVE1-ANALYTICS_REMOTE_ASSURANCE-INTEGRATION-P3-T0005-CONTRACTS",
+        "WAVE1-ANALYTICS_REMOTE_ASSURANCE-UI-P4-T0006-COMPONENTS",
+        "WAVE1-ANALYTICS_REMOTE_ASSURANCE-UI-P4-T0007-ROUTING"
+      ],
+      "deliverables": [
+        "Test directory structure",
+        "Test file templates",
+        "QA documentation"
+      ],
+      "qa_gates": [
+        "Structure follows standards",
+        "All areas covered"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "QA follows QA governance rules"
+      ]
+    },
+    {
+      "task_id": "WAVE1-AUDITOR_MOBILE_APP-SCHEMA-P1-T0009-SKELETON",
+      "title": "AUDITOR_MOBILE_APP - Database Schema Skeleton",
+      "module": "AUDITOR_MOBILE_APP",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create database schema skeleton for AUDITOR_MOBILE_APP module",
+      "acceptance_criteria": [
+        "Table definitions created (skeleton)",
+        "Basic relationships defined",
+        "Placeholder migrations created",
+        "Schema follows naming conventions"
+      ],
+      "dependencies": [],
+      "deliverables": [
+        "Schema definition files",
+        "Migration skeleton",
+        "Basic model interfaces"
+      ],
+      "qa_gates": [
+        "Schema structure valid",
+        "Follows architecture standards"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Must include organisation_id for multi-tenancy",
+        "Must respect privacy guardrails"
+      ],
+      "notes": [
+        "Skeleton only - no full implementation",
+        "Establishes structural foundation"
+      ]
+    },
+    {
+      "task_id": "WAVE1-AUDITOR_MOBILE_APP-SCHEMA-P1-T0010-MODELS",
+      "title": "AUDITOR_MOBILE_APP - Model Definition Skeletons",
+      "module": "AUDITOR_MOBILE_APP",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create TypeScript model definition skeletons",
+      "acceptance_criteria": [
+        "Model interfaces defined",
+        "Type definitions created",
+        "Basic validation placeholders"
+      ],
+      "dependencies": [
+        "WAVE1-AUDITOR_MOBILE_APP-SCHEMA-P1-T0009-SKELETON"
+      ],
+      "deliverables": [
+        "TypeScript model files",
+        "Type definition files"
+      ],
+      "qa_gates": [
+        "Type checking passes"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-AUDITOR_MOBILE_APP-API-P2-T0011-SKELETON",
+      "title": "AUDITOR_MOBILE_APP - API Route Skeletons",
+      "module": "AUDITOR_MOBILE_APP",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create API route skeletons for AUDITOR_MOBILE_APP",
+      "acceptance_criteria": [
+        "Route definitions created",
+        "Edge function placeholders created",
+        "Basic request/response types defined",
+        "Authentication placeholders included"
+      ],
+      "dependencies": [
+        "WAVE1-AUDITOR_MOBILE_APP-SCHEMA-P1-T0009-SKELETON",
+        "WAVE1-AUDITOR_MOBILE_APP-SCHEMA-P1-T0010-MODELS"
+      ],
+      "deliverables": [
+        "API route files",
+        "Edge function skeletons",
+        "Type definitions"
+      ],
+      "qa_gates": [
+        "Routes accessible",
+        "Type definitions valid"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Respects module boundaries",
+        "Includes tenant isolation placeholders"
+      ]
+    },
+    {
+      "task_id": "WAVE1-AUDITOR_MOBILE_APP-API-P2-T0012-HANDLERS",
+      "title": "AUDITOR_MOBILE_APP - Request Handler Placeholders",
+      "module": "AUDITOR_MOBILE_APP",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create request handler placeholder functions",
+      "acceptance_criteria": [
+        "Handler functions created",
+        "Basic error handling included",
+        "Placeholder responses defined"
+      ],
+      "dependencies": [
+        "WAVE1-AUDITOR_MOBILE_APP-API-P2-T0011-SKELETON"
+      ],
+      "deliverables": [
+        "Handler function files",
+        "Error handler placeholders"
+      ],
+      "qa_gates": [
+        "Functions callable"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-AUDITOR_MOBILE_APP-INTEGRATION-P3-T0013-CONTRACTS",
+      "title": "AUDITOR_MOBILE_APP - Integration Contract Definitions",
+      "module": "AUDITOR_MOBILE_APP",
+      "builder": "integration-builder",
+      "phase": 3,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define integration contracts for AUDITOR_MOBILE_APP",
+      "acceptance_criteria": [
+        "Integration points identified",
+        "Contract interfaces defined",
+        "Event definitions created"
+      ],
+      "dependencies": [
+        "WAVE1-AUDITOR_MOBILE_APP-API-P2-T0011-SKELETON",
+        "WAVE1-AUDITOR_MOBILE_APP-API-P2-T0012-HANDLERS"
+      ],
+      "deliverables": [
+        "Integration contract files",
+        "Event type definitions",
+        "Interface documentation"
+      ],
+      "qa_gates": [
+        "Contracts well-defined",
+        "No tight coupling"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Uses event-driven architecture",
+        "Respects integration boundaries"
+      ]
+    },
+    {
+      "task_id": "WAVE1-AUDITOR_MOBILE_APP-UI-P4-T0014-COMPONENTS",
+      "title": "AUDITOR_MOBILE_APP - UI Component Shells",
+      "module": "AUDITOR_MOBILE_APP",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create UI component shells for AUDITOR_MOBILE_APP",
+      "acceptance_criteria": [
+        "Component files created",
+        "Basic structure defined",
+        "Props interfaces defined"
+      ],
+      "dependencies": [
+        "WAVE1-AUDITOR_MOBILE_APP-API-P2-T0011-SKELETON",
+        "WAVE1-AUDITOR_MOBILE_APP-API-P2-T0012-HANDLERS"
+      ],
+      "deliverables": [
+        "React component files",
+        "Component type definitions",
+        "Placeholder layouts"
+      ],
+      "qa_gates": [
+        "Components render",
+        "No console errors"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "No business logic in UI",
+        "Uses API calls for data"
+      ]
+    },
+    {
+      "task_id": "WAVE1-AUDITOR_MOBILE_APP-UI-P4-T0015-ROUTING",
+      "title": "AUDITOR_MOBILE_APP - Route Definitions",
+      "module": "AUDITOR_MOBILE_APP",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define module routes",
+      "acceptance_criteria": [
+        "Routes defined",
+        "Navigation structure created",
+        "Route guards placeholders added"
+      ],
+      "dependencies": [
+        "WAVE1-AUDITOR_MOBILE_APP-UI-P4-T0014-COMPONENTS"
+      ],
+      "deliverables": [
+        "Route configuration files",
+        "Navigation components"
+      ],
+      "qa_gates": [
+        "Routes accessible"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-AUDITOR_MOBILE_APP-QA-P5-T0016-STRUCTURE",
+      "title": "AUDITOR_MOBILE_APP - QA Test Structure",
+      "module": "AUDITOR_MOBILE_APP",
+      "builder": "qa-builder",
+      "phase": 5,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create QA test structure for AUDITOR_MOBILE_APP",
+      "acceptance_criteria": [
+        "Test directory structure created",
+        "Test file placeholders created",
+        "QA documentation templates added"
+      ],
+      "dependencies": [
+        "WAVE1-AUDITOR_MOBILE_APP-SCHEMA-P1-T0009-SKELETON",
+        "WAVE1-AUDITOR_MOBILE_APP-SCHEMA-P1-T0010-MODELS",
+        "WAVE1-AUDITOR_MOBILE_APP-API-P2-T0011-SKELETON",
+        "WAVE1-AUDITOR_MOBILE_APP-API-P2-T0012-HANDLERS",
+        "WAVE1-AUDITOR_MOBILE_APP-INTEGRATION-P3-T0013-CONTRACTS",
+        "WAVE1-AUDITOR_MOBILE_APP-UI-P4-T0014-COMPONENTS",
+        "WAVE1-AUDITOR_MOBILE_APP-UI-P4-T0015-ROUTING"
+      ],
+      "deliverables": [
+        "Test directory structure",
+        "Test file templates",
+        "QA documentation"
+      ],
+      "qa_gates": [
+        "Structure follows standards",
+        "All areas covered"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "QA follows QA governance rules"
+      ]
+    },
+    {
+      "task_id": "WAVE1-COURSE_CRAFTER-SCHEMA-P1-T0017-SKELETON",
+      "title": "COURSE_CRAFTER - Database Schema Skeleton",
+      "module": "COURSE_CRAFTER",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create database schema skeleton for COURSE_CRAFTER module",
+      "acceptance_criteria": [
+        "Table definitions created (skeleton)",
+        "Basic relationships defined",
+        "Placeholder migrations created",
+        "Schema follows naming conventions"
+      ],
+      "dependencies": [],
+      "deliverables": [
+        "Schema definition files",
+        "Migration skeleton",
+        "Basic model interfaces"
+      ],
+      "qa_gates": [
+        "Schema structure valid",
+        "Follows architecture standards"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Must include organisation_id for multi-tenancy",
+        "Must respect privacy guardrails"
+      ],
+      "notes": [
+        "Skeleton only - no full implementation",
+        "Establishes structural foundation"
+      ]
+    },
+    {
+      "task_id": "WAVE1-COURSE_CRAFTER-SCHEMA-P1-T0018-MODELS",
+      "title": "COURSE_CRAFTER - Model Definition Skeletons",
+      "module": "COURSE_CRAFTER",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create TypeScript model definition skeletons",
+      "acceptance_criteria": [
+        "Model interfaces defined",
+        "Type definitions created",
+        "Basic validation placeholders"
+      ],
+      "dependencies": [
+        "WAVE1-COURSE_CRAFTER-SCHEMA-P1-T0017-SKELETON"
+      ],
+      "deliverables": [
+        "TypeScript model files",
+        "Type definition files"
+      ],
+      "qa_gates": [
+        "Type checking passes"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-COURSE_CRAFTER-API-P2-T0019-SKELETON",
+      "title": "COURSE_CRAFTER - API Route Skeletons",
+      "module": "COURSE_CRAFTER",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create API route skeletons for COURSE_CRAFTER",
+      "acceptance_criteria": [
+        "Route definitions created",
+        "Edge function placeholders created",
+        "Basic request/response types defined",
+        "Authentication placeholders included"
+      ],
+      "dependencies": [
+        "WAVE1-COURSE_CRAFTER-SCHEMA-P1-T0017-SKELETON",
+        "WAVE1-COURSE_CRAFTER-SCHEMA-P1-T0018-MODELS"
+      ],
+      "deliverables": [
+        "API route files",
+        "Edge function skeletons",
+        "Type definitions"
+      ],
+      "qa_gates": [
+        "Routes accessible",
+        "Type definitions valid"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Respects module boundaries",
+        "Includes tenant isolation placeholders"
+      ]
+    },
+    {
+      "task_id": "WAVE1-COURSE_CRAFTER-API-P2-T0020-HANDLERS",
+      "title": "COURSE_CRAFTER - Request Handler Placeholders",
+      "module": "COURSE_CRAFTER",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create request handler placeholder functions",
+      "acceptance_criteria": [
+        "Handler functions created",
+        "Basic error handling included",
+        "Placeholder responses defined"
+      ],
+      "dependencies": [
+        "WAVE1-COURSE_CRAFTER-API-P2-T0019-SKELETON"
+      ],
+      "deliverables": [
+        "Handler function files",
+        "Error handler placeholders"
+      ],
+      "qa_gates": [
+        "Functions callable"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-COURSE_CRAFTER-INTEGRATION-P3-T0021-CONTRACTS",
+      "title": "COURSE_CRAFTER - Integration Contract Definitions",
+      "module": "COURSE_CRAFTER",
+      "builder": "integration-builder",
+      "phase": 3,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define integration contracts for COURSE_CRAFTER",
+      "acceptance_criteria": [
+        "Integration points identified",
+        "Contract interfaces defined",
+        "Event definitions created"
+      ],
+      "dependencies": [
+        "WAVE1-COURSE_CRAFTER-API-P2-T0019-SKELETON",
+        "WAVE1-COURSE_CRAFTER-API-P2-T0020-HANDLERS"
+      ],
+      "deliverables": [
+        "Integration contract files",
+        "Event type definitions",
+        "Interface documentation"
+      ],
+      "qa_gates": [
+        "Contracts well-defined",
+        "No tight coupling"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Uses event-driven architecture",
+        "Respects integration boundaries"
+      ]
+    },
+    {
+      "task_id": "WAVE1-COURSE_CRAFTER-UI-P4-T0022-COMPONENTS",
+      "title": "COURSE_CRAFTER - UI Component Shells",
+      "module": "COURSE_CRAFTER",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create UI component shells for COURSE_CRAFTER",
+      "acceptance_criteria": [
+        "Component files created",
+        "Basic structure defined",
+        "Props interfaces defined"
+      ],
+      "dependencies": [
+        "WAVE1-COURSE_CRAFTER-API-P2-T0019-SKELETON",
+        "WAVE1-COURSE_CRAFTER-API-P2-T0020-HANDLERS"
+      ],
+      "deliverables": [
+        "React component files",
+        "Component type definitions",
+        "Placeholder layouts"
+      ],
+      "qa_gates": [
+        "Components render",
+        "No console errors"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "No business logic in UI",
+        "Uses API calls for data"
+      ]
+    },
+    {
+      "task_id": "WAVE1-COURSE_CRAFTER-UI-P4-T0023-ROUTING",
+      "title": "COURSE_CRAFTER - Route Definitions",
+      "module": "COURSE_CRAFTER",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define module routes",
+      "acceptance_criteria": [
+        "Routes defined",
+        "Navigation structure created",
+        "Route guards placeholders added"
+      ],
+      "dependencies": [
+        "WAVE1-COURSE_CRAFTER-UI-P4-T0022-COMPONENTS"
+      ],
+      "deliverables": [
+        "Route configuration files",
+        "Navigation components"
+      ],
+      "qa_gates": [
+        "Routes accessible"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-COURSE_CRAFTER-QA-P5-T0024-STRUCTURE",
+      "title": "COURSE_CRAFTER - QA Test Structure",
+      "module": "COURSE_CRAFTER",
+      "builder": "qa-builder",
+      "phase": 5,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create QA test structure for COURSE_CRAFTER",
+      "acceptance_criteria": [
+        "Test directory structure created",
+        "Test file placeholders created",
+        "QA documentation templates added"
+      ],
+      "dependencies": [
+        "WAVE1-COURSE_CRAFTER-SCHEMA-P1-T0017-SKELETON",
+        "WAVE1-COURSE_CRAFTER-SCHEMA-P1-T0018-MODELS",
+        "WAVE1-COURSE_CRAFTER-API-P2-T0019-SKELETON",
+        "WAVE1-COURSE_CRAFTER-API-P2-T0020-HANDLERS",
+        "WAVE1-COURSE_CRAFTER-INTEGRATION-P3-T0021-CONTRACTS",
+        "WAVE1-COURSE_CRAFTER-UI-P4-T0022-COMPONENTS",
+        "WAVE1-COURSE_CRAFTER-UI-P4-T0023-ROUTING"
+      ],
+      "deliverables": [
+        "Test directory structure",
+        "Test file templates",
+        "QA documentation"
+      ],
+      "qa_gates": [
+        "Structure follows standards",
+        "All areas covered"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "QA follows QA governance rules"
+      ]
+    },
+    {
+      "task_id": "WAVE1-POLICY_BUILDER-SCHEMA-P1-T0025-SKELETON",
+      "title": "POLICY_BUILDER - Database Schema Skeleton",
+      "module": "POLICY_BUILDER",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create database schema skeleton for POLICY_BUILDER module",
+      "acceptance_criteria": [
+        "Table definitions created (skeleton)",
+        "Basic relationships defined",
+        "Placeholder migrations created",
+        "Schema follows naming conventions"
+      ],
+      "dependencies": [],
+      "deliverables": [
+        "Schema definition files",
+        "Migration skeleton",
+        "Basic model interfaces"
+      ],
+      "qa_gates": [
+        "Schema structure valid",
+        "Follows architecture standards"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Must include organisation_id for multi-tenancy",
+        "Must respect privacy guardrails"
+      ],
+      "notes": [
+        "Skeleton only - no full implementation",
+        "Establishes structural foundation"
+      ]
+    },
+    {
+      "task_id": "WAVE1-POLICY_BUILDER-SCHEMA-P1-T0026-MODELS",
+      "title": "POLICY_BUILDER - Model Definition Skeletons",
+      "module": "POLICY_BUILDER",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create TypeScript model definition skeletons",
+      "acceptance_criteria": [
+        "Model interfaces defined",
+        "Type definitions created",
+        "Basic validation placeholders"
+      ],
+      "dependencies": [
+        "WAVE1-POLICY_BUILDER-SCHEMA-P1-T0025-SKELETON"
+      ],
+      "deliverables": [
+        "TypeScript model files",
+        "Type definition files"
+      ],
+      "qa_gates": [
+        "Type checking passes"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-POLICY_BUILDER-API-P2-T0027-SKELETON",
+      "title": "POLICY_BUILDER - API Route Skeletons",
+      "module": "POLICY_BUILDER",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create API route skeletons for POLICY_BUILDER",
+      "acceptance_criteria": [
+        "Route definitions created",
+        "Edge function placeholders created",
+        "Basic request/response types defined",
+        "Authentication placeholders included"
+      ],
+      "dependencies": [
+        "WAVE1-POLICY_BUILDER-SCHEMA-P1-T0025-SKELETON",
+        "WAVE1-POLICY_BUILDER-SCHEMA-P1-T0026-MODELS"
+      ],
+      "deliverables": [
+        "API route files",
+        "Edge function skeletons",
+        "Type definitions"
+      ],
+      "qa_gates": [
+        "Routes accessible",
+        "Type definitions valid"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Respects module boundaries",
+        "Includes tenant isolation placeholders"
+      ]
+    },
+    {
+      "task_id": "WAVE1-POLICY_BUILDER-API-P2-T0028-HANDLERS",
+      "title": "POLICY_BUILDER - Request Handler Placeholders",
+      "module": "POLICY_BUILDER",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create request handler placeholder functions",
+      "acceptance_criteria": [
+        "Handler functions created",
+        "Basic error handling included",
+        "Placeholder responses defined"
+      ],
+      "dependencies": [
+        "WAVE1-POLICY_BUILDER-API-P2-T0027-SKELETON"
+      ],
+      "deliverables": [
+        "Handler function files",
+        "Error handler placeholders"
+      ],
+      "qa_gates": [
+        "Functions callable"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-POLICY_BUILDER-INTEGRATION-P3-T0029-CONTRACTS",
+      "title": "POLICY_BUILDER - Integration Contract Definitions",
+      "module": "POLICY_BUILDER",
+      "builder": "integration-builder",
+      "phase": 3,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define integration contracts for POLICY_BUILDER",
+      "acceptance_criteria": [
+        "Integration points identified",
+        "Contract interfaces defined",
+        "Event definitions created"
+      ],
+      "dependencies": [
+        "WAVE1-POLICY_BUILDER-API-P2-T0027-SKELETON",
+        "WAVE1-POLICY_BUILDER-API-P2-T0028-HANDLERS"
+      ],
+      "deliverables": [
+        "Integration contract files",
+        "Event type definitions",
+        "Interface documentation"
+      ],
+      "qa_gates": [
+        "Contracts well-defined",
+        "No tight coupling"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Uses event-driven architecture",
+        "Respects integration boundaries"
+      ]
+    },
+    {
+      "task_id": "WAVE1-POLICY_BUILDER-UI-P4-T0030-COMPONENTS",
+      "title": "POLICY_BUILDER - UI Component Shells",
+      "module": "POLICY_BUILDER",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create UI component shells for POLICY_BUILDER",
+      "acceptance_criteria": [
+        "Component files created",
+        "Basic structure defined",
+        "Props interfaces defined"
+      ],
+      "dependencies": [
+        "WAVE1-POLICY_BUILDER-API-P2-T0027-SKELETON",
+        "WAVE1-POLICY_BUILDER-API-P2-T0028-HANDLERS"
+      ],
+      "deliverables": [
+        "React component files",
+        "Component type definitions",
+        "Placeholder layouts"
+      ],
+      "qa_gates": [
+        "Components render",
+        "No console errors"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "No business logic in UI",
+        "Uses API calls for data"
+      ]
+    },
+    {
+      "task_id": "WAVE1-POLICY_BUILDER-UI-P4-T0031-ROUTING",
+      "title": "POLICY_BUILDER - Route Definitions",
+      "module": "POLICY_BUILDER",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define module routes",
+      "acceptance_criteria": [
+        "Routes defined",
+        "Navigation structure created",
+        "Route guards placeholders added"
+      ],
+      "dependencies": [
+        "WAVE1-POLICY_BUILDER-UI-P4-T0030-COMPONENTS"
+      ],
+      "deliverables": [
+        "Route configuration files",
+        "Navigation components"
+      ],
+      "qa_gates": [
+        "Routes accessible"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-POLICY_BUILDER-QA-P5-T0032-STRUCTURE",
+      "title": "POLICY_BUILDER - QA Test Structure",
+      "module": "POLICY_BUILDER",
+      "builder": "qa-builder",
+      "phase": 5,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create QA test structure for POLICY_BUILDER",
+      "acceptance_criteria": [
+        "Test directory structure created",
+        "Test file placeholders created",
+        "QA documentation templates added"
+      ],
+      "dependencies": [
+        "WAVE1-POLICY_BUILDER-SCHEMA-P1-T0025-SKELETON",
+        "WAVE1-POLICY_BUILDER-SCHEMA-P1-T0026-MODELS",
+        "WAVE1-POLICY_BUILDER-API-P2-T0027-SKELETON",
+        "WAVE1-POLICY_BUILDER-API-P2-T0028-HANDLERS",
+        "WAVE1-POLICY_BUILDER-INTEGRATION-P3-T0029-CONTRACTS",
+        "WAVE1-POLICY_BUILDER-UI-P4-T0030-COMPONENTS",
+        "WAVE1-POLICY_BUILDER-UI-P4-T0031-ROUTING"
+      ],
+      "deliverables": [
+        "Test directory structure",
+        "Test file templates",
+        "QA documentation"
+      ],
+      "qa_gates": [
+        "Structure follows standards",
+        "All areas covered"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "QA follows QA governance rules"
+      ]
+    },
+    {
+      "task_id": "WAVE1-SKILLS_DEVELOPMENT_PORTAL-SCHEMA-P1-T0033-SKELETON",
+      "title": "SKILLS_DEVELOPMENT_PORTAL - Database Schema Skeleton",
+      "module": "SKILLS_DEVELOPMENT_PORTAL",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create database schema skeleton for SKILLS_DEVELOPMENT_PORTAL module",
+      "acceptance_criteria": [
+        "Table definitions created (skeleton)",
+        "Basic relationships defined",
+        "Placeholder migrations created",
+        "Schema follows naming conventions"
+      ],
+      "dependencies": [],
+      "deliverables": [
+        "Schema definition files",
+        "Migration skeleton",
+        "Basic model interfaces"
+      ],
+      "qa_gates": [
+        "Schema structure valid",
+        "Follows architecture standards"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Must include organisation_id for multi-tenancy",
+        "Must respect privacy guardrails"
+      ],
+      "notes": [
+        "Skeleton only - no full implementation",
+        "Establishes structural foundation"
+      ]
+    },
+    {
+      "task_id": "WAVE1-SKILLS_DEVELOPMENT_PORTAL-SCHEMA-P1-T0034-MODELS",
+      "title": "SKILLS_DEVELOPMENT_PORTAL - Model Definition Skeletons",
+      "module": "SKILLS_DEVELOPMENT_PORTAL",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create TypeScript model definition skeletons",
+      "acceptance_criteria": [
+        "Model interfaces defined",
+        "Type definitions created",
+        "Basic validation placeholders"
+      ],
+      "dependencies": [
+        "WAVE1-SKILLS_DEVELOPMENT_PORTAL-SCHEMA-P1-T0033-SKELETON"
+      ],
+      "deliverables": [
+        "TypeScript model files",
+        "Type definition files"
+      ],
+      "qa_gates": [
+        "Type checking passes"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-SKILLS_DEVELOPMENT_PORTAL-API-P2-T0035-SKELETON",
+      "title": "SKILLS_DEVELOPMENT_PORTAL - API Route Skeletons",
+      "module": "SKILLS_DEVELOPMENT_PORTAL",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create API route skeletons for SKILLS_DEVELOPMENT_PORTAL",
+      "acceptance_criteria": [
+        "Route definitions created",
+        "Edge function placeholders created",
+        "Basic request/response types defined",
+        "Authentication placeholders included"
+      ],
+      "dependencies": [
+        "WAVE1-SKILLS_DEVELOPMENT_PORTAL-SCHEMA-P1-T0033-SKELETON",
+        "WAVE1-SKILLS_DEVELOPMENT_PORTAL-SCHEMA-P1-T0034-MODELS"
+      ],
+      "deliverables": [
+        "API route files",
+        "Edge function skeletons",
+        "Type definitions"
+      ],
+      "qa_gates": [
+        "Routes accessible",
+        "Type definitions valid"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Respects module boundaries",
+        "Includes tenant isolation placeholders"
+      ]
+    },
+    {
+      "task_id": "WAVE1-SKILLS_DEVELOPMENT_PORTAL-API-P2-T0036-HANDLERS",
+      "title": "SKILLS_DEVELOPMENT_PORTAL - Request Handler Placeholders",
+      "module": "SKILLS_DEVELOPMENT_PORTAL",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create request handler placeholder functions",
+      "acceptance_criteria": [
+        "Handler functions created",
+        "Basic error handling included",
+        "Placeholder responses defined"
+      ],
+      "dependencies": [
+        "WAVE1-SKILLS_DEVELOPMENT_PORTAL-API-P2-T0035-SKELETON"
+      ],
+      "deliverables": [
+        "Handler function files",
+        "Error handler placeholders"
+      ],
+      "qa_gates": [
+        "Functions callable"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-SKILLS_DEVELOPMENT_PORTAL-INTEGRATION-P3-T0037-CONTRACTS",
+      "title": "SKILLS_DEVELOPMENT_PORTAL - Integration Contract Definitions",
+      "module": "SKILLS_DEVELOPMENT_PORTAL",
+      "builder": "integration-builder",
+      "phase": 3,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define integration contracts for SKILLS_DEVELOPMENT_PORTAL",
+      "acceptance_criteria": [
+        "Integration points identified",
+        "Contract interfaces defined",
+        "Event definitions created"
+      ],
+      "dependencies": [
+        "WAVE1-SKILLS_DEVELOPMENT_PORTAL-API-P2-T0035-SKELETON",
+        "WAVE1-SKILLS_DEVELOPMENT_PORTAL-API-P2-T0036-HANDLERS"
+      ],
+      "deliverables": [
+        "Integration contract files",
+        "Event type definitions",
+        "Interface documentation"
+      ],
+      "qa_gates": [
+        "Contracts well-defined",
+        "No tight coupling"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Uses event-driven architecture",
+        "Respects integration boundaries"
+      ]
+    },
+    {
+      "task_id": "WAVE1-SKILLS_DEVELOPMENT_PORTAL-UI-P4-T0038-COMPONENTS",
+      "title": "SKILLS_DEVELOPMENT_PORTAL - UI Component Shells",
+      "module": "SKILLS_DEVELOPMENT_PORTAL",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create UI component shells for SKILLS_DEVELOPMENT_PORTAL",
+      "acceptance_criteria": [
+        "Component files created",
+        "Basic structure defined",
+        "Props interfaces defined"
+      ],
+      "dependencies": [
+        "WAVE1-SKILLS_DEVELOPMENT_PORTAL-API-P2-T0035-SKELETON",
+        "WAVE1-SKILLS_DEVELOPMENT_PORTAL-API-P2-T0036-HANDLERS"
+      ],
+      "deliverables": [
+        "React component files",
+        "Component type definitions",
+        "Placeholder layouts"
+      ],
+      "qa_gates": [
+        "Components render",
+        "No console errors"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "No business logic in UI",
+        "Uses API calls for data"
+      ]
+    },
+    {
+      "task_id": "WAVE1-SKILLS_DEVELOPMENT_PORTAL-UI-P4-T0039-ROUTING",
+      "title": "SKILLS_DEVELOPMENT_PORTAL - Route Definitions",
+      "module": "SKILLS_DEVELOPMENT_PORTAL",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define module routes",
+      "acceptance_criteria": [
+        "Routes defined",
+        "Navigation structure created",
+        "Route guards placeholders added"
+      ],
+      "dependencies": [
+        "WAVE1-SKILLS_DEVELOPMENT_PORTAL-UI-P4-T0038-COMPONENTS"
+      ],
+      "deliverables": [
+        "Route configuration files",
+        "Navigation components"
+      ],
+      "qa_gates": [
+        "Routes accessible"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-SKILLS_DEVELOPMENT_PORTAL-QA-P5-T0040-STRUCTURE",
+      "title": "SKILLS_DEVELOPMENT_PORTAL - QA Test Structure",
+      "module": "SKILLS_DEVELOPMENT_PORTAL",
+      "builder": "qa-builder",
+      "phase": 5,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create QA test structure for SKILLS_DEVELOPMENT_PORTAL",
+      "acceptance_criteria": [
+        "Test directory structure created",
+        "Test file placeholders created",
+        "QA documentation templates added"
+      ],
+      "dependencies": [
+        "WAVE1-SKILLS_DEVELOPMENT_PORTAL-SCHEMA-P1-T0033-SKELETON",
+        "WAVE1-SKILLS_DEVELOPMENT_PORTAL-SCHEMA-P1-T0034-MODELS",
+        "WAVE1-SKILLS_DEVELOPMENT_PORTAL-API-P2-T0035-SKELETON",
+        "WAVE1-SKILLS_DEVELOPMENT_PORTAL-API-P2-T0036-HANDLERS",
+        "WAVE1-SKILLS_DEVELOPMENT_PORTAL-INTEGRATION-P3-T0037-CONTRACTS",
+        "WAVE1-SKILLS_DEVELOPMENT_PORTAL-UI-P4-T0038-COMPONENTS",
+        "WAVE1-SKILLS_DEVELOPMENT_PORTAL-UI-P4-T0039-ROUTING"
+      ],
+      "deliverables": [
+        "Test directory structure",
+        "Test file templates",
+        "QA documentation"
+      ],
+      "qa_gates": [
+        "Structure follows standards",
+        "All areas covered"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "QA follows QA governance rules"
+      ]
+    },
+    {
+      "task_id": "WAVE1-PIT-SCHEMA-P1-T0041-SKELETON",
+      "title": "PIT - Database Schema Skeleton",
+      "module": "PIT",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create database schema skeleton for PIT module",
+      "acceptance_criteria": [
+        "Table definitions created (skeleton)",
+        "Basic relationships defined",
+        "Placeholder migrations created",
+        "Schema follows naming conventions"
+      ],
+      "dependencies": [],
+      "deliverables": [
+        "Schema definition files",
+        "Migration skeleton",
+        "Basic model interfaces"
+      ],
+      "qa_gates": [
+        "Schema structure valid",
+        "Follows architecture standards"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Must include organisation_id for multi-tenancy",
+        "Must respect privacy guardrails"
+      ],
+      "notes": [
+        "Skeleton only - no full implementation",
+        "Establishes structural foundation"
+      ]
+    },
+    {
+      "task_id": "WAVE1-PIT-SCHEMA-P1-T0042-MODELS",
+      "title": "PIT - Model Definition Skeletons",
+      "module": "PIT",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create TypeScript model definition skeletons",
+      "acceptance_criteria": [
+        "Model interfaces defined",
+        "Type definitions created",
+        "Basic validation placeholders"
+      ],
+      "dependencies": [
+        "WAVE1-PIT-SCHEMA-P1-T0041-SKELETON"
+      ],
+      "deliverables": [
+        "TypeScript model files",
+        "Type definition files"
+      ],
+      "qa_gates": [
+        "Type checking passes"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-PIT-API-P2-T0043-SKELETON",
+      "title": "PIT - API Route Skeletons",
+      "module": "PIT",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create API route skeletons for PIT",
+      "acceptance_criteria": [
+        "Route definitions created",
+        "Edge function placeholders created",
+        "Basic request/response types defined",
+        "Authentication placeholders included"
+      ],
+      "dependencies": [
+        "WAVE1-PIT-SCHEMA-P1-T0041-SKELETON",
+        "WAVE1-PIT-SCHEMA-P1-T0042-MODELS"
+      ],
+      "deliverables": [
+        "API route files",
+        "Edge function skeletons",
+        "Type definitions"
+      ],
+      "qa_gates": [
+        "Routes accessible",
+        "Type definitions valid"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Respects module boundaries",
+        "Includes tenant isolation placeholders"
+      ]
+    },
+    {
+      "task_id": "WAVE1-PIT-API-P2-T0044-HANDLERS",
+      "title": "PIT - Request Handler Placeholders",
+      "module": "PIT",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create request handler placeholder functions",
+      "acceptance_criteria": [
+        "Handler functions created",
+        "Basic error handling included",
+        "Placeholder responses defined"
+      ],
+      "dependencies": [
+        "WAVE1-PIT-API-P2-T0043-SKELETON"
+      ],
+      "deliverables": [
+        "Handler function files",
+        "Error handler placeholders"
+      ],
+      "qa_gates": [
+        "Functions callable"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-PIT-INTEGRATION-P3-T0045-CONTRACTS",
+      "title": "PIT - Integration Contract Definitions",
+      "module": "PIT",
+      "builder": "integration-builder",
+      "phase": 3,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define integration contracts for PIT",
+      "acceptance_criteria": [
+        "Integration points identified",
+        "Contract interfaces defined",
+        "Event definitions created"
+      ],
+      "dependencies": [
+        "WAVE1-PIT-API-P2-T0043-SKELETON",
+        "WAVE1-PIT-API-P2-T0044-HANDLERS"
+      ],
+      "deliverables": [
+        "Integration contract files",
+        "Event type definitions",
+        "Interface documentation"
+      ],
+      "qa_gates": [
+        "Contracts well-defined",
+        "No tight coupling"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Uses event-driven architecture",
+        "Respects integration boundaries"
+      ]
+    },
+    {
+      "task_id": "WAVE1-PIT-UI-P4-T0046-COMPONENTS",
+      "title": "PIT - UI Component Shells",
+      "module": "PIT",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create UI component shells for PIT",
+      "acceptance_criteria": [
+        "Component files created",
+        "Basic structure defined",
+        "Props interfaces defined"
+      ],
+      "dependencies": [
+        "WAVE1-PIT-API-P2-T0043-SKELETON",
+        "WAVE1-PIT-API-P2-T0044-HANDLERS"
+      ],
+      "deliverables": [
+        "React component files",
+        "Component type definitions",
+        "Placeholder layouts"
+      ],
+      "qa_gates": [
+        "Components render",
+        "No console errors"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "No business logic in UI",
+        "Uses API calls for data"
+      ]
+    },
+    {
+      "task_id": "WAVE1-PIT-UI-P4-T0047-ROUTING",
+      "title": "PIT - Route Definitions",
+      "module": "PIT",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define module routes",
+      "acceptance_criteria": [
+        "Routes defined",
+        "Navigation structure created",
+        "Route guards placeholders added"
+      ],
+      "dependencies": [
+        "WAVE1-PIT-UI-P4-T0046-COMPONENTS"
+      ],
+      "deliverables": [
+        "Route configuration files",
+        "Navigation components"
+      ],
+      "qa_gates": [
+        "Routes accessible"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-PIT-QA-P5-T0048-STRUCTURE",
+      "title": "PIT - QA Test Structure",
+      "module": "PIT",
+      "builder": "qa-builder",
+      "phase": 5,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create QA test structure for PIT",
+      "acceptance_criteria": [
+        "Test directory structure created",
+        "Test file placeholders created",
+        "QA documentation templates added"
+      ],
+      "dependencies": [
+        "WAVE1-PIT-SCHEMA-P1-T0041-SKELETON",
+        "WAVE1-PIT-SCHEMA-P1-T0042-MODELS",
+        "WAVE1-PIT-API-P2-T0043-SKELETON",
+        "WAVE1-PIT-API-P2-T0044-HANDLERS",
+        "WAVE1-PIT-INTEGRATION-P3-T0045-CONTRACTS",
+        "WAVE1-PIT-UI-P4-T0046-COMPONENTS",
+        "WAVE1-PIT-UI-P4-T0047-ROUTING"
+      ],
+      "deliverables": [
+        "Test directory structure",
+        "Test file templates",
+        "QA documentation"
+      ],
+      "qa_gates": [
+        "Structure follows standards",
+        "All areas covered"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "QA follows QA governance rules"
+      ]
+    },
+    {
+      "task_id": "WAVE1-WRAC-SCHEMA-P1-T0049-SKELETON",
+      "title": "WRAC - Database Schema Skeleton",
+      "module": "WRAC",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create database schema skeleton for WRAC module",
+      "acceptance_criteria": [
+        "Table definitions created (skeleton)",
+        "Basic relationships defined",
+        "Placeholder migrations created",
+        "Schema follows naming conventions"
+      ],
+      "dependencies": [],
+      "deliverables": [
+        "Schema definition files",
+        "Migration skeleton",
+        "Basic model interfaces"
+      ],
+      "qa_gates": [
+        "Schema structure valid",
+        "Follows architecture standards"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Must include organisation_id for multi-tenancy",
+        "Must respect privacy guardrails"
+      ],
+      "notes": [
+        "Skeleton only - no full implementation",
+        "Establishes structural foundation"
+      ]
+    },
+    {
+      "task_id": "WAVE1-WRAC-SCHEMA-P1-T0050-MODELS",
+      "title": "WRAC - Model Definition Skeletons",
+      "module": "WRAC",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create TypeScript model definition skeletons",
+      "acceptance_criteria": [
+        "Model interfaces defined",
+        "Type definitions created",
+        "Basic validation placeholders"
+      ],
+      "dependencies": [
+        "WAVE1-WRAC-SCHEMA-P1-T0049-SKELETON"
+      ],
+      "deliverables": [
+        "TypeScript model files",
+        "Type definition files"
+      ],
+      "qa_gates": [
+        "Type checking passes"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-WRAC-API-P2-T0051-SKELETON",
+      "title": "WRAC - API Route Skeletons",
+      "module": "WRAC",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create API route skeletons for WRAC",
+      "acceptance_criteria": [
+        "Route definitions created",
+        "Edge function placeholders created",
+        "Basic request/response types defined",
+        "Authentication placeholders included"
+      ],
+      "dependencies": [
+        "WAVE1-WRAC-SCHEMA-P1-T0049-SKELETON",
+        "WAVE1-WRAC-SCHEMA-P1-T0050-MODELS"
+      ],
+      "deliverables": [
+        "API route files",
+        "Edge function skeletons",
+        "Type definitions"
+      ],
+      "qa_gates": [
+        "Routes accessible",
+        "Type definitions valid"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Respects module boundaries",
+        "Includes tenant isolation placeholders"
+      ]
+    },
+    {
+      "task_id": "WAVE1-WRAC-API-P2-T0052-HANDLERS",
+      "title": "WRAC - Request Handler Placeholders",
+      "module": "WRAC",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create request handler placeholder functions",
+      "acceptance_criteria": [
+        "Handler functions created",
+        "Basic error handling included",
+        "Placeholder responses defined"
+      ],
+      "dependencies": [
+        "WAVE1-WRAC-API-P2-T0051-SKELETON"
+      ],
+      "deliverables": [
+        "Handler function files",
+        "Error handler placeholders"
+      ],
+      "qa_gates": [
+        "Functions callable"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-WRAC-INTEGRATION-P3-T0053-CONTRACTS",
+      "title": "WRAC - Integration Contract Definitions",
+      "module": "WRAC",
+      "builder": "integration-builder",
+      "phase": 3,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define integration contracts for WRAC",
+      "acceptance_criteria": [
+        "Integration points identified",
+        "Contract interfaces defined",
+        "Event definitions created"
+      ],
+      "dependencies": [
+        "WAVE1-WRAC-API-P2-T0051-SKELETON",
+        "WAVE1-WRAC-API-P2-T0052-HANDLERS"
+      ],
+      "deliverables": [
+        "Integration contract files",
+        "Event type definitions",
+        "Interface documentation"
+      ],
+      "qa_gates": [
+        "Contracts well-defined",
+        "No tight coupling"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Uses event-driven architecture",
+        "Respects integration boundaries"
+      ]
+    },
+    {
+      "task_id": "WAVE1-WRAC-UI-P4-T0054-COMPONENTS",
+      "title": "WRAC - UI Component Shells",
+      "module": "WRAC",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create UI component shells for WRAC",
+      "acceptance_criteria": [
+        "Component files created",
+        "Basic structure defined",
+        "Props interfaces defined"
+      ],
+      "dependencies": [
+        "WAVE1-WRAC-API-P2-T0051-SKELETON",
+        "WAVE1-WRAC-API-P2-T0052-HANDLERS"
+      ],
+      "deliverables": [
+        "React component files",
+        "Component type definitions",
+        "Placeholder layouts"
+      ],
+      "qa_gates": [
+        "Components render",
+        "No console errors"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "No business logic in UI",
+        "Uses API calls for data"
+      ]
+    },
+    {
+      "task_id": "WAVE1-WRAC-UI-P4-T0055-ROUTING",
+      "title": "WRAC - Route Definitions",
+      "module": "WRAC",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define module routes",
+      "acceptance_criteria": [
+        "Routes defined",
+        "Navigation structure created",
+        "Route guards placeholders added"
+      ],
+      "dependencies": [
+        "WAVE1-WRAC-UI-P4-T0054-COMPONENTS"
+      ],
+      "deliverables": [
+        "Route configuration files",
+        "Navigation components"
+      ],
+      "qa_gates": [
+        "Routes accessible"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-WRAC-QA-P5-T0056-STRUCTURE",
+      "title": "WRAC - QA Test Structure",
+      "module": "WRAC",
+      "builder": "qa-builder",
+      "phase": 5,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create QA test structure for WRAC",
+      "acceptance_criteria": [
+        "Test directory structure created",
+        "Test file placeholders created",
+        "QA documentation templates added"
+      ],
+      "dependencies": [
+        "WAVE1-WRAC-SCHEMA-P1-T0049-SKELETON",
+        "WAVE1-WRAC-SCHEMA-P1-T0050-MODELS",
+        "WAVE1-WRAC-API-P2-T0051-SKELETON",
+        "WAVE1-WRAC-API-P2-T0052-HANDLERS",
+        "WAVE1-WRAC-INTEGRATION-P3-T0053-CONTRACTS",
+        "WAVE1-WRAC-UI-P4-T0054-COMPONENTS",
+        "WAVE1-WRAC-UI-P4-T0055-ROUTING"
+      ],
+      "deliverables": [
+        "Test directory structure",
+        "Test file templates",
+        "QA documentation"
+      ],
+      "qa_gates": [
+        "Structure follows standards",
+        "All areas covered"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "QA follows QA governance rules"
+      ]
+    },
+    {
+      "task_id": "WAVE1-ERM-SCHEMA-P1-T0057-SKELETON",
+      "title": "ERM - Database Schema Skeleton",
+      "module": "ERM",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create database schema skeleton for ERM module",
+      "acceptance_criteria": [
+        "Table definitions created (skeleton)",
+        "Basic relationships defined",
+        "Placeholder migrations created",
+        "Schema follows naming conventions"
+      ],
+      "dependencies": [],
+      "deliverables": [
+        "Schema definition files",
+        "Migration skeleton",
+        "Basic model interfaces"
+      ],
+      "qa_gates": [
+        "Schema structure valid",
+        "Follows architecture standards"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Must include organisation_id for multi-tenancy",
+        "Must respect privacy guardrails"
+      ],
+      "notes": [
+        "Skeleton only - no full implementation",
+        "Establishes structural foundation"
+      ]
+    },
+    {
+      "task_id": "WAVE1-ERM-SCHEMA-P1-T0058-MODELS",
+      "title": "ERM - Model Definition Skeletons",
+      "module": "ERM",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create TypeScript model definition skeletons",
+      "acceptance_criteria": [
+        "Model interfaces defined",
+        "Type definitions created",
+        "Basic validation placeholders"
+      ],
+      "dependencies": [
+        "WAVE1-ERM-SCHEMA-P1-T0057-SKELETON"
+      ],
+      "deliverables": [
+        "TypeScript model files",
+        "Type definition files"
+      ],
+      "qa_gates": [
+        "Type checking passes"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-ERM-API-P2-T0059-SKELETON",
+      "title": "ERM - API Route Skeletons",
+      "module": "ERM",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create API route skeletons for ERM",
+      "acceptance_criteria": [
+        "Route definitions created",
+        "Edge function placeholders created",
+        "Basic request/response types defined",
+        "Authentication placeholders included"
+      ],
+      "dependencies": [
+        "WAVE1-ERM-SCHEMA-P1-T0057-SKELETON",
+        "WAVE1-ERM-SCHEMA-P1-T0058-MODELS"
+      ],
+      "deliverables": [
+        "API route files",
+        "Edge function skeletons",
+        "Type definitions"
+      ],
+      "qa_gates": [
+        "Routes accessible",
+        "Type definitions valid"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Respects module boundaries",
+        "Includes tenant isolation placeholders"
+      ]
+    },
+    {
+      "task_id": "WAVE1-ERM-API-P2-T0060-HANDLERS",
+      "title": "ERM - Request Handler Placeholders",
+      "module": "ERM",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create request handler placeholder functions",
+      "acceptance_criteria": [
+        "Handler functions created",
+        "Basic error handling included",
+        "Placeholder responses defined"
+      ],
+      "dependencies": [
+        "WAVE1-ERM-API-P2-T0059-SKELETON"
+      ],
+      "deliverables": [
+        "Handler function files",
+        "Error handler placeholders"
+      ],
+      "qa_gates": [
+        "Functions callable"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-ERM-INTEGRATION-P3-T0061-CONTRACTS",
+      "title": "ERM - Integration Contract Definitions",
+      "module": "ERM",
+      "builder": "integration-builder",
+      "phase": 3,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define integration contracts for ERM",
+      "acceptance_criteria": [
+        "Integration points identified",
+        "Contract interfaces defined",
+        "Event definitions created"
+      ],
+      "dependencies": [
+        "WAVE1-ERM-API-P2-T0059-SKELETON",
+        "WAVE1-ERM-API-P2-T0060-HANDLERS"
+      ],
+      "deliverables": [
+        "Integration contract files",
+        "Event type definitions",
+        "Interface documentation"
+      ],
+      "qa_gates": [
+        "Contracts well-defined",
+        "No tight coupling"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Uses event-driven architecture",
+        "Respects integration boundaries"
+      ]
+    },
+    {
+      "task_id": "WAVE1-ERM-UI-P4-T0062-COMPONENTS",
+      "title": "ERM - UI Component Shells",
+      "module": "ERM",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create UI component shells for ERM",
+      "acceptance_criteria": [
+        "Component files created",
+        "Basic structure defined",
+        "Props interfaces defined"
+      ],
+      "dependencies": [
+        "WAVE1-ERM-API-P2-T0059-SKELETON",
+        "WAVE1-ERM-API-P2-T0060-HANDLERS"
+      ],
+      "deliverables": [
+        "React component files",
+        "Component type definitions",
+        "Placeholder layouts"
+      ],
+      "qa_gates": [
+        "Components render",
+        "No console errors"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "No business logic in UI",
+        "Uses API calls for data"
+      ]
+    },
+    {
+      "task_id": "WAVE1-ERM-UI-P4-T0063-ROUTING",
+      "title": "ERM - Route Definitions",
+      "module": "ERM",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define module routes",
+      "acceptance_criteria": [
+        "Routes defined",
+        "Navigation structure created",
+        "Route guards placeholders added"
+      ],
+      "dependencies": [
+        "WAVE1-ERM-UI-P4-T0062-COMPONENTS"
+      ],
+      "deliverables": [
+        "Route configuration files",
+        "Navigation components"
+      ],
+      "qa_gates": [
+        "Routes accessible"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-ERM-QA-P5-T0064-STRUCTURE",
+      "title": "ERM - QA Test Structure",
+      "module": "ERM",
+      "builder": "qa-builder",
+      "phase": 5,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create QA test structure for ERM",
+      "acceptance_criteria": [
+        "Test directory structure created",
+        "Test file placeholders created",
+        "QA documentation templates added"
+      ],
+      "dependencies": [
+        "WAVE1-ERM-SCHEMA-P1-T0057-SKELETON",
+        "WAVE1-ERM-SCHEMA-P1-T0058-MODELS",
+        "WAVE1-ERM-API-P2-T0059-SKELETON",
+        "WAVE1-ERM-API-P2-T0060-HANDLERS",
+        "WAVE1-ERM-INTEGRATION-P3-T0061-CONTRACTS",
+        "WAVE1-ERM-UI-P4-T0062-COMPONENTS",
+        "WAVE1-ERM-UI-P4-T0063-ROUTING"
+      ],
+      "deliverables": [
+        "Test directory structure",
+        "Test file templates",
+        "QA documentation"
+      ],
+      "qa_gates": [
+        "Structure follows standards",
+        "All areas covered"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "QA follows QA governance rules"
+      ]
+    },
+    {
+      "task_id": "WAVE1-RISK_ASSESSMENT-SCHEMA-P1-T0065-SKELETON",
+      "title": "RISK_ASSESSMENT - Database Schema Skeleton",
+      "module": "RISK_ASSESSMENT",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create database schema skeleton for RISK_ASSESSMENT module",
+      "acceptance_criteria": [
+        "Table definitions created (skeleton)",
+        "Basic relationships defined",
+        "Placeholder migrations created",
+        "Schema follows naming conventions"
+      ],
+      "dependencies": [],
+      "deliverables": [
+        "Schema definition files",
+        "Migration skeleton",
+        "Basic model interfaces"
+      ],
+      "qa_gates": [
+        "Schema structure valid",
+        "Follows architecture standards"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Must include organisation_id for multi-tenancy",
+        "Must respect privacy guardrails"
+      ],
+      "notes": [
+        "Skeleton only - no full implementation",
+        "Establishes structural foundation"
+      ]
+    },
+    {
+      "task_id": "WAVE1-RISK_ASSESSMENT-SCHEMA-P1-T0066-MODELS",
+      "title": "RISK_ASSESSMENT - Model Definition Skeletons",
+      "module": "RISK_ASSESSMENT",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create TypeScript model definition skeletons",
+      "acceptance_criteria": [
+        "Model interfaces defined",
+        "Type definitions created",
+        "Basic validation placeholders"
+      ],
+      "dependencies": [
+        "WAVE1-RISK_ASSESSMENT-SCHEMA-P1-T0065-SKELETON"
+      ],
+      "deliverables": [
+        "TypeScript model files",
+        "Type definition files"
+      ],
+      "qa_gates": [
+        "Type checking passes"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-RISK_ASSESSMENT-API-P2-T0067-SKELETON",
+      "title": "RISK_ASSESSMENT - API Route Skeletons",
+      "module": "RISK_ASSESSMENT",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create API route skeletons for RISK_ASSESSMENT",
+      "acceptance_criteria": [
+        "Route definitions created",
+        "Edge function placeholders created",
+        "Basic request/response types defined",
+        "Authentication placeholders included"
+      ],
+      "dependencies": [
+        "WAVE1-RISK_ASSESSMENT-SCHEMA-P1-T0065-SKELETON",
+        "WAVE1-RISK_ASSESSMENT-SCHEMA-P1-T0066-MODELS"
+      ],
+      "deliverables": [
+        "API route files",
+        "Edge function skeletons",
+        "Type definitions"
+      ],
+      "qa_gates": [
+        "Routes accessible",
+        "Type definitions valid"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Respects module boundaries",
+        "Includes tenant isolation placeholders"
+      ]
+    },
+    {
+      "task_id": "WAVE1-RISK_ASSESSMENT-API-P2-T0068-HANDLERS",
+      "title": "RISK_ASSESSMENT - Request Handler Placeholders",
+      "module": "RISK_ASSESSMENT",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create request handler placeholder functions",
+      "acceptance_criteria": [
+        "Handler functions created",
+        "Basic error handling included",
+        "Placeholder responses defined"
+      ],
+      "dependencies": [
+        "WAVE1-RISK_ASSESSMENT-API-P2-T0067-SKELETON"
+      ],
+      "deliverables": [
+        "Handler function files",
+        "Error handler placeholders"
+      ],
+      "qa_gates": [
+        "Functions callable"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-RISK_ASSESSMENT-INTEGRATION-P3-T0069-CONTRACTS",
+      "title": "RISK_ASSESSMENT - Integration Contract Definitions",
+      "module": "RISK_ASSESSMENT",
+      "builder": "integration-builder",
+      "phase": 3,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define integration contracts for RISK_ASSESSMENT",
+      "acceptance_criteria": [
+        "Integration points identified",
+        "Contract interfaces defined",
+        "Event definitions created"
+      ],
+      "dependencies": [
+        "WAVE1-RISK_ASSESSMENT-API-P2-T0067-SKELETON",
+        "WAVE1-RISK_ASSESSMENT-API-P2-T0068-HANDLERS"
+      ],
+      "deliverables": [
+        "Integration contract files",
+        "Event type definitions",
+        "Interface documentation"
+      ],
+      "qa_gates": [
+        "Contracts well-defined",
+        "No tight coupling"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Uses event-driven architecture",
+        "Respects integration boundaries"
+      ]
+    },
+    {
+      "task_id": "WAVE1-RISK_ASSESSMENT-UI-P4-T0070-COMPONENTS",
+      "title": "RISK_ASSESSMENT - UI Component Shells",
+      "module": "RISK_ASSESSMENT",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create UI component shells for RISK_ASSESSMENT",
+      "acceptance_criteria": [
+        "Component files created",
+        "Basic structure defined",
+        "Props interfaces defined"
+      ],
+      "dependencies": [
+        "WAVE1-RISK_ASSESSMENT-API-P2-T0067-SKELETON",
+        "WAVE1-RISK_ASSESSMENT-API-P2-T0068-HANDLERS"
+      ],
+      "deliverables": [
+        "React component files",
+        "Component type definitions",
+        "Placeholder layouts"
+      ],
+      "qa_gates": [
+        "Components render",
+        "No console errors"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "No business logic in UI",
+        "Uses API calls for data"
+      ]
+    },
+    {
+      "task_id": "WAVE1-RISK_ASSESSMENT-UI-P4-T0071-ROUTING",
+      "title": "RISK_ASSESSMENT - Route Definitions",
+      "module": "RISK_ASSESSMENT",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define module routes",
+      "acceptance_criteria": [
+        "Routes defined",
+        "Navigation structure created",
+        "Route guards placeholders added"
+      ],
+      "dependencies": [
+        "WAVE1-RISK_ASSESSMENT-UI-P4-T0070-COMPONENTS"
+      ],
+      "deliverables": [
+        "Route configuration files",
+        "Navigation components"
+      ],
+      "qa_gates": [
+        "Routes accessible"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-RISK_ASSESSMENT-QA-P5-T0072-STRUCTURE",
+      "title": "RISK_ASSESSMENT - QA Test Structure",
+      "module": "RISK_ASSESSMENT",
+      "builder": "qa-builder",
+      "phase": 5,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create QA test structure for RISK_ASSESSMENT",
+      "acceptance_criteria": [
+        "Test directory structure created",
+        "Test file placeholders created",
+        "QA documentation templates added"
+      ],
+      "dependencies": [
+        "WAVE1-RISK_ASSESSMENT-SCHEMA-P1-T0065-SKELETON",
+        "WAVE1-RISK_ASSESSMENT-SCHEMA-P1-T0066-MODELS",
+        "WAVE1-RISK_ASSESSMENT-API-P2-T0067-SKELETON",
+        "WAVE1-RISK_ASSESSMENT-API-P2-T0068-HANDLERS",
+        "WAVE1-RISK_ASSESSMENT-INTEGRATION-P3-T0069-CONTRACTS",
+        "WAVE1-RISK_ASSESSMENT-UI-P4-T0070-COMPONENTS",
+        "WAVE1-RISK_ASSESSMENT-UI-P4-T0071-ROUTING"
+      ],
+      "deliverables": [
+        "Test directory structure",
+        "Test file templates",
+        "QA documentation"
+      ],
+      "qa_gates": [
+        "Structure follows standards",
+        "All areas covered"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "QA follows QA governance rules"
+      ]
+    },
+    {
+      "task_id": "WAVE1-THREAT-SCHEMA-P1-T0073-SKELETON",
+      "title": "THREAT - Database Schema Skeleton",
+      "module": "THREAT",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create database schema skeleton for THREAT module",
+      "acceptance_criteria": [
+        "Table definitions created (skeleton)",
+        "Basic relationships defined",
+        "Placeholder migrations created",
+        "Schema follows naming conventions"
+      ],
+      "dependencies": [],
+      "deliverables": [
+        "Schema definition files",
+        "Migration skeleton",
+        "Basic model interfaces"
+      ],
+      "qa_gates": [
+        "Schema structure valid",
+        "Follows architecture standards"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Must include organisation_id for multi-tenancy",
+        "Must respect privacy guardrails"
+      ],
+      "notes": [
+        "Skeleton only - no full implementation",
+        "Establishes structural foundation"
+      ]
+    },
+    {
+      "task_id": "WAVE1-THREAT-SCHEMA-P1-T0074-MODELS",
+      "title": "THREAT - Model Definition Skeletons",
+      "module": "THREAT",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create TypeScript model definition skeletons",
+      "acceptance_criteria": [
+        "Model interfaces defined",
+        "Type definitions created",
+        "Basic validation placeholders"
+      ],
+      "dependencies": [
+        "WAVE1-THREAT-SCHEMA-P1-T0073-SKELETON"
+      ],
+      "deliverables": [
+        "TypeScript model files",
+        "Type definition files"
+      ],
+      "qa_gates": [
+        "Type checking passes"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-THREAT-API-P2-T0075-SKELETON",
+      "title": "THREAT - API Route Skeletons",
+      "module": "THREAT",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create API route skeletons for THREAT",
+      "acceptance_criteria": [
+        "Route definitions created",
+        "Edge function placeholders created",
+        "Basic request/response types defined",
+        "Authentication placeholders included"
+      ],
+      "dependencies": [
+        "WAVE1-THREAT-SCHEMA-P1-T0073-SKELETON",
+        "WAVE1-THREAT-SCHEMA-P1-T0074-MODELS"
+      ],
+      "deliverables": [
+        "API route files",
+        "Edge function skeletons",
+        "Type definitions"
+      ],
+      "qa_gates": [
+        "Routes accessible",
+        "Type definitions valid"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Respects module boundaries",
+        "Includes tenant isolation placeholders"
+      ]
+    },
+    {
+      "task_id": "WAVE1-THREAT-API-P2-T0076-HANDLERS",
+      "title": "THREAT - Request Handler Placeholders",
+      "module": "THREAT",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create request handler placeholder functions",
+      "acceptance_criteria": [
+        "Handler functions created",
+        "Basic error handling included",
+        "Placeholder responses defined"
+      ],
+      "dependencies": [
+        "WAVE1-THREAT-API-P2-T0075-SKELETON"
+      ],
+      "deliverables": [
+        "Handler function files",
+        "Error handler placeholders"
+      ],
+      "qa_gates": [
+        "Functions callable"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-THREAT-INTEGRATION-P3-T0077-CONTRACTS",
+      "title": "THREAT - Integration Contract Definitions",
+      "module": "THREAT",
+      "builder": "integration-builder",
+      "phase": 3,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define integration contracts for THREAT",
+      "acceptance_criteria": [
+        "Integration points identified",
+        "Contract interfaces defined",
+        "Event definitions created"
+      ],
+      "dependencies": [
+        "WAVE1-THREAT-API-P2-T0075-SKELETON",
+        "WAVE1-THREAT-API-P2-T0076-HANDLERS"
+      ],
+      "deliverables": [
+        "Integration contract files",
+        "Event type definitions",
+        "Interface documentation"
+      ],
+      "qa_gates": [
+        "Contracts well-defined",
+        "No tight coupling"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Uses event-driven architecture",
+        "Respects integration boundaries"
+      ]
+    },
+    {
+      "task_id": "WAVE1-THREAT-UI-P4-T0078-COMPONENTS",
+      "title": "THREAT - UI Component Shells",
+      "module": "THREAT",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create UI component shells for THREAT",
+      "acceptance_criteria": [
+        "Component files created",
+        "Basic structure defined",
+        "Props interfaces defined"
+      ],
+      "dependencies": [
+        "WAVE1-THREAT-API-P2-T0075-SKELETON",
+        "WAVE1-THREAT-API-P2-T0076-HANDLERS"
+      ],
+      "deliverables": [
+        "React component files",
+        "Component type definitions",
+        "Placeholder layouts"
+      ],
+      "qa_gates": [
+        "Components render",
+        "No console errors"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "No business logic in UI",
+        "Uses API calls for data"
+      ]
+    },
+    {
+      "task_id": "WAVE1-THREAT-UI-P4-T0079-ROUTING",
+      "title": "THREAT - Route Definitions",
+      "module": "THREAT",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define module routes",
+      "acceptance_criteria": [
+        "Routes defined",
+        "Navigation structure created",
+        "Route guards placeholders added"
+      ],
+      "dependencies": [
+        "WAVE1-THREAT-UI-P4-T0078-COMPONENTS"
+      ],
+      "deliverables": [
+        "Route configuration files",
+        "Navigation components"
+      ],
+      "qa_gates": [
+        "Routes accessible"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-THREAT-QA-P5-T0080-STRUCTURE",
+      "title": "THREAT - QA Test Structure",
+      "module": "THREAT",
+      "builder": "qa-builder",
+      "phase": 5,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create QA test structure for THREAT",
+      "acceptance_criteria": [
+        "Test directory structure created",
+        "Test file placeholders created",
+        "QA documentation templates added"
+      ],
+      "dependencies": [
+        "WAVE1-THREAT-SCHEMA-P1-T0073-SKELETON",
+        "WAVE1-THREAT-SCHEMA-P1-T0074-MODELS",
+        "WAVE1-THREAT-API-P2-T0075-SKELETON",
+        "WAVE1-THREAT-API-P2-T0076-HANDLERS",
+        "WAVE1-THREAT-INTEGRATION-P3-T0077-CONTRACTS",
+        "WAVE1-THREAT-UI-P4-T0078-COMPONENTS",
+        "WAVE1-THREAT-UI-P4-T0079-ROUTING"
+      ],
+      "deliverables": [
+        "Test directory structure",
+        "Test file templates",
+        "QA documentation"
+      ],
+      "qa_gates": [
+        "Structure follows standards",
+        "All areas covered"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "QA follows QA governance rules"
+      ]
+    },
+    {
+      "task_id": "WAVE1-VULNERABILITY-SCHEMA-P1-T0081-SKELETON",
+      "title": "VULNERABILITY - Database Schema Skeleton",
+      "module": "VULNERABILITY",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create database schema skeleton for VULNERABILITY module",
+      "acceptance_criteria": [
+        "Table definitions created (skeleton)",
+        "Basic relationships defined",
+        "Placeholder migrations created",
+        "Schema follows naming conventions"
+      ],
+      "dependencies": [],
+      "deliverables": [
+        "Schema definition files",
+        "Migration skeleton",
+        "Basic model interfaces"
+      ],
+      "qa_gates": [
+        "Schema structure valid",
+        "Follows architecture standards"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Must include organisation_id for multi-tenancy",
+        "Must respect privacy guardrails"
+      ],
+      "notes": [
+        "Skeleton only - no full implementation",
+        "Establishes structural foundation"
+      ]
+    },
+    {
+      "task_id": "WAVE1-VULNERABILITY-SCHEMA-P1-T0082-MODELS",
+      "title": "VULNERABILITY - Model Definition Skeletons",
+      "module": "VULNERABILITY",
+      "builder": "schema-builder",
+      "phase": 1,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create TypeScript model definition skeletons",
+      "acceptance_criteria": [
+        "Model interfaces defined",
+        "Type definitions created",
+        "Basic validation placeholders"
+      ],
+      "dependencies": [
+        "WAVE1-VULNERABILITY-SCHEMA-P1-T0081-SKELETON"
+      ],
+      "deliverables": [
+        "TypeScript model files",
+        "Type definition files"
+      ],
+      "qa_gates": [
+        "Type checking passes"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-VULNERABILITY-API-P2-T0083-SKELETON",
+      "title": "VULNERABILITY - API Route Skeletons",
+      "module": "VULNERABILITY",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create API route skeletons for VULNERABILITY",
+      "acceptance_criteria": [
+        "Route definitions created",
+        "Edge function placeholders created",
+        "Basic request/response types defined",
+        "Authentication placeholders included"
+      ],
+      "dependencies": [
+        "WAVE1-VULNERABILITY-SCHEMA-P1-T0081-SKELETON",
+        "WAVE1-VULNERABILITY-SCHEMA-P1-T0082-MODELS"
+      ],
+      "deliverables": [
+        "API route files",
+        "Edge function skeletons",
+        "Type definitions"
+      ],
+      "qa_gates": [
+        "Routes accessible",
+        "Type definitions valid"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Respects module boundaries",
+        "Includes tenant isolation placeholders"
+      ]
+    },
+    {
+      "task_id": "WAVE1-VULNERABILITY-API-P2-T0084-HANDLERS",
+      "title": "VULNERABILITY - Request Handler Placeholders",
+      "module": "VULNERABILITY",
+      "builder": "api-builder",
+      "phase": 2,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create request handler placeholder functions",
+      "acceptance_criteria": [
+        "Handler functions created",
+        "Basic error handling included",
+        "Placeholder responses defined"
+      ],
+      "dependencies": [
+        "WAVE1-VULNERABILITY-API-P2-T0083-SKELETON"
+      ],
+      "deliverables": [
+        "Handler function files",
+        "Error handler placeholders"
+      ],
+      "qa_gates": [
+        "Functions callable"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-VULNERABILITY-INTEGRATION-P3-T0085-CONTRACTS",
+      "title": "VULNERABILITY - Integration Contract Definitions",
+      "module": "VULNERABILITY",
+      "builder": "integration-builder",
+      "phase": 3,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define integration contracts for VULNERABILITY",
+      "acceptance_criteria": [
+        "Integration points identified",
+        "Contract interfaces defined",
+        "Event definitions created"
+      ],
+      "dependencies": [
+        "WAVE1-VULNERABILITY-API-P2-T0083-SKELETON",
+        "WAVE1-VULNERABILITY-API-P2-T0084-HANDLERS"
+      ],
+      "deliverables": [
+        "Integration contract files",
+        "Event type definitions",
+        "Interface documentation"
+      ],
+      "qa_gates": [
+        "Contracts well-defined",
+        "No tight coupling"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "Uses event-driven architecture",
+        "Respects integration boundaries"
+      ]
+    },
+    {
+      "task_id": "WAVE1-VULNERABILITY-UI-P4-T0086-COMPONENTS",
+      "title": "VULNERABILITY - UI Component Shells",
+      "module": "VULNERABILITY",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create UI component shells for VULNERABILITY",
+      "acceptance_criteria": [
+        "Component files created",
+        "Basic structure defined",
+        "Props interfaces defined"
+      ],
+      "dependencies": [
+        "WAVE1-VULNERABILITY-API-P2-T0083-SKELETON",
+        "WAVE1-VULNERABILITY-API-P2-T0084-HANDLERS"
+      ],
+      "deliverables": [
+        "React component files",
+        "Component type definitions",
+        "Placeholder layouts"
+      ],
+      "qa_gates": [
+        "Components render",
+        "No console errors"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "No business logic in UI",
+        "Uses API calls for data"
+      ]
+    },
+    {
+      "task_id": "WAVE1-VULNERABILITY-UI-P4-T0087-ROUTING",
+      "title": "VULNERABILITY - Route Definitions",
+      "module": "VULNERABILITY",
+      "builder": "ui-builder",
+      "phase": 4,
+      "priority": "LOW",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Define module routes",
+      "acceptance_criteria": [
+        "Routes defined",
+        "Navigation structure created",
+        "Route guards placeholders added"
+      ],
+      "dependencies": [
+        "WAVE1-VULNERABILITY-UI-P4-T0086-COMPONENTS"
+      ],
+      "deliverables": [
+        "Route configuration files",
+        "Navigation components"
+      ],
+      "qa_gates": [
+        "Routes accessible"
+      ],
+      "estimated_effort": "SMALL"
+    },
+    {
+      "task_id": "WAVE1-VULNERABILITY-QA-P5-T0088-STRUCTURE",
+      "title": "VULNERABILITY - QA Test Structure",
+      "module": "VULNERABILITY",
+      "builder": "qa-builder",
+      "phase": 5,
+      "priority": "MEDIUM",
+      "status": "NOT_STARTED",
+      "build_wave": 1,
+      "is_skeleton": true,
+      "description": "Create QA test structure for VULNERABILITY",
+      "acceptance_criteria": [
+        "Test directory structure created",
+        "Test file placeholders created",
+        "QA documentation templates added"
+      ],
+      "dependencies": [
+        "WAVE1-VULNERABILITY-SCHEMA-P1-T0081-SKELETON",
+        "WAVE1-VULNERABILITY-SCHEMA-P1-T0082-MODELS",
+        "WAVE1-VULNERABILITY-API-P2-T0083-SKELETON",
+        "WAVE1-VULNERABILITY-API-P2-T0084-HANDLERS",
+        "WAVE1-VULNERABILITY-INTEGRATION-P3-T0085-CONTRACTS",
+        "WAVE1-VULNERABILITY-UI-P4-T0086-COMPONENTS",
+        "WAVE1-VULNERABILITY-UI-P4-T0087-ROUTING"
+      ],
+      "deliverables": [
+        "Test directory structure",
+        "Test file templates",
+        "QA documentation"
+      ],
+      "qa_gates": [
+        "Structure follows standards",
+        "All areas covered"
+      ],
+      "estimated_effort": "SMALL",
+      "governance_checks": [
+        "QA follows QA governance rules"
+      ]
+    }
+  ],
+  "notes": [
+    "Build Wave 1 - Skeleton build tasks",
+    "All tasks are skeleton/placeholder builds",
+    "No full implementation - structural foundation only",
+    "Tasks respect module dependencies and sequencing",
+    "All governance boundaries enforced"
+  ]
+}
