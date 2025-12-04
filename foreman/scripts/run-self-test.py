@@ -265,24 +265,31 @@ class ForemanSelfTest:
         subsystem = self.validate_subsystem("Builder Agent System", required_files, json_files)
         
         # Check builder readiness
-        builders = ["ui_builder", "api_builder", "schema_builder", "integration_builder", "qa_builder"]
+        builders = {
+            "ui_builder": "ui-builder",
+            "api_builder": "api-builder", 
+            "schema_builder": "schema-builder",
+            "integration_builder": "integration-builder",
+            "qa_builder": "qa-builder"
+        }
         
         capability_path = self.repo_root / "foreman/builder/builder-capability-map.json"
         if capability_path.exists():
             valid, msg, data = self.validate_json_file(capability_path)
-            if valid:
-                for builder in builders:
+            if valid and "capabilities" in data:
+                capabilities = data.get("capabilities", {})
+                for builder_key, builder_name in builders.items():
                     # Check if builder exists in capability map
-                    if builder in data or builder.replace("_", "-") in data:
-                        self.results["builder_readiness"][builder] = "READY"
+                    if builder_name in capabilities:
+                        self.results["builder_readiness"][builder_key] = "READY"
                     else:
-                        self.results["builder_readiness"][builder] = "NOT_READY"
+                        self.results["builder_readiness"][builder_key] = "NOT_READY"
             else:
-                for builder in builders:
-                    self.results["builder_readiness"][builder] = "UNKNOWN"
+                for builder_key in builders.keys():
+                    self.results["builder_readiness"][builder_key] = "UNKNOWN"
         else:
-            for builder in builders:
-                self.results["builder_readiness"][builder] = "UNKNOWN"
+            for builder_key in builders.keys():
+                self.results["builder_readiness"][builder_key] = "UNKNOWN"
             subsystem["recommended_actions"].append("Run: python foreman/init_builders.py to initialize builders")
         
         return subsystem
