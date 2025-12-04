@@ -1,5 +1,5 @@
 {
-  "description": "Schema for recording all changes managed by Foreman/Maturion.",
+  "description": "Schema for recording all changes managed by Foreman/Maturion. This includes architecture changes, code modifications, AI routing/behaviour updates, configuration changes, and compliance/QA logic updates.",
   "version": "1.0.0",
   "fields": [
     "change_id",
