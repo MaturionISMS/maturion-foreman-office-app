@@ -1,19 +1,1652 @@
 {
   "metadata": {
-    "indexed_at": "2025-12-03T17:16:07.007150",
+    "indexed_at": "2025-12-04T07:27:58.619405",
     "repo_root": "/home/runner/work/maturion-ai-foreman/maturion-ai-foreman",
-    "total_modules": 0,
-    "total_files": 0
+    "total_modules": 12,
+    "total_files": 132
   },
-  "modules": {},
-  "true_north_index": {},
+  "modules": {
+    "COURSE_CRAFTER": {
+      "name": "COURSE_CRAFTER",
+      "files": {
+        "EDGE_FUNCTIONS": {
+          "path": "maturion-isms/apps/course-crafter/architecture/COURSE_CRAFTER_EDGE_FUNCTIONS_v1.0.md",
+          "version": "1.0",
+          "description": "Backend API",
+          "size": 1131,
+          "all_versions": [
+            "COURSE_CRAFTER_EDGE_FUNCTIONS_v1.0.md"
+          ]
+        },
+        "TRUE_NORTH": {
+          "path": "maturion-isms/apps/course-crafter/architecture/COURSE_CRAFTER_TRUE_NORTH_v1.0.md",
+          "version": "1.0",
+          "description": "Module Architecture",
+          "size": 17258,
+          "all_versions": [
+            "COURSE_CRAFTER_TRUE_NORTH_v1.0.md"
+          ]
+        },
+        "IMPLEMENTATION_GUIDE": {
+          "path": "maturion-isms/apps/course-crafter/architecture/COURSE_CRAFTER_IMPLEMENTATION_GUIDE_v1.0.md",
+          "version": "1.0",
+          "description": "Implementation",
+          "size": 1483,
+          "all_versions": [
+            "COURSE_CRAFTER_IMPLEMENTATION_GUIDE_v1.0.md"
+          ]
+        },
+        "SPRINT_PLAN": {
+          "path": "maturion-isms/apps/course-crafter/architecture/COURSE_CRAFTER_SPRINT_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Development Plan",
+          "size": 1302,
+          "all_versions": [
+            "COURSE_CRAFTER_SPRINT_PLAN_v1.0.md"
+          ]
+        },
+        "INTEGRATION_SPEC": {
+          "path": "maturion-isms/apps/course-crafter/architecture/COURSE_CRAFTER_INTEGRATION_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "Module Integration",
+          "size": 943,
+          "all_versions": [
+            "COURSE_CRAFTER_INTEGRATION_SPEC_v1.0.md"
+          ]
+        },
+        "ARCHITECTURE": {
+          "path": "maturion-isms/apps/course-crafter/architecture/COURSE_CRAFTER_ARCHITECTURE_v0.1.md",
+          "version": "0.1",
+          "description": "Architecture Design",
+          "size": 10236,
+          "all_versions": [
+            "COURSE_CRAFTER_ARCHITECTURE_v0.1.md"
+          ]
+        },
+        "WIREFRAMES": {
+          "path": "maturion-isms/apps/course-crafter/architecture/COURSE_CRAFTER_WIREFRAMES_v1.0.md",
+          "version": "1.0",
+          "description": "UI Design",
+          "size": 3052,
+          "all_versions": [
+            "COURSE_CRAFTER_WIREFRAMES_v1.0.md"
+          ]
+        },
+        "FRONTEND_COMPONENT_MAP": {
+          "path": "maturion-isms/apps/course-crafter/architecture/COURSE_CRAFTER_FRONTEND_COMPONENT_MAP_v1.0.md",
+          "version": "1.0",
+          "description": "UI Components",
+          "size": 1293,
+          "all_versions": [
+            "COURSE_CRAFTER_FRONTEND_COMPONENT_MAP_v1.0.md"
+          ]
+        },
+        "CHANGELOG": {
+          "path": "maturion-isms/apps/course-crafter/architecture/COURSE_CRAFTER_CHANGELOG_v1.0.md",
+          "version": "1.0",
+          "description": "Version History",
+          "size": 625,
+          "all_versions": [
+            "COURSE_CRAFTER_CHANGELOG_v1.0.md"
+          ]
+        },
+        "EXPORT_SPEC": {
+          "path": "maturion-isms/apps/course-crafter/architecture/COURSE_CRAFTER_EXPORT_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "Data Export",
+          "size": 859,
+          "all_versions": [
+            "COURSE_CRAFTER_EXPORT_SPEC_v1.0.md"
+          ]
+        },
+        "DATABASE_SCHEMA": {
+          "path": "maturion-isms/apps/course-crafter/architecture/COURSE_CRAFTER_DATABASE_SCHEMA_v1.0.md",
+          "version": "1.0",
+          "description": "Data Model",
+          "size": 1356,
+          "all_versions": [
+            "COURSE_CRAFTER_DATABASE_SCHEMA_v1.0.md"
+          ]
+        },
+        "QA_IMPLEMENTATION_PLAN": {
+          "path": "maturion-isms/apps/course-crafter/qa-plans/COURSE_CRAFTER_QA_IMPLEMENTATION_PLAN_v1.1.md",
+          "version": "1.1",
+          "description": "Quality Assurance",
+          "size": 9193,
+          "all_versions": [
+            "COURSE_CRAFTER_QA_IMPLEMENTATION_PLAN_v1.0.md",
+            "COURSE_CRAFTER_QA_IMPLEMENTATION_PLAN_v0.1.md",
+            "COURSE_CRAFTER_QA_IMPLEMENTATION_PLAN_v1.1.md"
+          ]
+        }
+      },
+      "versions": {},
+      "completeness": {
+        "percentage": 80.0,
+        "present": 12,
+        "total": 15,
+        "missing": [
+          "INTEGRATION_MAP",
+          "WATCHDOG_LOGIC",
+          "MODEL_ROUTING_SPEC"
+        ]
+      },
+      "file_count": 12
+    },
+    "ERM": {
+      "name": "ERM",
+      "files": {
+        "FRONTEND_COMPONENT_MAP": {
+          "path": "maturion-isms/apps/erm/architecture/ERM_FRONTEND_COMPONENT_MAP_v1.0.md",
+          "version": "1.0",
+          "description": "UI Components",
+          "size": 1269,
+          "all_versions": [
+            "ERM_FRONTEND_COMPONENT_MAP_v1.0.md"
+          ]
+        },
+        "CHANGELOG": {
+          "path": "maturion-isms/apps/erm/architecture/ERM_CHANGELOG_v1.0.md",
+          "version": "1.0",
+          "description": "Version History",
+          "size": 623,
+          "all_versions": [
+            "ERM_CHANGELOG_v1.0.md"
+          ]
+        },
+        "WIREFRAMES": {
+          "path": "maturion-isms/apps/erm/architecture/ERM_WIREFRAMES_v1.0.md",
+          "version": "1.0",
+          "description": "UI Design",
+          "size": 3059,
+          "all_versions": [
+            "ERM_WIREFRAMES_v1.0.md"
+          ]
+        },
+        "INTEGRATION_SPEC": {
+          "path": "maturion-isms/apps/erm/architecture/ERM_INTEGRATION_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "Module Integration",
+          "size": 941,
+          "all_versions": [
+            "ERM_INTEGRATION_SPEC_v1.0.md"
+          ]
+        },
+        "EDGE_FUNCTIONS": {
+          "path": "maturion-isms/apps/erm/architecture/ERM_EDGE_FUNCTIONS_v1.0.md",
+          "version": "1.0",
+          "description": "Backend API",
+          "size": 1074,
+          "all_versions": [
+            "ERM_EDGE_FUNCTIONS_v1.0.md"
+          ]
+        },
+        "TRUE_NORTH": {
+          "path": "maturion-isms/apps/erm/architecture/ERM_TRUE_NORTH_v1.0.md",
+          "version": "1.0",
+          "description": "Module Architecture",
+          "size": 9869,
+          "all_versions": [
+            "ERM_TRUE_NORTH_v1.0.md"
+          ]
+        },
+        "ARCHITECTURE": {
+          "path": "maturion-isms/apps/erm/architecture/ERM_ARCHITECTURE_v1.0.md",
+          "version": "1.0",
+          "description": "Architecture Design",
+          "size": 1275,
+          "all_versions": [
+            "ERM_ARCHITECTURE_v1.0.md"
+          ]
+        },
+        "SPRINT_PLAN": {
+          "path": "maturion-isms/apps/erm/architecture/ERM_SPRINT_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Development Plan",
+          "size": 1309,
+          "all_versions": [
+            "ERM_SPRINT_PLAN_v1.0.md"
+          ]
+        },
+        "IMPLEMENTATION_GUIDE": {
+          "path": "maturion-isms/apps/erm/architecture/ERM_IMPLEMENTATION_GUIDE_v1.0.md",
+          "version": "1.0",
+          "description": "Implementation",
+          "size": 1470,
+          "all_versions": [
+            "ERM_IMPLEMENTATION_GUIDE_v1.0.md"
+          ]
+        },
+        "DATABASE_SCHEMA": {
+          "path": "maturion-isms/apps/erm/architecture/ERM_DATABASE_SCHEMA_v1.0.md",
+          "version": "1.0",
+          "description": "Data Model",
+          "size": 1343,
+          "all_versions": [
+            "ERM_DATABASE_SCHEMA_v1.0.md"
+          ]
+        },
+        "EXPORT_SPEC": {
+          "path": "maturion-isms/apps/erm/architecture/ERM_EXPORT_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "Data Export",
+          "size": 824,
+          "all_versions": [
+            "ERM_EXPORT_SPEC_v1.0.md"
+          ]
+        },
+        "QA_IMPLEMENTATION_PLAN": {
+          "path": "maturion-isms/apps/erm/qa-plans/ERM_QA_IMPLEMENTATION_PLAN_v1.1.md",
+          "version": "1.1",
+          "description": "Quality Assurance",
+          "size": 9778,
+          "all_versions": [
+            "ERM_QA_IMPLEMENTATION_PLAN_v1.1.md",
+            "ERM_QA_IMPLEMENTATION_PLAN_v1.0.md"
+          ]
+        }
+      },
+      "versions": {},
+      "completeness": {
+        "percentage": 80.0,
+        "present": 12,
+        "total": 15,
+        "missing": [
+          "INTEGRATION_MAP",
+          "WATCHDOG_LOGIC",
+          "MODEL_ROUTING_SPEC"
+        ]
+      },
+      "file_count": 12
+    },
+    "PIT": {
+      "name": "PIT",
+      "files": {
+        "MODEL_ROUTING_SPEC": {
+          "path": "maturion-isms/apps/pit/architecture/PIT_MODEL_ROUTING_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "AI Routing",
+          "size": 1163,
+          "all_versions": [
+            "PIT_MODEL_ROUTING_SPEC_v1.0.md"
+          ]
+        },
+        "TRUE_NORTH": {
+          "path": "maturion-isms/apps/pit/architecture/PIT_TRUE_NORTH_v1.0.md",
+          "version": "1.0",
+          "description": "Module Architecture",
+          "size": 10331,
+          "all_versions": [
+            "PIT_TRUE_NORTH_v1.0.md"
+          ]
+        },
+        "EDGE_FUNCTIONS": {
+          "path": "maturion-isms/apps/pit/architecture/PIT_EDGE_FUNCTIONS_v1.0.md",
+          "version": "1.0",
+          "description": "Backend API",
+          "size": 1081,
+          "all_versions": [
+            "PIT_EDGE_FUNCTIONS_v1.0.md"
+          ]
+        },
+        "FRONTEND_COMPONENT_MAP": {
+          "path": "maturion-isms/apps/pit/architecture/PIT_FRONTEND_COMPONENT_MAP_v1.0.md",
+          "version": "1.0",
+          "description": "UI Components",
+          "size": 1276,
+          "all_versions": [
+            "PIT_FRONTEND_COMPONENT_MAP_v1.0.md"
+          ]
+        },
+        "IMPLEMENTATION_GUIDE": {
+          "path": "maturion-isms/apps/pit/architecture/PIT_IMPLEMENTATION_GUIDE_v1.0.md",
+          "version": "1.0",
+          "description": "Implementation",
+          "size": 1477,
+          "all_versions": [
+            "PIT_IMPLEMENTATION_GUIDE_v1.0.md"
+          ]
+        },
+        "CHANGELOG": {
+          "path": "maturion-isms/apps/pit/architecture/PIT_CHANGELOG_v1.0.md",
+          "version": "1.0",
+          "description": "Version History",
+          "size": 630,
+          "all_versions": [
+            "PIT_CHANGELOG_v1.0.md"
+          ]
+        },
+        "DATABASE_SCHEMA": {
+          "path": "maturion-isms/apps/pit/architecture/PIT_DATABASE_SCHEMA_v1.0.md",
+          "version": "1.0",
+          "description": "Data Model",
+          "size": 1350,
+          "all_versions": [
+            "PIT_DATABASE_SCHEMA_v1.0.md"
+          ]
+        },
+        "SPRINT_PLAN": {
+          "path": "maturion-isms/apps/pit/architecture/PIT_SPRINT_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Development Plan",
+          "size": 1323,
+          "all_versions": [
+            "PIT_SPRINT_PLAN_v1.0.md"
+          ]
+        },
+        "WATCHDOG_LOGIC": {
+          "path": "maturion-isms/apps/pit/architecture/PIT_WATCHDOG_LOGIC_v1.0.md",
+          "version": "1.0",
+          "description": "Monitoring",
+          "size": 1027,
+          "all_versions": [
+            "PIT_WATCHDOG_LOGIC_v1.0.md"
+          ]
+        },
+        "WIREFRAMES": {
+          "path": "maturion-isms/apps/pit/architecture/PIT_WIREFRAMES_v1.0.md",
+          "version": "1.0",
+          "description": "UI Design",
+          "size": 3073,
+          "all_versions": [
+            "PIT_WIREFRAMES_v1.0.md"
+          ]
+        },
+        "INTEGRATION_SPEC": {
+          "path": "maturion-isms/apps/pit/architecture/PIT_INTEGRATION_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "Module Integration",
+          "size": 948,
+          "all_versions": [
+            "PIT_INTEGRATION_SPEC_v1.0.md"
+          ]
+        },
+        "ARCHITECTURE": {
+          "path": "maturion-isms/apps/pit/architecture/PIT_ARCHITECTURE_v0.1.md",
+          "version": "0.1",
+          "description": "Architecture Design",
+          "size": 10828,
+          "all_versions": [
+            "PIT_ARCHITECTURE_v0.1.md"
+          ]
+        },
+        "QA_IMPLEMENTATION_PLAN": {
+          "path": "maturion-isms/apps/pit/qa-plans/PIT_QA_IMPLEMENTATION_PLAN_v1.1.md",
+          "version": "1.1",
+          "description": "Quality Assurance",
+          "size": 9837,
+          "all_versions": [
+            "PIT_QA_IMPLEMENTATION_PLAN_v0.1.md",
+            "PIT_QA_IMPLEMENTATION_PLAN_v1.0.md",
+            "PIT_QA_IMPLEMENTATION_PLAN_v1.1.md"
+          ]
+        }
+      },
+      "versions": {},
+      "completeness": {
+        "percentage": 86.7,
+        "present": 13,
+        "total": 15,
+        "missing": [
+          "INTEGRATION_MAP",
+          "EXPORT_SPEC"
+        ]
+      },
+      "file_count": 13
+    },
+    "THREAT": {
+      "name": "THREAT",
+      "files": {
+        "IMPLEMENTATION_GUIDE": {
+          "path": "maturion-isms/apps/threat/architecture/THREAT_IMPLEMENTATION_GUIDE_v1.0.md",
+          "version": "1.0",
+          "description": "Implementation",
+          "size": 1470,
+          "all_versions": [
+            "THREAT_IMPLEMENTATION_GUIDE_v1.0.md"
+          ]
+        },
+        "EDGE_FUNCTIONS": {
+          "path": "maturion-isms/apps/threat/architecture/THREAT_EDGE_FUNCTIONS_v1.0.md",
+          "version": "1.0",
+          "description": "Backend API",
+          "size": 1086,
+          "all_versions": [
+            "THREAT_EDGE_FUNCTIONS_v1.0.md"
+          ]
+        },
+        "TRUE_NORTH": {
+          "path": "maturion-isms/apps/threat/architecture/THREAT_TRUE_NORTH_v1.0.md",
+          "version": "1.0",
+          "description": "Module Architecture",
+          "size": 10160,
+          "all_versions": [
+            "THREAT_TRUE_NORTH_v1.0.md"
+          ]
+        },
+        "WIREFRAMES": {
+          "path": "maturion-isms/apps/threat/architecture/THREAT_WIREFRAMES_v1.0.md",
+          "version": "1.0",
+          "description": "UI Design",
+          "size": 3050,
+          "all_versions": [
+            "THREAT_WIREFRAMES_v1.0.md"
+          ]
+        },
+        "SPRINT_PLAN": {
+          "path": "maturion-isms/apps/threat/architecture/THREAT_SPRINT_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Development Plan",
+          "size": 1300,
+          "all_versions": [
+            "THREAT_SPRINT_PLAN_v1.0.md"
+          ]
+        },
+        "WATCHDOG_LOGIC": {
+          "path": "maturion-isms/apps/threat/architecture/THREAT_WATCHDOG_LOGIC_v1.0.md",
+          "version": "1.0",
+          "description": "Monitoring",
+          "size": 1004,
+          "all_versions": [
+            "THREAT_WATCHDOG_LOGIC_v1.0.md"
+          ]
+        },
+        "ARCHITECTURE": {
+          "path": "maturion-isms/apps/threat/architecture/THREAT_ARCHITECTURE_v1.0.md",
+          "version": "1.0",
+          "description": "Architecture Design",
+          "size": 1266,
+          "all_versions": [
+            "THREAT_ARCHITECTURE_v1.0.md"
+          ]
+        },
+        "FRONTEND_COMPONENT_MAP": {
+          "path": "maturion-isms/apps/threat/architecture/THREAT_FRONTEND_COMPONENT_MAP_v1.0.md",
+          "version": "1.0",
+          "description": "UI Components",
+          "size": 1272,
+          "all_versions": [
+            "THREAT_FRONTEND_COMPONENT_MAP_v1.0.md"
+          ]
+        },
+        "DATABASE_SCHEMA": {
+          "path": "maturion-isms/apps/threat/architecture/THREAT_DATABASE_SCHEMA_v1.0.md",
+          "version": "1.0",
+          "description": "Data Model",
+          "size": 1343,
+          "all_versions": [
+            "THREAT_DATABASE_SCHEMA_v1.0.md"
+          ]
+        },
+        "INTEGRATION_SPEC": {
+          "path": "maturion-isms/apps/threat/architecture/THREAT_INTEGRATION_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "Module Integration",
+          "size": 938,
+          "all_versions": [
+            "THREAT_INTEGRATION_SPEC_v1.0.md"
+          ]
+        },
+        "MODEL_ROUTING_SPEC": {
+          "path": "maturion-isms/apps/threat/architecture/THREAT_MODEL_ROUTING_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "AI Routing",
+          "size": 1140,
+          "all_versions": [
+            "THREAT_MODEL_ROUTING_SPEC_v1.0.md"
+          ]
+        },
+        "CHANGELOG": {
+          "path": "maturion-isms/apps/threat/architecture/THREAT_CHANGELOG_v1.0.md",
+          "version": "1.0",
+          "description": "Version History",
+          "size": 620,
+          "all_versions": [
+            "THREAT_CHANGELOG_v1.0.md"
+          ]
+        },
+        "QA_IMPLEMENTATION_PLAN": {
+          "path": "maturion-isms/apps/threat/qa-plans/THREAT_QA_IMPLEMENTATION_PLAN_v1.1.md",
+          "version": "1.1",
+          "description": "Quality Assurance",
+          "size": 8381,
+          "all_versions": [
+            "THREAT_QA_IMPLEMENTATION_PLAN_v1.1.md",
+            "THREAT_QA_IMPLEMENTATION_PLAN_v1.0.md"
+          ]
+        }
+      },
+      "versions": {},
+      "completeness": {
+        "percentage": 86.7,
+        "present": 13,
+        "total": 15,
+        "missing": [
+          "INTEGRATION_MAP",
+          "EXPORT_SPEC"
+        ]
+      },
+      "file_count": 13
+    },
+    "VULNERABILITY": {
+      "name": "VULNERABILITY",
+      "files": {
+        "TRUE_NORTH": {
+          "path": "maturion-isms/apps/vulnerability/architecture/VULNERABILITY_TRUE_NORTH_v1.0.md",
+          "version": "1.0",
+          "description": "Module Architecture",
+          "size": 11069,
+          "all_versions": [
+            "VULNERABILITY_TRUE_NORTH_v1.0.md",
+            "VULNERABILITY_MODULE_TRUE_NORTH_ARCHITECTURE_v0.1.md"
+          ]
+        },
+        "DATABASE_SCHEMA": {
+          "path": "maturion-isms/apps/vulnerability/architecture/VULNERABILITY_DATABASE_SCHEMA_v1.0.md",
+          "version": "1.0",
+          "description": "Data Model",
+          "size": 1364,
+          "all_versions": [
+            "VULNERABILITY_DATABASE_SCHEMA_v1.0.md"
+          ]
+        },
+        "WIREFRAMES": {
+          "path": "maturion-isms/apps/vulnerability/architecture/VULNERABILITY_WIREFRAMES_v1.0.md",
+          "version": "1.0",
+          "description": "UI Design",
+          "size": 3071,
+          "all_versions": [
+            "VULNERABILITY_WIREFRAMES_v1.0.md"
+          ]
+        },
+        "MODEL_ROUTING_SPEC": {
+          "path": "maturion-isms/apps/vulnerability/architecture/VULNERABILITY_MODEL_ROUTING_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "AI Routing",
+          "size": 1161,
+          "all_versions": [
+            "VULNERABILITY_MODEL_ROUTING_SPEC_v1.0.md"
+          ]
+        },
+        "WATCHDOG_LOGIC": {
+          "path": "maturion-isms/apps/vulnerability/architecture/VULNERABILITY_WATCHDOG_LOGIC_v1.0.md",
+          "version": "1.0",
+          "description": "Monitoring",
+          "size": 1025,
+          "all_versions": [
+            "VULNERABILITY_WATCHDOG_LOGIC_v1.0.md"
+          ]
+        },
+        "INTEGRATION_SPEC": {
+          "path": "maturion-isms/apps/vulnerability/architecture/VULNERABILITY_INTEGRATION_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "Module Integration",
+          "size": 952,
+          "all_versions": [
+            "VULNERABILITY_INTEGRATION_SPEC_v1.0.md"
+          ]
+        },
+        "CHANGELOG": {
+          "path": "maturion-isms/apps/vulnerability/architecture/VULNERABILITY_CHANGELOG_v1.0.md",
+          "version": "1.0",
+          "description": "Version History",
+          "size": 634,
+          "all_versions": [
+            "VULNERABILITY_CHANGELOG_v1.0.md"
+          ]
+        },
+        "SPRINT_PLAN": {
+          "path": "maturion-isms/apps/vulnerability/architecture/VULNERABILITY_SPRINT_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Development Plan",
+          "size": 1321,
+          "all_versions": [
+            "VULNERABILITY_SPRINT_PLAN_v1.0.md"
+          ]
+        },
+        "EDGE_FUNCTIONS": {
+          "path": "maturion-isms/apps/vulnerability/architecture/VULNERABILITY_EDGE_FUNCTIONS_v1.0.md",
+          "version": "1.0",
+          "description": "Backend API",
+          "size": 1135,
+          "all_versions": [
+            "VULNERABILITY_EDGE_FUNCTIONS_v1.0.md"
+          ]
+        },
+        "ARCHITECTURE": {
+          "path": "maturion-isms/apps/vulnerability/architecture/VULNERABILITY_ARCHITECTURE_v1.0.md",
+          "version": "1.0",
+          "description": "Architecture Design",
+          "size": 1287,
+          "all_versions": [
+            "VULNERABILITY_ARCHITECTURE_v1.0.md"
+          ]
+        },
+        "FRONTEND_COMPONENT_MAP": {
+          "path": "maturion-isms/apps/vulnerability/architecture/VULNERABILITY_FRONTEND_COMPONENT_MAP_v1.0.md",
+          "version": "1.0",
+          "description": "UI Components",
+          "size": 1300,
+          "all_versions": [
+            "VULNERABILITY_FRONTEND_COMPONENT_MAP_v1.0.md"
+          ]
+        },
+        "IMPLEMENTATION_GUIDE": {
+          "path": "maturion-isms/apps/vulnerability/architecture/VULNERABILITY_IMPLEMENTATION_GUIDE_v1.0.md",
+          "version": "1.0",
+          "description": "Implementation",
+          "size": 1491,
+          "all_versions": [
+            "VULNERABILITY_IMPLEMENTATION_GUIDE_v1.0.md"
+          ]
+        },
+        "QA_IMPLEMENTATION_PLAN": {
+          "path": "maturion-isms/apps/vulnerability/qa-plans/VULNERABILITY_QA_IMPLEMENTATION_PLAN_v1.1.md",
+          "version": "1.1",
+          "description": "Quality Assurance",
+          "size": 8319,
+          "all_versions": [
+            "VULNERABILITY_QA_IMPLEMENTATION_PLAN_v1.1.md",
+            "VULNERABILITY_QA_IMPLEMENTATION_PLAN_v1.0.md"
+          ]
+        }
+      },
+      "versions": {},
+      "completeness": {
+        "percentage": 86.7,
+        "present": 13,
+        "total": 15,
+        "missing": [
+          "INTEGRATION_MAP",
+          "EXPORT_SPEC"
+        ]
+      },
+      "file_count": 13
+    },
+    "RISK_ASSESSMENT": {
+      "name": "RISK_ASSESSMENT",
+      "files": {
+        "ARCHITECTURE": {
+          "path": "maturion-isms/apps/risk-assessment/architecture/RISK_ASSESSMENT_ARCHITECTURE_v1.0.md",
+          "version": "1.0",
+          "description": "Architecture Design",
+          "size": 1271,
+          "all_versions": [
+            "RISK_ASSESSMENT_ARCHITECTURE_v1.0.md"
+          ]
+        },
+        "FRONTEND_COMPONENT_MAP": {
+          "path": "maturion-isms/apps/risk-assessment/architecture/RISK_ASSESSMENT_FRONTEND_COMPONENT_MAP_v1.0.md",
+          "version": "1.0",
+          "description": "UI Components",
+          "size": 1297,
+          "all_versions": [
+            "RISK_ASSESSMENT_FRONTEND_COMPONENT_MAP_v1.0.md"
+          ]
+        },
+        "IMPLEMENTATION_GUIDE": {
+          "path": "maturion-isms/apps/risk-assessment/architecture/RISK_ASSESSMENT_IMPLEMENTATION_GUIDE_v1.0.md",
+          "version": "1.0",
+          "description": "Implementation",
+          "size": 1486,
+          "all_versions": [
+            "RISK_ASSESSMENT_IMPLEMENTATION_GUIDE_v1.0.md"
+          ]
+        },
+        "WIREFRAMES": {
+          "path": "maturion-isms/apps/risk-assessment/architecture/RISK_ASSESSMENT_WIREFRAMES_v1.0.md",
+          "version": "1.0",
+          "description": "UI Design",
+          "size": 3055,
+          "all_versions": [
+            "RISK_ASSESSMENT_WIREFRAMES_v1.0.md"
+          ]
+        },
+        "CHANGELOG": {
+          "path": "maturion-isms/apps/risk-assessment/architecture/RISK_ASSESSMENT_CHANGELOG_v1.0.md",
+          "version": "1.0",
+          "description": "Version History",
+          "size": 627,
+          "all_versions": [
+            "RISK_ASSESSMENT_CHANGELOG_v1.0.md"
+          ]
+        },
+        "DATABASE_SCHEMA": {
+          "path": "maturion-isms/apps/risk-assessment/architecture/RISK_ASSESSMENT_DATABASE_SCHEMA_v1.0.md",
+          "version": "1.0",
+          "description": "Data Model",
+          "size": 1359,
+          "all_versions": [
+            "RISK_ASSESSMENT_DATABASE_SCHEMA_v1.0.md"
+          ]
+        },
+        "EXPORT_SPEC": {
+          "path": "maturion-isms/apps/risk-assessment/architecture/RISK_ASSESSMENT_EXPORT_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "Data Export",
+          "size": 864,
+          "all_versions": [
+            "RISK_ASSESSMENT_EXPORT_SPEC_v1.0.md"
+          ]
+        },
+        "SPRINT_PLAN": {
+          "path": "maturion-isms/apps/risk-assessment/architecture/RISK_ASSESSMENT_SPRINT_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Development Plan",
+          "size": 1305,
+          "all_versions": [
+            "RISK_ASSESSMENT_SPRINT_PLAN_v1.0.md"
+          ]
+        },
+        "INTEGRATION_SPEC": {
+          "path": "maturion-isms/apps/risk-assessment/architecture/RISK_ASSESSMENT_INTEGRATION_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "Module Integration",
+          "size": 945,
+          "all_versions": [
+            "RISK_ASSESSMENT_INTEGRATION_SPEC_v1.0.md"
+          ]
+        },
+        "TRUE_NORTH": {
+          "path": "maturion-isms/apps/risk-assessment/architecture/RISK_ASSESSMENT_TRUE_NORTH_v1.1.md",
+          "version": "1.1",
+          "description": "Module Architecture",
+          "size": 9808,
+          "all_versions": [
+            "RISK_ASSESSMENT_TRUE_NORTH_v1.1.md",
+            "RISK_ASSESSMENT_TRUE_NORTH_v0.1.md"
+          ]
+        },
+        "QA_IMPLEMENTATION_PLAN": {
+          "path": "maturion-isms/apps/risk-assessment/qa-plans/RISK_ASSESSMENT_QA_IMPLEMENTATION_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Quality Assurance",
+          "size": 1385,
+          "all_versions": [
+            "RISK_ASSESSMENT_QA_IMPLEMENTATION_PLAN_v1.0.md"
+          ]
+        }
+      },
+      "versions": {},
+      "completeness": {
+        "percentage": 73.3,
+        "present": 11,
+        "total": 15,
+        "missing": [
+          "EDGE_FUNCTIONS",
+          "INTEGRATION_MAP",
+          "WATCHDOG_LOGIC",
+          "MODEL_ROUTING_SPEC"
+        ]
+      },
+      "file_count": 11
+    },
+    "WRAC": {
+      "name": "WRAC",
+      "files": {
+        "TRUE_NORTH": {
+          "path": "maturion-isms/apps/wrac/architecture/WRAC_TRUE_NORTH_v0.1.md",
+          "version": "0.1",
+          "description": "Module Architecture",
+          "size": 11000,
+          "all_versions": [
+            "WRAC_TRUE_NORTH_v0.1.md"
+          ]
+        },
+        "CHANGELOG": {
+          "path": "maturion-isms/apps/wrac/architecture/WRAC_CHANGELOG_v1.0.md",
+          "version": "1.0",
+          "description": "Version History",
+          "size": 628,
+          "all_versions": [
+            "WRAC_CHANGELOG_v1.0.md"
+          ]
+        },
+        "FRONTEND_COMPONENT_MAP": {
+          "path": "maturion-isms/apps/wrac/architecture/WRAC_FRONTEND_COMPONENT_MAP_v1.0.md",
+          "version": "1.0",
+          "description": "UI Components",
+          "size": 1276,
+          "all_versions": [
+            "WRAC_FRONTEND_COMPONENT_MAP_v1.0.md"
+          ]
+        },
+        "INTEGRATION_SPEC": {
+          "path": "maturion-isms/apps/wrac/architecture/WRAC_INTEGRATION_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "Module Integration",
+          "size": 946,
+          "all_versions": [
+            "WRAC_INTEGRATION_SPEC_v1.0.md"
+          ]
+        },
+        "SPRINT_PLAN": {
+          "path": "maturion-isms/apps/wrac/architecture/WRAC_SPRINT_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Development Plan",
+          "size": 1318,
+          "all_versions": [
+            "WRAC_SPRINT_PLAN_v1.0.md"
+          ]
+        },
+        "WIREFRAMES": {
+          "path": "maturion-isms/apps/wrac/architecture/WRAC_WIREFRAMES_v1.0.md",
+          "version": "1.0",
+          "description": "UI Design",
+          "size": 3068,
+          "all_versions": [
+            "WRAC_WIREFRAMES_v1.0.md"
+          ]
+        },
+        "DATABASE_SCHEMA": {
+          "path": "maturion-isms/apps/wrac/architecture/WRAC_DATABASE_SCHEMA_v1.0.md",
+          "version": "1.0",
+          "description": "Data Model",
+          "size": 1349,
+          "all_versions": [
+            "WRAC_DATABASE_SCHEMA_v1.0.md"
+          ]
+        },
+        "IMPLEMENTATION_GUIDE": {
+          "path": "maturion-isms/apps/wrac/architecture/WRAC_IMPLEMENTATION_GUIDE_v1.0.md",
+          "version": "1.0",
+          "description": "Implementation",
+          "size": 1476,
+          "all_versions": [
+            "WRAC_IMPLEMENTATION_GUIDE_v1.0.md"
+          ]
+        },
+        "QA_IMPLEMENTATION_PLAN": {
+          "path": "maturion-isms/apps/wrac/qa-plans/WRAC_QA_IMPLEMENTATION_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Quality Assurance",
+          "size": 1386,
+          "all_versions": [
+            "WRAC_QA_IMPLEMENTATION_PLAN_v0.1.md",
+            "WRAC_QA_IMPLEMENTATION_PLAN_v1.0.md"
+          ]
+        }
+      },
+      "versions": {},
+      "completeness": {
+        "percentage": 60.0,
+        "present": 9,
+        "total": 15,
+        "missing": [
+          "ARCHITECTURE",
+          "EDGE_FUNCTIONS",
+          "INTEGRATION_MAP",
+          "EXPORT_SPEC",
+          "WATCHDOG_LOGIC",
+          "MODEL_ROUTING_SPEC"
+        ]
+      },
+      "file_count": 9
+    },
+    "RISK_THREAT": {
+      "name": "RISK_THREAT",
+      "files": {
+        "TRUE_NORTH": {
+          "path": "maturion-isms/apps/threat/architecture/RISK_THREAT_MODULE_TRUE_NORTH_v0.1.md",
+          "version": "0.1",
+          "description": "Module Architecture",
+          "size": 15942,
+          "all_versions": [
+            "RISK_THREAT_MODULE_TRUE_NORTH_v0.1.md"
+          ]
+        },
+        "QA_IMPLEMENTATION_PLAN": {
+          "path": "maturion-isms/apps/threat/qa-plans/RISK_THREAT_QA_IMPLEMENTATION_PLAN_v0.1.md",
+          "version": "0.1",
+          "description": "Quality Assurance",
+          "size": 13106,
+          "all_versions": [
+            "RISK_THREAT_QA_IMPLEMENTATION_PLAN_v0.1.md"
+          ]
+        }
+      },
+      "versions": {},
+      "completeness": {
+        "percentage": 13.3,
+        "present": 2,
+        "total": 15,
+        "missing": [
+          "ARCHITECTURE",
+          "DATABASE_SCHEMA",
+          "FRONTEND_COMPONENT_MAP",
+          "WIREFRAMES",
+          "EDGE_FUNCTIONS",
+          "INTEGRATION_SPEC",
+          "INTEGRATION_MAP",
+          "EXPORT_SPEC",
+          "IMPLEMENTATION_GUIDE",
+          "SPRINT_PLAN",
+          "CHANGELOG",
+          "WATCHDOG_LOGIC",
+          "MODEL_ROUTING_SPEC"
+        ]
+      },
+      "file_count": 2
+    },
+    "POLICY_BUILDER": {
+      "name": "POLICY_BUILDER",
+      "files": {
+        "EDGE_FUNCTIONS": {
+          "path": "maturion-isms/apps/policy-builder/architecture/POLICY_BUILDER_EDGE_FUNCTIONS_v1.0.md",
+          "version": "1.0",
+          "description": "Backend API",
+          "size": 1131,
+          "all_versions": [
+            "POLICY_BUILDER_EDGE_FUNCTIONS_v1.0.md"
+          ]
+        },
+        "MODEL_ROUTING_SPEC": {
+          "path": "maturion-isms/apps/policy-builder/architecture/POLICY_BUILDER_MODEL_ROUTING_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "AI Routing",
+          "size": 1142,
+          "all_versions": [
+            "POLICY_BUILDER_MODEL_ROUTING_SPEC_v1.0.md"
+          ]
+        },
+        "ARCHITECTURE": {
+          "path": "maturion-isms/apps/policy-builder/architecture/POLICY_BUILDER_ARCHITECTURE_v1.0.md",
+          "version": "1.0",
+          "description": "Architecture Design",
+          "size": 1268,
+          "all_versions": [
+            "POLICY_BUILDER_ARCHITECTURE_v1.0.md"
+          ]
+        },
+        "INTEGRATION_SPEC": {
+          "path": "maturion-isms/apps/policy-builder/architecture/POLICY_BUILDER_INTEGRATION_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "Module Integration",
+          "size": 943,
+          "all_versions": [
+            "POLICY_BUILDER_INTEGRATION_SPEC_v1.0.md"
+          ]
+        },
+        "TRUE_NORTH": {
+          "path": "maturion-isms/apps/policy-builder/architecture/POLICY_BUILDER_TRUE_NORTH_v1.0.md",
+          "version": "1.0",
+          "description": "Module Architecture",
+          "size": 1184,
+          "all_versions": [
+            "POLICY_BUILDER_TRUE_NORTH_v1.0.md"
+          ]
+        },
+        "CHANGELOG": {
+          "path": "maturion-isms/apps/policy-builder/architecture/POLICY_BUILDER_CHANGELOG_v1.0.md",
+          "version": "1.0",
+          "description": "Version History",
+          "size": 625,
+          "all_versions": [
+            "POLICY_BUILDER_CHANGELOG_v1.0.md"
+          ]
+        },
+        "EXPORT_SPEC": {
+          "path": "maturion-isms/apps/policy-builder/architecture/POLICY_BUILDER_EXPORT_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "Data Export",
+          "size": 859,
+          "all_versions": [
+            "POLICY_BUILDER_EXPORT_SPEC_v1.0.md"
+          ]
+        },
+        "DATABASE_SCHEMA": {
+          "path": "maturion-isms/apps/policy-builder/architecture/POLICY_BUILDER_DATABASE_SCHEMA_v1.0.md",
+          "version": "1.0",
+          "description": "Data Model",
+          "size": 1356,
+          "all_versions": [
+            "POLICY_BUILDER_DATABASE_SCHEMA_v1.0.md"
+          ]
+        },
+        "FRONTEND_COMPONENT_MAP": {
+          "path": "maturion-isms/apps/policy-builder/architecture/POLICY_BUILDER_FRONTEND_COMPONENT_MAP_v1.0.md",
+          "version": "1.0",
+          "description": "UI Components",
+          "size": 1293,
+          "all_versions": [
+            "POLICY_BUILDER_FRONTEND_COMPONENT_MAP_v1.0.md"
+          ]
+        },
+        "IMPLEMENTATION_GUIDE": {
+          "path": "maturion-isms/apps/policy-builder/architecture/POLICY_BUILDER_IMPLEMENTATION_GUIDE_v1.0.md",
+          "version": "1.0",
+          "description": "Implementation",
+          "size": 1483,
+          "all_versions": [
+            "POLICY_BUILDER_IMPLEMENTATION_GUIDE_v1.0.md"
+          ]
+        },
+        "WIREFRAMES": {
+          "path": "maturion-isms/apps/policy-builder/architecture/POLICY_BUILDER_WIREFRAMES_v1.0.md",
+          "version": "1.0",
+          "description": "UI Design",
+          "size": 3052,
+          "all_versions": [
+            "POLICY_BUILDER_WIREFRAMES_v1.0.md"
+          ]
+        },
+        "SPRINT_PLAN": {
+          "path": "maturion-isms/apps/policy-builder/architecture/POLICY_BUILDER_SPRINT_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Development Plan",
+          "size": 1302,
+          "all_versions": [
+            "POLICY_BUILDER_SPRINT_PLAN_v1.0.md"
+          ]
+        },
+        "QA_IMPLEMENTATION_PLAN": {
+          "path": "maturion-isms/apps/policy-builder/qa-plans/POLICY_BUILDER_QA_IMPLEMENTATION_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Quality Assurance",
+          "size": 1383,
+          "all_versions": [
+            "POLICY_BUILDER_QA_IMPLEMENTATION_PLAN_v1.0.md"
+          ]
+        }
+      },
+      "versions": {},
+      "completeness": {
+        "percentage": 86.7,
+        "present": 13,
+        "total": 15,
+        "missing": [
+          "INTEGRATION_MAP",
+          "WATCHDOG_LOGIC"
+        ]
+      },
+      "file_count": 13
+    },
+    "ANALYTICS_REMOTE_ASSURANCE": {
+      "name": "ANALYTICS_REMOTE_ASSURANCE",
+      "files": {
+        "TRUE_NORTH": {
+          "path": "maturion-isms/apps/analytics-remote-assurance/architecture/ANALYTICS_REMOTE_ASSURANCE_TRUE_NORTH_v1.0.md",
+          "version": "1.0",
+          "description": "Module Architecture",
+          "size": 1232,
+          "all_versions": [
+            "ANALYTICS_REMOTE_ASSURANCE_TRUE_NORTH_v1.0.md"
+          ]
+        },
+        "CHANGELOG": {
+          "path": "maturion-isms/apps/analytics-remote-assurance/architecture/ANALYTICS_REMOTE_ASSURANCE_CHANGELOG_v1.0.md",
+          "version": "1.0",
+          "description": "Version History",
+          "size": 649,
+          "all_versions": [
+            "ANALYTICS_REMOTE_ASSURANCE_CHANGELOG_v1.0.md"
+          ]
+        },
+        "IMPLEMENTATION_GUIDE": {
+          "path": "maturion-isms/apps/analytics-remote-assurance/architecture/ANALYTICS_REMOTE_ASSURANCE_IMPLEMENTATION_GUIDE_v1.0.md",
+          "version": "1.0",
+          "description": "Implementation",
+          "size": 1519,
+          "all_versions": [
+            "ANALYTICS_REMOTE_ASSURANCE_IMPLEMENTATION_GUIDE_v1.0.md"
+          ]
+        },
+        "EXPORT_SPEC": {
+          "path": "maturion-isms/apps/analytics-remote-assurance/architecture/ANALYTICS_REMOTE_ASSURANCE_EXPORT_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "Data Export",
+          "size": 919,
+          "all_versions": [
+            "ANALYTICS_REMOTE_ASSURANCE_EXPORT_SPEC_v1.0.md"
+          ]
+        },
+        "EDGE_FUNCTIONS": {
+          "path": "maturion-isms/apps/analytics-remote-assurance/architecture/ANALYTICS_REMOTE_ASSURANCE_EDGE_FUNCTIONS_v1.0.md",
+          "version": "1.0",
+          "description": "Backend API",
+          "size": 1215,
+          "all_versions": [
+            "ANALYTICS_REMOTE_ASSURANCE_EDGE_FUNCTIONS_v1.0.md"
+          ]
+        },
+        "INTEGRATION_SPEC": {
+          "path": "maturion-isms/apps/analytics-remote-assurance/architecture/ANALYTICS_REMOTE_ASSURANCE_INTEGRATION_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "Module Integration",
+          "size": 967,
+          "all_versions": [
+            "ANALYTICS_REMOTE_ASSURANCE_INTEGRATION_SPEC_v1.0.md"
+          ]
+        },
+        "DATABASE_SCHEMA": {
+          "path": "maturion-isms/apps/analytics-remote-assurance/architecture/ANALYTICS_REMOTE_ASSURANCE_DATABASE_SCHEMA_v1.0.md",
+          "version": "1.0",
+          "description": "Data Model",
+          "size": 1392,
+          "all_versions": [
+            "ANALYTICS_REMOTE_ASSURANCE_DATABASE_SCHEMA_v1.0.md"
+          ]
+        },
+        "ARCHITECTURE": {
+          "path": "maturion-isms/apps/analytics-remote-assurance/architecture/ANALYTICS_REMOTE_ASSURANCE_ARCHITECTURE_v1.0.md",
+          "version": "1.0",
+          "description": "Architecture Design",
+          "size": 1304,
+          "all_versions": [
+            "ANALYTICS_REMOTE_ASSURANCE_ARCHITECTURE_v1.0.md"
+          ]
+        },
+        "SPRINT_PLAN": {
+          "path": "maturion-isms/apps/analytics-remote-assurance/architecture/ANALYTICS_REMOTE_ASSURANCE_SPRINT_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Development Plan",
+          "size": 1338,
+          "all_versions": [
+            "ANALYTICS_REMOTE_ASSURANCE_SPRINT_PLAN_v1.0.md"
+          ]
+        },
+        "FRONTEND_COMPONENT_MAP": {
+          "path": "maturion-isms/apps/analytics-remote-assurance/architecture/ANALYTICS_REMOTE_ASSURANCE_FRONTEND_COMPONENT_MAP_v1.0.md",
+          "version": "1.0",
+          "description": "UI Components",
+          "size": 1341,
+          "all_versions": [
+            "ANALYTICS_REMOTE_ASSURANCE_FRONTEND_COMPONENT_MAP_v1.0.md"
+          ]
+        },
+        "WIREFRAMES": {
+          "path": "maturion-isms/apps/analytics-remote-assurance/architecture/ANALYTICS_REMOTE_ASSURANCE_WIREFRAMES_v1.0.md",
+          "version": "1.0",
+          "description": "UI Design",
+          "size": 3088,
+          "all_versions": [
+            "ANALYTICS_REMOTE_ASSURANCE_WIREFRAMES_v1.0.md"
+          ]
+        },
+        "QA_IMPLEMENTATION_PLAN": {
+          "path": "maturion-isms/apps/analytics-remote-assurance/qa-plans/ANALYTICS_REMOTE_ASSURANCE_QA_IMPLEMENTATION_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Quality Assurance",
+          "size": 1407,
+          "all_versions": [
+            "ANALYTICS_REMOTE_ASSURANCE_QA_IMPLEMENTATION_PLAN_v1.0.md"
+          ]
+        }
+      },
+      "versions": {},
+      "completeness": {
+        "percentage": 80.0,
+        "present": 12,
+        "total": 15,
+        "missing": [
+          "INTEGRATION_MAP",
+          "WATCHDOG_LOGIC",
+          "MODEL_ROUTING_SPEC"
+        ]
+      },
+      "file_count": 12
+    },
+    "AUDITOR_MOBILE_APP": {
+      "name": "AUDITOR_MOBILE_APP",
+      "files": {
+        "CHANGELOG": {
+          "path": "maturion-isms/apps/auditor-mobile-app/architecture/AUDITOR_MOBILE_APP_CHANGELOG_v1.0.md",
+          "version": "1.0",
+          "description": "Version History",
+          "size": 633,
+          "all_versions": [
+            "AUDITOR_MOBILE_APP_CHANGELOG_v1.0.md"
+          ]
+        },
+        "EDGE_FUNCTIONS": {
+          "path": "maturion-isms/apps/auditor-mobile-app/architecture/AUDITOR_MOBILE_APP_EDGE_FUNCTIONS_v1.0.md",
+          "version": "1.0",
+          "description": "Backend API",
+          "size": 1159,
+          "all_versions": [
+            "AUDITOR_MOBILE_APP_EDGE_FUNCTIONS_v1.0.md"
+          ]
+        },
+        "DATABASE_SCHEMA": {
+          "path": "maturion-isms/apps/auditor-mobile-app/architecture/AUDITOR_MOBILE_APP_DATABASE_SCHEMA_v1.0.md",
+          "version": "1.0",
+          "description": "Data Model",
+          "size": 1368,
+          "all_versions": [
+            "AUDITOR_MOBILE_APP_DATABASE_SCHEMA_v1.0.md"
+          ]
+        },
+        "TRUE_NORTH": {
+          "path": "maturion-isms/apps/auditor-mobile-app/architecture/AUDITOR_MOBILE_APP_TRUE_NORTH_v1.0.md",
+          "version": "1.0",
+          "description": "Module Architecture",
+          "size": 1200,
+          "all_versions": [
+            "AUDITOR_MOBILE_APP_TRUE_NORTH_v1.0.md"
+          ]
+        },
+        "ARCHITECTURE": {
+          "path": "maturion-isms/apps/auditor-mobile-app/architecture/AUDITOR_MOBILE_APP_ARCHITECTURE_v1.0.md",
+          "version": "1.0",
+          "description": "Architecture Design",
+          "size": 1280,
+          "all_versions": [
+            "AUDITOR_MOBILE_APP_ARCHITECTURE_v1.0.md"
+          ]
+        },
+        "INTEGRATION_SPEC": {
+          "path": "maturion-isms/apps/auditor-mobile-app/architecture/AUDITOR_MOBILE_APP_INTEGRATION_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "Module Integration",
+          "size": 951,
+          "all_versions": [
+            "AUDITOR_MOBILE_APP_INTEGRATION_SPEC_v1.0.md"
+          ]
+        },
+        "FRONTEND_COMPONENT_MAP": {
+          "path": "maturion-isms/apps/auditor-mobile-app/architecture/AUDITOR_MOBILE_APP_FRONTEND_COMPONENT_MAP_v1.0.md",
+          "version": "1.0",
+          "description": "UI Components",
+          "size": 1309,
+          "all_versions": [
+            "AUDITOR_MOBILE_APP_FRONTEND_COMPONENT_MAP_v1.0.md"
+          ]
+        },
+        "SPRINT_PLAN": {
+          "path": "maturion-isms/apps/auditor-mobile-app/architecture/AUDITOR_MOBILE_APP_SPRINT_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Development Plan",
+          "size": 1314,
+          "all_versions": [
+            "AUDITOR_MOBILE_APP_SPRINT_PLAN_v1.0.md"
+          ]
+        },
+        "IMPLEMENTATION_GUIDE": {
+          "path": "maturion-isms/apps/auditor-mobile-app/architecture/AUDITOR_MOBILE_APP_IMPLEMENTATION_GUIDE_v1.0.md",
+          "version": "1.0",
+          "description": "Implementation",
+          "size": 1495,
+          "all_versions": [
+            "AUDITOR_MOBILE_APP_IMPLEMENTATION_GUIDE_v1.0.md"
+          ]
+        },
+        "WIREFRAMES": {
+          "path": "maturion-isms/apps/auditor-mobile-app/architecture/AUDITOR_MOBILE_APP_WIREFRAMES_v1.0.md",
+          "version": "1.0",
+          "description": "UI Design",
+          "size": 3064,
+          "all_versions": [
+            "AUDITOR_MOBILE_APP_WIREFRAMES_v1.0.md"
+          ]
+        },
+        "QA_IMPLEMENTATION_PLAN": {
+          "path": "maturion-isms/apps/auditor-mobile-app/qa-plans/AUDITOR_MOBILE_APP_QA_IMPLEMENTATION_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Quality Assurance",
+          "size": 1391,
+          "all_versions": [
+            "AUDITOR_MOBILE_APP_QA_IMPLEMENTATION_PLAN_v1.0.md"
+          ]
+        }
+      },
+      "versions": {},
+      "completeness": {
+        "percentage": 73.3,
+        "present": 11,
+        "total": 15,
+        "missing": [
+          "INTEGRATION_MAP",
+          "EXPORT_SPEC",
+          "WATCHDOG_LOGIC",
+          "MODEL_ROUTING_SPEC"
+        ]
+      },
+      "file_count": 11
+    },
+    "SKILLS_DEVELOPMENT_PORTAL": {
+      "name": "SKILLS_DEVELOPMENT_PORTAL",
+      "files": {
+        "SPRINT_PLAN": {
+          "path": "maturion-isms/apps/skills-development-portal/architecture/SKILLS_DEVELOPMENT_PORTAL_SPRINT_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Development Plan",
+          "size": 1335,
+          "all_versions": [
+            "SKILLS_DEVELOPMENT_PORTAL_SPRINT_PLAN_v1.0.md"
+          ]
+        },
+        "CHANGELOG": {
+          "path": "maturion-isms/apps/skills-development-portal/architecture/SKILLS_DEVELOPMENT_PORTAL_CHANGELOG_v1.0.md",
+          "version": "1.0",
+          "description": "Version History",
+          "size": 647,
+          "all_versions": [
+            "SKILLS_DEVELOPMENT_PORTAL_CHANGELOG_v1.0.md"
+          ]
+        },
+        "ARCHITECTURE": {
+          "path": "maturion-isms/apps/skills-development-portal/architecture/SKILLS_DEVELOPMENT_PORTAL_ARCHITECTURE_v1.0.md",
+          "version": "1.0",
+          "description": "Architecture Design",
+          "size": 1301,
+          "all_versions": [
+            "SKILLS_DEVELOPMENT_PORTAL_ARCHITECTURE_v1.0.md"
+          ]
+        },
+        "IMPLEMENTATION_GUIDE": {
+          "path": "maturion-isms/apps/skills-development-portal/architecture/SKILLS_DEVELOPMENT_PORTAL_IMPLEMENTATION_GUIDE_v1.0.md",
+          "version": "1.0",
+          "description": "Implementation",
+          "size": 1516,
+          "all_versions": [
+            "SKILLS_DEVELOPMENT_PORTAL_IMPLEMENTATION_GUIDE_v1.0.md"
+          ]
+        },
+        "INTEGRATION_SPEC": {
+          "path": "maturion-isms/apps/skills-development-portal/architecture/SKILLS_DEVELOPMENT_PORTAL_INTEGRATION_SPEC_v1.0.md",
+          "version": "1.0",
+          "description": "Module Integration",
+          "size": 965,
+          "all_versions": [
+            "SKILLS_DEVELOPMENT_PORTAL_INTEGRATION_SPEC_v1.0.md"
+          ]
+        },
+        "TRUE_NORTH": {
+          "path": "maturion-isms/apps/skills-development-portal/architecture/SKILLS_DEVELOPMENT_PORTAL_TRUE_NORTH_v1.0.md",
+          "version": "1.0",
+          "description": "Module Architecture",
+          "size": 1228,
+          "all_versions": [
+            "SKILLS_DEVELOPMENT_PORTAL_TRUE_NORTH_v1.0.md"
+          ]
+        },
+        "WIREFRAMES": {
+          "path": "maturion-isms/apps/skills-development-portal/architecture/SKILLS_DEVELOPMENT_PORTAL_WIREFRAMES_v1.0.md",
+          "version": "1.0",
+          "description": "UI Design",
+          "size": 3085,
+          "all_versions": [
+            "SKILLS_DEVELOPMENT_PORTAL_WIREFRAMES_v1.0.md"
+          ]
+        },
+        "FRONTEND_COMPONENT_MAP": {
+          "path": "maturion-isms/apps/skills-development-portal/architecture/SKILLS_DEVELOPMENT_PORTAL_FRONTEND_COMPONENT_MAP_v1.0.md",
+          "version": "1.0",
+          "description": "UI Components",
+          "size": 1337,
+          "all_versions": [
+            "SKILLS_DEVELOPMENT_PORTAL_FRONTEND_COMPONENT_MAP_v1.0.md"
+          ]
+        },
+        "DATABASE_SCHEMA": {
+          "path": "maturion-isms/apps/skills-development-portal/architecture/SKILLS_DEVELOPMENT_PORTAL_DATABASE_SCHEMA_v1.0.md",
+          "version": "1.0",
+          "description": "Data Model",
+          "size": 1389,
+          "all_versions": [
+            "SKILLS_DEVELOPMENT_PORTAL_DATABASE_SCHEMA_v1.0.md"
+          ]
+        },
+        "EDGE_FUNCTIONS": {
+          "path": "maturion-isms/apps/skills-development-portal/architecture/SKILLS_DEVELOPMENT_PORTAL_EDGE_FUNCTIONS_v1.0.md",
+          "version": "1.0",
+          "description": "Backend API",
+          "size": 1208,
+          "all_versions": [
+            "SKILLS_DEVELOPMENT_PORTAL_EDGE_FUNCTIONS_v1.0.md"
+          ]
+        },
+        "QA_IMPLEMENTATION_PLAN": {
+          "path": "maturion-isms/apps/skills-development-portal/qa-plans/SKILLS_DEVELOPMENT_PORTAL_QA_IMPLEMENTATION_PLAN_v1.0.md",
+          "version": "1.0",
+          "description": "Quality Assurance",
+          "size": 1405,
+          "all_versions": [
+            "SKILLS_DEVELOPMENT_PORTAL_QA_IMPLEMENTATION_PLAN_v1.0.md"
+          ]
+        }
+      },
+      "versions": {},
+      "completeness": {
+        "percentage": 73.3,
+        "present": 11,
+        "total": 15,
+        "missing": [
+          "INTEGRATION_MAP",
+          "EXPORT_SPEC",
+          "WATCHDOG_LOGIC",
+          "MODEL_ROUTING_SPEC"
+        ]
+      },
+      "file_count": 11
+    }
+  },
+  "true_north_index": {
+    "PIT": {
+      "module": "PIT",
+      "path": "maturion-isms/apps/pit/architecture/PIT_TRUE_NORTH_v1.0.md",
+      "version": "1.0",
+      "size": 10331,
+      "exists": true,
+      "sections": 0,
+      "has_purpose": true,
+      "has_architecture": true,
+      "has_data_model": true,
+      "has_integration": true
+    },
+    "COURSE_CRAFTER": {
+      "module": "COURSE_CRAFTER",
+      "path": "maturion-isms/apps/course-crafter/architecture/COURSE_CRAFTER_TRUE_NORTH_v1.0.md",
+      "version": "1.0",
+      "size": 17258,
+      "exists": true,
+      "sections": 0,
+      "has_purpose": true,
+      "has_architecture": true,
+      "has_data_model": false,
+      "has_integration": true
+    },
+    "WRAC": {
+      "module": "WRAC",
+      "path": "maturion-isms/apps/wrac/architecture/WRAC_TRUE_NORTH_v0.1.md",
+      "version": "0.1",
+      "size": 11000,
+      "exists": true,
+      "sections": 0,
+      "has_purpose": true,
+      "has_architecture": true,
+      "has_data_model": true,
+      "has_integration": true
+    },
+    "VULNERABILITY": {
+      "module": "VULNERABILITY",
+      "path": "maturion-isms/apps/vulnerability/architecture/VULNERABILITY_MODULE_TRUE_NORTH_ARCHITECTURE_v0.1.md",
+      "version": "0.1",
+      "size": 2006,
+      "exists": true,
+      "sections": 0,
+      "has_purpose": false,
+      "has_architecture": true,
+      "has_data_model": true,
+      "has_integration": true
+    },
+    "THREAT": {
+      "module": "THREAT",
+      "path": "maturion-isms/apps/threat/architecture/THREAT_TRUE_NORTH_v1.0.md",
+      "version": "1.0",
+      "size": 10160,
+      "exists": true,
+      "sections": 0,
+      "has_purpose": true,
+      "has_architecture": true,
+      "has_data_model": true,
+      "has_integration": true
+    },
+    "RISK_THREAT": {
+      "module": "RISK_THREAT",
+      "path": "maturion-isms/apps/threat/architecture/RISK_THREAT_MODULE_TRUE_NORTH_v0.1.md",
+      "version": "0.1",
+      "size": 15942,
+      "exists": true,
+      "sections": 0,
+      "has_purpose": true,
+      "has_architecture": false,
+      "has_data_model": true,
+      "has_integration": true
+    },
+    "RISK_ASSESSMENT": {
+      "module": "RISK_ASSESSMENT",
+      "path": "maturion-isms/apps/risk-assessment/architecture/RISK_ASSESSMENT_TRUE_NORTH_v0.1.md",
+      "version": "0.1",
+      "size": 5980,
+      "exists": true,
+      "sections": 23,
+      "has_purpose": true,
+      "has_architecture": true,
+      "has_data_model": false,
+      "has_integration": true
+    },
+    "SKILLS_DEVELOPMENT_PORTAL": {
+      "module": "SKILLS_DEVELOPMENT_PORTAL",
+      "path": "maturion-isms/apps/skills-development-portal/architecture/SKILLS_DEVELOPMENT_PORTAL_TRUE_NORTH_v1.0.md",
+      "version": "1.0",
+      "size": 1228,
+      "exists": true,
+      "sections": 9,
+      "has_purpose": true,
+      "has_architecture": true,
+      "has_data_model": false,
+      "has_integration": false
+    },
+    "AUDITOR_MOBILE_APP": {
+      "module": "AUDITOR_MOBILE_APP",
+      "path": "maturion-isms/apps/auditor-mobile-app/architecture/AUDITOR_MOBILE_APP_TRUE_NORTH_v1.0.md",
+      "version": "1.0",
+      "size": 1200,
+      "exists": true,
+      "sections": 9,
+      "has_purpose": true,
+      "has_architecture": true,
+      "has_data_model": false,
+      "has_integration": false
+    },
+    "POLICY_BUILDER": {
+      "module": "POLICY_BUILDER",
+      "path": "maturion-isms/apps/policy-builder/architecture/POLICY_BUILDER_TRUE_NORTH_v1.0.md",
+      "version": "1.0",
+      "size": 1184,
+      "exists": true,
+      "sections": 9,
+      "has_purpose": true,
+      "has_architecture": true,
+      "has_data_model": false,
+      "has_integration": false
+    },
+    "ERM": {
+      "module": "ERM",
+      "path": "maturion-isms/apps/erm/architecture/ERM_TRUE_NORTH_v1.0.md",
+      "version": "1.0",
+      "size": 9869,
+      "exists": true,
+      "sections": 0,
+      "has_purpose": true,
+      "has_architecture": true,
+      "has_data_model": true,
+      "has_integration": true
+    },
+    "ANALYTICS_REMOTE_ASSURANCE": {
+      "module": "ANALYTICS_REMOTE_ASSURANCE",
+      "path": "maturion-isms/apps/analytics-remote-assurance/architecture/ANALYTICS_REMOTE_ASSURANCE_TRUE_NORTH_v1.0.md",
+      "version": "1.0",
+      "size": 1232,
+      "exists": true,
+      "sections": 9,
+      "has_purpose": true,
+      "has_architecture": true,
+      "has_data_model": false,
+      "has_integration": false
+    }
+  },
   "dependency_map": {
-    "modules": {},
+    "modules": {
+      "COURSE_CRAFTER": {
+        "depends_on": [],
+        "dependency_count": 0
+      },
+      "ERM": {
+        "depends_on": [
+          "PIT",
+          "WRAC"
+        ],
+        "dependency_count": 2
+      },
+      "PIT": {
+        "depends_on": [
+          "WRAC"
+        ],
+        "dependency_count": 1
+      },
+      "THREAT": {
+        "depends_on": [
+          "ERM",
+          "PIT",
+          "VULNERABILITY",
+          "WRAC"
+        ],
+        "dependency_count": 4
+      },
+      "VULNERABILITY": {
+        "depends_on": [
+          "ERM",
+          "PIT",
+          "THREAT",
+          "WRAC"
+        ],
+        "dependency_count": 4
+      },
+      "RISK_ASSESSMENT": {
+        "depends_on": [
+          "ERM",
+          "PIT",
+          "WRAC"
+        ],
+        "dependency_count": 3
+      },
+      "WRAC": {
+        "depends_on": [
+          "PIT",
+          "THREAT"
+        ],
+        "dependency_count": 2
+      },
+      "RISK_THREAT": {
+        "depends_on": [
+          "PIT"
+        ],
+        "dependency_count": 1
+      },
+      "POLICY_BUILDER": {
+        "depends_on": [],
+        "dependency_count": 0
+      },
+      "ANALYTICS_REMOTE_ASSURANCE": {
+        "depends_on": [],
+        "dependency_count": 0
+      },
+      "AUDITOR_MOBILE_APP": {
+        "depends_on": [],
+        "dependency_count": 0
+      },
+      "SKILLS_DEVELOPMENT_PORTAL": {
+        "depends_on": [],
+        "dependency_count": 0
+      }
+    },
     "statistics": {
-      "total_dependencies": 0,
-      "average_per_module": 0,
-      "most_dependent": null,
-      "most_referenced": null
+      "total_dependencies": 17,
+      "average_per_module": 1.42,
+      "most_dependent": "THREAT",
+      "most_referenced": "PIT"
     }
   },
   "compliance_mapping": {
@@ -23,75 +1656,148 @@
     },
     "coverage_by_standard": {
       "ISO 27001": {
-        "modules_covered": 0,
-        "total_modules": 0,
-        "coverage_percentage": 0,
-        "modules": []
+        "modules_covered": 4,
+        "total_modules": 12,
+        "coverage_percentage": 33.3,
+        "modules": [
+          "POLICY_BUILDER",
+          "ANALYTICS_REMOTE_ASSURANCE",
+          "AUDITOR_MOBILE_APP",
+          "SKILLS_DEVELOPMENT_PORTAL"
+        ]
       },
       "ISO 27005": {
         "modules_covered": 0,
-        "total_modules": 0,
-        "coverage_percentage": 0,
+        "total_modules": 12,
+        "coverage_percentage": 0.0,
         "modules": []
       },
       "ISO 31000": {
-        "modules_covered": 0,
-        "total_modules": 0,
-        "coverage_percentage": 0,
-        "modules": []
+        "modules_covered": 1,
+        "total_modules": 12,
+        "coverage_percentage": 8.3,
+        "modules": [
+          "RISK_THREAT"
+        ]
       },
       "ISO 22301": {
         "modules_covered": 0,
-        "total_modules": 0,
-        "coverage_percentage": 0,
+        "total_modules": 12,
+        "coverage_percentage": 0.0,
         "modules": []
       },
       "NIST CSF": {
         "modules_covered": 0,
-        "total_modules": 0,
-        "coverage_percentage": 0,
+        "total_modules": 12,
+        "coverage_percentage": 0.0,
         "modules": []
       },
       "NIST 800-53": {
         "modules_covered": 0,
-        "total_modules": 0,
-        "coverage_percentage": 0,
+        "total_modules": 12,
+        "coverage_percentage": 0.0,
         "modules": []
       },
       "COBIT": {
         "modules_covered": 0,
-        "total_modules": 0,
-        "coverage_percentage": 0,
+        "total_modules": 12,
+        "coverage_percentage": 0.0,
         "modules": []
       },
       "GDPR": {
-        "modules_covered": 0,
-        "total_modules": 0,
-        "coverage_percentage": 0,
-        "modules": []
+        "modules_covered": 5,
+        "total_modules": 12,
+        "coverage_percentage": 41.7,
+        "modules": [
+          "THREAT",
+          "POLICY_BUILDER",
+          "ANALYTICS_REMOTE_ASSURANCE",
+          "AUDITOR_MOBILE_APP",
+          "SKILLS_DEVELOPMENT_PORTAL"
+        ]
       },
       "POPIA": {
-        "modules_covered": 0,
-        "total_modules": 0,
-        "coverage_percentage": 0,
-        "modules": []
+        "modules_covered": 5,
+        "total_modules": 12,
+        "coverage_percentage": 41.7,
+        "modules": [
+          "THREAT",
+          "POLICY_BUILDER",
+          "ANALYTICS_REMOTE_ASSURANCE",
+          "AUDITOR_MOBILE_APP",
+          "SKILLS_DEVELOPMENT_PORTAL"
+        ]
       },
       "OWASP ASVS": {
         "modules_covered": 0,
-        "total_modules": 0,
-        "coverage_percentage": 0,
+        "total_modules": 12,
+        "coverage_percentage": 0.0,
         "modules": []
       },
       "OWASP Top 10": {
         "modules_covered": 0,
-        "total_modules": 0,
-        "coverage_percentage": 0,
+        "total_modules": 12,
+        "coverage_percentage": 0.0,
         "modules": []
       }
     },
-    "module_references": {},
+    "module_references": {
+      "GDPR": {
+        "THREAT": [
+          "Referenced"
+        ],
+        "POLICY_BUILDER": [
+          "Referenced"
+        ],
+        "ANALYTICS_REMOTE_ASSURANCE": [
+          "Referenced"
+        ],
+        "AUDITOR_MOBILE_APP": [
+          "Referenced"
+        ],
+        "SKILLS_DEVELOPMENT_PORTAL": [
+          "Referenced"
+        ]
+      },
+      "POPIA": {
+        "THREAT": [
+          "Referenced"
+        ],
+        "POLICY_BUILDER": [
+          ""
+        ],
+        "ANALYTICS_REMOTE_ASSURANCE": [
+          ""
+        ],
+        "AUDITOR_MOBILE_APP": [
+          ""
+        ],
+        "SKILLS_DEVELOPMENT_PORTAL": [
+          ""
+        ]
+      },
+      "ISO 31000": {
+        "RISK_THREAT": [
+          "Referenced"
+        ]
+      },
+      "ISO 27001": {
+        "POLICY_BUILDER": [
+          "Referenced"
+        ],
+        "ANALYTICS_REMOTE_ASSURANCE": [
+          "Referenced"
+        ],
+        "AUDITOR_MOBILE_APP": [
+          "Referenced"
+        ],
+        "SKILLS_DEVELOPMENT_PORTAL": [
+          "Referenced"
+        ]
+      }
+    },
     "overall": {
-      "average_coverage": 0.0,
+      "average_coverage": 11.4,
       "standards_tracked": 11,
       "fully_covered_standards": 0
     }
@@ -113,44 +1819,82 @@
       "severity": "critical"
     },
     {
-      "type": "true_north",
-      "module": "COURSE_CRAFTER",
-      "severity": "critical"
-    },
-    {
-      "type": "true_north",
-      "module": "ERM",
-      "severity": "critical"
-    },
-    {
-      "type": "true_north",
-      "module": "PIT",
-      "severity": "critical"
-    },
-    {
-      "type": "true_north",
-      "module": "THREAT",
-      "severity": "critical"
-    },
-    {
-      "type": "true_north",
-      "module": "VULNERABILITY",
-      "severity": "critical"
-    },
-    {
-      "type": "true_north",
-      "module": "RISK_ASSESSMENT",
-      "severity": "critical"
-    },
-    {
-      "type": "true_north",
-      "module": "WRAC",
-      "severity": "critical"
-    },
-    {
-      "type": "true_north",
+      "type": "specification",
       "module": "RISK_THREAT",
+      "specification": "ARCHITECTURE",
+      "severity": "medium"
+    },
+    {
+      "type": "specification",
+      "module": "RISK_THREAT",
+      "specification": "DATABASE_SCHEMA",
       "severity": "critical"
+    },
+    {
+      "type": "specification",
+      "module": "RISK_THREAT",
+      "specification": "FRONTEND_COMPONENT_MAP",
+      "severity": "medium"
+    },
+    {
+      "type": "specification",
+      "module": "RISK_THREAT",
+      "specification": "WIREFRAMES",
+      "severity": "medium"
+    },
+    {
+      "type": "specification",
+      "module": "RISK_THREAT",
+      "specification": "EDGE_FUNCTIONS",
+      "severity": "medium"
+    },
+    {
+      "type": "specification",
+      "module": "RISK_THREAT",
+      "specification": "INTEGRATION_SPEC",
+      "severity": "medium"
+    },
+    {
+      "type": "specification",
+      "module": "RISK_THREAT",
+      "specification": "INTEGRATION_MAP",
+      "severity": "medium"
+    },
+    {
+      "type": "specification",
+      "module": "RISK_THREAT",
+      "specification": "EXPORT_SPEC",
+      "severity": "medium"
+    },
+    {
+      "type": "specification",
+      "module": "RISK_THREAT",
+      "specification": "IMPLEMENTATION_GUIDE",
+      "severity": "medium"
+    },
+    {
+      "type": "specification",
+      "module": "RISK_THREAT",
+      "specification": "SPRINT_PLAN",
+      "severity": "medium"
+    },
+    {
+      "type": "specification",
+      "module": "RISK_THREAT",
+      "specification": "CHANGELOG",
+      "severity": "medium"
+    },
+    {
+      "type": "specification",
+      "module": "RISK_THREAT",
+      "specification": "WATCHDOG_LOGIC",
+      "severity": "medium"
+    },
+    {
+      "type": "specification",
+      "module": "RISK_THREAT",
+      "specification": "MODEL_ROUTING_SPEC",
+      "severity": "medium"
     },
     {
       "type": "true_north",
@@ -158,5 +1902,79 @@
       "severity": "critical"
     }
   ],
-  "inconsistencies": []
+  "inconsistencies": [
+    {
+      "type": "circular_dependency",
+      "modules": [
+        "PIT",
+        "WRAC"
+      ],
+      "severity": "high"
+    },
+    {
+      "type": "circular_dependency",
+      "modules": [
+        "THREAT",
+        "VULNERABILITY"
+      ],
+      "severity": "high"
+    },
+    {
+      "type": "circular_dependency",
+      "modules": [
+        "THREAT",
+        "WRAC"
+      ],
+      "severity": "high"
+    },
+    {
+      "type": "circular_dependency",
+      "modules": [
+        "VULNERABILITY",
+        "THREAT"
+      ],
+      "severity": "high"
+    },
+    {
+      "type": "circular_dependency",
+      "modules": [
+        "WRAC",
+        "PIT"
+      ],
+      "severity": "high"
+    },
+    {
+      "type": "circular_dependency",
+      "modules": [
+        "WRAC",
+        "THREAT"
+      ],
+      "severity": "high"
+    },
+    {
+      "type": "orphaned_module",
+      "module": "COURSE_CRAFTER",
+      "severity": "low"
+    },
+    {
+      "type": "orphaned_module",
+      "module": "POLICY_BUILDER",
+      "severity": "low"
+    },
+    {
+      "type": "orphaned_module",
+      "module": "ANALYTICS_REMOTE_ASSURANCE",
+      "severity": "low"
+    },
+    {
+      "type": "orphaned_module",
+      "module": "AUDITOR_MOBILE_APP",
+      "severity": "low"
+    },
+    {
+      "type": "orphaned_module",
+      "module": "SKILLS_DEVELOPMENT_PORTAL",
+      "severity": "low"
+    }
+  ]
 }

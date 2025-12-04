@@ -33,7 +33,11 @@ class ISMSArchitectureIndexer:
         'RISK_ASSESSMENT',
         'WRAC',
         'RISK_THREAT',
-        'RISK_VULNERABILITY'
+        'RISK_VULNERABILITY',
+        'POLICY_BUILDER',
+        'ANALYTICS_REMOTE_ASSURANCE',
+        'AUDITOR_MOBILE_APP',
+        'SKILLS_DEVELOPMENT_PORTAL'
     ]
     
     # Architecture specification types
@@ -44,6 +48,7 @@ class ISMSArchitectureIndexer:
         'FRONTEND_COMPONENT_MAP': 'UI Components',
         'WIREFRAMES': 'UI Design',
         'EDGE_FUNCTIONS': 'Backend API',
+        'INTEGRATION_SPEC': 'Module Integration',
         'INTEGRATION_MAP': 'Module Integration',
         'EXPORT_SPEC': 'Data Export',
         'QA_IMPLEMENTATION_PLAN': 'Quality Assurance',
@@ -208,8 +213,24 @@ class ISMSArchitectureIndexer:
             }
             
             # Find all files for this module
+            # Search in both maturion-isms/apps subdirectories and repo root
             pattern = f"{module}_*_v*.md"
-            matching_files = list(self.repo_root.glob(pattern))
+            matching_files = []
+            
+            # Search in maturion-isms/apps structure
+            apps_dir = self.repo_root / 'maturion-isms' / 'apps'
+            if apps_dir.exists():
+                # Search in all subdirectories under apps
+                for module_dir in apps_dir.iterdir():
+                    if module_dir.is_dir():
+                        # Search in architecture/ and qa-plans/ subdirectories
+                        for arch_file in (module_dir / 'architecture').glob(pattern):
+                            matching_files.append(arch_file)
+                        for qa_file in (module_dir / 'qa-plans').glob(pattern):
+                            matching_files.append(qa_file)
+            
+            # Also search in repo root for backward compatibility
+            matching_files.extend(self.repo_root.glob(pattern))
             
             if not matching_files:
                 print(f"  ⚠️  No files found for module: {module}")
@@ -261,7 +282,18 @@ class ISMSArchitectureIndexer:
         """Build True North architecture index"""
         print("🧭 Building True North Index...")
         
-        true_north_files = list(self.repo_root.glob("*TRUE_NORTH*.md"))
+        # Search in both maturion-isms/apps structure and repo root
+        true_north_files = []
+        
+        # Search in maturion-isms/apps structure
+        apps_dir = self.repo_root / 'maturion-isms' / 'apps'
+        if apps_dir.exists():
+            for module_dir in apps_dir.iterdir():
+                if module_dir.is_dir():
+                    true_north_files.extend((module_dir / 'architecture').glob("*TRUE_NORTH*.md"))
+        
+        # Also search in repo root for backward compatibility
+        true_north_files.extend(self.repo_root.glob("*TRUE_NORTH*.md"))
         
         for file_path in true_north_files:
             # Determine which module this belongs to
