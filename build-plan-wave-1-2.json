@@ -1,0 +1,372 @@
+{
+  "version": "1.0",
+  "generated": "2025-12-04T08:35:00.000000",
+  "build_wave": 1.2,
+  "purpose": "Database Foundation Build",
+  "description": "Establish the complete database schema foundation for all 11 ISMS modules, including tables, relationships, validation rules, and compliance structures",
+  "scope": {
+    "global_schema": {
+      "database_architecture": true,
+      "naming_conventions": true,
+      "id_strategy": true,
+      "audit_strategy": true,
+      "multi_tenancy_model": true,
+      "timescale_strategy": true,
+      "relationships_guide": true
+    },
+    "module_schemas": {
+      "count": 11,
+      "modules": [
+        "PIT",
+        "ERM",
+        "RISK_ASSESSMENT",
+        "THREAT",
+        "VULNERABILITY",
+        "WRAC",
+        "COURSE_CRAFTER",
+        "POLICY_BUILDER",
+        "ANALYTICS_REMOTE_ASSURANCE",
+        "AUDITOR_MOBILE",
+        "SKILLS_DEVELOPMENT_PORTAL"
+      ]
+    }
+  },
+  "build_components": [
+    {
+      "id": "global-schema",
+      "name": "Global Database Schema",
+      "description": "Global database architecture, naming conventions, ID strategy, audit strategy, multi-tenancy, TimescaleDB, relationships",
+      "specification": "maturion-isms/schema/global/",
+      "builder": "schema-builder",
+      "priority": "CRITICAL",
+      "dependencies": [],
+      "estimated_tasks": 8,
+      "status": "COMPLETE"
+    },
+    {
+      "id": "module-schemas",
+      "name": "Module Database Schemas",
+      "description": "Complete schema definitions for all 11 ISMS modules",
+      "specification": "maturion-isms/schema/modules/",
+      "builder": "schema-builder",
+      "priority": "CRITICAL",
+      "dependencies": ["global-schema"],
+      "estimated_tasks": 66
+    },
+    {
+      "id": "integration-tables",
+      "name": "Cross-Module Integration Tables",
+      "description": "Integration tables for cross-module relationships (PIT-WRAC, Threat-Vulnerability, etc.)",
+      "specification": "maturion-isms/schema/global/relationships-guide.md",
+      "builder": "schema-builder",
+      "priority": "HIGH",
+      "dependencies": ["module-schemas"],
+      "estimated_tasks": 8
+    },
+    {
+      "id": "validation-rules",
+      "name": "Data Validation Rules",
+      "description": "Validation rules, constraints, and business logic for all schemas",
+      "specification": "maturion-isms/schema/modules/*/validation-rules.md",
+      "builder": "schema-builder",
+      "priority": "HIGH",
+      "dependencies": ["module-schemas"],
+      "estimated_tasks": 11
+    },
+    {
+      "id": "schema-qa",
+      "name": "Schema QA Tests",
+      "description": "Automated tests for schema validity, relationships, referential integrity",
+      "specification": "Build-specific",
+      "builder": "qa-builder",
+      "priority": "CRITICAL",
+      "dependencies": ["module-schemas", "integration-tables", "validation-rules"],
+      "estimated_tasks": 15
+    }
+  ],
+  "build_sequence": [
+    {
+      "phase": 1,
+      "name": "Global Foundation",
+      "components": ["global-schema"],
+      "description": "Establish global database architecture and standards",
+      "parallel_execution": false,
+      "status": "COMPLETE"
+    },
+    {
+      "phase": 2,
+      "name": "Module Schemas",
+      "components": ["module-schemas"],
+      "description": "Create complete schema definitions for all 11 modules",
+      "parallel_execution": true
+    },
+    {
+      "phase": 3,
+      "name": "Integration & Validation",
+      "components": ["integration-tables", "validation-rules"],
+      "description": "Define cross-module integration and validation rules",
+      "parallel_execution": true
+    },
+    {
+      "phase": 4,
+      "name": "QA Validation",
+      "components": ["schema-qa"],
+      "description": "Comprehensive QA testing of all schemas",
+      "parallel_execution": false
+    }
+  ],
+  "builders_required": [
+    {
+      "builder": "schema-builder",
+      "tasks": 93,
+      "percentage": 86
+    },
+    {
+      "builder": "qa-builder",
+      "tasks": 15,
+      "percentage": 14
+    }
+  ],
+  "estimated_timeline": {
+    "total_tasks": 108,
+    "estimated_hours": 216,
+    "estimated_days": 27,
+    "buffer_days": 5,
+    "total_days": 32
+  },
+  "deliverables": [
+    {
+      "type": "global-schema",
+      "name": "Global Database Architecture",
+      "files": [
+        "database-architecture.md",
+        "naming-conventions.md",
+        "id-strategy.md",
+        "audit-strategy.md",
+        "multi-tenancy-model.md",
+        "timescale-strategy.md",
+        "relationships-guide.md",
+        "README.md"
+      ],
+      "status": "COMPLETE"
+    },
+    {
+      "type": "module-schema",
+      "name": "Module Schema Documentation",
+      "files": [
+        "11 × schema.json (machine-readable schema)",
+        "11 × tables.md (table definitions)",
+        "11 × fields.md (field documentation)",
+        "11 × relationships.md (relationship mappings)",
+        "11 × validation-rules.md (validation rules)",
+        "11 × versioning.md (schema versioning)"
+      ]
+    },
+    {
+      "type": "integration",
+      "name": "Cross-Module Integration Tables",
+      "files": [
+        "project_personnel (PIT-WRAC)",
+        "threat_vulnerability_link",
+        "risk_assessment_link (ERM-Risk)",
+        "course_enrollment (Course-Skills)",
+        "Additional integration tables as needed"
+      ]
+    },
+    {
+      "type": "qa-tests",
+      "name": "Schema QA Tests",
+      "files": [
+        "Schema validity tests",
+        "Relationship integrity tests",
+        "Referential completeness tests",
+        "Required fields validation",
+        "Naming standards validation"
+      ]
+    }
+  ],
+  "module_details": {
+    "PIT": {
+      "schema_complexity": "HIGH",
+      "existing_schema": true,
+      "action": "ENHANCE",
+      "tables_estimated": 15,
+      "tasks": 6
+    },
+    "ERM": {
+      "schema_complexity": "MEDIUM",
+      "existing_schema": true,
+      "action": "ENHANCE",
+      "tables_estimated": 8,
+      "tasks": 6
+    },
+    "RISK_ASSESSMENT": {
+      "schema_complexity": "MEDIUM",
+      "existing_schema": true,
+      "action": "ENHANCE",
+      "tables_estimated": 7,
+      "tasks": 6
+    },
+    "THREAT": {
+      "schema_complexity": "MEDIUM",
+      "existing_schema": true,
+      "action": "ENHANCE",
+      "tables_estimated": 8,
+      "tasks": 6
+    },
+    "VULNERABILITY": {
+      "schema_complexity": "MEDIUM",
+      "existing_schema": true,
+      "action": "ENHANCE",
+      "tables_estimated": 8,
+      "tasks": 6
+    },
+    "WRAC": {
+      "schema_complexity": "HIGH",
+      "existing_schema": true,
+      "action": "ENHANCE",
+      "tables_estimated": 12,
+      "tasks": 6
+    },
+    "COURSE_CRAFTER": {
+      "schema_complexity": "MEDIUM",
+      "existing_schema": true,
+      "action": "ENHANCE",
+      "tables_estimated": 10,
+      "tasks": 6
+    },
+    "POLICY_BUILDER": {
+      "schema_complexity": "MEDIUM",
+      "existing_schema": false,
+      "action": "CREATE",
+      "tables_estimated": 8,
+      "tasks": 6
+    },
+    "ANALYTICS_REMOTE_ASSURANCE": {
+      "schema_complexity": "LOW",
+      "existing_schema": false,
+      "action": "CREATE",
+      "tables_estimated": 5,
+      "tasks": 6
+    },
+    "AUDITOR_MOBILE": {
+      "schema_complexity": "LOW",
+      "existing_schema": false,
+      "action": "CREATE",
+      "tables_estimated": 6,
+      "tasks": 6
+    },
+    "SKILLS_DEVELOPMENT_PORTAL": {
+      "schema_complexity": "MEDIUM",
+      "existing_schema": false,
+      "action": "CREATE",
+      "tables_estimated": 9,
+      "tasks": 6
+    }
+  },
+  "qa_requirements": {
+    "schema_validation": {
+      "naming_conventions": true,
+      "audit_fields_presence": true,
+      "rls_policies": true,
+      "indexes": true,
+      "foreign_keys": true
+    },
+    "relationship_validation": {
+      "cross_module_integrity": true,
+      "integration_table_completeness": true,
+      "event_log_coverage": true
+    },
+    "compliance_validation": {
+      "iso_27001_auditability": true,
+      "gdpr_popia_compliance": true,
+      "data_retention_policies": true,
+      "soft_delete_implementation": true
+    }
+  },
+  "dependencies": {
+    "internal": [
+      "Global database architecture (foreman/)",
+      "Naming conventions",
+      "QA requirements",
+      "Module architecture specifications"
+    ],
+    "external": [
+      "PostgreSQL 15+",
+      "TimescaleDB extension",
+      "uuid-ossp or pgcrypto extension"
+    ]
+  },
+  "risks": [
+    {
+      "risk": "Schema complexity for large modules (PIT, WRAC)",
+      "severity": "MEDIUM",
+      "mitigation": "Break down into logical sub-schemas, focus on core entities first"
+    },
+    {
+      "risk": "Cross-module relationship consistency",
+      "severity": "MEDIUM",
+      "mitigation": "Use integration tables pattern, event-driven sync, thorough QA testing"
+    },
+    {
+      "risk": "Missing modules without existing schemas",
+      "severity": "LOW",
+      "mitigation": "Use architecture specifications, reference similar modules, iterative design"
+    },
+    {
+      "risk": "Performance impact of RLS policies",
+      "severity": "LOW",
+      "mitigation": "Proper indexing on organisation_id, query optimization, monitoring"
+    }
+  ],
+  "success_criteria": [
+    {
+      "criterion": "All global schema documents complete",
+      "measurable": true,
+      "target": "8/8 documents",
+      "status": "ACHIEVED"
+    },
+    {
+      "criterion": "All 11 module schemas documented",
+      "measurable": true,
+      "target": "11 modules × 6 documents = 66 documents"
+    },
+    {
+      "criterion": "All schemas pass naming convention validation",
+      "measurable": true,
+      "target": "100% compliance"
+    },
+    {
+      "criterion": "All schemas include mandatory audit fields",
+      "measurable": true,
+      "target": "100% compliance"
+    },
+    {
+      "criterion": "All cross-module relationships defined",
+      "measurable": true,
+      "target": "100% coverage"
+    },
+    {
+      "criterion": "All QA tests pass",
+      "measurable": true,
+      "target": "100% pass rate"
+    }
+  ],
+  "governance_checks": {
+    "architecture_validation": true,
+    "qa_validation": true,
+    "compliance_validation": true,
+    "security_validation": true,
+    "foreman_approval": true
+  },
+  "notes": [
+    "Build Wave 1.2 focuses on database schema foundation only",
+    "No backend logic implementation - schema definitions only",
+    "All modules must align with global architecture standards",
+    "Use existing schemas as baseline, enhance with global standards",
+    "Create new schemas for modules without existing schemas",
+    "Integration tables use loose coupling pattern (no direct FKs)",
+    "All schemas must be compliance-ready (ISO 27001, GDPR, POPIA)",
+    "QA validation is mandatory before wave completion"
+  ]
+}
