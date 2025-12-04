@@ -1,7 +1,7 @@
 ====================================================================================================
 MATURION ISMS - ARCHITECTURE INDEX REPORT
 ====================================================================================================
-Generated: 2025-12-04T07:27:58.619405
+Generated: 2025-12-04T14:40:26.846808
 Repository: /home/runner/work/maturion-ai-foreman/maturion-ai-foreman
 
 📊 EXECUTIVE SUMMARY
