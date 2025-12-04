@@ -1,0 +1,419 @@
+{
+  "version": "1.0",
+  "build_wave": 1,
+  "generated": "2025-12-04T07:50:00Z",
+  "total_patterns": 6,
+  "patterns": [
+    {
+      "pattern_id": "BP-BW1-001",
+      "name": "Skeleton-First Multi-Module Build",
+      "category": "BUILD_STRATEGY",
+      "context": "Multiple modules with incomplete architecture requiring coordinated build",
+      "problem": "How to proceed with multi-module builds when architecture completeness is low (0-30%)",
+      "pattern": {
+        "approach": "Generate skeleton builds to establish structural foundation across all modules",
+        "steps": [
+          "1. Assess each module's architecture completeness",
+          "2. Create skeleton build plan with placeholders",
+          "3. Generate tasks for schema, API, UI, integration, and QA skeletons",
+          "4. Build in dependency order",
+          "5. Defer full implementation to future waves"
+        ],
+        "when_to_use": [
+          "Architecture completeness < 30%",
+          "Goal is structural foundation, not full functionality",
+          "Multiple modules need coordinated scaffolding",
+          "Full implementation planned for future waves"
+        ],
+        "when_not_to_use": [
+          "Architecture is >80% complete",
+          "Full functionality required immediately",
+          "Single module build",
+          "Production deployment imminent"
+        ]
+      },
+      "rationale": [
+        "Creates structural foundation without blocking on complete architecture",
+        "Enables early identification of integration issues",
+        "Allows parallel architecture completion work",
+        "Provides clear scope for builders"
+      ],
+      "benefits": [
+        "Unblocks progress when architecture is incomplete",
+        "Establishes consistent structure across modules",
+        "Identifies missing components early",
+        "Enables parallel work streams"
+      ],
+      "risks": [
+        "Skeleton may not match eventual full architecture",
+        "Rework required if architecture changes significantly",
+        "May give false sense of progress"
+      ],
+      "mitigations": [
+        "Document all assumptions in skeleton builds",
+        "Create Change Records for missing components",
+        "Validate skeleton against architecture when available",
+        "Keep skeleton builds minimal and flexible"
+      ],
+      "examples": [
+        {
+          "scenario": "Build Wave 1 with 11 modules at 0% completeness",
+          "application": "Generated 88 skeleton tasks across all modules, establishing foundation for Wave 2 full builds",
+          "outcome": "Structural backbone created; full implementation deferred"
+        }
+      ],
+      "related_patterns": ["BP-BW1-002", "BP-BW1-003"]
+    },
+    {
+      "pattern_id": "BP-BW1-002",
+      "name": "Dependency-Level Sequencing",
+      "category": "BUILD_ORCHESTRATION",
+      "context": "Multiple modules with complex dependency relationships",
+      "problem": "How to sequence builds when modules have dependencies on each other",
+      "pattern": {
+        "approach": "Analyze dependency graph, assign dependency levels, build level-by-level",
+        "steps": [
+          "1. Create dependency graph from integration specs",
+          "2. Calculate dependency level for each module (longest path from root)",
+          "3. Detect circular dependencies",
+          "4. Group modules by dependency level",
+          "5. Build all Level N modules before Level N+1",
+          "6. Within each level, build in parallel"
+        ],
+        "when_to_use": [
+          "Multiple modules with dependencies",
+          "Need to maximize parallelization",
+          "Build order is critical",
+          "Integration between modules is essential"
+        ],
+        "when_not_to_use": [
+          "All modules are independent",
+          "Single module build",
+          "Dependencies don't matter for current build type"
+        ]
+      },
+      "rationale": [
+        "Ensures dependencies are available when needed",
+        "Maximizes parallel builds within each level",
+        "Prevents integration failures from missing dependencies",
+        "Provides clear build order"
+      ],
+      "benefits": [
+        "Optimal build throughput",
+        "Clear sequencing logic",
+        "Easy to reason about build order",
+        "Enables effective resource allocation"
+      ],
+      "risks": [
+        "Circular dependencies block sequencing",
+        "Single slow module at a level blocks all dependent modules",
+        "Dependency changes require re-sequencing"
+      ],
+      "mitigations": [
+        "Detect and report circular dependencies early",
+        "Monitor build time per level to identify bottlenecks",
+        "Use event-driven architecture to reduce coupling",
+        "Re-validate dependency graph before each build wave"
+      ],
+      "examples": [
+        {
+          "scenario": "Build Wave 1 with 11 modules, 6 dependency levels",
+          "application": "Level 0 (5 modules) build in parallel, then Level 2 (2 modules), then Level 3-5 sequentially",
+          "outcome": "Optimal build order with maximum parallelization"
+        }
+      ],
+      "related_patterns": ["BP-BW1-001", "BP-BW1-004"]
+    },
+    {
+      "pattern_id": "BP-BW1-003",
+      "name": "Builder Task Distribution by Phase",
+      "category": "BUILD_ORCHESTRATION",
+      "context": "Multiple specialized builders need coordinated task assignment",
+      "problem": "How to distribute skeleton build tasks across schema, API, UI, integration, and QA builders",
+      "pattern": {
+        "approach": "Assign tasks based on builder specialty and phase sequencing",
+        "steps": [
+          "1. Define 5 build phases: Schema, API, Integration, UI, QA",
+          "2. Assign builders to phases based on specialty",
+          "3. Create 2 tasks per module for critical phases (schema, API, UI)",
+          "4. Create 1 task per module for supporting phases (integration, QA)",
+          "5. Sequence phases to respect dependencies (schema → API → integration/UI → QA)"
+        ],
+        "when_to_use": [
+          "Skeleton builds with minimal implementation",
+          "Multiple modules requiring consistent structure",
+          "Specialized builders for each layer",
+          "Phase-based build approach"
+        ],
+        "when_not_to_use": [
+          "Full implementation builds (requires different task breakdown)",
+          "Single module build",
+          "No specialized builders"
+        ]
+      },
+      "rationale": [
+        "Schema and API are foundation layers requiring more tasks",
+        "Integration and QA are lighter for skeleton builds",
+        "Phase sequencing matches natural dependencies",
+        "Even distribution across modules within each phase"
+      ],
+      "benefits": [
+        "Clear task ownership per builder",
+        "Predictable task count per module",
+        "Easy to scale to more modules",
+        "Natural phase sequencing"
+      ],
+      "risks": [
+        "Uneven builder workload across phases",
+        "Sequential phases may slow overall build",
+        "Task breakdown may not match actual complexity"
+      ],
+      "mitigations": [
+        "Monitor builder utilization and adjust task distribution",
+        "Allow some phase overlap where dependencies permit",
+        "Adjust task count for full builds based on complexity",
+        "Review task distribution after each wave"
+      ],
+      "examples": [
+        {
+          "scenario": "11 modules, 5 builders, skeleton builds",
+          "application": "schema-builder: 22 tasks, api-builder: 22 tasks, ui-builder: 22 tasks, integration-builder: 11 tasks, qa-builder: 11 tasks",
+          "outcome": "88 total tasks, evenly distributed by module count"
+        }
+      ],
+      "related_patterns": ["BP-BW1-001", "BP-BW1-002"]
+    },
+    {
+      "pattern_id": "BP-BW1-004",
+      "name": "Event-Driven Integration for Circular Dependencies",
+      "category": "INTEGRATION",
+      "context": "Modules with circular dependencies requiring decoupling",
+      "problem": "How to handle circular dependencies (A → B → A) without creating tight coupling",
+      "pattern": {
+        "approach": "Replace direct dependencies with event-driven asynchronous communication",
+        "steps": [
+          "1. Identify circular dependencies in dependency graph",
+          "2. Define integration events for each direction of communication",
+          "3. Create event bus or message broker",
+          "4. Implement event publishers in source modules",
+          "5. Implement event subscribers in target modules",
+          "6. Remove direct module-to-module calls",
+          "7. Test async event flows"
+        ],
+        "when_to_use": [
+          "Circular dependencies detected",
+          "Modules need bidirectional communication",
+          "Tight coupling is causing issues",
+          "Async communication is acceptable"
+        ],
+        "when_not_to_use": [
+          "No circular dependencies",
+          "Synchronous communication required",
+          "Real-time response needed (consider request-response pattern instead)"
+        ]
+      },
+      "rationale": [
+        "Events break direct dependencies",
+        "Async communication reduces coupling",
+        "Modules become independently deployable",
+        "Easier to test and maintain"
+      ],
+      "benefits": [
+        "No circular dependencies",
+        "Loose coupling",
+        "Independent module evolution",
+        "Better testability"
+      ],
+      "risks": [
+        "Eventual consistency instead of immediate",
+        "Increased complexity in event handling",
+        "Debugging async flows is harder",
+        "Requires event bus infrastructure"
+      ],
+      "mitigations": [
+        "Document event contracts clearly",
+        "Implement event versioning",
+        "Add comprehensive event logging",
+        "Create event flow diagrams",
+        "Test event sequences thoroughly"
+      ],
+      "examples": [
+        {
+          "scenario": "WRAC ↔ PIT circular dependency",
+          "application": "WRAC publishes 'AssessmentCompleted' event; PIT subscribes and creates issues. PIT publishes 'IssueResolved' event; WRAC subscribes and updates assessments.",
+          "outcome": "Bidirectional communication without direct dependencies"
+        },
+        {
+          "scenario": "THREAT ↔ VULNERABILITY circular dependency",
+          "application": "THREAT publishes 'ThreatIdentified' event; VULNERABILITY subscribes. VULNERABILITY publishes 'VulnerabilityDetected' event; THREAT subscribes.",
+          "outcome": "Security modules communicate asynchronously"
+        }
+      ],
+      "related_patterns": ["BP-BW1-002", "BP-BW1-005"]
+    },
+    {
+      "pattern_id": "BP-BW1-005",
+      "name": "Change Record Generation for Gaps",
+      "category": "GOVERNANCE",
+      "context": "Architecture gaps identified during build planning",
+      "problem": "How to track and manage missing architecture components across multiple modules",
+      "pattern": {
+        "approach": "Generate Change Records documenting gaps, priorities, and resolution plans",
+        "steps": [
+          "1. Analyze module architecture completeness",
+          "2. Identify all missing components",
+          "3. Categorize by priority (CRITICAL, HIGH, MEDIUM, LOW)",
+          "4. Generate CR for each module with gaps",
+          "5. Document proposed solutions and timelines",
+          "6. Link CRs to build wave summary",
+          "7. Track CR resolution status"
+        ],
+        "when_to_use": [
+          "Architectural gaps prevent full builds",
+          "Multiple modules have similar gaps",
+          "Need to track technical debt",
+          "Planning future architecture work"
+        ],
+        "when_not_to_use": [
+          "Architecture is complete",
+          "Gaps are acceptable for current goals",
+          "No governance process in place"
+        ]
+      },
+      "rationale": [
+        "Makes gaps visible and trackable",
+        "Enables prioritization of architecture work",
+        "Creates audit trail of decisions",
+        "Prevents gaps from being forgotten"
+      ],
+      "benefits": [
+        "Clear tracking of technical debt",
+        "Prioritized work backlog",
+        "Visible to all stakeholders",
+        "Audit trail for governance"
+      ],
+      "risks": [
+        "Too many CRs can overwhelm tracking",
+        "CRs may become stale if not reviewed",
+        "Effort to create and maintain CRs"
+      ],
+      "mitigations": [
+        "Group related gaps into single CR per module",
+        "Review and close CRs regularly",
+        "Prioritize critical gaps first",
+        "Automate CR generation where possible"
+      ],
+      "examples": [
+        {
+          "scenario": "Build Wave 1 with 11 modules, all at 0% completeness",
+          "application": "Generated 11 CRs (CR-BW1-001 through CR-BW1-011), one per module, documenting 9-13 missing components each",
+          "outcome": "Complete tracking of 122 total missing components across all modules"
+        }
+      ],
+      "related_patterns": ["BP-BW1-001", "BP-BW1-006"]
+    },
+    {
+      "pattern_id": "BP-BW1-006",
+      "name": "Test Environment Skeleton Deployment",
+      "category": "DEPLOYMENT",
+      "context": "Skeleton builds ready for test environment deployment",
+      "problem": "How to prepare test environment for skeleton deployments when full implementation doesn't exist",
+      "pattern": {
+        "approach": "Create deployment stub scripts and infrastructure placeholders",
+        "steps": [
+          "1. Define deployment structure per module",
+          "2. Create deployment script stubs for each module",
+          "3. Create validation script stubs",
+          "4. Document deployment sequence",
+          "5. Prepare rollback procedures",
+          "6. Set up monitoring placeholders"
+        ],
+        "when_to_use": [
+          "Skeleton builds ready to deploy",
+          "Need to validate deployment process",
+          "Setting up test infrastructure",
+          "Preparing for future full deployments"
+        ],
+        "when_not_to_use": [
+          "Full builds ready (use real deployment)",
+          "No test environment available",
+          "Deployment process not defined"
+        ]
+      },
+      "rationale": [
+        "Validates deployment process early",
+        "Identifies infrastructure gaps",
+        "Prepares for future full deployments",
+        "Tests deployment sequencing"
+      ],
+      "benefits": [
+        "Early validation of deployment approach",
+        "Clear deployment documentation",
+        "Identifies missing infrastructure",
+        "Smooth transition to full deployments"
+      ],
+      "risks": [
+        "Stub scripts may not reflect real deployment complexity",
+        "False confidence if stubs too simplistic",
+        "Maintenance overhead for stubs"
+      ],
+      "mitigations": [
+        "Make stubs realistic, not trivial",
+        "Update stubs as real deployment logic emerges",
+        "Test deployment sequencing even with stubs",
+        "Document assumptions in stub scripts"
+      ],
+      "examples": [
+        {
+          "scenario": "Build Wave 1 with 11 module skeletons",
+          "application": "Created deploy-{module}.sh and validate-{module}.sh for each module, documented deployment sequence",
+          "outcome": "Complete deployment plan ready, stubs can be filled in during execution"
+        }
+      ],
+      "related_patterns": ["BP-BW1-001", "BP-BW1-002"]
+    }
+  ],
+  "pattern_relationships": {
+    "BP-BW1-001": {
+      "uses": ["BP-BW1-002", "BP-BW1-003", "BP-BW1-005", "BP-BW1-006"],
+      "complements": ["BP-BW1-004"]
+    },
+    "BP-BW1-002": {
+      "requires": ["BP-BW1-001"],
+      "complements": ["BP-BW1-003", "BP-BW1-004"]
+    },
+    "BP-BW1-003": {
+      "requires": ["BP-BW1-001"],
+      "complements": ["BP-BW1-002"]
+    },
+    "BP-BW1-004": {
+      "solves_problems_from": ["BP-BW1-002"],
+      "complements": ["BP-BW1-001", "BP-BW1-005"]
+    },
+    "BP-BW1-005": {
+      "supports": ["BP-BW1-001"],
+      "complements": ["BP-BW1-004"]
+    },
+    "BP-BW1-006": {
+      "requires": ["BP-BW1-001"],
+      "complements": ["BP-BW1-002"]
+    }
+  },
+  "usage_statistics": {
+    "total_applications": 6,
+    "by_category": {
+      "BUILD_STRATEGY": 1,
+      "BUILD_ORCHESTRATION": 2,
+      "INTEGRATION": 1,
+      "GOVERNANCE": 1,
+      "DEPLOYMENT": 1
+    }
+  },
+  "key_principles": [
+    "Start with structure (skeleton) before full implementation",
+    "Respect dependencies through proper sequencing",
+    "Break circular dependencies with events",
+    "Track gaps with Change Records",
+    "Prepare infrastructure early with stubs"
+  ]
+}

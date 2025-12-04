@@ -1,0 +1,49 @@
+{
+  "overall_status": "PASS_WITH_WARNINGS",
+  "timestamp": "2025-12-04T07:50:47.443775Z",
+  "checks": {
+    "deliverables": {
+      "status": "PASS",
+      "message": "All core deliverables present"
+    },
+    "build_plan": {
+      "status": "PASS",
+      "modules": 11,
+      "circular_dependencies": 2
+    },
+    "build_tasks": {
+      "status": "PASS",
+      "total_tasks": 88,
+      "builders": 5
+    },
+    "build_status": {
+      "status": "PASS",
+      "overall_status": "PLANNING_COMPLETE"
+    },
+    "change_records": {
+      "status": "PASS",
+      "count": 11
+    },
+    "test_environment": {
+      "status": "PASS",
+      "deploy_scripts": 11,
+      "validate_scripts": 11
+    },
+    "ai_memory": {
+      "status": "PASS",
+      "files": 3
+    },
+    "governance": {
+      "status": "PASS",
+      "execution_status": "AWAITING_APPROVAL",
+      "awaiting_approval": true
+    }
+  },
+  "errors": [],
+  "warnings": [
+    "Circular dependencies detected: ['WRAC -> PIT', 'VULNERABILITY -> THREAT']"
+  ],
+  "passed": 8,
+  "failed": 0,
+  "warnings_count": 1
+}
