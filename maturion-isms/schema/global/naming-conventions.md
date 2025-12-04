@@ -531,7 +531,7 @@ Automated validation tool: `validate-schema-naming.py`
 
 ```sql
 CREATE TABLE risk_assessment (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id UUID PRIMARY KEY DEFAULT generate_uuidv7(),
   organisation_id UUID NOT NULL REFERENCES organisations(id),
   title TEXT NOT NULL,
   description TEXT,

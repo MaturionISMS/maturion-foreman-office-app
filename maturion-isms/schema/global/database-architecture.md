@@ -246,7 +246,7 @@ For versioned entities (policies, risk assessments, etc.):
 ```sql
 -- Example: policy table with versioning
 CREATE TABLE policies (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id UUID PRIMARY KEY DEFAULT generate_uuidv7(),
   organisation_id UUID NOT NULL REFERENCES organisations(id),
   version_number INTEGER NOT NULL DEFAULT 1,
   is_current_version BOOLEAN DEFAULT TRUE,
