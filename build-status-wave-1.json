@@ -1,0 +1,651 @@
+{
+  "version": "1.0",
+  "generated": "2025-12-04T07:06:13.250068",
+  "build_wave": 1,
+  "overall_status": "PLANNING_COMPLETE",
+  "execution_status": "AWAITING_APPROVAL",
+  "modules": {
+    "ANALYTICS_REMOTE_ASSURANCE": {
+      "sequence_number": 1,
+      "completeness": 0.0,
+      "status": "NOT_READY",
+      "ready_for_skeleton": true,
+      "dependency_level": 0,
+      "dependencies": [],
+      "phases": {
+        "Phase 1: Schema Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "schema-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 2: API Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "api-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 3: Integration Points": {
+          "status": "NOT_STARTED",
+          "builder": "integration-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 4: UI Shell": {
+          "status": "NOT_STARTED",
+          "builder": "ui-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 5: QA Placeholders": {
+          "status": "NOT_STARTED",
+          "builder": "qa-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        }
+      },
+      "overall_progress": 0.0
+    },
+    "AUDITOR_MOBILE_APP": {
+      "sequence_number": 2,
+      "completeness": 0.0,
+      "status": "NOT_READY",
+      "ready_for_skeleton": true,
+      "dependency_level": 0,
+      "dependencies": [],
+      "phases": {
+        "Phase 1: Schema Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "schema-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 2: API Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "api-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 3: Integration Points": {
+          "status": "NOT_STARTED",
+          "builder": "integration-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 4: UI Shell": {
+          "status": "NOT_STARTED",
+          "builder": "ui-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 5: QA Placeholders": {
+          "status": "NOT_STARTED",
+          "builder": "qa-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        }
+      },
+      "overall_progress": 0.0
+    },
+    "COURSE_CRAFTER": {
+      "sequence_number": 3,
+      "completeness": 0.0,
+      "status": "NOT_READY",
+      "ready_for_skeleton": true,
+      "dependency_level": 0,
+      "dependencies": [],
+      "phases": {
+        "Phase 1: Schema Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "schema-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 2: API Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "api-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 3: Integration Points": {
+          "status": "NOT_STARTED",
+          "builder": "integration-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 4: UI Shell": {
+          "status": "NOT_STARTED",
+          "builder": "ui-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 5: QA Placeholders": {
+          "status": "NOT_STARTED",
+          "builder": "qa-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        }
+      },
+      "overall_progress": 0.0
+    },
+    "POLICY_BUILDER": {
+      "sequence_number": 4,
+      "completeness": 0.0,
+      "status": "NOT_READY",
+      "ready_for_skeleton": true,
+      "dependency_level": 0,
+      "dependencies": [],
+      "phases": {
+        "Phase 1: Schema Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "schema-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 2: API Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "api-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 3: Integration Points": {
+          "status": "NOT_STARTED",
+          "builder": "integration-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 4: UI Shell": {
+          "status": "NOT_STARTED",
+          "builder": "ui-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 5: QA Placeholders": {
+          "status": "NOT_STARTED",
+          "builder": "qa-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        }
+      },
+      "overall_progress": 0.0
+    },
+    "SKILLS_DEVELOPMENT_PORTAL": {
+      "sequence_number": 5,
+      "completeness": 0.0,
+      "status": "NOT_READY",
+      "ready_for_skeleton": true,
+      "dependency_level": 0,
+      "dependencies": [],
+      "phases": {
+        "Phase 1: Schema Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "schema-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 2: API Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "api-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 3: Integration Points": {
+          "status": "NOT_STARTED",
+          "builder": "integration-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 4: UI Shell": {
+          "status": "NOT_STARTED",
+          "builder": "ui-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 5: QA Placeholders": {
+          "status": "NOT_STARTED",
+          "builder": "qa-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        }
+      },
+      "overall_progress": 0.0
+    },
+    "PIT": {
+      "sequence_number": 6,
+      "completeness": 0.0,
+      "status": "NOT_READY",
+      "ready_for_skeleton": true,
+      "dependency_level": 2,
+      "dependencies": [
+        "WRAC"
+      ],
+      "phases": {
+        "Phase 1: Schema Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "schema-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 2: API Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "api-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 3: Integration Points": {
+          "status": "NOT_STARTED",
+          "builder": "integration-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 4: UI Shell": {
+          "status": "NOT_STARTED",
+          "builder": "ui-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 5: QA Placeholders": {
+          "status": "NOT_STARTED",
+          "builder": "qa-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        }
+      },
+      "overall_progress": 0.0
+    },
+    "WRAC": {
+      "sequence_number": 7,
+      "completeness": 0.0,
+      "status": "NOT_READY",
+      "ready_for_skeleton": true,
+      "dependency_level": 2,
+      "dependencies": [
+        "PIT"
+      ],
+      "phases": {
+        "Phase 1: Schema Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "schema-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 2: API Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "api-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 3: Integration Points": {
+          "status": "NOT_STARTED",
+          "builder": "integration-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 4: UI Shell": {
+          "status": "NOT_STARTED",
+          "builder": "ui-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 5: QA Placeholders": {
+          "status": "NOT_STARTED",
+          "builder": "qa-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        }
+      },
+      "overall_progress": 0.0
+    },
+    "ERM": {
+      "sequence_number": 8,
+      "completeness": 0.0,
+      "status": "NOT_READY",
+      "ready_for_skeleton": true,
+      "dependency_level": 3,
+      "dependencies": [
+        "PIT",
+        "WRAC"
+      ],
+      "phases": {
+        "Phase 1: Schema Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "schema-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 2: API Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "api-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 3: Integration Points": {
+          "status": "NOT_STARTED",
+          "builder": "integration-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 4: UI Shell": {
+          "status": "NOT_STARTED",
+          "builder": "ui-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 5: QA Placeholders": {
+          "status": "NOT_STARTED",
+          "builder": "qa-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        }
+      },
+      "overall_progress": 0.0
+    },
+    "RISK_ASSESSMENT": {
+      "sequence_number": 9,
+      "completeness": 0.0,
+      "status": "NOT_READY",
+      "ready_for_skeleton": true,
+      "dependency_level": 4,
+      "dependencies": [
+        "ERM",
+        "PIT",
+        "WRAC"
+      ],
+      "phases": {
+        "Phase 1: Schema Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "schema-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 2: API Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "api-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 3: Integration Points": {
+          "status": "NOT_STARTED",
+          "builder": "integration-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 4: UI Shell": {
+          "status": "NOT_STARTED",
+          "builder": "ui-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 5: QA Placeholders": {
+          "status": "NOT_STARTED",
+          "builder": "qa-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        }
+      },
+      "overall_progress": 0.0
+    },
+    "THREAT": {
+      "sequence_number": 10,
+      "completeness": 0.0,
+      "status": "NOT_READY",
+      "ready_for_skeleton": true,
+      "dependency_level": 5,
+      "dependencies": [
+        "ERM",
+        "PIT",
+        "VULNERABILITY",
+        "WRAC"
+      ],
+      "phases": {
+        "Phase 1: Schema Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "schema-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 2: API Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "api-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 3: Integration Points": {
+          "status": "NOT_STARTED",
+          "builder": "integration-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 4: UI Shell": {
+          "status": "NOT_STARTED",
+          "builder": "ui-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 5: QA Placeholders": {
+          "status": "NOT_STARTED",
+          "builder": "qa-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        }
+      },
+      "overall_progress": 0.0
+    },
+    "VULNERABILITY": {
+      "sequence_number": 11,
+      "completeness": 0.0,
+      "status": "NOT_READY",
+      "ready_for_skeleton": true,
+      "dependency_level": 5,
+      "dependencies": [
+        "ERM",
+        "PIT",
+        "THREAT",
+        "WRAC"
+      ],
+      "phases": {
+        "Phase 1: Schema Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "schema-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 2: API Skeleton": {
+          "status": "NOT_STARTED",
+          "builder": "api-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 3: Integration Points": {
+          "status": "NOT_STARTED",
+          "builder": "integration-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 4: UI Shell": {
+          "status": "NOT_STARTED",
+          "builder": "ui-builder",
+          "tasks_total": 2,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        },
+        "Phase 5: QA Placeholders": {
+          "status": "NOT_STARTED",
+          "builder": "qa-builder",
+          "tasks_total": 1,
+          "tasks_complete": 0,
+          "tasks_in_progress": 0,
+          "blockers": []
+        }
+      },
+      "overall_progress": 0.0
+    }
+  },
+  "builder_status": {
+    "schema-builder": {
+      "ready": true,
+      "tasks_assigned": 22,
+      "tasks_complete": 0,
+      "tasks_in_progress": 0,
+      "modules_assigned": 11
+    },
+    "api-builder": {
+      "ready": true,
+      "tasks_assigned": 22,
+      "tasks_complete": 0,
+      "tasks_in_progress": 0,
+      "modules_assigned": 11
+    },
+    "integration-builder": {
+      "ready": true,
+      "tasks_assigned": 11,
+      "tasks_complete": 0,
+      "tasks_in_progress": 0,
+      "modules_assigned": 11
+    },
+    "ui-builder": {
+      "ready": true,
+      "tasks_assigned": 22,
+      "tasks_complete": 0,
+      "tasks_in_progress": 0,
+      "modules_assigned": 11
+    },
+    "qa-builder": {
+      "ready": true,
+      "tasks_assigned": 11,
+      "tasks_complete": 0,
+      "tasks_in_progress": 0,
+      "modules_assigned": 11
+    }
+  },
+  "orchestration": {
+    "plan_generated": true,
+    "tasks_generated": true,
+    "sequencing_validated": true,
+    "governance_checks_passed": false,
+    "circular_dependencies": [
+      "WRAC -> PIT",
+      "VULNERABILITY -> THREAT"
+    ]
+  },
+  "statistics": {
+    "total_modules": 11,
+    "total_tasks": 88,
+    "total_phases": 55,
+    "tasks_completed": 0,
+    "overall_progress_percent": 0.0
+  },
+  "notes": [
+    "Build Wave 1 planning complete",
+    "All skeleton tasks defined",
+    "Awaiting Johan approval to proceed",
+    "No execution has started - this is planning phase only"
+  ]
+}
