@@ -1,5 +1,5 @@
 {
-  "overall_status": "UNKNOWN",
+  "overall_status": "PASS_WITH_WARNINGS",
   "timestamp": "2025-12-04T07:50:47.443775Z",
   "checks": {
     "deliverables": {
