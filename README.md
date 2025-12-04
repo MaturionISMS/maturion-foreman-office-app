@@ -402,6 +402,62 @@ python3 validate-repository.py
 **Use Together:**
 Both `validate-repository.py` and `index-isms-architecture.py` should be run as part of architectural governance to ensure complete validation and indexing.
 
+### Foreman Self-Test & Readiness Verification
+
+```bash
+python3 foreman/scripts/run-self-test.py
+```
+
+**Validates:**
+- Core governance system (8 files)
+- Architecture system (8 files)
+- Builder agent system (10 files)
+- Compliance engine (5 files)
+- QA & QA-of-QA system (6 files)
+- Runtime & continuity system (12 files)
+- Change management system (9 files)
+- Upgrade & continuity system (4 files)
+- Test environment system (4 files)
+- Orchestration & build pipeline (6 files)
+- Platform & UI standards (6 files)
+- Innovation & admin intelligence (3 files)
+
+**Generates:**
+- `self-test-report.json` - Machine-readable test results
+- `self-test-report.md` - Human-readable diagnostic report
+
+**Features:**
+- Validates 81+ critical files across 12 subsystems
+- PASS/WARN/FAIL status with exit codes (0/1/2)
+- Builder readiness detection
+- Compliance coverage tracking
+- Runtime system validation
+- Change record tracking
+- Privacy-compliant (no tenant data, no secrets)
+- Supports chat reset recovery
+
+**Command-Line Options:**
+```bash
+--verbose          # Detailed logging
+--output-dir DIR   # Custom output directory
+--json-only        # Generate JSON only (skip Markdown)
+```
+
+**Use Cases:**
+- After chat resets (verify all systems intact)
+- Before major builds (ensure readiness)
+- After merges (validate no critical files lost)
+- Post-deployment validation
+- Periodic health checks
+- Troubleshooting and diagnostics
+
+**Exit Codes:**
+- `0` = PASS - All systems healthy
+- `1` = WARN - Some warnings, but functional
+- `2` = FAIL - Critical systems missing/broken
+
+See `foreman/self-test/SELF_TEST_QUICK_REFERENCE.md` for detailed usage guide.
+
 ## 🧠 Conclusion
 
 Maturion is the permanent AI intelligence running the entire Maturion ISMS ecosystem.
