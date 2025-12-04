@@ -29,6 +29,25 @@ from datetime import datetime
 class ForemanIntegrationTest:
     """Comprehensive integration test for Maturion Foreman governance systems."""
     
+    # Configuration constants
+    MAX_ALLOWED_FAILURES = 2  # Maximum test failures before overall failure
+    HIGH_WARNING_THRESHOLD = 50  # Warning count threshold for high priority
+    TEST_TIMEOUT_SECONDS = 120  # Timeout for each governance system test
+    
+    # Allowed governance system commands (security whitelist)
+    ALLOWED_COMMANDS = {
+        'validate-repository.py',
+        'foreman/test-init-builders.py',
+        'activate-compliance-engine.py',
+        'index-isms-architecture.py'
+    }
+    
+    # System name constants
+    SYSTEM_REPOSITORY_VALIDATION = 'Repository Validation'
+    SYSTEM_BUILDER_REGISTRY = 'Builder Registry'
+    SYSTEM_COMPLIANCE_ENGINE = 'Compliance Engine'
+    SYSTEM_ARCHITECTURE_INDEXING = 'Architecture Indexing'
+    
     def __init__(self):
         self.repo_root = Path(__file__).parent.resolve()
         self.test_results = {
@@ -76,6 +95,14 @@ class ForemanIntegrationTest:
         Returns:
             Tuple of (success, output)
         """
+        # Security: Validate that the script being run is in allowed list
+        # Command format is typically ['python3', 'script.py'] or ['script.py']
+        script_path = command[1] if len(command) > 1 and command[0] == 'python3' else (command[0] if command else None)
+        
+        if not script_path or script_path not in self.ALLOWED_COMMANDS:
+            self.log_error(f"Script not in allowed list: {script_path}")
+            return False, "Script not allowed for security reasons"
+        
         try:
             self.log_info(f"Running: {description}")
             result = subprocess.run(
@@ -83,7 +110,7 @@ class ForemanIntegrationTest:
                 cwd=self.repo_root,
                 capture_output=True,
                 text=True,
-                timeout=120
+                timeout=self.TEST_TIMEOUT_SECONDS
             )
             
             success = result.returncode == 0
@@ -99,8 +126,8 @@ class ForemanIntegrationTest:
         except subprocess.TimeoutExpired:
             self.log_error(f"{description} - TIMEOUT")
             return False, "Command timed out"
-        except Exception as e:
-            self.log_error(f"{description} - EXCEPTION: {e}")
+        except (OSError, ValueError) as e:
+            self.log_error(f"{description} - COMMAND ERROR: {e}")
             return False, str(e)
     
     def test_repository_validation(self) -> Dict:
@@ -226,7 +253,7 @@ class ForemanIntegrationTest:
                     index_data = json.load(f)
                     result['total_modules'] = len(index_data.get('modules', {}))
                     result['total_files'] = index_data.get('summary', {}).get('total_architecture_files', 0)
-            except Exception as e:
+            except (json.JSONDecodeError, FileNotFoundError, KeyError) as e:
                 self.log_warning(f"Could not parse index: {e}")
         
         if result['report_generated']:
@@ -259,45 +286,45 @@ class ForemanIntegrationTest:
         # Analyze each system
         repo_val = self.test_results.get('repository_validation', {})
         if repo_val.get('success'):
-            analysis['systems_operational'].append('Repository Validation')
-            self.log_success("Repository Validation: OPERATIONAL")
+            analysis['systems_operational'].append(self.SYSTEM_REPOSITORY_VALIDATION)
+            self.log_success(f"{self.SYSTEM_REPOSITORY_VALIDATION}: OPERATIONAL")
         else:
-            analysis['systems_degraded'].append('Repository Validation')
+            analysis['systems_degraded'].append(self.SYSTEM_REPOSITORY_VALIDATION)
             analysis['critical_issues'].append('Repository validation failed')
-            self.log_error("Repository Validation: DEGRADED")
+            self.log_error(f"{self.SYSTEM_REPOSITORY_VALIDATION}: DEGRADED")
         
         builder_reg = self.test_results.get('builder_registry', {})
         if builder_reg.get('all_tests_passed'):
-            analysis['systems_operational'].append('Builder Registry')
-            self.log_success("Builder Registry: OPERATIONAL")
+            analysis['systems_operational'].append(self.SYSTEM_BUILDER_REGISTRY)
+            self.log_success(f"{self.SYSTEM_BUILDER_REGISTRY}: OPERATIONAL")
         else:
-            analysis['systems_degraded'].append('Builder Registry')
+            analysis['systems_degraded'].append(self.SYSTEM_BUILDER_REGISTRY)
             analysis['critical_issues'].append('Builder registry tests failed')
-            self.log_error("Builder Registry: DEGRADED")
+            self.log_error(f"{self.SYSTEM_BUILDER_REGISTRY}: DEGRADED")
         
         compliance = self.test_results.get('compliance_engine', {})
         if compliance.get('success'):
-            analysis['systems_operational'].append('Compliance Engine')
-            self.log_success("Compliance Engine: OPERATIONAL")
+            analysis['systems_operational'].append(self.SYSTEM_COMPLIANCE_ENGINE)
+            self.log_success(f"{self.SYSTEM_COMPLIANCE_ENGINE}: OPERATIONAL")
         else:
-            analysis['systems_degraded'].append('Compliance Engine')
+            analysis['systems_degraded'].append(self.SYSTEM_COMPLIANCE_ENGINE)
             analysis['warnings'].append('Compliance engine activation issues')
-            self.log_warning("Compliance Engine: DEGRADED")
+            self.log_warning(f"{self.SYSTEM_COMPLIANCE_ENGINE}: DEGRADED")
         
         arch_index = self.test_results.get('architecture_index', {})
         if arch_index.get('index_generated'):
-            analysis['systems_operational'].append('Architecture Indexing')
-            self.log_success("Architecture Indexing: OPERATIONAL")
+            analysis['systems_operational'].append(self.SYSTEM_ARCHITECTURE_INDEXING)
+            self.log_success(f"{self.SYSTEM_ARCHITECTURE_INDEXING}: OPERATIONAL")
         else:
-            analysis['systems_degraded'].append('Architecture Indexing')
+            analysis['systems_degraded'].append(self.SYSTEM_ARCHITECTURE_INDEXING)
             analysis['warnings'].append('Architecture index not fully generated')
-            self.log_warning("Architecture Indexing: DEGRADED")
+            self.log_warning(f"{self.SYSTEM_ARCHITECTURE_INDEXING}: DEGRADED")
         
         # Check for missing architecture components
         if repo_val.get('warning_count'):
             try:
                 warning_count = int(repo_val['warning_count'])
-                if warning_count > 50:
+                if warning_count > self.HIGH_WARNING_THRESHOLD:
                     analysis['warnings'].append(f'High number of architecture warnings: {warning_count}')
                     analysis['recommendations'].append(
                         'Review and address missing architecture components'
@@ -348,7 +375,8 @@ class ForemanIntegrationTest:
         
         # Priority 2: Degraded systems
         for system in analysis.get('systems_degraded', []):
-            if system not in ['Compliance Engine', 'Architecture Indexing']:
+            # Only create high-priority actions for critical systems
+            if system not in [self.SYSTEM_COMPLIANCE_ENGINE, self.SYSTEM_ARCHITECTURE_INDEXING]:
                 actions.append({
                     'priority': 'HIGH',
                     'category': 'System Degradation',
@@ -554,8 +582,8 @@ class ForemanIntegrationTest:
         print(f"📊 JSON results saved to: {json_path}")
         
         # Determine exit code
-        # Success if critical systems are operational (max 2 failures allowed)
-        exit_code = 0 if self.failed_tests <= 2 else 1
+        # Success if critical systems are operational (max allowed failures threshold)
+        exit_code = 0 if self.failed_tests <= self.MAX_ALLOWED_FAILURES else 1
         
         return exit_code
 

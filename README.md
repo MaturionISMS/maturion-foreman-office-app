@@ -402,6 +402,44 @@ python3 validate-repository.py
 **Use Together:**
 Both `validate-repository.py` and `index-isms-architecture.py` should be run as part of architectural governance to ensure complete validation and indexing.
 
+### Foreman Integration Test
+
+Run comprehensive integration test of all governance systems:
+
+```bash
+python3 test-foreman-integration.py
+```
+
+**Tests:**
+- Repository validation system
+- Builder registry initialization
+- Compliance engine activation
+- Architecture indexing
+- Governance reasoning and analysis
+- Action proposal generation
+
+**Generates:**
+- `FOREMAN_INTEGRATION_TEST_REPORT.md` - Human-readable comprehensive report
+- `FOREMAN_INTEGRATION_TEST_RESULTS.json` - Machine-readable test results
+
+**Validates:**
+- All governance systems work together cohesively
+- Foreman can analyze system state and identify issues
+- Action proposals are prioritized and actionable
+- System health monitoring is operational
+
+**Features:**
+- System health percentage calculation
+- Critical issue identification
+- Prioritized action recommendations (CRITICAL → LOW)
+- Impact and effort estimation for each action
+- Comprehensive governance reasoning workflow
+
+See `FOREMAN_INTEGRATION_TEST_README.md` for full documentation.
+
+**Use Case:**
+Run before deployments to ensure the governance framework is fully operational and can effectively oversee the ISMS ecosystem.
+
 ## 🧠 Conclusion
 
 Maturion is the permanent AI intelligence running the entire Maturion ISMS ecosystem.
