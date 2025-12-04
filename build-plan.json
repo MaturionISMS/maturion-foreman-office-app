@@ -1,0 +1,116 @@
+{
+  "version": "1.0",
+  "generated": "2025-12-04T06:31:53.071349",
+  "module": "PIT",
+  "build_wave": 0,
+  "metadata": {
+    "completeness": 15.4,
+    "status": "NOT_READY",
+    "dependencies": [
+      "WRAC"
+    ],
+    "missing_components_count": 0
+  },
+  "readiness": {
+    "ready_for_build": false,
+    "blockers": [
+      "Module status is NOT_READY, not READY",
+      "Module completeness is only 15.4%"
+    ],
+    "warnings": [],
+    "prerequisites": []
+  },
+  "missing_components": [],
+  "build_phases": [
+    {
+      "phase": 1,
+      "name": "Schema Foundation",
+      "description": "Database schema, models, and migrations",
+      "builder": "schema-builder",
+      "dependencies": [],
+      "deliverables": [
+        "Database schema implementation",
+        "Schema migrations",
+        "Model definitions",
+        "Schema validation tests"
+      ]
+    },
+    {
+      "phase": 2,
+      "name": "API Implementation",
+      "description": "Backend API routes, edge functions, business logic",
+      "builder": "api-builder",
+      "dependencies": [
+        "Phase 1: Schema Foundation"
+      ],
+      "deliverables": [
+        "API routes and handlers",
+        "Edge functions",
+        "Business logic implementation",
+        "API tests"
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "Integration Layer",
+      "description": "Inter-module integrations and event handling",
+      "builder": "integration-builder",
+      "dependencies": [
+        "Phase 2: API Implementation"
+      ],
+      "deliverables": [
+        "Module integration logic",
+        "Event handlers",
+        "Integration tests",
+        "Integration documentation"
+      ]
+    },
+    {
+      "phase": 4,
+      "name": "UI Components",
+      "description": "Frontend components, layouts, and user interface",
+      "builder": "ui-builder",
+      "dependencies": [
+        "Phase 2: API Implementation"
+      ],
+      "deliverables": [
+        "UI components",
+        "Page layouts",
+        "Component tests",
+        "UI documentation"
+      ]
+    },
+    {
+      "phase": 5,
+      "name": "QA & Validation",
+      "description": "End-to-end testing, QA-of-QA, compliance validation",
+      "builder": "qa-builder",
+      "dependencies": [
+        "Phase 3: Integration Layer",
+        "Phase 4: UI Components"
+      ],
+      "deliverables": [
+        "End-to-end tests",
+        "Integration test suite",
+        "QA-of-QA report",
+        "Compliance validation report",
+        "Test coverage report"
+      ]
+    }
+  ],
+  "builders_required": [
+    "schema-builder",
+    "api-builder",
+    "integration-builder",
+    "ui-builder",
+    "qa-builder"
+  ],
+  "estimated_tasks": 15,
+  "warnings": [],
+  "notes": [
+    "This is Build Wave 0 - a dry-run to validate orchestration",
+    "Actual module construction requires architecture completion",
+    "All builders must respect governance boundaries",
+    "QA-of-QA gates must pass before proceeding to next phase"
+  ]
+}
