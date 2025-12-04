@@ -1,0 +1,70 @@
+{
+  "timestamp": "2025-12-04T14:50:27.310063",
+  "repository_validation": {
+    "success": true,
+    "output_length": 16270,
+    "has_errors": false,
+    "has_warnings": true,
+    "error_count": "0",
+    "warning_count": "78"
+  },
+  "builder_registry": {
+    "success": true,
+    "output_length": 1869,
+    "all_tests_passed": true,
+    "tests_passed": "16",
+    "tests_failed": "0"
+  },
+  "compliance_engine": {
+    "success": true,
+    "output_length": 1301,
+    "standards_validated": false,
+    "report_generated": true
+  },
+  "architecture_index": {
+    "success": true,
+    "output_length": 11780,
+    "index_generated": true,
+    "report_generated": true,
+    "total_modules": 12,
+    "total_files": 0
+  },
+  "governance_analysis": {
+    "timestamp": "2025-12-04T14:50:27.661660",
+    "systems_operational": [
+      "Repository Validation",
+      "Builder Registry",
+      "Compliance Engine",
+      "Architecture Indexing"
+    ],
+    "systems_degraded": [],
+    "critical_issues": [],
+    "warnings": [
+      "High number of architecture warnings: 78"
+    ],
+    "recommendations": [
+      "Review and address missing architecture components"
+    ],
+    "overall_health": "100.0%",
+    "operational_systems": 4,
+    "total_systems": 4
+  },
+  "proposed_actions": [
+    {
+      "priority": "MEDIUM",
+      "category": "Architecture Completeness",
+      "issue": "High number of architecture warnings: 78",
+      "action": "Complete missing architecture specifications",
+      "impact": "MEDIUM - Incomplete architecture documentation",
+      "effort": "HIGH"
+    },
+    {
+      "priority": "LOW",
+      "category": "Optimization",
+      "issue": "Continuous improvement opportunity",
+      "action": "Review and address missing architecture components",
+      "impact": "LOW - Incremental improvement",
+      "effort": "VARIABLE"
+    }
+  ]
+}
