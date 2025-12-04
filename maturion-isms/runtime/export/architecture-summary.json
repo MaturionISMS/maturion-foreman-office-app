@@ -1,0 +1,47 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "export_date": "2025-12-04T05:21:23.488516",
+    "architecture_version": "1.0.0",
+    "export_source": "export-runtime-context.py"
+  },
+  "modules": [],
+  "integration_contracts": [],
+  "architecture_principles": [
+    "One-Time Build Correctness",
+    "Zero Regression",
+    "Strict Module Boundaries",
+    "Tenant Isolation",
+    "Compliance by Design",
+    "Test-Driven Development",
+    "API-First Design",
+    "Schema-Driven Development"
+  ],
+  "module_boundaries": {
+    "strict_separation": true,
+    "allowed_cross_module_access": []
+  },
+  "technology_stack": {
+    "frontend": [
+      "React",
+      "TypeScript",
+      "Shadcn UI",
+      "Tailwind CSS"
+    ],
+    "backend": [
+      "Supabase",
+      "Edge Functions",
+      "PostgreSQL"
+    ],
+    "database": [
+      "PostgreSQL",
+      "Supabase"
+    ],
+    "ai_models": [
+      "OpenAI GPT-4",
+      "Claude",
+      "DALL-E"
+    ]
+  },
+  "known_issues": []
+}

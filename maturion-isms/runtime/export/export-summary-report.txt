@@ -1,0 +1,15 @@
+================================================================================
+RUNTIME CONTEXT EXPORT SUMMARY
+================================================================================
+
+Export Timestamp: 2025-12-04T05:21:23.488516
+
+EXPORTS GENERATED:
+
+✅ Architecture Summary: /home/runner/work/maturion-ai-foreman/maturion-ai-foreman/maturion-isms/runtime/export/architecture-summary.json
+✅ Compliance Summary: /home/runner/work/maturion-ai-foreman/maturion-ai-foreman/maturion-isms/runtime/export/compliance-summary.json
+✅ Runtime Profile: /home/runner/work/maturion-ai-foreman/maturion-ai-foreman/maturion-isms/runtime/export/runtime-profile.json
+
+================================================================================
+EXPORT COMPLETE
+================================================================================

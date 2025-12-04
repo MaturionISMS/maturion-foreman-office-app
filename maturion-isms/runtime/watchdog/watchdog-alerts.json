@@ -1,0 +1,333 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Watchdog Alerts",
+  "description": "Real-time alerts from compliance watchdog, security monitors, and platform health checks",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Schema version"
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When alerts were exported"
+        },
+        "alert_retention_days": {
+          "type": "integer",
+          "description": "Number of days alerts are retained"
+        }
+      },
+      "required": ["version", "generated_at"]
+    },
+    "alerts": {
+      "type": "array",
+      "description": "List of watchdog alerts",
+      "items": {
+        "type": "object",
+        "properties": {
+          "alert_id": {
+            "type": "string",
+            "description": "Unique alert identifier"
+          },
+          "alert_type": {
+            "type": "string",
+            "enum": [
+              "compliance_drift",
+              "architecture_drift",
+              "performance_degradation",
+              "security_anomaly",
+              "privacy_violation",
+              "qa_failure",
+              "integration_failure",
+              "availability",
+              "data_integrity"
+            ],
+            "description": "Type of alert"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"],
+            "description": "Alert severity"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["new", "acknowledged", "investigating", "resolved", "false_positive", "suppressed"],
+            "description": "Current status of alert"
+          },
+          "triggered_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When alert was triggered"
+          },
+          "acknowledged_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When alert was acknowledged"
+          },
+          "resolved_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When alert was resolved"
+          },
+          "watchdog_source": {
+            "type": "string",
+            "enum": [
+              "compliance_watchdog",
+              "security_monitor",
+              "performance_monitor",
+              "architecture_validator",
+              "privacy_guardian",
+              "qa_monitor"
+            ],
+            "description": "Which watchdog generated the alert"
+          },
+          "module": {
+            "type": "string",
+            "description": "Module affected by alert (if applicable)"
+          },
+          "component": {
+            "type": "string",
+            "description": "Specific component (API, UI, DB, etc.)"
+          },
+          "organisation_id": {
+            "type": "string",
+            "description": "Organisation affected (null for platform-wide, anonymized for aggregation)"
+          },
+          "alert_title": {
+            "type": "string",
+            "description": "Brief title of alert"
+          },
+          "alert_description": {
+            "type": "string",
+            "description": "Detailed description of alert"
+          },
+          "trigger_condition": {
+            "type": "object",
+            "properties": {
+              "metric": {
+                "type": "string",
+                "description": "Metric that triggered alert"
+              },
+              "threshold": {
+                "type": "number",
+                "description": "Alert threshold"
+              },
+              "current_value": {
+                "type": "number",
+                "description": "Current value that exceeded threshold"
+              },
+              "operator": {
+                "type": "string",
+                "enum": [">", "<", ">=", "<=", "==", "!="],
+                "description": "Comparison operator"
+              }
+            },
+            "required": ["metric", "threshold", "current_value", "operator"]
+          },
+          "impact": {
+            "type": "object",
+            "properties": {
+              "users_affected": {
+                "type": "integer",
+                "description": "Estimated number of users affected"
+              },
+              "organisations_affected": {
+                "type": "integer",
+                "description": "Number of organisations affected"
+              },
+              "compliance_impact": {
+                "type": "boolean",
+                "description": "Whether compliance is impacted"
+              },
+              "availability_impact": {
+                "type": "boolean",
+                "description": "Whether system availability is impacted"
+              },
+              "data_loss_risk": {
+                "type": "boolean",
+                "description": "Whether there is risk of data loss"
+              }
+            }
+          },
+          "recommended_action": {
+            "type": "string",
+            "description": "Recommended action to resolve alert"
+          },
+          "auto_remediation": {
+            "type": "object",
+            "properties": {
+              "attempted": {
+                "type": "boolean",
+                "description": "Whether auto-remediation was attempted"
+              },
+              "successful": {
+                "type": "boolean",
+                "description": "Whether auto-remediation was successful"
+              },
+              "action_taken": {
+                "type": "string",
+                "description": "What auto-remediation action was taken"
+              }
+            },
+            "required": ["attempted"]
+          },
+          "escalation": {
+            "type": "object",
+            "properties": {
+              "escalated": {
+                "type": "boolean",
+                "description": "Whether alert was escalated to human"
+              },
+              "escalated_to": {
+                "type": "string",
+                "description": "Who alert was escalated to"
+              },
+              "escalation_reason": {
+                "type": "string",
+                "description": "Reason for escalation"
+              }
+            },
+            "required": ["escalated"]
+          },
+          "related_alerts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "IDs of related alerts (potential incident)"
+          },
+          "compliance_mapping": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Compliance controls related to alert"
+          },
+          "evidence": {
+            "type": "object",
+            "description": "Supporting evidence for alert (logs, metrics, etc.)",
+            "properties": {
+              "log_entries": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Relevant log entries (sanitized, no PII)"
+              },
+              "metrics_snapshot": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Metrics at time of alert"
+              },
+              "screenshot_available": {
+                "type": "boolean",
+                "description": "Whether screenshot is available (for UI issues)"
+              }
+            }
+          },
+          "resolution_notes": {
+            "type": "string",
+            "description": "Notes on how alert was resolved"
+          },
+          "false_positive": {
+            "type": "boolean",
+            "description": "Whether alert was determined to be false positive"
+          },
+          "false_positive_reason": {
+            "type": "string",
+            "description": "Reason if alert was false positive"
+          },
+          "suppressed": {
+            "type": "boolean",
+            "description": "Whether alert has been suppressed (e.g., during maintenance)"
+          },
+          "suppression_reason": {
+            "type": "string",
+            "description": "Reason for suppression"
+          },
+          "suppression_until": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When suppression expires"
+          }
+        },
+        "required": [
+          "alert_id",
+          "alert_type",
+          "severity",
+          "status",
+          "triggered_at",
+          "watchdog_source",
+          "alert_title",
+          "alert_description",
+          "recommended_action",
+          "escalation"
+        ]
+      }
+    },
+    "summary": {
+      "type": "object",
+      "description": "Summary of watchdog alerts",
+      "properties": {
+        "total_alerts": {
+          "type": "integer"
+        },
+        "active_alerts": {
+          "type": "integer",
+          "description": "Alerts not yet resolved"
+        },
+        "by_severity": {
+          "type": "object",
+          "properties": {
+            "critical": {
+              "type": "integer"
+            },
+            "high": {
+              "type": "integer"
+            },
+            "medium": {
+              "type": "integer"
+            },
+            "low": {
+              "type": "integer"
+            }
+          }
+        },
+        "by_type": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "by_status": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "escalated_count": {
+          "type": "integer",
+          "description": "Number of alerts escalated to human"
+        },
+        "auto_remediated_count": {
+          "type": "integer",
+          "description": "Number of alerts auto-remediated successfully"
+        },
+        "false_positive_count": {
+          "type": "integer",
+          "description": "Number of false positive alerts"
+        },
+        "mean_time_to_resolution_minutes": {
+          "type": "number",
+          "description": "Average time to resolve alerts"
+        }
+      },
+      "required": ["total_alerts", "active_alerts"]
+    }
+  },
+  "required": ["metadata", "alerts", "summary"]
+}

@@ -1,0 +1,252 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maturion Risk Actions",
+  "description": "Action plan for managing and mitigating Maturion platform risks",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Schema version"
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When risk actions were last updated"
+        }
+      },
+      "required": ["version", "last_updated"]
+    },
+    "actions": {
+      "type": "array",
+      "description": "List of risk mitigation actions",
+      "items": {
+        "type": "object",
+        "properties": {
+          "action_id": {
+            "type": "string",
+            "description": "Unique action identifier"
+          },
+          "risk_id": {
+            "type": "string",
+            "description": "Associated risk ID from risk register"
+          },
+          "action_type": {
+            "type": "string",
+            "enum": [
+              "control_implementation",
+              "control_enhancement",
+              "monitoring_improvement",
+              "process_change",
+              "training",
+              "escalation",
+              "investigation"
+            ],
+            "description": "Type of action"
+          },
+          "action_title": {
+            "type": "string",
+            "description": "Brief title of action"
+          },
+          "action_description": {
+            "type": "string",
+            "description": "Detailed description of action"
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"],
+            "description": "Priority of action"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["planned", "in_progress", "blocked", "completed", "cancelled"],
+            "description": "Current status of action"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Person/agent responsible for action (e.g., Foreman, Johan, Builder)"
+          },
+          "due_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When action should be completed"
+          },
+          "created_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When action was created"
+          },
+          "completed_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When action was completed (null if not completed)"
+          },
+          "expected_impact": {
+            "type": "string",
+            "description": "Expected impact on residual risk if action completed"
+          },
+          "estimated_effort": {
+            "type": "string",
+            "description": "Estimated effort (e.g., hours, days)"
+          },
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Other action IDs this action depends on"
+          },
+          "blockers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "blocker_description": {
+                  "type": "string"
+                },
+                "blocker_owner": {
+                  "type": "string"
+                },
+                "blocker_status": {
+                  "type": "string",
+                  "enum": ["open", "resolved"]
+                }
+              },
+              "required": ["blocker_description", "blocker_status"]
+            },
+            "description": "Issues blocking this action"
+          },
+          "progress_notes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "progress_percentage": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": ["timestamp", "note"]
+            },
+            "description": "Progress updates on action"
+          },
+          "verification": {
+            "type": "object",
+            "properties": {
+              "verification_required": {
+                "type": "boolean",
+                "description": "Whether action completion requires verification"
+              },
+              "verification_method": {
+                "type": "string",
+                "description": "How action completion will be verified"
+              },
+              "verified": {
+                "type": "boolean",
+                "description": "Whether action has been verified as effective"
+              },
+              "verified_by": {
+                "type": "string",
+                "description": "Who verified the action"
+              },
+              "verified_date": {
+                "type": "string",
+                "format": "date-time",
+                "description": "When verification was completed"
+              }
+            },
+            "required": ["verification_required"]
+          },
+          "cr_id": {
+            "type": "string",
+            "description": "Change Request ID if action requires CR"
+          }
+        },
+        "required": [
+          "action_id",
+          "risk_id",
+          "action_type",
+          "action_title",
+          "action_description",
+          "priority",
+          "status",
+          "owner",
+          "due_date",
+          "created_date"
+        ]
+      }
+    },
+    "summary": {
+      "type": "object",
+      "description": "Summary of risk actions",
+      "properties": {
+        "total_actions": {
+          "type": "integer"
+        },
+        "by_status": {
+          "type": "object",
+          "properties": {
+            "planned": {
+              "type": "integer"
+            },
+            "in_progress": {
+              "type": "integer"
+            },
+            "blocked": {
+              "type": "integer"
+            },
+            "completed": {
+              "type": "integer"
+            },
+            "cancelled": {
+              "type": "integer"
+            }
+          }
+        },
+        "by_priority": {
+          "type": "object",
+          "properties": {
+            "critical": {
+              "type": "integer"
+            },
+            "high": {
+              "type": "integer"
+            },
+            "medium": {
+              "type": "integer"
+            },
+            "low": {
+              "type": "integer"
+            }
+          }
+        },
+        "overdue_actions": {
+          "type": "integer",
+          "description": "Number of actions past due date"
+        },
+        "blocked_actions": {
+          "type": "integer",
+          "description": "Number of actions currently blocked"
+        },
+        "completion_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Percentage of completed actions"
+        }
+      },
+      "required": ["total_actions"]
+    }
+  },
+  "required": ["metadata", "actions", "summary"]
+}

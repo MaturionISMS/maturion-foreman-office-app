@@ -1,0 +1,189 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "export_date": "2025-12-04T05:21:23.488516",
+    "compliance_version": "1.0",
+    "export_source": "export-runtime-context.py"
+  },
+  "supported_standards": [
+    {
+      "standard_id": "ISO_27001",
+      "standard_name": "ISO/IEC 27001:2022 - Information Security Management",
+      "version": "2022",
+      "category": "information_security",
+      "total_controls": 0,
+      "mapped_controls": 0,
+      "coverage_percentage": 0.0
+    },
+    {
+      "standard_id": "ISO_27005",
+      "standard_name": "ISO/IEC 27005:2022 - Information Security Risk Management",
+      "version": "2022",
+      "category": "risk_management",
+      "total_controls": 0,
+      "mapped_controls": 0,
+      "coverage_percentage": 0.0
+    },
+    {
+      "standard_id": "ISO_31000",
+      "standard_name": "ISO 31000:2018 - Risk Management Guidelines",
+      "version": "2018",
+      "category": "risk_management",
+      "total_controls": 0,
+      "mapped_controls": 0,
+      "coverage_percentage": 0.0
+    },
+    {
+      "standard_id": "ISO_22301",
+      "standard_name": "ISO 22301:2019 - Business Continuity Management",
+      "version": "2019",
+      "category": "business_continuity",
+      "total_controls": 0,
+      "mapped_controls": 0,
+      "coverage_percentage": 0.0
+    },
+    {
+      "standard_id": "NIST_CSF",
+      "standard_name": "NIST Cybersecurity Framework",
+      "version": "latest",
+      "category": "information_security",
+      "total_controls": 0,
+      "mapped_controls": 0,
+      "coverage_percentage": 0.0
+    },
+    {
+      "standard_id": "NIST_800_53",
+      "standard_name": "NIST SP 800-53 - Security and Privacy Controls",
+      "version": "latest",
+      "category": "information_security",
+      "total_controls": 0,
+      "mapped_controls": 0,
+      "coverage_percentage": 0.0
+    },
+    {
+      "standard_id": "COBIT",
+      "standard_name": "COBIT 2019 - Control Objectives for Information Technologies",
+      "version": "2019",
+      "category": "governance",
+      "total_controls": 0,
+      "mapped_controls": 0,
+      "coverage_percentage": 0.0
+    },
+    {
+      "standard_id": "GDPR",
+      "standard_name": "General Data Protection Regulation",
+      "version": "latest",
+      "category": "data_privacy",
+      "total_controls": 0,
+      "mapped_controls": 0,
+      "coverage_percentage": 0.0
+    },
+    {
+      "standard_id": "POPIA",
+      "standard_name": "Protection of Personal Information Act",
+      "version": "latest",
+      "category": "data_privacy",
+      "total_controls": 0,
+      "mapped_controls": 0,
+      "coverage_percentage": 0.0
+    },
+    {
+      "standard_id": "OWASP_ASVS",
+      "standard_name": "OWASP Application Security Verification Standard",
+      "version": "latest",
+      "category": "application_security",
+      "total_controls": 0,
+      "mapped_controls": 0,
+      "coverage_percentage": 0.0
+    },
+    {
+      "standard_id": "OWASP_TOP_10",
+      "standard_name": "OWASP Top 10 Web Application Security Risks",
+      "version": "latest",
+      "category": "application_security",
+      "total_controls": 0,
+      "mapped_controls": 0,
+      "coverage_percentage": 0.0
+    }
+  ],
+  "control_mappings": [],
+  "compliance_coverage_by_module": [
+    {
+      "module_id": "COURSE_CRAFTER",
+      "module_name": "Course Crafter",
+      "standards_supported": [],
+      "total_controls_implemented": 0
+    },
+    {
+      "module_id": "ERM",
+      "module_name": "Erm",
+      "standards_supported": [],
+      "total_controls_implemented": 0
+    },
+    {
+      "module_id": "PIT",
+      "module_name": "Pit",
+      "standards_supported": [],
+      "total_controls_implemented": 0
+    },
+    {
+      "module_id": "THREAT",
+      "module_name": "Threat",
+      "standards_supported": [],
+      "total_controls_implemented": 0
+    },
+    {
+      "module_id": "VULNERABILITY",
+      "module_name": "Vulnerability",
+      "standards_supported": [],
+      "total_controls_implemented": 0
+    },
+    {
+      "module_id": "RISK_ASSESSMENT",
+      "module_name": "Risk Assessment",
+      "standards_supported": [],
+      "total_controls_implemented": 0
+    },
+    {
+      "module_id": "WRAC",
+      "module_name": "Wrac",
+      "standards_supported": [],
+      "total_controls_implemented": 0
+    },
+    {
+      "module_id": "RISK_THREAT",
+      "module_name": "Risk Threat",
+      "standards_supported": [],
+      "total_controls_implemented": 0
+    },
+    {
+      "module_id": "RISK_VULNERABILITY",
+      "module_name": "Risk Vulnerability",
+      "standards_supported": [],
+      "total_controls_implemented": 0
+    }
+  ],
+  "compliance_gaps": [],
+  "watchdog_rules": [
+    {
+      "rule_id": "WD-001",
+      "standard": "ISO_27001",
+      "rule_description": "Monitor compliance control coverage",
+      "monitoring_frequency": "daily",
+      "alert_threshold": "coverage < 85%",
+      "remediation_action": "Alert admin to review missing controls"
+    }
+  ],
+  "audit_requirements": {
+    "evidence_retention_days": 2555,
+    "audit_trail_enabled": true,
+    "required_documentation": [
+      "Compliance control library",
+      "Control implementation evidence",
+      "QA test results",
+      "Architecture documentation",
+      "Change management logs"
+    ],
+    "certification_status": {}
+  }
+}

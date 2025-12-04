@@ -1,0 +1,260 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maturion Self-Risk Register",
+  "description": "Risk register for risks related to Maturion AI platform itself (not tenant risks)",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Schema version"
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When risk register was last updated"
+        },
+        "risk_framework": {
+          "type": "string",
+          "description": "Risk management framework used (e.g., ISO 31000)"
+        }
+      },
+      "required": ["version", "last_updated"]
+    },
+    "risks": {
+      "type": "array",
+      "description": "List of Maturion platform risks",
+      "items": {
+        "type": "object",
+        "properties": {
+          "risk_id": {
+            "type": "string",
+            "description": "Unique risk identifier"
+          },
+          "risk_category": {
+            "type": "string",
+            "enum": [
+              "ai_hallucination",
+              "privacy_breach",
+              "tenant_isolation_failure",
+              "compliance_drift",
+              "architecture_drift",
+              "performance_degradation",
+              "security_vulnerability",
+              "data_loss",
+              "availability",
+              "governance_failure"
+            ],
+            "description": "Category of risk"
+          },
+          "risk_title": {
+            "type": "string",
+            "description": "Brief title of the risk"
+          },
+          "risk_description": {
+            "type": "string",
+            "description": "Detailed description of the risk"
+          },
+          "threat_source": {
+            "type": "string",
+            "description": "Source of threat (e.g., AI model limitations, human error, cyber attack)"
+          },
+          "vulnerability": {
+            "type": "string",
+            "description": "Vulnerability being exploited"
+          },
+          "impact_description": {
+            "type": "string",
+            "description": "Description of potential impact if risk materializes"
+          },
+          "impact_areas": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "confidentiality",
+                "integrity",
+                "availability",
+                "compliance",
+                "reputation",
+                "financial",
+                "legal"
+              ]
+            },
+            "description": "Areas of impact (CIA triad + compliance, reputation, etc.)"
+          },
+          "likelihood": {
+            "type": "string",
+            "enum": ["rare", "unlikely", "possible", "likely", "almost_certain"],
+            "description": "Likelihood of risk occurring (ISO 31000 aligned)"
+          },
+          "impact": {
+            "type": "string",
+            "enum": ["negligible", "minor", "moderate", "major", "catastrophic"],
+            "description": "Impact severity if risk occurs (ISO 31000 aligned)"
+          },
+          "inherent_risk_level": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"],
+            "description": "Risk level before controls (likelihood × impact)"
+          },
+          "existing_controls": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "control_id": {
+                  "type": "string"
+                },
+                "control_description": {
+                  "type": "string"
+                },
+                "control_type": {
+                  "type": "string",
+                  "enum": ["preventive", "detective", "corrective"]
+                },
+                "control_effectiveness": {
+                  "type": "string",
+                  "enum": ["effective", "partially_effective", "ineffective", "not_tested"]
+                }
+              },
+              "required": ["control_id", "control_description", "control_type", "control_effectiveness"]
+            },
+            "description": "Existing controls mitigating this risk"
+          },
+          "residual_likelihood": {
+            "type": "string",
+            "enum": ["rare", "unlikely", "possible", "likely", "almost_certain"],
+            "description": "Likelihood after controls"
+          },
+          "residual_impact": {
+            "type": "string",
+            "enum": ["negligible", "minor", "moderate", "major", "catastrophic"],
+            "description": "Impact after controls"
+          },
+          "residual_risk_level": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"],
+            "description": "Risk level after controls"
+          },
+          "risk_treatment": {
+            "type": "string",
+            "enum": ["accept", "mitigate", "avoid", "transfer"],
+            "description": "Risk treatment strategy"
+          },
+          "risk_owner": {
+            "type": "string",
+            "description": "Owner responsible for managing this risk (e.g., Foreman, Johan)"
+          },
+          "review_frequency": {
+            "type": "string",
+            "enum": ["weekly", "monthly", "quarterly", "annually", "on_demand"],
+            "description": "How often risk is reviewed"
+          },
+          "last_reviewed": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When risk was last reviewed"
+          },
+          "next_review": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When risk should be reviewed next"
+          },
+          "risk_status": {
+            "type": "string",
+            "enum": ["open", "monitoring", "closed", "accepted"],
+            "description": "Current status of risk"
+          },
+          "compliance_mapping": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Compliance standards/controls related to this risk (e.g., ISO_27001_A.5.37)"
+          }
+        },
+        "required": [
+          "risk_id",
+          "risk_category",
+          "risk_title",
+          "risk_description",
+          "likelihood",
+          "impact",
+          "inherent_risk_level",
+          "residual_risk_level",
+          "risk_treatment",
+          "risk_owner",
+          "risk_status"
+        ]
+      }
+    },
+    "summary": {
+      "type": "object",
+      "description": "Summary of risk register",
+      "properties": {
+        "total_risks": {
+          "type": "integer"
+        },
+        "by_category": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "by_inherent_risk_level": {
+          "type": "object",
+          "properties": {
+            "critical": {
+              "type": "integer"
+            },
+            "high": {
+              "type": "integer"
+            },
+            "medium": {
+              "type": "integer"
+            },
+            "low": {
+              "type": "integer"
+            }
+          }
+        },
+        "by_residual_risk_level": {
+          "type": "object",
+          "properties": {
+            "critical": {
+              "type": "integer"
+            },
+            "high": {
+              "type": "integer"
+            },
+            "medium": {
+              "type": "integer"
+            },
+            "low": {
+              "type": "integer"
+            }
+          }
+        },
+        "by_status": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "risks_requiring_review": {
+          "type": "integer",
+          "description": "Number of risks due for review"
+        },
+        "high_residual_risks": {
+          "type": "integer",
+          "description": "Number of high/critical residual risks requiring attention"
+        }
+      },
+      "required": ["total_risks"]
+    }
+  },
+  "required": ["metadata", "risks", "summary"]
+}
