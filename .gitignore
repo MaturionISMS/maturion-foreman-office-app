@@ -11,6 +11,7 @@ downloads/
 eggs/
 .eggs/
 lib/
+!lib/memory/  # Exception: TypeScript memory client
 lib64/
 parts/
 sdist/
