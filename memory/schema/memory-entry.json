@@ -1,0 +1,204 @@
+{
+  "description": "Unified Memory Fabric Entry Schema - Core structure for all memory entries across Maturion ecosystem",
+  "version": "1.0.0",
+  "schema": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for this memory entry (UUID or semantic ID)",
+      "required": true,
+      "example": "mem-2024-12-05-foreman-governance-001"
+    },
+    "scope": {
+      "type": "string",
+      "description": "Memory scope defining where this entry applies",
+      "required": true,
+      "allowed_values": [
+        "global",
+        "foreman",
+        "isms",
+        "partpulse",
+        "runtime"
+      ],
+      "examples": [
+        "global - applies to entire Maturion platform",
+        "foreman - build-time governance and orchestration",
+        "isms - ISMS module specific",
+        "partpulse - PartPulse module specific",
+        "runtime - runtime agent and monitoring"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable title for this memory entry",
+      "required": true,
+      "max_length": 200,
+      "example": "One-Time Build Correctness Philosophy"
+    },
+    "summary": {
+      "type": "string",
+      "description": "Brief summary of what this memory represents",
+      "required": true,
+      "max_length": 500,
+      "example": "Core principle: all builds must be correct on the first attempt, with zero regression tolerance"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "ISO8601",
+      "description": "Timestamp when this memory entry was created",
+      "required": true,
+      "example": "2024-12-05T14:30:00Z"
+    },
+    "author": {
+      "type": "string",
+      "description": "Who created this memory entry",
+      "required": true,
+      "allowed_values": [
+        "foreman",
+        "runtime",
+        "builder",
+        "human"
+      ],
+      "example": "foreman"
+    },
+    "importance": {
+      "type": "string",
+      "description": "Importance level for prioritization and retrieval",
+      "required": true,
+      "allowed_values": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "example": "critical"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Categorization tags for filtering and searching",
+      "required": true,
+      "common_tags": [
+        "architecture",
+        "qa",
+        "compliance",
+        "incident",
+        "decision",
+        "governance",
+        "privacy",
+        "security",
+        "integration",
+        "builder",
+        "runtime",
+        "philosophy"
+      ],
+      "example": ["architecture", "governance", "philosophy"]
+    },
+    "details": {
+      "type": "object",
+      "description": "Detailed information specific to this memory entry (flexible structure)",
+      "required": false,
+      "properties": {
+        "rationale": {
+          "type": "string",
+          "description": "Why this memory entry exists"
+        },
+        "context": {
+          "type": "string",
+          "description": "Additional context"
+        },
+        "constraints": {
+          "type": "array",
+          "description": "Constraints or rules associated with this memory"
+        },
+        "examples": {
+          "type": "array",
+          "description": "Examples illustrating this memory"
+        },
+        "related_decisions": {
+          "type": "array",
+          "description": "Related architectural or governance decisions"
+        }
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Type of link",
+            "allowed_values": [
+              "architecture_doc",
+              "governance_doc",
+              "issue",
+              "pr",
+              "module",
+              "related_memory"
+            ]
+          },
+          "path": {
+            "type": "string",
+            "description": "Path or URL to the linked resource"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the link relationship"
+          }
+        }
+      },
+      "description": "Links to related documents, issues, or other memory entries",
+      "required": false,
+      "example": [
+        {
+          "type": "governance_doc",
+          "path": "foreman/architecture-governance.md",
+          "description": "Core architecture governance rules"
+        }
+      ]
+    }
+  },
+  "usage_guidelines": {
+    "memory_lifecycle": [
+      "1. Memory entries are created during build, runtime, or governance events",
+      "2. Entries are version-controlled in Git",
+      "3. Entries are immutable once created (updates create new versions)",
+      "4. Critical memories survive across chat resets, model upgrades, repo initialization"
+    ],
+    "retrieval_rules": [
+      "Load relevant memories before ANY reasoning or planning",
+      "Filter by scope, tags, and importance",
+      "Recent + critical memories take precedence",
+      "Cross-reference with current context"
+    ],
+    "privacy_requirements": [
+      "NO tenant-specific data in memory entries",
+      "NO user identifiable information",
+      "Only aggregate, anonymized patterns",
+      "Strict tenant isolation enforced"
+    ]
+  },
+  "integration_points": {
+    "reads_from": [
+      "Foreman governance decisions",
+      "Builder task outcomes",
+      "QA and QA-of-QA results",
+      "Compliance incidents",
+      "Runtime platform events",
+      "Architecture changes",
+      "Innovation proposals"
+    ],
+    "feeds_into": [
+      "Build planning and sequencing",
+      "Architecture evaluation",
+      "QA coverage validation",
+      "Compliance mapping",
+      "Incident response",
+      "Auto-fix decisions",
+      "Runtime monitoring",
+      "Innovation roadmap"
+    ]
+  }
+}

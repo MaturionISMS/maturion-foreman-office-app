@@ -1,0 +1,204 @@
+{
+  "memory_collection": "Build Philosophy - Foundational Principles",
+  "version": "1.0.0",
+  "description": "Core build philosophy memories that govern all Maturion development",
+  "entries": [
+    {
+      "id": "mem-global-build-philosophy-001",
+      "scope": "global",
+      "title": "One-Time Build Correctness Principle",
+      "summary": "Every build must be correct on the first attempt. No iterative debugging, no trial-and-error. Architecture, requirements, and QA must be complete before building begins.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "critical",
+      "tags": ["philosophy", "build", "governance", "architecture"],
+      "details": {
+        "rationale": "Ensures high quality, reduces waste, prevents rework, maintains architectural integrity",
+        "constraints": [
+          "Architecture must be 100% complete before build starts",
+          "All requirements must be unambiguous and validated",
+          "QA coverage must be defined before implementation",
+          "No module may begin build without passing readiness checks"
+        ],
+        "enforcement_mechanisms": [
+          "Pre-build architecture validation",
+          "Requirement completeness checks",
+          "QA-of-QA validation",
+          "Builder task sequencing rules"
+        ]
+      },
+      "links": [
+        {
+          "type": "governance_doc",
+          "path": "foreman/architecture-governance.md",
+          "description": "Architecture governance rules"
+        },
+        {
+          "type": "governance_doc",
+          "path": "foreman/task-distribution-rules.md",
+          "description": "Task sequencing and readiness rules"
+        }
+      ]
+    },
+    {
+      "id": "mem-global-build-philosophy-002",
+      "scope": "global",
+      "title": "Zero Regression Guarantee",
+      "summary": "No change may break existing functionality. All working code, tests, and behavior must remain intact. Extensions are allowed; breakage is forbidden.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "critical",
+      "tags": ["philosophy", "qa", "regression", "testing"],
+      "details": {
+        "rationale": "Protects platform stability, ensures customer trust, maintains production reliability",
+        "constraints": [
+          "All existing tests must continue to pass",
+          "No removal of working features without explicit approval",
+          "All changes must include regression test coverage",
+          "Integration points must remain compatible"
+        ],
+        "enforcement_mechanisms": [
+          "Comprehensive regression test suites",
+          "QA validation before merge",
+          "Integration testing",
+          "Foreman approval required for breaking changes"
+        ]
+      },
+      "links": [
+        {
+          "type": "governance_doc",
+          "path": "foreman/qa-governance.md",
+          "description": "QA governance and testing requirements"
+        },
+        {
+          "type": "governance_doc",
+          "path": "foreman/qa-of-qa.md",
+          "description": "QA-of-QA validation process"
+        }
+      ]
+    },
+    {
+      "id": "mem-global-build-philosophy-003",
+      "scope": "global",
+      "title": "Full Architectural Alignment",
+      "summary": "Every module, component, and integration must align with the master architecture. No deviation, no drift, no exceptions. Architecture is law.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "critical",
+      "tags": ["philosophy", "architecture", "governance", "alignment"],
+      "details": {
+        "rationale": "Ensures system coherence, enables safe evolution, prevents fragmentation, maintains integration integrity",
+        "master_references": [
+          "SRMF Master Build Reference",
+          "Integrated ISMS Architecture",
+          "Module True North documents",
+          "Module boundary specifications"
+        ],
+        "constraints": [
+          "All builds reference specific architecture sections",
+          "Module boundaries must not be violated",
+          "Integration contracts must be honored",
+          "No implementation without architecture approval"
+        ],
+        "enforcement_mechanisms": [
+          "Architecture validation checklist",
+          "Drift detection and reporting",
+          "Module boundary enforcement",
+          "Integration contract validation"
+        ]
+      },
+      "links": [
+        {
+          "type": "architecture_doc",
+          "path": "foreman/minimum-architecture-template.md",
+          "description": "Architecture template and structure"
+        },
+        {
+          "type": "governance_doc",
+          "path": "foreman/architecture-validation-checklist.md",
+          "description": "Architecture validation requirements"
+        }
+      ]
+    },
+    {
+      "id": "mem-global-build-philosophy-004",
+      "scope": "global",
+      "title": "Zero Loss of Context",
+      "summary": "All architectural decisions, rationales, and governance details must be preserved. Never discard, oversimplify, or lose important context. Memory is permanent.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "critical",
+      "tags": ["philosophy", "memory", "governance", "documentation"],
+      "details": {
+        "rationale": "Prevents knowledge loss, enables informed decisions, supports continuity across model upgrades and chat resets",
+        "preservation_requirements": [
+          "All architectural decisions documented with rationale",
+          "All governance changes tracked in change records",
+          "All build outcomes captured in memory",
+          "All compliance incidents recorded"
+        ],
+        "storage_mechanisms": [
+          "Version-controlled memory files",
+          "Change management records",
+          "Build event logs",
+          "Architectural decision records"
+        ]
+      },
+      "links": [
+        {
+          "type": "governance_doc",
+          "path": "foreman/memory-model.md",
+          "description": "Memory model and layers"
+        },
+        {
+          "type": "governance_doc",
+          "path": "foreman/change-management-spec.md",
+          "description": "Change management and tracking"
+        }
+      ]
+    },
+    {
+      "id": "mem-global-build-philosophy-005",
+      "scope": "global",
+      "title": "Zero Ambiguity Principle",
+      "summary": "All governance rules, requirements, and specifications must be explicit and machine-checkable. Vague language that cannot be enforced is forbidden.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "critical",
+      "tags": ["philosophy", "governance", "clarity", "validation"],
+      "details": {
+        "rationale": "Enables automated enforcement, prevents misinterpretation, ensures consistency, supports AI-driven governance",
+        "requirements": [
+          "All rules must be testable",
+          "All requirements must be verifiable",
+          "All acceptance criteria must be measurable",
+          "All validations must be automatable"
+        ],
+        "anti_patterns": [
+          "Subjective quality statements without metrics",
+          "Requirements using 'should' without clear criteria",
+          "Unverifiable acceptance criteria",
+          "Governance rules without enforcement mechanism"
+        ],
+        "enforcement_mechanisms": [
+          "Automated validation scripts",
+          "Self-test framework",
+          "Architecture validation checklist",
+          "QA coverage requirements"
+        ]
+      },
+      "links": [
+        {
+          "type": "governance_doc",
+          "path": "foreman/qa-minimum-coverage-requirements.md",
+          "description": "Explicit QA coverage requirements"
+        },
+        {
+          "type": "architecture_doc",
+          "path": "foreman/architecture-validation-checklist.md",
+          "description": "Machine-checkable architecture validation"
+        }
+      ]
+    }
+  ]
+}

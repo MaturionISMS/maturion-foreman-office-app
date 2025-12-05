@@ -1,0 +1,258 @@
+{
+  "memory_collection": "Architecture - Core Patterns and Constraints",
+  "version": "1.0.0",
+  "description": "Foundational architecture memories defining module structure, boundaries, integration patterns, and constraints",
+  "entries": [
+    {
+      "id": "mem-global-architecture-001",
+      "scope": "global",
+      "title": "Module Boundary Protection",
+      "summary": "Every module has strict boundaries. No module may implement logic, access data, or define schema belonging to another module. Boundaries are enforced at build and runtime.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "critical",
+      "tags": ["architecture", "boundaries", "modules", "isolation"],
+      "details": {
+        "rationale": "Prevents coupling, enables independent evolution, supports clear ownership, facilitates testing and maintenance",
+        "boundary_types": [
+          "Logic boundaries - module-specific business logic",
+          "Data boundaries - module-owned database tables",
+          "UI boundaries - module-specific user interfaces",
+          "API boundaries - module-specific endpoints"
+        ],
+        "violation_examples": [
+          "ISMS module directly querying PartPulse tables",
+          "PartPulse implementing risk assessment logic (ISMS owns this)",
+          "One module modifying another module's schema",
+          "Direct database access across module boundaries"
+        ],
+        "enforcement_mechanisms": [
+          "Architecture validation during build",
+          "Module boundary checklist",
+          "Integration contract validation",
+          "Code review boundary checks"
+        ]
+      },
+      "links": [
+        {
+          "type": "architecture_doc",
+          "path": "foreman/architecture-governance.md",
+          "description": "Module boundary rules"
+        },
+        {
+          "type": "architecture_doc",
+          "path": "ARCHITECTURE_INDEX.json",
+          "description": "Module architecture index"
+        }
+      ]
+    },
+    {
+      "id": "mem-global-architecture-002",
+      "scope": "global",
+      "title": "Integration Via Declared Contracts",
+      "summary": "All inter-module communication must occur through explicitly declared integration contracts. No implicit coupling. All integrations must be bidirectionally documented.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "critical",
+      "tags": ["architecture", "integration", "contracts", "coupling"],
+      "details": {
+        "rationale": "Ensures predictable behavior, enables safe evolution, supports testing, prevents hidden dependencies",
+        "contract_requirements": [
+          "All integration points declared in architecture",
+          "Data exchange formats explicitly defined",
+          "Error handling protocols specified",
+          "Version compatibility documented"
+        ],
+        "allowed_integration_patterns": [
+          "Edge functions calling other module APIs",
+          "Shared Supabase RLS policies for cross-module queries",
+          "Event-based notifications via platform event bus",
+          "Scheduled sync jobs with explicit contracts"
+        ],
+        "forbidden_patterns": [
+          "Direct database access across modules",
+          "Undocumented API calls",
+          "Implicit data sharing",
+          "Hidden dependencies"
+        ]
+      },
+      "links": [
+        {
+          "type": "builder_spec",
+          "path": "foreman/builder/integration-builder-spec.md",
+          "description": "Integration builder specification"
+        },
+        {
+          "type": "governance_doc",
+          "path": "foreman/architecture-governance.md",
+          "description": "Integration governance rules"
+        }
+      ]
+    },
+    {
+      "id": "mem-global-architecture-003",
+      "scope": "global",
+      "title": "Supabase Multi-Tenant Architecture Pattern",
+      "summary": "All Maturion modules use Supabase with strict tenant isolation via organisation_id. All tables MUST include organisation_id. All RLS policies MUST enforce tenant boundaries.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "critical",
+      "tags": ["architecture", "supabase", "multi-tenant", "privacy", "security"],
+      "details": {
+        "rationale": "Enforces data privacy, prevents data leakage, ensures compliance, supports scalability",
+        "mandatory_pattern": [
+          "All tables must have organisation_id column",
+          "All RLS policies must filter by organisation_id",
+          "All queries must include organisation_id in WHERE clause",
+          "No cross-tenant data access permitted"
+        ],
+        "rls_policy_template": [
+          "CREATE POLICY tenant_isolation ON table_name",
+          "FOR ALL USING (organisation_id = auth.jwt() ->> 'organisation_id')"
+        ],
+        "validation_requirements": [
+          "Schema builder must validate organisation_id presence",
+          "QA must test tenant isolation",
+          "Runtime must monitor for tenant violations",
+          "Compliance must verify privacy boundaries"
+        ]
+      },
+      "links": [
+        {
+          "type": "governance_doc",
+          "path": "foreman/privacy-guardrails.md",
+          "description": "Privacy and tenant isolation rules"
+        },
+        {
+          "type": "builder_spec",
+          "path": "foreman/builder/schema-builder-spec.md",
+          "description": "Schema builder specification"
+        }
+      ]
+    },
+    {
+      "id": "mem-global-architecture-004",
+      "scope": "global",
+      "title": "Module Architecture Completeness Requirements",
+      "summary": "Every module must have complete architecture documentation before build begins. Completeness is machine-checkable via architecture validation checklist.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "critical",
+      "tags": ["architecture", "documentation", "completeness", "validation"],
+      "details": {
+        "mandatory_architecture_files": [
+          "module-architecture.md - Full module architecture",
+          "module-true-north.md - Requirements and scope",
+          "module-integration-map.md - Integration points",
+          "module-schema-spec.md - Database schema",
+          "module-api-spec.md - API endpoints",
+          "module-ui-spec.md - UI components",
+          "module-qa-spec.md - QA requirements"
+        ],
+        "completeness_criteria": [
+          "All requirements clearly stated",
+          "All integration points documented",
+          "All data models defined",
+          "All API contracts specified",
+          "All UI components described",
+          "All QA coverage defined"
+        ],
+        "validation_mechanism": "Architecture validation checklist with machine-checkable items"
+      },
+      "links": [
+        {
+          "type": "architecture_doc",
+          "path": "foreman/minimum-architecture-template.md",
+          "description": "Minimum architecture template"
+        },
+        {
+          "type": "governance_doc",
+          "path": "foreman/architecture-validation-checklist.md",
+          "description": "Architecture validation checklist"
+        }
+      ]
+    },
+    {
+      "id": "mem-global-architecture-005",
+      "scope": "global",
+      "title": "Naming and Folder Structure Standards",
+      "summary": "All modules follow standardized naming conventions and folder structures. Consistency enables automation, reduces confusion, supports tooling.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "high",
+      "tags": ["architecture", "naming", "structure", "standards"],
+      "details": {
+        "naming_conventions": [
+          "Module names: lowercase with hyphens (e.g., risk-assessment)",
+          "Component names: PascalCase (e.g., RiskMatrix)",
+          "File names: kebab-case (e.g., risk-assessment-api.ts)",
+          "Database tables: snake_case (e.g., risk_assessments)",
+          "API endpoints: kebab-case (e.g., /api/risk-assessment)"
+        ],
+        "folder_structure_standard": [
+          "/{module-name}/architecture/ - Architecture docs",
+          "/{module-name}/schema/ - Database schema",
+          "/{module-name}/api/ - API functions",
+          "/{module-name}/ui/ - UI components",
+          "/{module-name}/tests/ - Test files"
+        ],
+        "enforcement": "Validated during architecture review and build preparation"
+      },
+      "links": [
+        {
+          "type": "governance_doc",
+          "path": "foreman/architecture-naming-conventions.md",
+          "description": "Naming conventions"
+        },
+        {
+          "type": "governance_doc",
+          "path": "foreman/architecture-folder-structure.md",
+          "description": "Folder structure standards"
+        }
+      ]
+    },
+    {
+      "id": "mem-global-architecture-006",
+      "scope": "global",
+      "title": "Versioning and Breaking Change Management",
+      "summary": "All architecture, modules, and APIs follow semantic versioning. Breaking changes require major version increment and explicit approval.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "high",
+      "tags": ["architecture", "versioning", "compatibility", "breaking-changes"],
+      "details": {
+        "versioning_scheme": [
+          "v0.x - Draft/experimental",
+          "v1.0 - First production release",
+          "v1.x - Backward-compatible enhancements",
+          "v2.0 - Breaking changes"
+        ],
+        "breaking_change_rules": [
+          "Major version increment required",
+          "Foreman review mandatory",
+          "Human (Johan) approval required",
+          "Migration path must be documented",
+          "Deprecation warnings for removed features"
+        ],
+        "compatibility_requirements": [
+          "Minor versions must be backward compatible",
+          "API contracts must remain stable within major version",
+          "Database migrations must be reversible",
+          "Integration contracts must version independently"
+        ]
+      },
+      "links": [
+        {
+          "type": "governance_doc",
+          "path": "foreman/versioning-rules.md",
+          "description": "Versioning rules"
+        },
+        {
+          "type": "governance_doc",
+          "path": "foreman/change-management-spec.md",
+          "description": "Change management specification"
+        }
+      ]
+    }
+  ]
+}

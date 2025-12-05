@@ -1,0 +1,27 @@
+{
+  "description": "Foreman Governance Events - Records of governance decisions, validations, and enforcement actions",
+  "version": "1.0.0",
+  "last_updated": "2024-12-05T00:00:00Z",
+  "events": [
+    {
+      "id": "example-governance-event-001",
+      "timestamp": "2024-12-05T00:00:00Z",
+      "event_type": "governance_validation",
+      "severity": "info",
+      "description": "Example governance event - Memory Fabric initialization validated",
+      "details": {
+        "action": "Memory subsystem validation",
+        "outcome": "PASS",
+        "validator": "foreman",
+        "context": "Memory Wave 1 implementation"
+      },
+      "tags": ["governance", "validation", "memory"]
+    }
+  ],
+  "usage_notes": [
+    "This file records governance-related events during Foreman operations",
+    "Events include: architecture validations, QA approvals, compliance checks, builder coordination",
+    "New events are appended as they occur during build and governance activities",
+    "Events are version-controlled and provide audit trail of governance actions"
+  ]
+}

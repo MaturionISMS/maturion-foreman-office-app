@@ -1,0 +1,273 @@
+{
+  "memory_collection": "Runtime Agent - Responsibilities and Monitoring",
+  "version": "1.0.0",
+  "description": "Runtime Maturion agent responsibilities, monitoring capabilities, and operational boundaries",
+  "entries": [
+    {
+      "id": "mem-global-runtime-001",
+      "scope": "runtime",
+      "title": "Runtime Platform Monitoring Mandate",
+      "summary": "Runtime Maturion continuously monitors platform health, security, compliance, and performance. All anomalies, threats, and violations are detected and logged.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "critical",
+      "tags": ["runtime", "monitoring", "health", "security"],
+      "details": {
+        "monitoring_domains": [
+          "System health - uptime, errors, performance",
+          "Security - threats, vulnerabilities, intrusions",
+          "Compliance - control adherence, violations",
+          "Privacy - tenant isolation, data access patterns",
+          "Performance - response times, resource usage",
+          "Integration - cross-module communication health"
+        ],
+        "monitoring_mechanisms": [
+          "Real-time log analysis",
+          "Health check endpoints",
+          "Anomaly detection algorithms",
+          "Compliance watchdog",
+          "Security event correlation",
+          "Performance metric collection"
+        ],
+        "alerting_thresholds": [
+          "Critical - immediate escalation (security breaches, tenant violations)",
+          "High - urgent attention (compliance failures, major errors)",
+          "Medium - timely review (performance degradation, warnings)",
+          "Low - routine logging (informational events)"
+        ]
+      },
+      "links": [
+        {
+          "type": "runtime_spec",
+          "path": "foreman/runtime/system-health-checks-spec.md",
+          "description": "System health checks specification"
+        },
+        {
+          "type": "governance_doc",
+          "path": "foreman/runtime-agent-plan.md",
+          "description": "Runtime agent plan"
+        }
+      ]
+    },
+    {
+      "id": "mem-global-runtime-002",
+      "scope": "runtime",
+      "title": "Tenant Isolation Enforcement at Runtime",
+      "summary": "Runtime agent continuously validates tenant isolation. Any cross-tenant data access, even accidental, triggers immediate alert and auto-remediation if possible.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "critical",
+      "tags": ["runtime", "privacy", "tenant-isolation", "security"],
+      "details": {
+        "rationale": "Tenant isolation violations are the highest severity privacy and security incidents",
+        "detection_mechanisms": [
+          "Query pattern analysis for missing organisation_id filters",
+          "Access log analysis for cross-tenant access attempts",
+          "RLS policy validation",
+          "Data flow monitoring"
+        ],
+        "automatic_responses": [
+          "Log all details of violation",
+          "Alert security team immediately",
+          "Attempt to block ongoing violation if detected in real-time",
+          "Generate incident report"
+        ],
+        "violation_types": [
+          "Query without organisation_id filter",
+          "Authenticated user accessing wrong tenant data",
+          "API endpoint serving cross-tenant data",
+          "Report or export containing multi-tenant data"
+        ]
+      },
+      "links": [
+        {
+          "type": "governance_doc",
+          "path": "foreman/privacy-guardrails.md",
+          "description": "Privacy guardrails and tenant isolation"
+        },
+        {
+          "type": "governance_doc",
+          "path": "foreman/memory-model.md",
+          "description": "Memory model with tenant boundaries"
+        }
+      ]
+    },
+    {
+      "id": "mem-global-runtime-003",
+      "scope": "runtime",
+      "title": "Architecture Drift Detection at Runtime",
+      "summary": "Runtime agent detects when deployed code deviates from documented architecture. Drift indicates governance bypass or incomplete architecture updates.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "high",
+      "tags": ["runtime", "architecture", "drift", "governance"],
+      "details": {
+        "drift_indicators": [
+          "Undocumented API endpoints",
+          "Undocumented database tables or columns",
+          "Module boundary violations (cross-module direct access)",
+          "Undocumented integration points",
+          "Missing RLS policies"
+        ],
+        "detection_methods": [
+          "Compare runtime schema with documented schema",
+          "Monitor API calls against API specification",
+          "Analyze data flow patterns vs integration contracts",
+          "Validate deployed code against architecture index"
+        ],
+        "remediation_workflow": [
+          "Generate drift report with specific violations",
+          "Alert Foreman and development team",
+          "Create backlog item to update architecture or fix code",
+          "Track drift until resolved"
+        ]
+      },
+      "links": [
+        {
+          "type": "governance_doc",
+          "path": "foreman/architecture-governance.md",
+          "description": "Architecture governance and drift rules"
+        },
+        {
+          "type": "architecture_doc",
+          "path": "ARCHITECTURE_INDEX.json",
+          "description": "Architecture index for drift comparison"
+        }
+      ]
+    },
+    {
+      "id": "mem-global-runtime-004",
+      "scope": "runtime",
+      "title": "Compliance Watchdog Continuous Validation",
+      "summary": "Runtime agent continuously validates compliance controls are functioning. Failed controls trigger alerts and remediation workflows.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "critical",
+      "tags": ["runtime", "compliance", "watchdog", "controls"],
+      "details": {
+        "watchdog_functions": [
+          "Validate audit logging is active",
+          "Verify access controls are enforced",
+          "Check encryption is functioning",
+          "Monitor data retention compliance",
+          "Validate backup and recovery processes",
+          "Verify incident response readiness"
+        ],
+        "validation_frequency": [
+          "Critical controls - continuous/real-time",
+          "High priority - every 15 minutes",
+          "Medium priority - hourly",
+          "Low priority - daily"
+        ],
+        "failure_responses": [
+          "Log control failure details",
+          "Alert compliance team",
+          "Attempt auto-remediation if safe",
+          "Generate compliance incident report",
+          "Escalate to human if auto-fix fails"
+        ]
+      },
+      "links": [
+        {
+          "type": "compliance_spec",
+          "path": "foreman/compliance/compliance-watchdog-spec.md",
+          "description": "Compliance watchdog specification"
+        },
+        {
+          "type": "compliance_spec",
+          "path": "foreman/compliance/compliance-control-library.json",
+          "description": "Compliance control library"
+        }
+      ]
+    },
+    {
+      "id": "mem-global-runtime-005",
+      "scope": "runtime",
+      "title": "Anonymized Learning from Runtime Patterns",
+      "summary": "Runtime agent learns from aggregate patterns to improve platform. All learning is anonymized, privacy-preserving, and feeds back into governance and architecture.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "medium",
+      "tags": ["runtime", "learning", "privacy", "improvement"],
+      "details": {
+        "rationale": "Safe learning improves platform quality without compromising privacy",
+        "learning_domains": [
+          "Common error patterns and solutions",
+          "Performance optimization opportunities",
+          "User workflow patterns (anonymized)",
+          "Module usage patterns",
+          "Integration pain points"
+        ],
+        "privacy_requirements": [
+          "NO raw tenant data",
+          "NO user identifiers",
+          "NO customer secrets",
+          "ONLY aggregated statistics",
+          "ONLY anonymized patterns"
+        ],
+        "feedback_loops": [
+          "Feed learnings into foreman/ai-memory/",
+          "Update architecture patterns based on successful deployments",
+          "Improve QA coverage based on runtime issues",
+          "Enhance compliance controls based on violations"
+        ]
+      },
+      "links": [
+        {
+          "type": "governance_doc",
+          "path": "foreman/memory-model.md",
+          "description": "Memory model Layer 4 - Global anonymized learning"
+        },
+        {
+          "type": "governance_doc",
+          "path": "foreman/privacy-guardrails.md",
+          "description": "Privacy requirements for learning"
+        }
+      ]
+    },
+    {
+      "id": "mem-global-runtime-006",
+      "scope": "runtime",
+      "title": "Innovation Engine and Admin Intelligence",
+      "summary": "Runtime agent supports admin innovation chat, providing intelligent insights, suggestions, and answering questions about platform behavior and optimization.",
+      "created_at": "2024-12-05T00:00:00Z",
+      "author": "foreman",
+      "importance": "medium",
+      "tags": ["runtime", "innovation", "admin", "intelligence"],
+      "details": {
+        "innovation_capabilities": [
+          "Answer admin questions about platform behavior",
+          "Suggest optimization opportunities",
+          "Analyze usage patterns for improvement ideas",
+          "Recommend feature enhancements based on patterns",
+          "Provide intelligent troubleshooting assistance"
+        ],
+        "admin_chat_boundaries": [
+          "Can provide insights and suggestions",
+          "Can explain platform behavior",
+          "CANNOT make changes without approval",
+          "CANNOT access tenant-specific data",
+          "CANNOT bypass governance or compliance"
+        ],
+        "feedback_integration": [
+          "Admin suggestions feed into innovation backlog",
+          "Vetted ideas feed into architecture proposals",
+          "Common questions improve documentation",
+          "Pain points inform roadmap priorities"
+        ]
+      },
+      "links": [
+        {
+          "type": "platform_spec",
+          "path": "foreman/admin/admin-innovation-chat-spec.md",
+          "description": "Admin innovation chat specification"
+        },
+        {
+          "type": "platform_spec",
+          "path": "foreman/admin/ai-self-improvement-spec.md",
+          "description": "AI self-improvement specification"
+        }
+      ]
+    }
+  ]
+}
