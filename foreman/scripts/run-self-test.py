@@ -509,29 +509,23 @@ class ForemanSelfTest:
         return subsystem
     
     def test_memory_fabric(self) -> Dict:
-        """Test Unified Memory Fabric"""
-        required_files = [
-            "memory/schema/memory-entry.json",
-            "memory/global/seed-build-philosophy-memory.json",
-            "memory/global/seed-governance-memory.json",
-            "memory/global/seed-architecture-memory.json",
-            "memory/global/seed-autonomy-memory.json",
-            "memory/global/seed-runtime-agent-memory.json",
-            "memory/foreman/governance-events.json",
-            "memory/foreman/build-events.json",
-            "memory/platform/runtime-events.json"
-        ]
+        """Test Unified Memory Fabric with integrated memory client"""
+        # Try to import memory client
+        try:
+            sys.path.insert(0, str(self.repo_root / "python_agent"))
+            from memory_client import memory_health_check, load_memory, write_memory
+            memory_client_available = True
+        except ImportError:
+            memory_client_available = False
         
+        # Required seed files
         json_files = [
             "memory/schema/memory-entry.json",
             "memory/global/seed-build-philosophy-memory.json",
             "memory/global/seed-governance-memory.json",
             "memory/global/seed-architecture-memory.json",
             "memory/global/seed-autonomy-memory.json",
-            "memory/global/seed-runtime-agent-memory.json",
-            "memory/foreman/governance-events.json",
-            "memory/foreman/build-events.json",
-            "memory/platform/runtime-events.json"
+            "memory/global/seed-runtime-agent-memory.json"
         ]
         
         subsystem = self.validate_subsystem("Unified Memory Fabric", [], json_files)
@@ -542,10 +536,11 @@ class ForemanSelfTest:
             subsystem["status"] = "FAIL"
             subsystem["details"] = "Memory directory does not exist - critical governance failure"
             subsystem["recommended_actions"].append("Create memory/ directory structure immediately")
+            subsystem["recommended_actions"].append("Run: python3 init-memory-fabric.py")
             return subsystem
         
         # Check subdirectories
-        subdirs = ["schema", "global", "foreman", "platform"]
+        subdirs = ["schema", "global", "foreman", "platform", "runtime"]
         missing_dirs = []
         for subdir in subdirs:
             if not (memory_dir / subdir).exists():
@@ -554,27 +549,80 @@ class ForemanSelfTest:
         if missing_dirs:
             subsystem["recommended_actions"].append(f"Create missing directories: {', '.join(missing_dirs)}")
         
-        # Count total memory entries
-        total_entries = 0
-        for json_file in json_files:
-            json_path = self.repo_root / json_file
-            if json_path.exists():
-                valid, msg, data = self.validate_json_file(json_path)
-                if valid and isinstance(data, dict):
-                    # Count entries in seed files
-                    if "entries" in data:
-                        total_entries += len(data.get("entries", []))
-                    elif "events" in data:
-                        total_entries += len(data.get("events", []))
-        
-        if total_entries > 0:
-            subsystem["details"] += f". Memory contains {total_entries} total entries"
+        # Run memory client tests if available
+        if memory_client_available:
+            # Test 1: Memory Health Check
+            try:
+                health = memory_health_check()
+                subsystem["details"] += f". Health Status: {health['status'].upper()}"
+                subsystem["details"] += f", Total Entries: {health['total_entries']}"
+                
+                if health['status'] == 'error':
+                    subsystem["status"] = "FAIL"
+                    subsystem["recommended_actions"].append("Fix memory fabric errors")
+                elif health['status'] == 'warning':
+                    if subsystem["status"] == "PASS":
+                        subsystem["status"] = "WARN"
+                
+                for issue in health.get('issues', []):
+                    subsystem["recommended_actions"].append(f"Memory Issue: {issue}")
+            except Exception as e:
+                subsystem["status"] = "WARN"
+                subsystem["details"] += f". Health check error: {str(e)}"
+            
+            # Test 2: Memory Load Test
+            try:
+                memories = load_memory(['global', 'foreman'], importance_min='critical')
+                if len(memories) > 0:
+                    subsystem["details"] += f", Critical Memories Loaded: {len(memories)}"
+                else:
+                    subsystem["status"] = "WARN"
+                    subsystem["recommended_actions"].append("No critical memories found - review seed files")
+            except Exception as e:
+                subsystem["status"] = "WARN"
+                subsystem["details"] += f". Load test error: {str(e)}"
+            
+            # Test 3: Memory Write Test
+            try:
+                test_entry = {
+                    'scope': 'foreman',
+                    'title': 'Self-Test Memory Write Validation',
+                    'summary': 'Testing memory write capability during self-test',
+                    'importance': 'low',
+                    'tags': ['test', 'self-test', 'validation']
+                }
+                entry_id = write_memory(test_entry)
+                subsystem["details"] += f", Write Test: PASS (ID: {entry_id[:20]}...)"
+                
+                # Clean up test file
+                test_file = memory_dir / 'foreman' / f'events-{datetime.now(timezone.utc).strftime("%Y-%m-%d")}.json'
+                if test_file.exists():
+                    import tempfile
+                    # Read, remove test entry, and rewrite
+                    with open(test_file, 'r') as f:
+                        data = json.load(f)
+                    data['entries'] = [e for e in data.get('entries', []) if e.get('id') != entry_id]
+                    if len(data['entries']) == 0:
+                        # Remove file if empty
+                        test_file.unlink()
+                    else:
+                        with open(test_file, 'w') as f:
+                            json.dump(data, f, indent=2)
+            except Exception as e:
+                subsystem["status"] = "WARN"
+                subsystem["details"] += f". Write test error: {str(e)}"
+        else:
+            subsystem["status"] = "WARN"
+            subsystem["details"] += ". Memory client not available - install python_agent/memory_client.py"
+            subsystem["recommended_actions"].append("Ensure python_agent/memory_client.py exists")
         
         # Add memory readiness note
         if subsystem["status"] == "PASS":
-            subsystem["details"] += ". Memory Fabric is READY for build operations"
+            subsystem["details"] += ". ✅ Memory Fabric is READY for build operations"
+        elif subsystem["status"] == "WARN":
+            subsystem["details"] += ". ⚠️ Memory has warnings - review before critical builds"
         else:
-            subsystem["details"] += ". ⚠️ BUILDS CANNOT PROCEED - Memory validation FAILED"
+            subsystem["details"] += ". ❌ BUILDS CANNOT PROCEED - Memory validation FAILED"
         
         return subsystem
     
