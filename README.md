@@ -57,6 +57,82 @@ Maturion is designed to outlive development cycles, chat sessions, and deploymen
 
 He is the single source of truth and the permanent intelligence behind the Maturion ecosystem.
 
+## 🧠 Unified Memory Fabric (Permanent AI Knowledge System)
+
+Maturion and Foreman share a **permanent, version-controlled institutional memory** that survives:
+- Chat resets and context window limits
+- Foreman redeployments and upgrades  
+- Model version changes
+- New module creation
+- New repository initialization
+- Platform evolution over time
+
+### Memory is Mandatory
+
+The Memory Fabric is a **mandatory governance subsystem** on the same level as:
+- Architecture governance
+- QA & QA-of-QA
+- Compliance validation
+- Privacy guardrails
+- Versioning rules
+
+**Builds cannot proceed without validated memory.**
+
+### What Memory Contains
+
+Memory stores permanent knowledge about:
+- **Build Philosophy**: One-time build correctness, zero regression, architectural fidelity
+- **Governance Decisions**: Architecture validations, QA approvals, compliance checks
+- **Architectural Patterns**: Module boundaries, integration contracts, design decisions
+- **Autonomy Rules**: Class A1 boundaries, human-in-loop triggers, safety guardrails
+- **Runtime Intelligence**: Platform health patterns, incidents, auto-fixes, performance insights
+- **Build Outcomes**: Task completions, builder coordination, integration validations
+- **Lessons Learned**: Historical issues, proven patterns, common pitfalls
+
+### Memory Usage
+
+Memory is used for:
+- **Build Planning**: Load historical patterns and decisions before sequencing tasks
+- **Architecture Evaluation**: Reference past architectural decisions and constraints
+- **QA and QA-of-QA**: Consult test coverage patterns and regression histories
+- **Compliance Mapping**: Track control validations and incident patterns
+- **Incident Response**: Apply proven remediation patterns from past incidents
+- **Auto-fixes**: Use learned patterns for safe automated corrections
+- **Runtime Monitoring**: Detect anomalies based on historical baselines
+- **Innovation and Roadmap**: Feed user patterns and lessons into improvement proposals
+
+### Memory Structure
+
+```
+memory/
+├── schema/
+│   └── memory-entry.json          # Memory entry schema
+│
+├── global/                         # Platform-wide foundational memories
+│   ├── seed-build-philosophy-memory.json
+│   ├── seed-governance-memory.json
+│   ├── seed-architecture-memory.json
+│   ├── seed-autonomy-memory.json
+│   └── seed-runtime-agent-memory.json
+│
+├── foreman/                        # Build-time governance memories
+│   ├── governance-events.json
+│   └── build-events.json
+│
+└── platform/                       # Runtime platform memories
+    └── runtime-events.json
+```
+
+### Privacy and Safety
+
+Memory follows strict privacy rules:
+- **NO tenant-specific data** 
+- **NO user identifiable information**
+- **ONLY aggregate, anonymized patterns**
+- **Strict tenant isolation enforced**
+
+Memory is version-controlled, auditable, and permanent.
+
 ## 🧱 Architectural Foundations
 
 Maturion enforces alignment with:
@@ -77,6 +153,21 @@ Maturion enforces alignment with:
 
 ```
 maturion-ai-foreman/
+│
+├── memory/                         # 🧠 Unified Memory Fabric (NEW)
+│   ├── schema/
+│   │   └── memory-entry.json
+│   ├── global/
+│   │   ├── seed-build-philosophy-memory.json
+│   │   ├── seed-governance-memory.json
+│   │   ├── seed-architecture-memory.json
+│   │   ├── seed-autonomy-memory.json
+│   │   └── seed-runtime-agent-memory.json
+│   ├── foreman/
+│   │   ├── governance-events.json
+│   │   └── build-events.json
+│   └── platform/
+│       └── runtime-events.json
 │
 ├── foreman/
 │   ├── identity.md

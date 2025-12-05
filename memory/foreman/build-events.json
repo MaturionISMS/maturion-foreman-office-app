@@ -1,0 +1,27 @@
+{
+  "description": "Foreman Build Events - Records of build activities, outcomes, and decisions",
+  "version": "1.0.0",
+  "last_updated": "2024-12-05T00:00:00Z",
+  "events": [
+    {
+      "id": "example-build-event-001",
+      "timestamp": "2024-12-05T00:00:00Z",
+      "event_type": "build_initialization",
+      "severity": "info",
+      "description": "Example build event - Memory Fabric build wave initialized",
+      "details": {
+        "wave": "Memory Wave 1",
+        "action": "Build planning and sequencing",
+        "outcome": "In Progress",
+        "coordinator": "foreman"
+      },
+      "tags": ["build", "initialization", "memory"]
+    }
+  ],
+  "usage_notes": [
+    "This file records build-related events during development",
+    "Events include: build planning, task distribution, builder coordination, build completions",
+    "New events are appended as builds progress",
+    "Events provide historical context for build decisions and outcomes"
+  ]
+}

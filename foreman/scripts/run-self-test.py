@@ -57,7 +57,7 @@ class ForemanSelfTest:
             "overall_status": "PASS",
             "subsystems": [],
             "summary": {
-                "total_subsystems": 12,
+                "total_subsystems": 13,
                 "passed": 0,
                 "warnings": 0,
                 "failed": 0,
@@ -508,6 +508,76 @@ class ForemanSelfTest:
         
         return subsystem
     
+    def test_memory_fabric(self) -> Dict:
+        """Test Unified Memory Fabric"""
+        required_files = [
+            "memory/schema/memory-entry.json",
+            "memory/global/seed-build-philosophy-memory.json",
+            "memory/global/seed-governance-memory.json",
+            "memory/global/seed-architecture-memory.json",
+            "memory/global/seed-autonomy-memory.json",
+            "memory/global/seed-runtime-agent-memory.json",
+            "memory/foreman/governance-events.json",
+            "memory/foreman/build-events.json",
+            "memory/platform/runtime-events.json"
+        ]
+        
+        json_files = [
+            "memory/schema/memory-entry.json",
+            "memory/global/seed-build-philosophy-memory.json",
+            "memory/global/seed-governance-memory.json",
+            "memory/global/seed-architecture-memory.json",
+            "memory/global/seed-autonomy-memory.json",
+            "memory/global/seed-runtime-agent-memory.json",
+            "memory/foreman/governance-events.json",
+            "memory/foreman/build-events.json",
+            "memory/platform/runtime-events.json"
+        ]
+        
+        subsystem = self.validate_subsystem("Unified Memory Fabric", [], json_files)
+        
+        # Additional validation: check memory directory structure
+        memory_dir = self.repo_root / "memory"
+        if not memory_dir.exists():
+            subsystem["status"] = "FAIL"
+            subsystem["details"] = "Memory directory does not exist - critical governance failure"
+            subsystem["recommended_actions"].append("Create memory/ directory structure immediately")
+            return subsystem
+        
+        # Check subdirectories
+        subdirs = ["schema", "global", "foreman", "platform"]
+        missing_dirs = []
+        for subdir in subdirs:
+            if not (memory_dir / subdir).exists():
+                missing_dirs.append(f"memory/{subdir}")
+        
+        if missing_dirs:
+            subsystem["recommended_actions"].append(f"Create missing directories: {', '.join(missing_dirs)}")
+        
+        # Count total memory entries
+        total_entries = 0
+        for json_file in json_files:
+            json_path = self.repo_root / json_file
+            if json_path.exists():
+                valid, msg, data = self.validate_json_file(json_path)
+                if valid and isinstance(data, dict):
+                    # Count entries in seed files
+                    if "entries" in data:
+                        total_entries += len(data.get("entries", []))
+                    elif "events" in data:
+                        total_entries += len(data.get("events", []))
+        
+        if total_entries > 0:
+            subsystem["details"] += f". Memory contains {total_entries} total entries"
+        
+        # Add memory readiness note
+        if subsystem["status"] == "PASS":
+            subsystem["details"] += ". Memory Fabric is READY for build operations"
+        else:
+            subsystem["details"] += ". ⚠️ BUILDS CANNOT PROCEED - Memory validation FAILED"
+        
+        return subsystem
+    
     def run_all_tests(self):
         """Run all subsystem tests"""
         self.log("=" * 80, "INFO")
@@ -532,6 +602,7 @@ class ForemanSelfTest:
         self.results["subsystems"].append(self.test_orchestration_pipeline())
         self.results["subsystems"].append(self.test_platform_standards())
         self.results["subsystems"].append(self.test_innovation_admin())
+        self.results["subsystems"].append(self.test_memory_fabric())
         
         # Determine overall status
         if self.results["summary"]["failed"] > 0:
