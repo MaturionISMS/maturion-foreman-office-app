@@ -1,6 +1,6 @@
 # Architecture Design Checklist
 
-**Version**: 1.0.0  
+**Version**: 1.1.0  
 **Status**: Constitutional Authority  
 **Authority**: Build Philosophy Principle #3 (Full Architectural Alignment)  
 **Last Updated**: 2025-12-15
@@ -93,6 +93,74 @@ If ANY item fails:
 - Could a builder implement this without guessing?
 
 **If ANY item unchecked** → Architecture is incomplete
+
+---
+
+### Section 2A: Domain/Business Logic Architecture
+
+**Purpose**: Ensure domain logic and business rules are explicitly documented
+
+**Note**: If module has no complex domain logic (e.g., simple CRUD), mark this section as N/A with justification.
+
+- [ ] **2A.1** Core domain concepts are defined with clear definitions
+- [ ] **2A.2** Business rules are explicit and unambiguous
+- [ ] **2A.3** Domain invariants (rules that must always hold) are documented
+- [ ] **2A.4** Domain constraints are specified
+- [ ] **2A.5** Deterministic logic is fully documented (scoring, calculations, thresholds, weightings)
+- [ ] **2A.6** Domain logic formulas are specified with inputs and outputs
+- [ ] **2A.7** Domain logic is separated from UI concerns
+- [ ] **2A.8** Domain logic is separated from persistence concerns
+- [ ] **2A.9** Domain validation rules are explicit
+- [ ] **2A.10** Domain model relationships and dependencies are clear
+- [ ] **2A.11** Business process flows are documented
+- [ ] **2A.12** Domain-specific enums, scales, or taxonomies are fully defined
+
+**Validation Questions**:
+- Are core business rules explicit and testable?
+- Can domain logic be implemented without UI or database knowledge?
+- Are all calculations, scores, and thresholds fully specified?
+- Could a domain expert validate the logic from this documentation?
+
+**Examples from Existing Architectures**:
+- Risk Assessment: 8 sub-engines (UE Intake, Likelihood, Impact, ALE, Control Environment, Risk Matrix, Residual Risk, Projected Risk)
+- Threat Module: TTP classification, drift scoring
+- Vulnerability Module: Exploitability scoring, TVRE derivation
+
+**If ANY item unchecked** → Domain logic architecture is incomplete
+
+---
+
+### Section 2B: Decision & Evaluation Pipelines
+
+**Purpose**: Ensure decision-making and evaluation processes are fully specified
+
+**Note**: If module has no decision pipelines (e.g., simple display-only module), mark this section as N/A with justification.
+
+- [ ] **2B.1** Decision pipeline stages are identified and documented
+- [ ] **2B.2** Input requirements for each pipeline stage are specified
+- [ ] **2B.3** Output contracts for each pipeline stage are specified
+- [ ] **2B.4** Data transformations between stages are explicit
+- [ ] **2B.5** Rule ordering and precedence is defined (which rules apply first)
+- [ ] **2B.6** Deterministic steps are distinguished from heuristic steps
+- [ ] **2B.7** Decision criteria and thresholds are explicit
+- [ ] **2B.8** Failure modes for each stage are defined
+- [ ] **2B.9** Fallback behavior is specified for each failure mode
+- [ ] **2B.10** Pipeline state management is defined
+- [ ] **2B.11** Auditability of decisions is ensured (can trace input → decision → output)
+- [ ] **2B.12** Evidence generation at each stage is specified
+
+**Validation Questions**:
+- Can each decision stage be tested independently?
+- Is it clear what happens when a stage fails?
+- Can decisions be audited and explained after the fact?
+- Are all inputs to decision points documented?
+
+**Examples from Existing Architectures**:
+- Risk Assessment: Threat × Vulnerability → UE → Likelihood → Impact → Inherent Risk → Controls → Residual Risk → Projected Risk
+- Threat Module: Threat intake → Classification → TTP mapping → Drift analysis → Risk signal
+- Control Efficacy: Control mapping → Effectiveness scoring → Coverage calculation → Gap analysis
+
+**If ANY item unchecked** → Decision pipeline architecture is incomplete
 
 ---
 
@@ -313,24 +381,71 @@ If ANY item fails:
 
 ---
 
-### Section 11: Change Management and Versioning
+### Section 11: Versioning & Evolution Strategy
 
-**Purpose**: Ensure changes can be tracked and versioned
+**Purpose**: Ensure changes can be tracked, versioned, and evolved safely
 
-- [ ] **11.1** Initial version number is assigned
-- [ ] **11.2** Change record template is created
-- [ ] **11.3** Breaking change policy is understood
-- [ ] **11.4** Backward compatibility requirements are defined
-- [ ] **11.5** Deprecation strategy is defined (if applicable)
-- [ ] **11.6** Migration path is documented (if replacing existing)
-- [ ] **11.7** Rollback procedure is documented
+- [ ] **11.1** Initial version number is assigned (e.g., v1.0.0)
+- [ ] **11.2** Versioning scheme is documented (semantic versioning recommended)
+- [ ] **11.3** Version number interpretation is clear (what triggers major/minor/patch)
+- [ ] **11.4** Change record template is created
+- [ ] **11.5** Breaking change policy is understood and documented
+- [ ] **11.6** Backward compatibility guarantees are explicitly stated
+- [ ] **11.7** Backward compatibility validation approach is defined
+- [ ] **11.8** Deprecation strategy is defined (if applicable)
+- [ ] **11.9** Deprecation timeline and notification process is specified
+- [ ] **11.10** Migration path is documented (if replacing existing functionality)
+- [ ] **11.11** Migration scripts or tools are specified (if needed)
+- [ ] **11.12** Impact analysis for version changes is defined
+- [ ] **11.13** Version compatibility matrix is created (if multi-module)
+- [ ] **11.14** Rollback procedure is documented
+- [ ] **11.15** Version-specific data migration is addressed
+- [ ] **11.16** API/interface version negotiation is defined (if applicable)
 
 **Validation Questions**:
-- Is versioning clear?
-- Are breaking changes managed?
-- Is migration path defined?
+- Is it clear when to increment major, minor, or patch versions?
+- Are backward compatibility guarantees explicit and testable?
+- Is there a safe migration path from previous versions?
+- Can changes be rolled back safely?
+- How are breaking changes communicated and managed?
 
-**If ANY item unchecked** → Change management spec is incomplete
+**If ANY item unchecked** → Versioning strategy is incomplete
+
+---
+
+### Section 12: Evidence & Audit Architecture
+
+**Purpose**: Ensure auditability, traceability, and evidence generation are designed into the system
+
+- [ ] **12.1** Evidence generation requirements are identified
+- [ ] **12.2** Types of evidence to be captured are enumerated
+- [ ] **12.3** Evidence formats and schemas are defined
+- [ ] **12.4** Evidence storage locations are specified
+- [ ] **12.5** Evidence retention policies are defined
+- [ ] **12.6** Evidence access controls are specified
+- [ ] **12.7** Traceability between inputs and outputs is ensured
+- [ ] **12.8** Traceability between decisions and outcomes is ensured
+- [ ] **12.9** Audit trail completeness is validated
+- [ ] **12.10** Audit replay capability is specified (can reconstruct past states)
+- [ ] **12.11** Evidence integrity is protected (tamper detection)
+- [ ] **12.12** Evidence versioning is addressed (evidence changes over time)
+- [ ] **12.13** Provenance tracking is specified (who/what/when/why)
+- [ ] **12.14** Compliance evidence mapping is defined
+- [ ] **12.15** Evidence export and reporting capabilities are specified
+
+**Validation Questions**:
+- Can every decision be traced back to its inputs?
+- Can system state be reconstructed from audit logs?
+- Is evidence sufficient for compliance audits?
+- Are evidence generation points identified in workflows?
+- Can evidence be exported in required formats?
+
+**Examples from Existing Architectures**:
+- PIT: Audit logging for all operations (entity_type, entity_id, action, user_id, organisation_id, timestamp, changes JSON)
+- Risk Assessment: Evidence contracts at each pipeline stage, versioned UE/threat/vulnerability references
+- Control Library: Control implementation evidence, effectiveness evidence, audit trail
+
+**If ANY item unchecked** → Evidence and audit architecture is incomplete
 
 ---
 
@@ -367,6 +482,18 @@ Failed Items: <list if any>
 Status: <PASS | FAIL>
 Items Passed: X/12
 Failed Items: <list if any>
+
+### Section 2A: Domain/Business Logic Architecture
+Status: <PASS | FAIL | N/A>
+Items Passed: X/12
+Failed Items: <list if any>
+Notes: <If N/A, provide justification>
+
+### Section 2B: Decision & Evaluation Pipelines
+Status: <PASS | FAIL | N/A>
+Items Passed: X/12
+Failed Items: <list if any>
+Notes: <If N/A, provide justification>
 
 ### Section 3: Integration Specification
 Status: <PASS | FAIL>
@@ -408,9 +535,14 @@ Status: <PASS | FAIL>
 Items Passed: X/10
 Failed Items: <list if any>
 
-### Section 11: Change Management
+### Section 11: Versioning & Evolution Strategy
 Status: <PASS | FAIL>
-Items Passed: X/7
+Items Passed: X/16
+Failed Items: <list if any>
+
+### Section 12: Evidence & Audit Architecture
+Status: <PASS | FAIL>
+Items Passed: X/15
 Failed Items: <list if any>
 
 ## Final Determination
@@ -458,7 +590,7 @@ Architecture Validation (Enforcement)
 
 ## VI. Version and Authority
 
-**Version**: 1.0.0  
+**Version**: 1.1.0  
 **Status**: Active and Enforced  
 **Authority**: Constitutional Authority (Build Philosophy Implementation)  
 **Precedence**: Mandatory pre-build validation  
@@ -467,6 +599,13 @@ Architecture Validation (Enforcement)
 **Enforcer**: Maturion Foreman
 
 **Changelog**:
+- 1.1.0 (2025-12-15): **Critical Structural Extension**
+  - Added Section 2A: Domain/Business Logic Architecture (12 items)
+  - Added Section 2B: Decision & Evaluation Pipelines (12 items)
+  - Extended Section 11: Versioning & Evolution Strategy (16 items, expanded from 7)
+  - Added Section 12: Evidence & Audit Architecture (15 items)
+  - **Rationale**: Aligns checklist with existing mature architectures (ERM, Risk Assessment, Threat, Vulnerability) that include domain logic, decision pipelines, comprehensive versioning, and evidence generation
+  - **Impact**: Closes structural gaps identified during governance review; prevents architectures from passing validation while omitting critical dimensions
 - 1.0.0 (2025-12-15): Initial Architecture Design Checklist
 
 ---
@@ -475,13 +614,16 @@ Architecture Validation (Enforcement)
 
 Architecture Design Checklist ensures:
 
-1. ✅ **Complete Architecture** - All sections defined
-2. ✅ **Zero Ambiguity** - All requirements clear
-3. ✅ **Full Coverage** - All aspects addressed
+1. ✅ **Complete Architecture** - All sections defined, including domain logic and decision pipelines
+2. ✅ **Zero Ambiguity** - All requirements clear, testable, and enforceable
+3. ✅ **Full Coverage** - All aspects addressed: domain, decisions, versioning, evidence, and audit
 4. ✅ **Build Readiness** - Builders can execute without guessing
+5. ✅ **Governance Alignment** - Aligns with mature architectures across the ISMS ecosystem
 
 **Architecture must be perfect before building begins.**  
 **This checklist ensures it.**
+
+**Total Checklist Items**: ~175+ validation points across 14 sections (including N/A options for 2A, 2B, and Section 6)
 
 ---
 
