@@ -1,0 +1,122 @@
+{
+  "task_id": "<task-id>",
+  "validation_timestamp": "<ISO 8601 timestamp>",
+  "validated_by": "foreman",
+  "validation_results": {
+    "instruction_format_validation": {
+      "status": "pass | fail",
+      "checks": [
+        {
+          "check": "Instruction is exactly 'Build to Green'",
+          "result": "pass | fail",
+          "details": ""
+        },
+        {
+          "check": "Not 'Build feature X' or other format",
+          "result": "pass | fail",
+          "details": ""
+        }
+      ]
+    },
+    "architecture_validation": {
+      "status": "pass | fail",
+      "checks": [
+        {
+          "check": "Architecture document exists",
+          "result": "pass | fail",
+          "path": "<path-to-architecture-doc>"
+        },
+        {
+          "check": "Architecture is accessible",
+          "result": "pass | fail",
+          "details": ""
+        },
+        {
+          "check": "Architecture is complete (no TBD/TODO)",
+          "result": "pass | fail",
+          "tbd_count": 0,
+          "todo_count": 0
+        },
+        {
+          "check": "Architecture defines all components",
+          "result": "pass | fail",
+          "components_count": 0
+        },
+        {
+          "check": "Architecture passes validation checklist",
+          "result": "pass | fail",
+          "checklist_score": "0/11 sections"
+        }
+      ]
+    },
+    "qa_suite_validation": {
+      "status": "pass | fail",
+      "checks": [
+        {
+          "check": "QA suite exists",
+          "result": "pass | fail",
+          "path": "<path-to-qa-suite>"
+        },
+        {
+          "check": "QA suite is accessible",
+          "result": "pass | fail",
+          "details": ""
+        },
+        {
+          "check": "QA suite has been executed",
+          "result": "pass | fail",
+          "details": ""
+        },
+        {
+          "check": "QA status is RED (failing)",
+          "result": "pass | fail",
+          "current_status": "RED | GREEN",
+          "failing_count": 0
+        },
+        {
+          "check": "Test failures are clear and specific",
+          "result": "pass | fail",
+          "details": ""
+        },
+        {
+          "check": "Zero test debt",
+          "result": "pass | fail",
+          "test_debt_count": 0,
+          "test_debt_types": []
+        }
+      ]
+    },
+    "acceptance_criteria_validation": {
+      "status": "pass | fail",
+      "checks": [
+        {
+          "check": "Acceptance criteria is defined",
+          "result": "pass | fail",
+          "criteria": ""
+        },
+        {
+          "check": "Acceptance criteria is measurable",
+          "result": "pass | fail",
+          "details": ""
+        },
+        {
+          "check": "No ambiguity about 'done'",
+          "result": "pass | fail",
+          "details": ""
+        }
+      ]
+    }
+  },
+  "overall_validation_status": "pass | fail",
+  "validation_summary": {
+    "total_checks": 0,
+    "passed_checks": 0,
+    "failed_checks": 0,
+    "pass_rate": "0%"
+  },
+  "decision": "PROCEED | REJECT",
+  "rejection_reason": "<reason if rejected>",
+  "action_required": "<what must be fixed if rejected>",
+  "philosophy_reference": "/BUILD_PHILOSOPHY.md",
+  "timestamp_completed": "<ISO 8601 timestamp>"
+}

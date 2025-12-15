@@ -1,0 +1,47 @@
+{
+  "task_id": "<unique-task-identifier>",
+  "build_type": "build_to_green",
+  "module": "<module-name>",
+  "timestamp_started": "<ISO 8601 timestamp>",
+  "initiated_by": "foreman",
+  "instruction_received": {
+    "format": "Build to Green",
+    "architecture_reference": "<path-to-architecture-doc>",
+    "qa_suite_location": "<path-to-qa-suite>",
+    "qa_current_status": "RED",
+    "failing_tests_count": 0,
+    "acceptance_criteria": "All tests must pass (100% green)"
+  },
+  "builder_assigned": "<ui-builder | api-builder | schema-builder | integration-builder | qa-builder>",
+  "architecture_summary": {
+    "key_components": [
+      "Component A: <description>",
+      "Component B: <description>",
+      "Component C: <description>"
+    ],
+    "scope": "<brief scope description>"
+  },
+  "qa_summary": {
+    "total_tests": 0,
+    "passing_tests": 0,
+    "failing_tests": 0,
+    "test_files": [
+      "<path-to-test-file-1>",
+      "<path-to-test-file-2>"
+    ]
+  },
+  "expected_deliverables": [
+    "All QA tests passing (100%)",
+    "Zero test debt",
+    "Build quality validated",
+    "Evidence trail complete",
+    "Completion report submitted"
+  ],
+  "build_context": {
+    "dependencies": [],
+    "integration_points": [],
+    "special_requirements": []
+  },
+  "evidence_location": "foreman/evidence/builds/<task-id>/",
+  "notes": ""
+}
