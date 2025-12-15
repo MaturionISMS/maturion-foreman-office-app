@@ -77,8 +77,8 @@ protected_paths:
   - foreman/constitution/
   - foreman/builder-specs/build-to-green-rule.md
   - foreman/governance/
+  - foreman/FOREMAN_EXECUTION_PLAYBOOK.md
   - docs/governance/
-  - foreman/architecture-design-checklist.md
 escalation_triggers:
   - Architecture-QA mismatches
   - Constitutional violations

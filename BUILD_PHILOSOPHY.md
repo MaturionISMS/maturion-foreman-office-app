@@ -432,16 +432,17 @@ Build cannot proceed until:
 These paths are **constitutionally protected** and MUST NEVER be modified by builders:
 
 ```
-.github/workflows/                           # CI/CD workflows
-.github/foreman/agent-contract.md            # Foreman constitution
-.github/agents/foreman.agent.md              # Foreman agent definition
-BUILD_PHILOSOPHY.md                          # This document (Build Philosophy)
-foreman/constitution/                        # Constitutional documents
-foreman/architecture-design-checklist.md     # Architecture checklist
-foreman/builder-specs/build-to-green-rule.md # Builder protocol
-foreman/governance/                          # Governance rules
-docs/governance/                             # Governance documentation
-maturion/philosophy-tree.md                  # Platform ontology (if exists)
+.github/workflows/                                  # CI/CD workflows
+.github/foreman/agent-contract.md                   # Foreman constitution
+.github/agents/foreman.agent.md                     # Foreman agent definition
+BUILD_PHILOSOPHY.md                                 # This document (Build Philosophy)
+foreman/constitution/                               # Constitutional documents
+foreman/constitution/architecture-design-checklist.md # Architecture checklist
+foreman/builder-specs/build-to-green-rule.md        # Builder protocol
+foreman/governance/                                 # Governance rules
+foreman/FOREMAN_EXECUTION_PLAYBOOK.md               # Foreman operational guide
+docs/governance/                                    # Governance documentation
+maturion/philosophy-tree.md                         # Platform ontology (if exists)
 ```
 
 **If a task requires modification of ANY protected path:**
