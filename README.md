@@ -26,6 +26,29 @@ Responsible for:
 Maturion does not write production code.
 He governs and orchestrates all builder agents.
 
+### Foreman Execution Readiness
+
+Foreman is fully operationally ready with comprehensive execution documentation:
+
+**Primary Operational Guide**: [`foreman/FOREMAN_EXECUTION_PLAYBOOK.md`](foreman/FOREMAN_EXECUTION_PLAYBOOK.md)
+- Complete end-to-end execution workflow
+- Task classification (Program/Wave/Task)
+- Architecture and QA design workflows
+- Build supervision and evidence evaluation
+- Escalation and decision protocols
+
+**Quick Reference**: [`foreman/FOREMAN_EXECUTION_QUICK_REFERENCE.md`](foreman/FOREMAN_EXECUTION_QUICK_REFERENCE.md)
+- Quick navigation to any scenario
+- Decision trees and workflow summaries
+- Common scenarios and solutions
+
+**Constitutional Documents**:
+- **Architecture Design Checklist**: [`foreman/constitution/architecture-design-checklist.md`](foreman/constitution/architecture-design-checklist.md) - 11 mandatory sections
+- **Design Freeze Rule**: [`foreman/governance/design-freeze-rule.md`](foreman/governance/design-freeze-rule.md) - Architecture/QA frozen during builds
+- **Execution State Model**: [`foreman/governance/foreman-execution-state-model.md`](foreman/governance/foreman-execution-state-model.md) - 8-state tracking model
+
+**For Complete Overview**: See [`foreman/README.md`](foreman/README.md)
+
 ## 🌐 2. Run-Time Platform Agent
 
 After deployment, Maturion becomes the live platform intelligence, responsible for:
