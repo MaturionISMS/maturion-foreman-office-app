@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Maturion Foreman Office - Governance and QA orchestration system",
   "scripts": {
-    "test": "pytest tests/ -v"
+    "test": "pytest tests/ -v -m 'not wave0'",
+    "test:all": "pytest tests/ -v",
+    "test:wave0": "pytest tests/ -v -m wave0"
   },
   "repository": {
     "type": "git",

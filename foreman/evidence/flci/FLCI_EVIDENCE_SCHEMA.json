@@ -1,0 +1,597 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "1.0.0",
+  "description": "Evidence Schema for Field/Live and CI/Test Catastrophic Failures. CRITICAL: All catastrophic failures MUST add at least 1 test for permanent prevention (enforced by tests_added minimum: 1).",
+  "last_updated": "2025-12-16",
+  "authority": "BUILD_PHILOSOPHY.md Section XIII (Failure Learning) + Foreman Agent Contract (One-Time Failure Doctrine)",
+  
+  "definitions": {
+    "iso8601_timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z$",
+      "description": "ISO 8601 timestamp format"
+    },
+    "failure_id": {
+      "type": "string",
+      "pattern": "^FLCI-\\d{8}-\\d{3}$",
+      "description": "Failure ID format: FLCI-YYYYMMDD-NNN"
+    },
+    "severity_level": {
+      "type": "string",
+      "enum": ["catastrophic", "double-catastrophic", "multi-catastrophic"],
+      "description": "Failure severity classification"
+    },
+    "root_cause_bucket": {
+      "type": "string",
+      "enum": [
+        "missing_architecture",
+        "missing_qa_coverage",
+        "misaligned_qa",
+        "implementation_bug",
+        "governance_gap",
+        "integration_issue",
+        "environmental_issue",
+        "unknown"
+      ],
+      "description": "Primary root cause category"
+    },
+    "context_type": {
+      "type": "string",
+      "enum": ["field_live", "ci_test", "development", "staging", "production"],
+      "description": "Where the failure was observed"
+    },
+    "test_type": {
+      "type": "string",
+      "enum": ["unit", "integration", "e2e", "regression", "performance", "security"],
+      "description": "Type of test added"
+    }
+  },
+  
+  "schemas": {
+    "failure-report": {
+      "$id": "https://maturion.io/schemas/evidence/flci/failure-report/v1.0.0",
+      "type": "object",
+      "required": [
+        "failure_id",
+        "reported_date",
+        "severity",
+        "objective_description",
+        "context",
+        "root_cause_analysis",
+        "evidence_metadata"
+      ],
+      "properties": {
+        "failure_id": {
+          "$ref": "#/definitions/failure_id"
+        },
+        "reported_date": {
+          "$ref": "#/definitions/iso8601_timestamp"
+        },
+        "severity": {
+          "type": "object",
+          "required": ["level", "justification"],
+          "properties": {
+            "level": {
+              "$ref": "#/definitions/severity_level"
+            },
+            "justification": {
+              "type": "string",
+              "description": "Why this severity level was assigned",
+              "minLength": 20
+            },
+            "occurrence_count": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "How many times this defect type has occurred"
+            },
+            "previous_occurrence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "References to previous occurrences (for double/multi-catastrophic)"
+            }
+          }
+        },
+        "objective_description": {
+          "type": "object",
+          "required": ["what_failed", "observable_behavior"],
+          "properties": {
+            "what_failed": {
+              "type": "string",
+              "description": "Clear, objective description of the failure",
+              "minLength": 20
+            },
+            "observable_behavior": {
+              "type": "string",
+              "description": "Observable behavior that indicates failure",
+              "minLength": 10
+            },
+            "expected_behavior": {
+              "type": "string",
+              "description": "What should have happened instead"
+            }
+          }
+        },
+        "context": {
+          "type": "object",
+          "required": ["type", "location"],
+          "properties": {
+            "type": {
+              "$ref": "#/definitions/context_type"
+            },
+            "location": {
+              "type": "object",
+              "required": ["description"],
+              "properties": {
+                "description": {
+                  "type": "string",
+                  "description": "Specific screen, API endpoint, or workflow"
+                },
+                "module": {
+                  "type": "string",
+                  "description": "Module where failure occurred"
+                },
+                "component": {
+                  "type": "string",
+                  "description": "Specific component if applicable"
+                },
+                "file_path": {
+                  "type": "string",
+                  "description": "File path where failure originated"
+                },
+                "line_number": {
+                  "type": "integer",
+                  "description": "Line number if applicable"
+                }
+              }
+            },
+            "user_impact": {
+              "type": "string",
+              "description": "Impact on users"
+            },
+            "affected_users": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of users affected (if known)"
+            }
+          }
+        },
+        "root_cause_analysis": {
+          "type": "object",
+          "required": ["primary_bucket", "detailed_analysis", "why_escaped_b2g"],
+          "properties": {
+            "primary_bucket": {
+              "$ref": "#/definitions/root_cause_bucket"
+            },
+            "detailed_analysis": {
+              "type": "string",
+              "description": "Detailed analysis of what went wrong and why",
+              "minLength": 50
+            },
+            "why_escaped_b2g": {
+              "type": "string",
+              "description": "Explanation of how this escaped Build-to-Green",
+              "minLength": 30
+            },
+            "contributing_factors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Additional contributing factors"
+            }
+          }
+        },
+        "discovery_details": {
+          "type": "object",
+          "properties": {
+            "discovered_by": {
+              "type": "string",
+              "description": "Who discovered the failure"
+            },
+            "discovery_timestamp": {
+              "$ref": "#/definitions/iso8601_timestamp"
+            },
+            "discovery_method": {
+              "type": "string",
+              "description": "How was this discovered (user report, automated monitoring, etc.)"
+            }
+          }
+        },
+        "evidence_metadata": {
+          "type": "object",
+          "required": ["schema_version", "immutable", "governance_gate_version"],
+          "properties": {
+            "schema_version": {
+              "type": "string",
+              "const": "1.0.0"
+            },
+            "immutable": {
+              "type": "boolean",
+              "const": true
+            },
+            "governance_gate_version": {
+              "type": "string"
+            },
+            "compliance_mappings": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Compliance controls this evidence supports"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    
+    "prevention-plan": {
+      "$id": "https://maturion.io/schemas/evidence/flci/prevention-plan/v1.0.0",
+      "type": "object",
+      "required": [
+        "failure_id",
+        "immediate_fix",
+        "permanent_prevention",
+        "validation",
+        "evidence_metadata"
+      ],
+      "properties": {
+        "failure_id": {
+          "$ref": "#/definitions/failure_id"
+        },
+        "immediate_fix": {
+          "type": "object",
+          "required": ["applied", "description"],
+          "properties": {
+            "applied": {
+              "type": "boolean",
+              "description": "Whether immediate fix was applied"
+            },
+            "description": {
+              "type": "string",
+              "description": "Description of the immediate fix",
+              "minLength": 20
+            },
+            "fix_timestamp": {
+              "$ref": "#/definitions/iso8601_timestamp"
+            },
+            "fix_pr": {
+              "type": "string",
+              "description": "PR link for the fix"
+            },
+            "validation_method": {
+              "type": "string",
+              "description": "How the fix was validated"
+            }
+          }
+        },
+        "permanent_prevention": {
+          "type": "object",
+          "required": ["test_coverage_updates", "prevention_mechanism"],
+          "properties": {
+            "test_coverage_updates": {
+              "type": "object",
+              "required": ["tests_added"],
+              "properties": {
+                "tests_added": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["type", "file_path", "test_name", "purpose"],
+                    "properties": {
+                      "type": {
+                        "$ref": "#/definitions/test_type"
+                      },
+                      "file_path": {
+                        "type": "string",
+                        "description": "Path to test file"
+                      },
+                      "test_name": {
+                        "type": "string",
+                        "description": "Name of the test"
+                      },
+                      "purpose": {
+                        "type": "string",
+                        "description": "What this test prevents",
+                        "minLength": 20
+                      },
+                      "coverage_gap_filled": {
+                        "type": "string",
+                        "description": "What coverage gap this fills"
+                      }
+                    }
+                  },
+                  "minItems": 1
+                },
+                "coverage_gap_analysis": {
+                  "type": "string",
+                  "description": "Analysis of what test coverage was missing and why",
+                  "minLength": 30
+                }
+              }
+            },
+            "architecture_updates": {
+              "type": "object",
+              "properties": {
+                "required": {
+                  "type": "boolean"
+                },
+                "updates": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["file_path", "description"],
+                    "properties": {
+                      "file_path": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string",
+                        "minLength": 20
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "governance_updates": {
+              "type": "object",
+              "properties": {
+                "required": {
+                  "type": "boolean"
+                },
+                "updates": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["file_path", "description"],
+                    "properties": {
+                      "file_path": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string",
+                        "minLength": 20
+                      },
+                      "policy_change": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "prevention_mechanism": {
+              "type": "string",
+              "description": "Detailed explanation of how this defect will be caught forever",
+              "minLength": 50
+            }
+          }
+        },
+        "validation": {
+          "type": "object",
+          "required": ["prevention_validated", "validated_by", "validation_timestamp"],
+          "properties": {
+            "prevention_validated": {
+              "type": "boolean",
+              "description": "Whether permanent prevention has been validated"
+            },
+            "validated_by": {
+              "type": "string",
+              "description": "Who validated the prevention (Foreman | Human)"
+            },
+            "validation_timestamp": {
+              "$ref": "#/definitions/iso8601_timestamp"
+            },
+            "validation_notes": {
+              "type": "string",
+              "description": "Notes from validation"
+            },
+            "validation_evidence": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Links to validation evidence (test runs, etc.)"
+            }
+          }
+        },
+        "evidence_metadata": {
+          "type": "object",
+          "required": ["schema_version", "immutable", "parent_evidence_id"],
+          "properties": {
+            "schema_version": {
+              "type": "string",
+              "const": "1.0.0"
+            },
+            "immutable": {
+              "type": "boolean",
+              "const": true
+            },
+            "parent_evidence_id": {
+              "type": "string",
+              "description": "Reference to failure-report"
+            },
+            "governance_gate_version": {
+              "type": "string"
+            },
+            "compliance_mappings": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    
+    "test-coverage-delta": {
+      "$id": "https://maturion.io/schemas/evidence/flci/test-coverage-delta/v1.0.0",
+      "type": "object",
+      "required": [
+        "failure_id",
+        "before_coverage",
+        "after_coverage",
+        "coverage_improvement",
+        "evidence_metadata"
+      ],
+      "properties": {
+        "failure_id": {
+          "$ref": "#/definitions/failure_id"
+        },
+        "before_coverage": {
+          "type": "object",
+          "required": ["total_tests", "coverage_percentage", "covered_lines", "total_lines"],
+          "properties": {
+            "total_tests": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "coverage_percentage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "covered_lines": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "total_lines": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "by_test_type": {
+              "type": "object",
+              "properties": {
+                "unit": {"type": "integer", "minimum": 0},
+                "integration": {"type": "integer", "minimum": 0},
+                "e2e": {"type": "integer", "minimum": 0},
+                "regression": {"type": "integer", "minimum": 0}
+              }
+            }
+          }
+        },
+        "after_coverage": {
+          "type": "object",
+          "required": ["total_tests", "coverage_percentage", "covered_lines", "total_lines"],
+          "properties": {
+            "total_tests": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "coverage_percentage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "covered_lines": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "total_lines": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "by_test_type": {
+              "type": "object",
+              "properties": {
+                "unit": {"type": "integer", "minimum": 0},
+                "integration": {"type": "integer", "minimum": 0},
+                "e2e": {"type": "integer", "minimum": 0},
+                "regression": {"type": "integer", "minimum": 0}
+              }
+            }
+          }
+        },
+        "coverage_improvement": {
+          "type": "object",
+          "required": ["tests_added", "lines_added", "percentage_increase"],
+          "properties": {
+            "tests_added": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Number of new tests added"
+            },
+            "lines_added": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Additional lines covered"
+            },
+            "percentage_increase": {
+              "type": "number",
+              "description": "Percentage point increase in coverage"
+            },
+            "gap_filled": {
+              "type": "string",
+              "description": "Description of coverage gap that was filled",
+              "minLength": 20
+            }
+          }
+        },
+        "evidence_metadata": {
+          "type": "object",
+          "required": ["schema_version", "immutable", "parent_evidence_id"],
+          "properties": {
+            "schema_version": {
+              "type": "string",
+              "const": "1.0.0"
+            },
+            "immutable": {
+              "type": "boolean",
+              "const": true
+            },
+            "parent_evidence_id": {
+              "type": "string"
+            },
+            "governance_gate_version": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  
+  "compliance_control_mapping": {
+    "description": "How FL/CI failure evidence maps to compliance controls",
+    "mappings": [
+      {
+        "evidence_type": "failure-report",
+        "controls": [
+          "ISO_27001:A.16.1 - Management of information security incidents",
+          "ISO_27001:A.16.1.4 - Assessment of information security events",
+          "ISO_27001:A.16.1.5 - Response to information security incidents",
+          "NIST_800_53:IR-4 - Incident Handling",
+          "NIST_800_53:IR-6 - Incident Reporting",
+          "COBIT:DSS02 - Manage Service Requests and Incidents"
+        ]
+      },
+      {
+        "evidence_type": "prevention-plan",
+        "controls": [
+          "ISO_27001:A.16.1.6 - Learning from information security incidents",
+          "ISO_27001:A.14.2.8 - System security testing",
+          "NIST_800_53:SA-11 - Developer Testing and Evaluation",
+          "NIST_800_53:IR-4(4) - Incident Handling | Information Correlation",
+          "COBIT:APO11 - Manage Quality",
+          "COBIT:BAI03 - Manage Solutions Identification and Build"
+        ]
+      },
+      {
+        "evidence_type": "test-coverage-delta",
+        "controls": [
+          "ISO_27001:A.14.2.9 - System acceptance testing",
+          "NIST_800_53:SA-11 - Developer Testing",
+          "NIST_800_53:CA-2 - Security Assessments",
+          "COBIT:BAI03.10 - Maintain systems",
+          "COBIT:APO11 - Manage Quality"
+        ]
+      }
+    ]
+  }
+}

@@ -50,20 +50,35 @@ foreman/evidence/
 │   ├── validation-results.template.json
 │   ├── iteration.template.json
 │   └── completion-report.template.md
-└── builds/
-    ├── <task-id-001>/
-    │   ├── build-initiation.json
-    │   ├── validation-results.json
-    │   ├── iterations/
-    │   │   ├── iteration-001.json
-    │   │   ├── iteration-002.json
-    │   │   └── ...
-    │   ├── final-validation.json
-    │   ├── qa-results.json
-    │   └── completion-report.md
-    ├── <task-id-002>/
-    │   └── ...
-    └── ...
+├── builds/
+│   ├── <task-id-001>/
+│   │   ├── build-initiation.json
+│   │   ├── validation-results.json
+│   │   ├── iterations/
+│   │   │   ├── iteration-001.json
+│   │   │   ├── iteration-002.json
+│   │   │   └── ...
+│   │   ├── final-validation.json
+│   │   ├── qa-results.json
+│   │   └── completion-report.md
+│   ├── <task-id-002>/
+│   │   └── ...
+│   └── ...
+└── flci/
+    ├── README.md (FL/CI catastrophic failures)
+    ├── FLCI_EVIDENCE_SCHEMA.json (FL/CI schema)
+    ├── templates/
+    │   ├── failure-report.template.json
+    │   ├── prevention-plan.template.json
+    │   ├── test-coverage-delta.template.json
+    │   ├── root-cause-analysis.template.md
+    │   └── completion-validation.template.md
+    └── FLCI-YYYYMMDD-NNN/
+        ├── failure-report.json
+        ├── prevention-plan.json
+        ├── test-coverage-delta.json
+        ├── root-cause-analysis.md
+        └── completion-validation.md
 ```
 
 ---
@@ -158,6 +173,29 @@ foreman/evidence/
 - `incident-report.md` - If governance violation detected
 
 **When Created**: As needed during build process
+
+---
+
+### 6. FL/CI Catastrophic Failure Evidence
+
+**Directory**: `flci/`  
+**Schema**: `FLCI_EVIDENCE_SCHEMA.json`  
+**README**: `flci/README.md`
+
+**Purpose**: Complete evidence trails for all catastrophic failures observed after Build-to-Green
+
+**Evidence Types**:
+- `failure-report.json` - Structured failure data
+- `prevention-plan.json` - Permanent prevention actions
+- `test-coverage-delta.json` - Test coverage improvements
+- `root-cause-analysis.md` - Detailed RCA
+- `completion-validation.md` - Final validation
+
+**When Created**: For every defect observed after successful Build-to-Green
+
+**Authority**: BUILD_PHILOSOPHY.md Section XIII + Foreman Agent Contract (One-Time Failure Doctrine)
+
+**See**: `flci/README.md` for complete FL/CI evidence documentation
 
 ---
 
