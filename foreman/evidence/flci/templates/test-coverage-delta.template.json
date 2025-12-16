@@ -25,7 +25,7 @@
     }
   },
   "coverage_improvement": {
-    "tests_added": 1,
+    "tests_added": 0,
     "lines_added": 0,
     "percentage_increase": 0.0,
     "gap_filled": "<Description of coverage gap that was filled (minimum 20 characters)>"

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "version": "1.0.0",
-  "description": "Evidence Schema for Field/Live and CI/Test Catastrophic Failures",
+  "description": "Evidence Schema for Field/Live and CI/Test Catastrophic Failures. CRITICAL: All catastrophic failures MUST add at least 1 test for permanent prevention (enforced by tests_added minimum: 1).",
   "last_updated": "2025-12-16",
   "authority": "BUILD_PHILOSOPHY.md Section XIII (Failure Learning) + Foreman Agent Contract (One-Time Failure Doctrine)",
   

@@ -192,6 +192,7 @@ At least **one** of:
 
 ### Create Evidence Directory
 ```bash
+# Use next available number for the day (e.g., 001, 002, 003, etc.)
 mkdir -p foreman/evidence/flci/FLCI-$(date +%Y%m%d)-001
 ```
 

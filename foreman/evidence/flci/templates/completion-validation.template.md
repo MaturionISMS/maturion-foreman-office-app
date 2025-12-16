@@ -72,7 +72,7 @@
 #### Tests Added
 | Type | File | Test Name | Purpose |
 |------|------|-----------|---------|
-| <type> | <file> | <name> | <purpose> |
+| \<type\> | \<file\> | \<name\> | \<purpose\> |
 
 **Total Tests Added**: N
 

@@ -9,7 +9,7 @@ assignees: ''
 
 # Catastrophic Failure Report
 
-**Failure ID**: FLCI-[YYYYMMDD]-[NNN]  
+**Failure ID**: FLCI-YYYYMMDD-NNN (e.g., FLCI-20251216-001)  
 **Reported Date**: YYYY-MM-DD  
 **Severity**: <!-- catastrophic | double-catastrophic -->
 
