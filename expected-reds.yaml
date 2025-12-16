@@ -1,0 +1,123 @@
+# Expected RED Tests During Governance Convergence
+# 
+# Context: Governance Convergence Mode
+# Purpose: Explicitly declare tests that are expected to FAIL during convergence
+# 
+# These tests are RED because implementation does not exist yet.
+# They represent architecture contracts that must be implemented.
+# 
+# Governance Convergence Rules:
+# - Do NOT attempt to resolve these REDs
+# - Do NOT mark them as PASS
+# - DO enforce FAIL-latch (they must stay RED until properly implemented)
+# - These REDs block progression but do NOT block convergence merge
+#
+# Date: 2025-12-16
+# Authority: Governance Convergence Directive (Johan, comment 3661433604)
+
+version: "1.0.0"
+phase: "GOVERNANCE_CONVERGENCE"
+
+categories:
+  decision_determinism:
+    description: "Decision determinism tests - QIEL not implemented"
+    reason: "Tests require deterministic decision engine (QIEL semantics)"
+    tests:
+      - "tests/wave0_minimum_red/test_decision_determinism.py::TestDeterministicDecisions::test_same_qa_results_produce_same_completion_decision"
+      - "tests/wave0_minimum_red/test_decision_determinism.py::TestDeterministicDecisions::test_same_stall_conditions_produce_same_recovery_strategy"
+      - "tests/wave0_minimum_red/test_decision_determinism.py::TestReplayableDecisionTraces::test_decision_trace_is_recorded"
+      - "tests/wave0_minimum_red/test_decision_determinism.py::TestReplayableDecisionTraces::test_decision_trace_contains_input_hash"
+      - "tests/wave0_minimum_red/test_decision_determinism.py::TestReplayableDecisionTraces::test_decision_can_be_replayed_from_trace"
+      - "tests/wave0_minimum_red/test_decision_determinism.py::TestReplayableDecisionTraces::test_decision_trace_includes_reasoning_steps"
+      - "tests/wave0_minimum_red/test_decision_determinism.py::TestReplayableDecisionTraces::test_decision_traces_are_stored_in_governance_memory"
+      - "tests/wave0_minimum_red/test_decision_determinism.py::TestReplayableDecisionTraces::test_decision_trace_audit_trail_is_immutable"
+
+  evidence_integrity:
+    description: "Evidence generation and integrity tests - evidence system not implemented"
+    reason: "Tests require evidence generation engine and traceability system"
+    tests:
+      - "tests/wave0_minimum_red/test_evidence_integrity.py::TestEvidenceGeneration::test_build_initiation_evidence_is_generated"
+      - "tests/wave0_minimum_red/test_evidence_integrity.py::TestEvidenceGeneration::test_iteration_evidence_is_generated_per_iteration"
+      - "tests/wave0_minimum_red/test_evidence_integrity.py::TestEvidenceGeneration::test_final_validation_evidence_is_generated"
+      - "tests/wave0_minimum_red/test_evidence_integrity.py::TestEvidenceGeneration::test_evidence_generation_is_automatic_not_manual"
+      - "tests/wave0_minimum_red/test_evidence_integrity.py::TestEvidenceSchemaValidation::test_build_initiation_evidence_conforms_to_schema"
+      - "tests/wave0_minimum_red/test_evidence_integrity.py::TestEvidenceSchemaValidation::test_iteration_evidence_conforms_to_schema"
+      - "tests/wave0_minimum_red/test_evidence_integrity.py::TestEvidenceSchemaValidation::test_schema_validation_catches_missing_required_fields"
+      - "tests/wave0_minimum_red/test_evidence_integrity.py::TestEvidenceSchemaValidation::test_evidence_schema_is_versioned"
+      - "tests/wave0_minimum_red/test_evidence_integrity.py::TestEvidenceTraceability::test_evidence_includes_traceability_chain"
+      - "tests/wave0_minimum_red/test_evidence_integrity.py::TestEvidenceTraceability::test_evidence_chain_can_be_traversed_backwards"
+      - "tests/wave0_minimum_red/test_evidence_integrity.py::TestEvidenceTraceability::test_evidence_includes_architecture_reference"
+      - "tests/wave0_minimum_red/test_evidence_integrity.py::TestEvidenceTraceability::test_evidence_includes_qa_suite_reference"
+      - "tests/wave0_minimum_red/test_evidence_integrity.py::TestEvidenceTraceability::test_evidence_traceability_to_governance_memory"
+
+  evidence_schema:
+    description: "Evidence schema validation tests - governance gates not implemented"
+    reason: "Tests require governance gate validation and audit replay system"
+    tests:
+      - "tests/wave0_minimum_red/test_evidence_schema_validation.py::TestEvidenceSchemaValidation::test_build_initiation_enforces_immutability_flag"
+      - "tests/wave0_minimum_red/test_evidence_schema_validation.py::TestEvidenceSchemaValidation::test_iteration_schema_validates_valid_evidence"
+      - "tests/wave0_minimum_red/test_evidence_schema_validation.py::TestEvidenceSchemaValidation::test_iteration_schema_requires_parent_evidence_id"
+      - "tests/wave0_minimum_red/test_evidence_schema_validation.py::TestEvidenceSchemaValidation::test_final_validation_schema_validates_valid_evidence"
+      - "tests/wave0_minimum_red/test_evidence_schema_validation.py::TestEvidenceSchemaValidation::test_final_validation_enforces_green_requirements"
+      - "tests/wave0_minimum_red/test_evidence_schema_validation.py::TestGovernanceGateValidation::test_governance_gate_rejects_malformed_evidence"
+      - "tests/wave0_minimum_red/test_evidence_schema_validation.py::TestGovernanceGateValidation::test_governance_gate_accepts_valid_evidence"
+      - "tests/wave0_minimum_red/test_evidence_schema_validation.py::TestGovernanceGateValidation::test_governance_gate_verifies_immutability"
+      - "tests/wave0_minimum_red/test_evidence_schema_validation.py::TestGovernanceGateValidation::test_governance_gate_verifies_traceability"
+      - "tests/wave0_minimum_red/test_evidence_schema_validation.py::TestAuditReplaySupport::test_evidence_chain_supports_replay"
+      - "tests/wave0_minimum_red/test_evidence_schema_validation.py::TestAuditReplaySupport::test_audit_replay_detects_missing_evidence"
+      - "tests/wave0_minimum_red/test_evidence_schema_validation.py::TestAuditReplaySupport::test_audit_replay_validates_chronological_consistency"
+
+  governance_supremacy:
+    description: "Governance supremacy and QA bypass prevention tests - enforcement not implemented"
+    reason: "Tests require architecture freeze enforcement and QA bypass prevention mechanisms"
+    tests:
+      - "tests/wave0_minimum_red/test_governance_supremacy.py::TestArchitectureFreezeEnforcement::test_architecture_cannot_be_modified_during_build"
+      - "tests/wave0_minimum_red/test_governance_supremacy.py::TestArchitectureFreezeEnforcement::test_architecture_freeze_applies_to_all_related_files"
+      - "tests/wave0_minimum_red/test_governance_supremacy.py::TestArchitectureFreezeEnforcement::test_architecture_freeze_released_after_build_completion"
+      - "tests/wave0_minimum_red/test_governance_supremacy.py::TestArchitectureFreezeEnforcement::test_architecture_freeze_logs_violation_attempts"
+      - "tests/wave0_minimum_red/test_governance_supremacy.py::TestArchitectureFreezeEnforcement::test_architecture_freeze_blocks_cs2_without_approval"
+      - "tests/wave0_minimum_red/test_governance_supremacy.py::TestQABypassPrevention::test_cannot_mark_task_complete_with_failing_tests"
+      - "tests/wave0_minimum_red/test_governance_supremacy.py::TestQABypassPrevention::test_99_percent_pass_rate_is_failure"
+      - "tests/wave0_minimum_red/test_governance_supremacy.py::TestQABypassPrevention::test_cannot_skip_qa_validation_step"
+      - "tests/wave0_minimum_red/test_governance_supremacy.py::TestQABypassPrevention::test_test_debt_blocks_completion"
+      - "tests/wave0_minimum_red/test_governance_supremacy.py::TestQABypassPrevention::test_qa_bypass_attempts_are_logged_to_governance_memory"
+      - "tests/wave0_minimum_red/test_governance_supremacy.py::TestQABypassPrevention::test_qa_enforcement_applies_to_all_builder_types"
+
+  liveness_continuity:
+    description: "Liveness and continuity tests - heartbeat and stall detection not implemented"
+    reason: "Tests require liveness heartbeat system, stall detection, and recovery mechanisms"
+    tests:
+      - "tests/wave0_minimum_red/test_liveness_continuity.py::TestHeartbeat::test_heartbeat_generation"
+      - "tests/wave0_minimum_red/test_liveness_continuity.py::TestHeartbeat::test_heartbeat_timestamp_accuracy"
+      - "tests/wave0_minimum_red/test_liveness_continuity.py::TestHeartbeat::test_heartbeat_continuous_operation"
+      - "tests/wave0_minimum_red/test_liveness_continuity.py::TestStallDetection::test_stall_detection_when_no_heartbeat"
+      - "tests/wave0_minimum_red/test_liveness_continuity.py::TestStallDetection::test_stall_detection_timeout_configuration"
+      - "tests/wave0_minimum_red/test_liveness_continuity.py::TestStallDetection::test_stall_classification"
+      - "tests/wave0_minimum_red/test_liveness_continuity.py::TestRecoveryFromFailure::test_recovery_after_soft_stall"
+      - "tests/wave0_minimum_red/test_liveness_continuity.py::TestRecoveryFromFailure::test_recovery_strategy_selection"
+      - "tests/wave0_minimum_red/test_liveness_continuity.py::TestRecoveryFromFailure::test_recovery_execution_tracking"
+
+summary:
+  total_expected_reds: 53
+  categories: 5
+  blocking_categories:
+    - "decision_determinism (QIEL)"
+    - "evidence_integrity"
+    - "evidence_schema"
+    - "governance_supremacy"
+    - "liveness_continuity"
+
+convergence_commitment:
+  - "These REDs are EXPECTED and DECLARED"
+  - "FAIL-latch enforced (must stay RED until implemented)"
+  - "No FAIL→PASS overwrites allowed"
+  - "No attempts to resolve during convergence"
+  - "Implementation deferred to post-convergence"
+  - "CI may show these failures - this is CORRECT behavior"
+
+exit_criteria:
+  - "Governance code compiles without type errors"
+  - "FAIL-latch invariant enforced"
+  - "All expected REDs explicitly declared (this file)"
+  - "No undeclared or hidden failures"
+  - "CI shows only declared REDs"
