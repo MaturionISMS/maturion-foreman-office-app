@@ -15,10 +15,15 @@ Enforcement Level: CI/CD blocking
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Optional
+
+# Constants
+MAX_OUTPUT_LENGTH = 5000  # Maximum length for test output in reports
 
 
 class QAGreenValidator:
@@ -133,7 +138,6 @@ class QAGreenValidator:
             # Look for summary line like: "5 passed in 0.12s"
             if 'passed' in line or 'failed' in line:
                 # Parse counts
-                import re
                 passed_match = re.search(r'(\d+)\s+passed', line)
                 failed_match = re.search(r'(\d+)\s+failed', line)
                 skipped_match = re.search(r'(\d+)\s+skipped', line)
@@ -156,7 +160,8 @@ class QAGreenValidator:
 
         # If we couldn't parse, try to at least get exit code info
         if total == 0 and result.returncode != 0:
-            # Tests failed but we couldn't parse - assume at least 1 failure
+            # Tests failed but we couldn't parse - log warning and assume failure
+            print("⚠️  Warning: Could not parse test output, counts may be inaccurate", file=sys.stderr)
             failed = 1
             total = 1
 
@@ -168,7 +173,7 @@ class QAGreenValidator:
             'errors': errors,
             'warnings': warnings,
             'exit_code': result.returncode,
-            'output': output[:5000]  # Limit output length
+            'output': output[:MAX_OUTPUT_LENGTH]
         }
 
     def _run_jest(self) -> Dict:
@@ -189,7 +194,7 @@ class QAGreenValidator:
                 'errors': 0,
                 'warnings': 0,
                 'exit_code': result.returncode,
-                'output': result.stdout[:5000]
+                'output': result.stdout[:MAX_OUTPUT_LENGTH]
             }
         except json.JSONDecodeError:
             # Fallback to text parsing
@@ -201,7 +206,7 @@ class QAGreenValidator:
                 'errors': 1,
                 'warnings': 0,
                 'exit_code': result.returncode,
-                'output': result.stdout[:5000]
+                'output': result.stdout[:MAX_OUTPUT_LENGTH]
             }
 
     def _check_violations(self, test_result: Dict) -> list:
@@ -298,8 +303,7 @@ class QAGreenValidator:
     @staticmethod
     def _get_timestamp() -> str:
         """Get ISO 8601 timestamp"""
-        from datetime import datetime
-        return datetime.utcnow().isoformat() + 'Z'
+        return datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
 
 
 def main():

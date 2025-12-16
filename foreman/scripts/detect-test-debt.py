@@ -18,8 +18,12 @@ import json
 import os
 import re
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Set
+
+# Constants
+MAX_CONTENT_LENGTH = 100  # Maximum length for violation content snippets
 
 # Test debt patterns to detect
 TEST_DEBT_PATTERNS = {
@@ -125,7 +129,7 @@ class TestDebtDetector:
                             'line': line_num,
                             'category': category,
                             'pattern': pattern,
-                            'content': line_content[:100]  # Limit length
+                            'content': line_content[:MAX_CONTENT_LENGTH]
                         })
 
             # Check for stub tests (tests with no assertions)
@@ -191,8 +195,7 @@ class TestDebtDetector:
     @staticmethod
     def _get_timestamp() -> str:
         """Get ISO 8601 timestamp"""
-        from datetime import datetime
-        return datetime.utcnow().isoformat() + 'Z'
+        return datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
 
 
 def main():
