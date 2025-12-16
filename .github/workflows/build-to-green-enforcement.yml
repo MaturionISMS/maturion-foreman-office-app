@@ -29,8 +29,16 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Node dependencies
         run: npm ci
+
+      - name: Install Python dependencies
+        run: pip install -r requirements-test.txt
 
       - name: Enforce No Test Dodging
         run: |
