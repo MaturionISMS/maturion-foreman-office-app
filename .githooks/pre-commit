@@ -1,0 +1,109 @@
+#!/bin/bash
+#
+# Build-to-Green Pre-Commit Hook
+#
+# Prevents commits with test debt or failing tests.
+# Enforces Zero Test Debt Constitutional Rule locally.
+#
+# Installation:
+#   git config core.hooksPath .githooks
+#
+
+set -e
+
+echo "🔍 Build-to-Green Pre-Commit Check"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Track if we should block the commit
+BLOCK_COMMIT=false
+
+# Stage 1: Check for Test Debt
+echo ""
+echo "📋 Stage 1: Detecting Test Debt..."
+if [ -f "foreman/scripts/detect-test-debt.py" ]; then
+    if python3 foreman/scripts/detect-test-debt.py --test-dir tests 2>/dev/null; then
+        echo -e "${GREEN}✅ Zero test debt detected${NC}"
+    else
+        echo -e "${RED}❌ TEST DEBT DETECTED${NC}"
+        echo ""
+        echo "Test debt found in your changes:"
+        python3 foreman/scripts/detect-test-debt.py --test-dir tests --verbose 2>/dev/null || true
+        echo ""
+        echo "Constitutional Violation: Zero Test Debt Rule"
+        echo "Action Required: Remove all test debt before committing"
+        BLOCK_COMMIT=true
+    fi
+else
+    echo -e "${YELLOW}⚠️  Test debt detection script not found, skipping...${NC}"
+fi
+
+# Stage 2: Check Constitutional Files
+echo ""
+echo "📋 Stage 2: Checking Constitutional Files..."
+
+PROTECTED_FILES=(
+    "BUILD_PHILOSOPHY.md"
+    "foreman/constitution/"
+    "foreman/governance/governance-supremacy-rule.md"
+    "foreman/governance/zero-test-debt-constitutional-rule.md"
+    "foreman/builder-specs/build-to-green-rule.md"
+    ".github/workflows/"
+)
+
+MODIFIED_CONSTITUTIONAL=false
+for file in "${PROTECTED_FILES[@]}"; do
+    if git diff --cached --name-only | grep -q "^$file"; then
+        echo -e "${YELLOW}⚠️  Constitutional file modified: $file${NC}"
+        MODIFIED_CONSTITUTIONAL=true
+    fi
+done
+
+if [ "$MODIFIED_CONSTITUTIONAL" = true ]; then
+    echo ""
+    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${YELLOW}⚠️  WARNING: Constitutional Files Modified${NC}"
+    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+    echo "You are modifying protected constitutional files."
+    echo "This requires:"
+    echo "  - CS2 Architecture Approval Workflow"
+    echo "  - Owner (Johan) review"
+    echo ""
+    read -p "Do you have authorization to modify these files? (yes/no): " response
+    if [[ ! "$response" =~ ^[Yy]es$ ]]; then
+        echo -e "${RED}❌ Commit blocked: Unauthorized constitutional modification${NC}"
+        BLOCK_COMMIT=true
+    else
+        echo -e "${GREEN}✅ Authorization confirmed${NC}"
+    fi
+else
+    echo -e "${GREEN}✅ No constitutional files modified${NC}"
+fi
+
+# Final Decision
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+if [ "$BLOCK_COMMIT" = true ]; then
+    echo -e "${RED}❌ COMMIT BLOCKED${NC}"
+    echo ""
+    echo "Governance Supremacy Rule enforcement:"
+    echo "  - Fix all test debt"
+    echo "  - Ensure proper authorization for protected files"
+    echo "  - Re-run commit after fixes"
+    echo ""
+    exit 1
+else
+    echo -e "${GREEN}✅ PRE-COMMIT CHECK PASSED${NC}"
+    echo ""
+    echo "Build-to-Green requirements met:"
+    echo "  ✅ Zero test debt"
+    echo "  ✅ No unauthorized constitutional changes"
+    echo ""
+    exit 0
+fi
