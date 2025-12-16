@@ -92,7 +92,7 @@ jobs:
       - name: Validate QA Green (100% Pass)
         id: qa_green
         run: |
-          echo "🔍 Validating QA green status..."
+          echo "🔍 Validating QA green status (excluding wave0_minimum_red intentionally RED tests)..."
           python foreman/scripts/validate-qa-green.py --test-dir tests --json > qa-green-report.json
           
           # Check exit code
