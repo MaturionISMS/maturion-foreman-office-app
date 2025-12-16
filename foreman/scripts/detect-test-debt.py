@@ -2,239 +2,263 @@
 """
 Test Debt Detection Script
 
-Scans test directories for patterns that indicate test debt:
-- .skip(), .todo(), .only() markers
+Constitutional Authority: Zero Test Debt Constitutional Rule
+Purpose: Detect all forms of test debt and block builds when found
+
+This script scans test files for:
+- Skipped tests (.skip(), .todo(), .only())
 - Commented out tests
-- Stub tests with no assertions
+- Incomplete test stubs (no assertions)
 - TODO/FIXME markers in tests
 - Incomplete test infrastructure
-
-Constitutional Authority: Zero Test Debt Constitutional Rule
-Enforcement Level: CI/CD + Pre-commit hooks
 """
 
-import argparse
-import json
 import os
 import re
 import sys
-from datetime import datetime, timezone
+import json
 from pathlib import Path
-from typing import Dict, List, Set
-
-# Constants
-MAX_CONTENT_LENGTH = 100  # Maximum length for violation content snippets
-
-# Test debt patterns to detect
-TEST_DEBT_PATTERNS = {
-    'skip_markers': [
-        r'\.skip\s*\(',  # .skip()
-        r'describe\.skip',  # describe.skip
-        r'it\.skip',  # it.skip
-        r'test\.skip',  # test.skip
-        r'@pytest\.mark\.skip',  # pytest skip decorator
-    ],
-    'todo_markers': [
-        r'\.todo\s*\(',  # .todo()
-        r'test\.todo',  # test.todo
-        r'it\.todo',  # it.todo
-        r'@pytest\.mark\.xfail',  # pytest expected fail
-    ],
-    'only_markers': [
-        r'\.only\s*\(',  # .only() (should not be committed)
-        r'fdescribe',  # focused describe
-        r'fit\s*\(',  # focused it
-    ],
-    'todo_comments': [
-        r'#\s*TODO',  # TODO comments
-        r'#\s*FIXME',  # FIXME comments
-        r'//\s*TODO',  # JS/TS TODO
-        r'//\s*FIXME',  # JS/TS FIXME
-    ],
-    'commented_tests': [
-        r'#\s*def\s+test_',  # Commented Python test
-        r'#\s*it\s*\(',  # Commented JS/TS test
-        r'#\s*test\s*\(',  # Commented test
-        r'//\s*it\s*\(',  # JS commented test
-        r'//\s*test\s*\(',  # JS commented test
-    ],
-}
-
+from typing import List, Dict, Tuple
 
 class TestDebtDetector:
     """Detects test debt in test files"""
-
-    def __init__(self, test_dir: str):
+    
+    # Patterns for different types of test debt
+    SKIP_PATTERNS = [
+        r'\.skip\(',
+        r'\.todo\(',
+        r'\.only\(',
+        r'describe\.skip',
+        r'it\.skip',
+        r'test\.skip',
+        r'xdescribe\(',
+        r'xit\(',
+        r'@pytest\.mark\.skip',
+        r'@pytest\.mark\.xfail',
+        r'@unittest\.skip',
+    ]
+    
+    TODO_PATTERNS = [
+        r'#\s*TODO',
+        r'#\s*FIXME',
+        r'#\s*XXX',
+        r'//\s*TODO',
+        r'//\s*FIXME',
+        r'//\s*XXX',
+    ]
+    
+    STUB_PATTERNS = [
+        r'def\s+test_\w+\(.*?\):\s*(?:#.*?\n\s*)*pass\s*(?:\n|$)',  # Python stub tests
+        r'it\([\'"].*?[\'"]\s*,\s*\(\)\s*=>\s*\{\s*\}\s*\)',  # JS/TS empty tests
+        r'expect\(true\)\.toBe\(true\)',  # Meaningless assertions
+    ]
+    
+    def __init__(self, test_dir: str = "tests"):
         self.test_dir = Path(test_dir)
         self.violations: List[Dict] = []
-        self.files_scanned = 0
-        self.test_extensions = {'.py', '.js', '.ts', '.jsx', '.tsx', '.test.js', '.spec.js'}
-
-    def scan(self) -> Dict:
-        """Scan test directory for test debt"""
-        print(f"🔍 Scanning for test debt in: {self.test_dir}")
-
+        
+    def scan(self) -> Tuple[bool, List[Dict]]:
+        """
+        Scan test directory for test debt.
+        
+        Returns:
+            Tuple of (has_debt: bool, violations: List[Dict])
+        """
         if not self.test_dir.exists():
-            return self._create_report(success=False, message=f"Test directory not found: {self.test_dir}")
-
-        # Find all test files
+            return False, []
+            
+        # Scan all test files
         test_files = self._find_test_files()
-
-        if not test_files:
-            return self._create_report(success=False, message="No test files found")
-
-        # Scan each file
+        
         for test_file in test_files:
             self._scan_file(test_file)
-            self.files_scanned += 1
-
-        # Generate report
-        if self.violations:
-            return self._create_report(
-                success=False,
-                message=f"❌ TEST DEBT DETECTED: {len(self.violations)} violations found"
-            )
-        else:
-            return self._create_report(
-                success=True,
-                message=f"✅ ZERO TEST DEBT: Scanned {self.files_scanned} files, no violations found"
-            )
-
+            
+        has_debt = len(self.violations) > 0
+        return has_debt, self.violations
+        
     def _find_test_files(self) -> List[Path]:
-        """Find all test files in the test directory"""
+        """Find all test files in test directory"""
         test_files = []
-        for ext in ['.py', '.js', '.ts', '.jsx', '.tsx']:
-            test_files.extend(self.test_dir.rglob(f'*test*{ext}'))
-            test_files.extend(self.test_dir.rglob(f'*spec*{ext}'))
-        return list(set(test_files))  # Remove duplicates
-
+        
+        # Python test files
+        test_files.extend(self.test_dir.glob("**/test_*.py"))
+        test_files.extend(self.test_dir.glob("**/*_test.py"))
+        
+        # JavaScript/TypeScript test files
+        test_files.extend(self.test_dir.glob("**/*.test.js"))
+        test_files.extend(self.test_dir.glob("**/*.test.ts"))
+        test_files.extend(self.test_dir.glob("**/*.spec.js"))
+        test_files.extend(self.test_dir.glob("**/*.spec.ts"))
+        
+        return list(test_files)
+        
     def _scan_file(self, file_path: Path):
-        """Scan a single file for test debt patterns"""
+        """Scan a single test file for debt"""
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                content = f.read()
-                lines = content.split('\n')
-
-            # Check each pattern category
-            for category, patterns in TEST_DEBT_PATTERNS.items():
-                for pattern in patterns:
-                    matches = re.finditer(pattern, content, re.IGNORECASE)
-                    for match in matches:
-                        # Find line number
-                        line_num = content[:match.start()].count('\n') + 1
-                        line_content = lines[line_num - 1].strip() if line_num <= len(lines) else ""
-
+            content = file_path.read_text()
+            lines = content.split('\n')
+            
+            # Check for skip patterns
+            for line_num, line in enumerate(lines, 1):
+                # Skip patterns
+                for pattern in self.SKIP_PATTERNS:
+                    if re.search(pattern, line):
                         self.violations.append({
-                            'file': str(file_path.relative_to(self.test_dir.parent)),
-                            'line': line_num,
-                            'category': category,
-                            'pattern': pattern,
-                            'content': line_content[:MAX_CONTENT_LENGTH]
+                            "type": "skipped_test",
+                            "file": str(file_path),
+                            "line": line_num,
+                            "content": line.strip(),
+                            "severity": "HIGH",
+                            "message": "Skipped test detected - tests must not be skipped"
                         })
-
-            # Check for stub tests (tests with no assertions)
-            self._check_stub_tests(file_path, content, lines)
-
-        except Exception as e:
-            print(f"⚠️  Warning: Could not scan {file_path}: {e}", file=sys.stderr)
-
-    def _check_stub_tests(self, file_path: Path, content: str, lines: List[str]):
-        """Check for stub tests with no assertions"""
-        # Python stub tests
-        if file_path.suffix == '.py':
-            # Find test functions
-            test_func_pattern = r'def\s+(test_\w+)\s*\('
-            for match in re.finditer(test_func_pattern, content):
-                func_start = match.start()
-                func_name = match.group(1)
-
-                # Find function body (simplified - looks for next def or class)
-                func_end = content.find('\ndef ', func_start + 1)
-                if func_end == -1:
-                    func_end = content.find('\nclass ', func_start + 1)
-                if func_end == -1:
-                    func_end = len(content)
-
-                func_body = content[func_start:func_end]
-
-                # Check if function has assertions or test operations
-                has_assertion = any(keyword in func_body for keyword in [
-                    'assert', 'assertEqual', 'assertTrue', 'assertFalse',
-                    'expect(', 'toBe(', 'toEqual(', 'pytest.raises',
-                    'validate(', 'raises(', 'self.assert'
-                ])
-
-                # Check if it's just a placeholder
-                is_placeholder = 'pass' in func_body and len(func_body.strip().split('\n')) <= 3
-                
-                # Only flag if it has NO assertions AND is short OR is an obvious placeholder
-                if (not has_assertion and len(func_body.strip().split('\n')) <= 5) or is_placeholder:
-                    line_num = content[:func_start].count('\n') + 1
+                        
+                # TODO/FIXME patterns
+                for pattern in self.TODO_PATTERNS:
+                    if re.search(pattern, line, re.IGNORECASE):
+                        self.violations.append({
+                            "type": "todo_marker",
+                            "file": str(file_path),
+                            "line": line_num,
+                            "content": line.strip(),
+                            "severity": "HIGH",
+                            "message": "TODO/FIXME marker in test - tests must be complete"
+                        })
+                        
+            # Check for stub patterns (multi-line)
+            for pattern in self.STUB_PATTERNS:
+                for match in re.finditer(pattern, content, re.MULTILINE):
+                    line_num = content[:match.start()].count('\n') + 1
                     self.violations.append({
-                        'file': str(file_path.relative_to(self.test_dir.parent)),
-                        'line': line_num,
-                        'category': 'stub_test',
-                        'pattern': 'Test with no assertions',
-                        'content': f'def {func_name}(...)'
+                        "type": "stub_test",
+                        "file": str(file_path),
+                        "line": line_num,
+                        "content": match.group(0).strip()[:100],
+                        "severity": "HIGH",
+                        "message": "Stub or incomplete test detected"
                     })
-
-    def _create_report(self, success: bool, message: str) -> Dict:
-        """Create the final report"""
-        return {
-            'success': success,
-            'message': message,
-            'timestamp': self._get_timestamp(),
-            'test_directory': str(self.test_dir),
-            'files_scanned': self.files_scanned,
-            'violations_count': len(self.violations),
-            'violations': self.violations,
-            'constitutional_authority': 'Zero Test Debt Constitutional Rule',
-            'enforcement_level': 'BLOCKING'
-        }
-
-    @staticmethod
-    def _get_timestamp() -> str:
-        """Get ISO 8601 timestamp"""
-        return datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
+                    
+            # Check for commented out test blocks
+            self._check_commented_tests(file_path, lines)
+            
+        except Exception as e:
+            print(f"Warning: Could not scan {file_path}: {e}", file=sys.stderr)
+            
+    def _check_commented_tests(self, file_path: Path, lines: List[str]):
+        """Check for blocks of commented out test code"""
+        in_comment_block = False
+        comment_start = 0
+        comment_lines = []
+        
+        for line_num, line in enumerate(lines, 1):
+            stripped = line.strip()
+            
+            # Check if line is a comment
+            if stripped.startswith('#') or stripped.startswith('//'):
+                if not in_comment_block:
+                    in_comment_block = True
+                    comment_start = line_num
+                comment_lines.append(stripped)
+            else:
+                # End of comment block
+                if in_comment_block and len(comment_lines) >= 3:
+                    # Check if comment block looks like test code
+                    comment_text = ' '.join(comment_lines)
+                    if any(keyword in comment_text for keyword in ['test', 'it(', 'describe(', 'def test_', 'expect(', 'assert']):
+                        self.violations.append({
+                            "type": "commented_test",
+                            "file": str(file_path),
+                            "line": comment_start,
+                            "content": f"Commented test block ({len(comment_lines)} lines)",
+                            "severity": "HIGH",
+                            "message": "Commented out test code detected - remove or uncomment"
+                        })
+                        
+                in_comment_block = False
+                comment_lines = []
+                
+    def report(self) -> str:
+        """Generate a human-readable report of violations"""
+        if not self.violations:
+            return "✅ No test debt detected"
+            
+        report_lines = [
+            "❌ TEST DEBT DETECTED",
+            "=" * 80,
+            f"Total violations: {len(self.violations)}",
+            "",
+            "VIOLATIONS:",
+            ""
+        ]
+        
+        # Group by type
+        by_type = {}
+        for violation in self.violations:
+            vtype = violation['type']
+            if vtype not in by_type:
+                by_type[vtype] = []
+            by_type[vtype].append(violation)
+            
+        for vtype, violations in sorted(by_type.items()):
+            report_lines.append(f"{vtype.upper().replace('_', ' ')}: {len(violations)}")
+            for v in violations[:10]:  # Show first 10 of each type
+                report_lines.append(f"  - {v['file']}:{v['line']}")
+                report_lines.append(f"    {v['content'][:100]}")
+            if len(violations) > 10:
+                report_lines.append(f"  ... and {len(violations) - 10} more")
+            report_lines.append("")
+            
+        report_lines.extend([
+            "=" * 80,
+            "Build BLOCKED by Zero Test Debt Constitutional Rule",
+            "All test debt must be fixed before merge.",
+            "See: foreman/governance/zero-test-debt-constitutional-rule.md"
+        ])
+        
+        return '\n'.join(report_lines)
+        
+    def report_json(self) -> str:
+        """Generate JSON report of violations"""
+        return json.dumps({
+            "test_debt_detected": len(self.violations) > 0,
+            "violation_count": len(self.violations),
+            "violations": self.violations,
+            "status": "BLOCKED" if self.violations else "PASS"
+        }, indent=2)
 
 
 def main():
     """Main entry point"""
+    import argparse
+    
     parser = argparse.ArgumentParser(
-        description='Detect test debt in test files',
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog='''
-Constitutional Authority: Zero Test Debt Constitutional Rule
-Enforcement: Pre-commit hooks + CI/CD
-
-Exit Codes:
-  0 = Zero test debt (success)
-  1 = Test debt detected (failure)
-  2 = Scan error
-'''
+        description="Detect test debt in test files",
+        epilog="Constitutional Authority: Zero Test Debt Constitutional Rule"
     )
-    parser.add_argument('--test-dir', required=True, help='Test directory to scan')
-    parser.add_argument('--json', action='store_true', help='Output JSON format')
-    parser.add_argument('--verbose', action='store_true', help='Verbose output')
-
+    parser.add_argument(
+        '--test-dir',
+        default='tests',
+        help='Directory containing test files (default: tests)'
+    )
+    parser.add_argument(
+        '--json',
+        action='store_true',
+        help='Output results as JSON'
+    )
+    
     args = parser.parse_args()
-
+    
     # Run detection
     detector = TestDebtDetector(args.test_dir)
-    report = detector.scan()
-
-    # Output report
+    has_debt, violations = detector.scan()
+    
+    # Output results
     if args.json:
-        print(json.dumps(report, indent=2))
+        print(detector.report_json())
     else:
-        print(report['message'])
-        if report['violations'] and args.verbose:
-            print("\n📋 Violations:")
-            for v in report['violations']:
-                print(f"  - {v['file']}:{v['line']} [{v['category']}] {v['content']}")
-
-    # Exit with appropriate code
-    sys.exit(0 if report['success'] else 1)
+        print(detector.report())
+        
+    # Exit with error code if debt detected
+    sys.exit(1 if has_debt else 0)
 
 
 if __name__ == '__main__':

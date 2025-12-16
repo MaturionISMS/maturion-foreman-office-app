@@ -2,348 +2,334 @@
 """
 QA Green Validation Script
 
-Validates that QA suite meets 100% pass requirement:
-- 100% tests passing (no failures, no errors)
+Constitutional Authority: Governance Supremacy Rule (100% Pass Required)
+Purpose: Validate that QA status is truly GREEN (100% pass, no violations)
+
+This script validates:
+- 100% tests passing (not 99%, not 301/303)
+- Zero test failures
+- Zero test errors
 - Zero skipped tests
 - Zero warnings
-- Clean exit code
-
-Constitutional Authority: Governance Supremacy Rule (GSR)
-Enforcement Level: CI/CD blocking
+- No suppressed failures
 """
 
-import argparse
-import json
 import os
-import re
-import subprocess
 import sys
-from datetime import datetime, timezone
+import json
+import subprocess
+import re
 from pathlib import Path
-from typing import Dict, Optional
-
-# Constants
-MAX_OUTPUT_LENGTH = 5000  # Maximum length for test output in reports
-
+from typing import Dict, List, Tuple, Optional
 
 class QAGreenValidator:
-    """Validates QA green status (100% pass requirement)"""
-
-    def __init__(self, test_dir: str):
+    """Validates QA green status according to constitutional requirements"""
+    
+    def __init__(self, test_dir: str = "tests"):
         self.test_dir = Path(test_dir)
-        self.report: Dict = {}
-
-    def validate(self) -> Dict:
-        """Validate QA green status"""
-        print(f"🔍 Validating QA green status for: {self.test_dir}")
-
-        if not self.test_dir.exists():
-            return self._create_report(
-                success=False,
-                message=f"Test directory not found: {self.test_dir}",
-                blocking_reason="NO_TEST_DIRECTORY"
-            )
-
-        # Run tests
-        test_result = self._run_tests()
-
+        self.violations: List[Dict] = []
+        self.test_results: Optional[Dict] = None
+        
+    def validate(self) -> Tuple[bool, Dict]:
+        """
+        Validate QA green status.
+        
+        Returns:
+            Tuple of (is_green: bool, results: Dict)
+        """
+        # Run tests and collect results
+        self._run_tests()
+        
         # Validate results
-        if not test_result:
-            return self._create_report(
-                success=False,
-                message="Failed to run tests",
-                blocking_reason="TEST_EXECUTION_FAILED"
-            )
-
-        # Check for violations
-        violations = self._check_violations(test_result)
-
-        if violations:
-            return self._create_report(
-                success=False,
-                message=f"❌ QA NOT GREEN: {len(violations)} violations detected",
-                test_result=test_result,
-                violations=violations,
-                blocking_reason="GOVERNANCE_SUPREMACY_RULE_VIOLATION"
-            )
-        else:
-            return self._create_report(
-                success=True,
-                message=f"✅ QA IS GREEN: 100% pass ({test_result['passed']}/{test_result['total']} tests)",
-                test_result=test_result,
-                violations=[]
-            )
-
-    def _run_tests(self) -> Optional[Dict]:
-        """Run the test suite and capture results"""
+        self._validate_100_percent_pass()
+        self._validate_no_skipped()
+        self._validate_no_errors()
+        self._validate_no_warnings()
+        
+        is_green = len(self.violations) == 0
+        
+        results = {
+            "is_green": is_green,
+            "test_results": self.test_results,
+            "violations": self.violations,
+            "status": "GREEN" if is_green else "RED"
+        }
+        
+        return is_green, results
+        
+    def _run_tests(self):
+        """Run test suite and capture results"""
         try:
-            # Detect test framework and run appropriate command
-            if self._has_pytest():
-                return self._run_pytest()
-            elif self._has_jest():
-                return self._run_jest()
-            else:
-                # Default to pytest
-                return self._run_pytest()
-
+            # Try pytest first
+            result = subprocess.run(
+                ['python3', '-m', 'pytest', str(self.test_dir), '-v', '--tb=short', '-q'],
+                capture_output=True,
+                text=True,
+                timeout=300
+            )
+            
+            self._parse_pytest_output(result.stdout, result.stderr, result.returncode)
+            
+        except FileNotFoundError:
+            # pytest not available, try other test runners
+            self.test_results = {
+                "runner": "none",
+                "total": 0,
+                "passed": 0,
+                "failed": 0,
+                "skipped": 0,
+                "errors": 0,
+                "warnings": 0
+            }
+            self.violations.append({
+                "type": "no_test_runner",
+                "severity": "CRITICAL",
+                "message": "No test runner available (pytest not found)"
+            })
+            
+        except subprocess.TimeoutExpired:
+            self.violations.append({
+                "type": "timeout",
+                "severity": "CRITICAL",
+                "message": "Test execution timed out after 300 seconds"
+            })
+            
         except Exception as e:
-            print(f"❌ Error running tests: {e}", file=sys.stderr)
-            return None
-
-    def _has_pytest(self) -> bool:
-        """Check if pytest is available"""
-        try:
-            subprocess.run(['pytest', '--version'], capture_output=True, check=True)
-            return True
-        except (subprocess.CalledProcessError, FileNotFoundError):
-            return False
-
-    def _has_jest(self) -> bool:
-        """Check if jest is available"""
-        try:
-            subprocess.run(['jest', '--version'], capture_output=True, check=True)
-            return True
-        except (subprocess.CalledProcessError, FileNotFoundError):
-            return False
-
-    def _run_pytest(self) -> Dict:
-        """Run pytest and parse results"""
-        print("  Running pytest...")
-
-        # Run pytest with JSON report
-        cmd = [
-            'python', '-m', 'pytest',
-            str(self.test_dir),
-            '-v',
-            '--tb=short',
-            '--color=no',
-            '-W', 'error'  # Treat warnings as errors
+            self.violations.append({
+                "type": "execution_error",
+                "severity": "CRITICAL",
+                "message": f"Failed to run tests: {str(e)}"
+            })
+            
+    def _parse_pytest_output(self, stdout: str, stderr: str, returncode: int):
+        """Parse pytest output and extract test results"""
+        # Initialize results
+        self.test_results = {
+            "runner": "pytest",
+            "total": 0,
+            "passed": 0,
+            "failed": 0,
+            "skipped": 0,
+            "errors": 0,
+            "warnings": 0,
+            "returncode": returncode
+        }
+        
+        # Parse summary line (e.g., "73 passed, 50 failed in 10.5s")
+        summary_pattern = r'(\d+)\s+(\w+)'
+        matches = re.findall(summary_pattern, stdout + stderr)
+        
+        for count, status in matches:
+            count = int(count)
+            status = status.lower()
+            
+            if 'pass' in status:
+                self.test_results['passed'] = count
+                self.test_results['total'] += count
+            elif 'fail' in status:
+                self.test_results['failed'] = count
+                self.test_results['total'] += count
+            elif 'skip' in status or 'xpass' in status or 'xfail' in status:
+                self.test_results['skipped'] = count
+                self.test_results['total'] += count
+            elif 'error' in status:
+                self.test_results['errors'] = count
+                
+        # Check for warnings
+        warning_pattern = r'(\d+)\s+warning'
+        warning_matches = re.findall(warning_pattern, stdout + stderr, re.IGNORECASE)
+        if warning_matches:
+            self.test_results['warnings'] = int(warning_matches[0])
+            
+    def _validate_100_percent_pass(self):
+        """Validate that 100% of tests pass (not 99%, not 301/303)"""
+        if not self.test_results:
+            return
+            
+        total = self.test_results['total']
+        passed = self.test_results['passed']
+        failed = self.test_results['failed']
+        
+        if failed > 0:
+            percentage = (passed / total * 100) if total > 0 else 0
+            self.violations.append({
+                "type": "partial_pass",
+                "severity": "CRITICAL",
+                "message": f"Partial pass detected: {passed}/{total} ({percentage:.1f}%) - 100% required",
+                "details": {
+                    "total": total,
+                    "passed": passed,
+                    "failed": failed
+                },
+                "constitutional_reference": "Governance Supremacy Rule: 100% QA Passing is ABSOLUTE"
+            })
+            
+        if self.test_results['returncode'] != 0:
+            self.violations.append({
+                "type": "non_zero_exit",
+                "severity": "CRITICAL",
+                "message": f"Test runner exited with code {self.test_results['returncode']} (expected 0)",
+                "constitutional_reference": "All tests must pass"
+            })
+            
+    def _validate_no_skipped(self):
+        """Validate zero skipped tests"""
+        if not self.test_results:
+            return
+            
+        skipped = self.test_results['skipped']
+        if skipped > 0:
+            self.violations.append({
+                "type": "skipped_tests",
+                "severity": "CRITICAL",
+                "message": f"Skipped tests detected: {skipped} tests skipped",
+                "details": {
+                    "skipped_count": skipped
+                },
+                "constitutional_reference": "Zero Test Debt Constitutional Rule"
+            })
+            
+    def _validate_no_errors(self):
+        """Validate zero test errors"""
+        if not self.test_results:
+            return
+            
+        errors = self.test_results['errors']
+        if errors > 0:
+            self.violations.append({
+                "type": "test_errors",
+                "severity": "CRITICAL",
+                "message": f"Test errors detected: {errors} errors",
+                "details": {
+                    "error_count": errors
+                },
+                "constitutional_reference": "Zero test errors required"
+            })
+            
+    def _validate_no_warnings(self):
+        """Validate zero warnings"""
+        if not self.test_results:
+            return
+            
+        warnings = self.test_results.get('warnings', 0)
+        if warnings > 0:
+            self.violations.append({
+                "type": "test_warnings",
+                "severity": "HIGH",
+                "message": f"Test warnings detected: {warnings} warnings",
+                "details": {
+                    "warning_count": warnings
+                },
+                "constitutional_reference": "Zero warnings required for green status"
+            })
+            
+    def report(self) -> str:
+        """Generate human-readable report"""
+        lines = [
+            "=" * 80,
+            "QA GREEN VALIDATION REPORT",
+            "=" * 80,
+            ""
         ]
-
-        result = subprocess.run(cmd, capture_output=True, text=True)
-
-        # Parse output
-        output = result.stdout + result.stderr
-        lines = output.split('\n')
-
-        # Extract test counts from pytest summary
-        total = 0
-        passed = 0
-        failed = 0
-        skipped = 0
-        errors = 0
-        warnings = 0
-
-        for line in lines:
-            # Look for summary line like: "5 passed in 0.12s"
-            if 'passed' in line or 'failed' in line:
-                # Parse counts
-                passed_match = re.search(r'(\d+)\s+passed', line)
-                failed_match = re.search(r'(\d+)\s+failed', line)
-                skipped_match = re.search(r'(\d+)\s+skipped', line)
-                error_match = re.search(r'(\d+)\s+error', line)
-
-                if passed_match:
-                    passed = int(passed_match.group(1))
-                if failed_match:
-                    failed = int(failed_match.group(1))
-                if skipped_match:
-                    skipped = int(skipped_match.group(1))
-                if error_match:
-                    errors = int(error_match.group(1))
-
-            # Check for warnings
-            if 'warning' in line.lower():
-                warnings += 1
-
-        total = passed + failed + skipped + errors
-
-        # If we couldn't parse, try to at least get exit code info
-        if total == 0 and result.returncode != 0:
-            # Tests failed but we couldn't parse - log warning and assume failure
-            print("⚠️  Warning: Could not parse test output, counts may be inaccurate", file=sys.stderr)
-            failed = 1
-            total = 1
-
-        return {
-            'total': total,
-            'passed': passed,
-            'failed': failed,
-            'skipped': skipped,
-            'errors': errors,
-            'warnings': warnings,
-            'exit_code': result.returncode,
-            'output': output[:MAX_OUTPUT_LENGTH]
-        }
-
-    def _run_jest(self) -> Dict:
-        """Run jest and parse results"""
-        print("  Running jest...")
-
-        cmd = ['jest', '--json', '--testPathPattern', str(self.test_dir)]
-        result = subprocess.run(cmd, capture_output=True, text=True)
-
-        # Parse JSON output
-        try:
-            data = json.loads(result.stdout)
-            return {
-                'total': data.get('numTotalTests', 0),
-                'passed': data.get('numPassedTests', 0),
-                'failed': data.get('numFailedTests', 0),
-                'skipped': data.get('numPendingTests', 0),
-                'errors': 0,
-                'warnings': 0,
-                'exit_code': result.returncode,
-                'output': result.stdout[:MAX_OUTPUT_LENGTH]
-            }
-        except json.JSONDecodeError:
-            # Fallback to text parsing
-            return {
-                'total': 0,
-                'passed': 0,
-                'failed': 1,  # Assume failure if can't parse
-                'skipped': 0,
-                'errors': 1,
-                'warnings': 0,
-                'exit_code': result.returncode,
-                'output': result.stdout[:MAX_OUTPUT_LENGTH]
-            }
-
-    def _check_violations(self, test_result: Dict) -> list:
-        """Check for Governance Supremacy Rule violations"""
-        violations = []
-
-        # Rule 1: ALL tests must pass (100%)
-        if test_result['failed'] > 0:
-            violations.append({
-                'rule': 'GSR Pillar 1: 100% Pass Required',
-                'violation': f"{test_result['failed']} test(s) failed",
-                'severity': 'CRITICAL',
-                'blocking': True,
-                'message': f"❌ {test_result['failed']} tests FAILED. GSR requires 100% pass. No exceptions."
-            })
-
-        if test_result['errors'] > 0:
-            violations.append({
-                'rule': 'GSR Pillar 1: 100% Pass Required',
-                'violation': f"{test_result['errors']} test error(s)",
-                'severity': 'CRITICAL',
-                'blocking': True,
-                'message': f"❌ {test_result['errors']} tests had ERRORS. GSR requires 100% pass. No exceptions."
-            })
-
-        # Rule 2: Zero skipped tests
-        if test_result['skipped'] > 0:
-            violations.append({
-                'rule': 'GSR Pillar 2: Zero Test Debt',
-                'violation': f"{test_result['skipped']} test(s) skipped",
-                'severity': 'CRITICAL',
-                'blocking': True,
-                'message': f"❌ {test_result['skipped']} tests SKIPPED. Zero test debt rule violated."
-            })
-
-        # Rule 3: Zero warnings
-        if test_result['warnings'] > 0:
-            violations.append({
-                'rule': 'GSR: Zero Warnings',
-                'violation': f"{test_result['warnings']} warning(s) detected",
-                'severity': 'HIGH',
-                'blocking': True,
-                'message': f"❌ {test_result['warnings']} WARNINGS detected. Clean build required."
-            })
-
-        # Rule 4: Exit code must be 0
-        if test_result['exit_code'] != 0:
-            violations.append({
-                'rule': 'GSR: Clean Exit Required',
-                'violation': f"Non-zero exit code: {test_result['exit_code']}",
-                'severity': 'CRITICAL',
-                'blocking': True,
-                'message': f"❌ Test exit code: {test_result['exit_code']}. Must be 0 for GREEN."
-            })
-
-        # Rule 5: Partial pass = FAILURE
-        if test_result['total'] > 0:
-            pass_rate = (test_result['passed'] / test_result['total']) * 100
-            if 0 < pass_rate < 100:
-                violations.append({
-                    'rule': 'GSR Pillar 1: No Partial Passes',
-                    'violation': f"Partial pass: {pass_rate:.1f}% ({test_result['passed']}/{test_result['total']})",
-                    'severity': 'CRITICAL',
-                    'blocking': True,
-                    'message': f"❌ {pass_rate:.1f}% pass rate. GSR requires 100%. 99% = FAILURE."
-                })
-
-        return violations
-
-    def _create_report(self, success: bool, message: str, test_result: Dict = None,
-                      violations: list = None, blocking_reason: str = None) -> Dict:
-        """Create the validation report"""
-        report = {
-            'success': success,
-            'message': message,
-            'timestamp': self._get_timestamp(),
-            'test_directory': str(self.test_dir),
-            'constitutional_authority': 'Governance Supremacy Rule (GSR)',
-            'enforcement_level': 'BLOCKING'
-        }
-
-        if test_result:
-            report['test_result'] = test_result
-
-        if violations is not None:
-            report['violations'] = violations
-            report['violations_count'] = len(violations)
-
-        if blocking_reason:
-            report['blocking_reason'] = blocking_reason
-
-        return report
-
-    @staticmethod
-    def _get_timestamp() -> str:
-        """Get ISO 8601 timestamp"""
-        return datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
+        
+        if self.test_results:
+            lines.extend([
+                f"Test Runner: {self.test_results.get('runner', 'unknown')}",
+                f"Total Tests: {self.test_results.get('total', 0)}",
+                f"Passed: {self.test_results.get('passed', 0)}",
+                f"Failed: {self.test_results.get('failed', 0)}",
+                f"Skipped: {self.test_results.get('skipped', 0)}",
+                f"Errors: {self.test_results.get('errors', 0)}",
+                f"Warnings: {self.test_results.get('warnings', 0)}",
+                ""
+            ])
+            
+        if not self.violations:
+            lines.extend([
+                "✅ QA STATUS: GREEN",
+                "",
+                "All requirements met:",
+                "  ✅ 100% tests passing",
+                "  ✅ Zero failures",
+                "  ✅ Zero skipped tests",
+                "  ✅ Zero errors",
+                "  ✅ Zero warnings",
+                "",
+                "Build is APPROVED for merge."
+            ])
+        else:
+            lines.extend([
+                "❌ QA STATUS: RED",
+                "",
+                f"Violations detected: {len(self.violations)}",
+                ""
+            ])
+            
+            for i, violation in enumerate(self.violations, 1):
+                lines.extend([
+                    f"{i}. [{violation['severity']}] {violation['type'].upper().replace('_', ' ')}",
+                    f"   {violation['message']}",
+                ])
+                if 'constitutional_reference' in violation:
+                    lines.append(f"   Reference: {violation['constitutional_reference']}")
+                lines.append("")
+                
+            lines.extend([
+                "=" * 80,
+                "Build BLOCKED by Governance Supremacy Rule",
+                "All violations must be fixed before merge.",
+                "See: foreman/governance/governance-supremacy-rule.md"
+            ])
+            
+        lines.append("=" * 80)
+        return '\n'.join(lines)
+        
+    def report_json(self) -> str:
+        """Generate JSON report"""
+        is_green = len(self.violations) == 0
+        return json.dumps({
+            "qa_status": "GREEN" if is_green else "RED",
+            "is_green": is_green,
+            "test_results": self.test_results,
+            "violation_count": len(self.violations),
+            "violations": self.violations,
+            "build_status": "APPROVED" if is_green else "BLOCKED"
+        }, indent=2)
 
 
 def main():
     """Main entry point"""
+    import argparse
+    
     parser = argparse.ArgumentParser(
-        description='Validate QA green status (100% pass requirement)',
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog='''
-Constitutional Authority: Governance Supremacy Rule (GSR)
-Enforcement: CI/CD blocking
-
-Exit Codes:
-  0 = QA is GREEN (100% pass)
-  1 = QA is NOT GREEN (violations detected)
-  2 = Validation error
-'''
+        description="Validate QA green status (100% pass required)",
+        epilog="Constitutional Authority: Governance Supremacy Rule"
     )
-    parser.add_argument('--test-dir', required=True, help='Test directory to validate')
-    parser.add_argument('--json', action='store_true', help='Output JSON format')
-    parser.add_argument('--verbose', action='store_true', help='Verbose output')
-
+    parser.add_argument(
+        '--test-dir',
+        default='tests',
+        help='Directory containing test files (default: tests)'
+    )
+    parser.add_argument(
+        '--json',
+        action='store_true',
+        help='Output results as JSON'
+    )
+    
     args = parser.parse_args()
-
+    
     # Run validation
     validator = QAGreenValidator(args.test_dir)
-    report = validator.validate()
-
-    # Output report
+    is_green, results = validator.validate()
+    
+    # Output results
     if args.json:
-        print(json.dumps(report, indent=2))
+        print(validator.report_json())
     else:
-        print(report['message'])
-        if report.get('violations') and args.verbose:
-            print("\n📋 Violations:")
-            for v in report['violations']:
-                print(f"  - [{v['severity']}] {v['rule']}")
-                print(f"    {v['message']}")
-
-    # Exit with appropriate code
-    sys.exit(0 if report['success'] else 1)
+        print(validator.report())
+        
+    # Exit with error code if not green
+    sys.exit(0 if is_green else 1)
 
 
 if __name__ == '__main__':

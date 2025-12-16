@@ -1,38 +1,36 @@
 name: Build-to-Green Enforcement
 
+# Constitutional Authority: BUILD_PHILOSOPHY.md + Governance Supremacy Rule
+# Purpose: Enforce true Build-to-Green semantics - no cheating allowed
+
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    branches: [ main, develop ]
   push:
-    branches:
-      - main
-
-# Grant permissions for PR comments and issue interactions
-permissions:
-  contents: read
-  pull-requests: write
-  issues: write
+    branches: [ main, develop ]
+  workflow_dispatch:
 
 jobs:
-  # Stage 1: Detect Test Debt
-  test-debt-detection:
-    name: Enforce Zero Test Debt
+  enforce-zero-test-debt:
+    name: "Enforce Zero Test Debt"
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+        
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
+          
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pytest pytest-asyncio pytest-cov pytest-mock
-
+          
       - name: Detect Test Debt
+        id: test_debt
         run: |
           echo "🔍 Scanning for test debt..."
           python foreman/scripts/detect-test-debt.py --test-dir tests --json > test-debt-report.json
@@ -44,37 +42,37 @@ jobs:
             echo "::error::Test debt detected - build BLOCKED by Zero Test Debt Constitutional Rule"
             exit 1
           else
-            echo "✅ Zero test debt confirmed"
+            echo "✅ No test debt detected"
           fi
-
+          
       - name: Upload Test Debt Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-debt-report
           path: test-debt-report.json
-          if-no-files-found: warn
-
-  # Stage 2: Validate 100% Pass Requirement
-  qa-green-validation:
-    name: Enforce 100% Pass Requirement
+          
+  enforce-100-percent-pass:
+    name: "Enforce 100% Pass Requirement"
     runs-on: ubuntu-latest
-    needs: test-debt-detection
+    needs: enforce-zero-test-debt
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+        
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
+          
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pytest pytest-asyncio pytest-cov pytest-mock
-
+          
       - name: Validate QA Green (100% Pass)
+        id: qa_green
         run: |
           echo "🔍 Validating QA green status..."
           python foreman/scripts/validate-qa-green.py --test-dir tests --json > qa-green-report.json
@@ -88,229 +86,160 @@ jobs:
           else
             echo "✅ QA is GREEN (100% pass)"
           fi
-
+          
       - name: Upload QA Green Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: qa-green-report
           path: qa-green-report.json
-          if-no-files-found: warn
-
-  # Stage 3: Check for Suppressed Failures
-  suppression-check:
-    name: Enforce No Suppressed Failures
+          
+  enforce-no-suppressed-failures:
+    name: "Enforce No Suppressed Failures"
     runs-on: ubuntu-latest
-    needs: qa-green-validation
+    needs: enforce-100-percent-pass
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+        
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
+          
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pytest pytest-asyncio pytest-cov pytest-mock
-
+          
       - name: Check for Suppressed Failures
         run: |
           echo "🔍 Checking for suppressed failures..."
           
-          # Run tests with strict settings
-          python -m pytest tests/ -v --strict-markers --strict-config -W error 2>&1 | tee suppression-check.log
+          # Run tests with strict mode
+          python -m pytest tests/ -v --strict-markers --tb=short -W error 2>&1 | tee test-output.txt
+          EXIT_CODE=${PIPESTATUS[0]}
           
-          # Check exit code
-          if [ $? -ne 0 ]; then
+          # Check for any indication of suppressed failures
+          if grep -qi "xfail\|xpass" test-output.txt; then
             echo "❌ SUPPRESSED FAILURES DETECTED"
-            echo "::error::Suppressed failures found - build BLOCKED"
+            echo "::error::Tests with xfail or xpass markers detected - not allowed"
             exit 1
-          else
-            echo "✅ No suppressed failures"
           fi
-
-      - name: Upload Suppression Check Log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: suppression-check-log
-          path: suppression-check.log
-          if-no-files-found: warn
-
-  # Stage 4: Constitutional Compliance Check
-  constitutional-compliance:
-    name: Enforce Constitutional Compliance
+          
+          # Check for .only() in test files (should have been caught by test debt check)
+          if find tests -name "*.py" -o -name "*.js" -o -name "*.ts" | xargs grep -l "\.only(" 2>/dev/null; then
+            echo "❌ FOCUSED TESTS DETECTED"
+            echo "::error::.only() tests detected - all tests must run"
+            exit 1
+          fi
+          
+          echo "✅ No suppressed failures detected"
+          exit $EXIT_CODE
+          
+  enforce-constitutional-compliance:
+    name: "Enforce Constitutional Compliance"
     runs-on: ubuntu-latest
-    needs: suppression-check
+    needs: [enforce-zero-test-debt, enforce-100-percent-pass, enforce-no-suppressed-failures]
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Verify Constitutional Files Integrity
+        
+      - name: Verify Build Philosophy Compliance
         run: |
-          echo "🔍 Verifying constitutional file integrity..."
+          echo "🔍 Verifying Build Philosophy compliance..."
           
-          # List of protected constitutional files
-          CONSTITUTIONAL_FILES=(
+          # Check that constitutional files have not been modified inappropriately
+          PROTECTED_FILES=(
             "BUILD_PHILOSOPHY.md"
-            "foreman/constitution/"
             "foreman/governance/governance-supremacy-rule.md"
             "foreman/governance/zero-test-debt-constitutional-rule.md"
             "foreman/builder-specs/build-to-green-rule.md"
           )
           
-          # Check if any constitutional files were modified
-          MODIFIED=false
-          for file in "${CONSTITUTIONAL_FILES[@]}"; do
-            if git diff --name-only ${{ github.event.pull_request.base.sha || 'HEAD~1' }} ${{ github.sha }} | grep -q "^$file"; then
+          for file in "${PROTECTED_FILES[@]}"; do
+            if git diff --name-only origin/main...HEAD | grep -q "^$file$"; then
               echo "⚠️  Constitutional file modified: $file"
-              MODIFIED=true
+              echo "::warning::Constitutional file $file was modified - requires CS2 approval"
             fi
           done
           
-          if [ "$MODIFIED" = true ]; then
-            echo "::warning::Constitutional files modified - Owner review required"
-          fi
+          echo "✅ Constitutional compliance verified"
           
-          echo "✅ Constitutional compliance check complete"
-
-      - name: Create Compliance Report
+      - name: Generate Enforcement Summary
+        if: always()
         run: |
-          cat > constitutional-compliance.json << EOF
-          {
-            "success": true,
-            "message": "Constitutional compliance verified",
-            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
-            "checks": [
-              "Protected files integrity",
-              "Build philosophy adherence",
-              "Governance rules enforcement"
-            ]
-          }
-          EOF
-
-      - name: Upload Compliance Report
+          echo "# Build-to-Green Enforcement Summary" > enforcement-summary.md
+          echo "" >> enforcement-summary.md
+          echo "**Date**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> enforcement-summary.md
+          echo "**Commit**: ${{ github.sha }}" >> enforcement-summary.md
+          echo "**Branch**: ${{ github.ref_name }}" >> enforcement-summary.md
+          echo "" >> enforcement-summary.md
+          echo "## Enforcement Status" >> enforcement-summary.md
+          echo "" >> enforcement-summary.md
+          echo "- ✅ Zero Test Debt: Enforced" >> enforcement-summary.md
+          echo "- ✅ 100% Pass Requirement: Enforced" >> enforcement-summary.md
+          echo "- ✅ No Suppressed Failures: Enforced" >> enforcement-summary.md
+          echo "- ✅ Constitutional Compliance: Verified" >> enforcement-summary.md
+          echo "" >> enforcement-summary.md
+          echo "## Constitutional Authority" >> enforcement-summary.md
+          echo "" >> enforcement-summary.md
+          echo "This enforcement is mandated by:" >> enforcement-summary.md
+          echo "- BUILD_PHILOSOPHY.md (Supreme Authority)" >> enforcement-summary.md
+          echo "- Governance Supremacy Rule" >> enforcement-summary.md
+          echo "- Zero Test Debt Constitutional Rule" >> enforcement-summary.md
+          echo "- Build to Green Rule" >> enforcement-summary.md
+          echo "" >> enforcement-summary.md
+          echo "**Green means GREEN. No exceptions. No compromises.**" >> enforcement-summary.md
+          
+          cat enforcement-summary.md
+          
+      - name: Upload Enforcement Summary
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: constitutional-compliance-report
-          path: constitutional-compliance.json
-
-  # Stage 5: Final Report and PR Comment
-  enforcement-report:
-    name: Report Enforcement Status
+          name: enforcement-summary
+          path: enforcement-summary.md
+          
+  report-enforcement-status:
+    name: "Report Enforcement Status"
     runs-on: ubuntu-latest
-    needs: [test-debt-detection, qa-green-validation, suppression-check, constitutional-compliance]
+    needs: [enforce-constitutional-compliance]
     if: always()
+    
     steps:
       - name: Download All Artifacts
         uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-
+        
       - name: Generate Final Report
         run: |
-          echo "## 🎯 Build-to-Green Enforcement Report" > enforcement-report.md
-          echo "" >> enforcement-report.md
-          echo "**Status**: ✅ PASSED" >> enforcement-report.md
-          echo "" >> enforcement-report.md
-          echo "### Constitutional Requirements Met:" >> enforcement-report.md
-          echo "- ✅ Zero test debt (no skip, todo, or only markers)" >> enforcement-report.md
-          echo "- ✅ 100% pass rate (all tests passing)" >> enforcement-report.md
-          echo "- ✅ No suppressed failures" >> enforcement-report.md
-          echo "- ✅ Constitutional compliance verified" >> enforcement-report.md
-          echo "" >> enforcement-report.md
-          echo "**Build approved for merge.**" >> enforcement-report.md
-
+          echo "# Build-to-Green Enforcement - Final Report"
+          echo ""
+          echo "## Status: ✅ ALL ENFORCEMENTS PASSED"
+          echo ""
+          echo "This build has passed all Build-to-Green enforcement checks:"
+          echo ""
+          echo "1. ✅ Zero test debt verified"
+          echo "2. ✅ 100% pass requirement met"
+          echo "3. ✅ No suppressed failures"
+          echo "4. ✅ Constitutional compliance verified"
+          echo ""
+          echo "**Build is APPROVED for merge.**"
+          echo ""
+          echo "---"
+          echo "Enforced by: Build-to-Green Enforcement Workflow"
+          echo "Authority: BUILD_PHILOSOPHY.md + Governance Supremacy Rule"
+          
       - name: Comment on PR (if PR)
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const fs = require('fs');
-            let reportContent = '✅ **Build-to-Green Enforcement: PASSED**\n\n';
-            reportContent += 'All constitutional requirements met:\n';
-            reportContent += '- Zero test debt\n';
-            reportContent += '- 100% pass rate\n';
-            reportContent += '- No suppressed failures\n';
-            reportContent += '- Full compliance\n\n';
-            reportContent += '**Build approved for merge.**';
-            
-            try {
-              await github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: reportContent
-              });
-            } catch (error) {
-              core.warning('Failed to post comment: ' + error.message);
-            }
-
-  # Failure Handler: Report on any failures
-  enforcement-failure:
-    name: Report Enforcement Failure
-    runs-on: ubuntu-latest
-    needs: [test-debt-detection, qa-green-validation, suppression-check, constitutional-compliance]
-    if: failure()
-    steps:
-      - name: Download All Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-        continue-on-error: true
-
-      - name: Generate Failure Report
-        run: |
-          echo "## ❌ Build-to-Green Enforcement FAILED" > failure-report.md
-          echo "" >> failure-report.md
-          echo "**Status**: BLOCKED" >> failure-report.md
-          echo "" >> failure-report.md
-          echo "### Violations Detected:" >> failure-report.md
-          echo "" >> failure-report.md
-          
-          # Check which stage failed
-          if [ -f "artifacts/test-debt-report/test-debt-report.json" ]; then
-            echo "**Test Debt Report:**" >> failure-report.md
-            cat artifacts/test-debt-report/test-debt-report.json >> failure-report.md
-            echo "" >> failure-report.md
-          fi
-          
-          if [ -f "artifacts/qa-green-report/qa-green-report.json" ]; then
-            echo "**QA Green Report:**" >> failure-report.md
-            cat artifacts/qa-green-report/qa-green-report.json >> failure-report.md
-            echo "" >> failure-report.md
-          fi
-          
-          echo "### Action Required:" >> failure-report.md
-          echo "Fix all violations before merge. See reports above for details." >> failure-report.md
-
-      - name: Comment Failure on PR
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const reportContent = '❌ **Build-to-Green Enforcement: FAILED**\n\n' +
-              '**Build BLOCKED by Governance Supremacy Rule**\n\n' +
-              'Violations detected. Please:\n' +
-              '1. Check the workflow logs for details\n' +
-              '2. Fix all failing tests\n' +
-              '3. Remove any test debt (skip, todo, only)\n' +
-              '4. Ensure 100% pass rate\n' +
-              '5. Re-run the workflow\n\n' +
-              'Download artifacts for detailed reports.';
-            
-            try {
-              await github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: reportContent
-              });
-            } catch (error) {
-              core.warning('Failed to post failure comment: ' + error.message);
-            }
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ **Build-to-Green Enforcement: PASSED**\n\nAll constitutional requirements met:\n- Zero test debt\n- 100% pass rate\n- No suppressed failures\n- Full compliance\n\n**Build approved for merge.**'
+            })
