@@ -199,9 +199,18 @@ Any deviation from this process is a **Build Philosophy Violation** and must be 
 - Test failures must be clear and specific
 - No test debt (no .skip(), no .todo(), no stubs)
 
+**DP-RED (Design-Phase RED) Mechanism**:
+- Tests that are intentionally RED because implementation doesn't exist yet
+- MUST be registered in `foreman/qa/dp-red-registry.json`
+- Allowed ONLY in QA_DESIGN phase
+- Unregistered RED tests → BLOCKED
+- See: `foreman/qa/dp-red-registry-spec.md` and `foreman/governance/dp-red-policy.md`
+
 **Validation**: QA-of-QA validation (mandatory)
 
 **Critical Rule**: If QA is GREEN before build starts, there is NOTHING TO BUILD. Reject the task.
+
+**DP-RED Rule**: Intentional RED is acceptable during design phase ONLY when explicitly registered. Unregistered RED tests block merge.
 
 ### Phase 3: Build to Green
 

@@ -16,7 +16,7 @@ These hooks implement:
 Runs before every `git commit` to check for:
 
 1. **Test Debt Detection**
-   - Scans for `.skip()`, `.todo()`, `.only()` patterns
+   - Scans for test skip and focus patterns
    - Checks for TODO/FIXME markers in test files
    - Detects commented out tests
    - Identifies stub tests

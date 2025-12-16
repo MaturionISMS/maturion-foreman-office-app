@@ -1,0 +1,21 @@
+{
+  "name": "maturion-foreman-office-app",
+  "version": "1.0.0",
+  "description": "Maturion Foreman Office - Governance and QA orchestration system",
+  "scripts": {
+    "test": "pytest tests/ -v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MaturionISMS/maturion-foreman-office-app.git"
+  },
+  "keywords": [
+    "governance",
+    "qa",
+    "foreman",
+    "isms"
+  ],
+  "author": "MaturionISMS",
+  "license": "UNLICENSED",
+  "private": true
+}

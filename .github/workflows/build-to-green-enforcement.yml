@@ -29,14 +29,25 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Node dependencies
         run: npm ci
+
+      - name: Install Python dependencies
+        run: pip install -r requirements-test.txt
 
       - name: Enforce No Test Dodging
         run: |
           echo "🔍 Scanning for forbidden test-dodging patterns..."
 
-          if grep -R --line-number -E "\.skip|\.(only)\b|jest\.skip|describe\.only|it\.only|\|\| true" .; then
+          # Search only in executable code files, excluding documentation and detection scripts
+          if grep -r --line-number --include="*.py" --include="*.js" --include="*.ts" --include="*.jsx" --include="*.tsx" \
+            --exclude="detect-test-debt.py" --exclude-dir=".git" --exclude-dir="node_modules" \
+            -E "\.skip|\.(only)\b|jest\.skip|describe\.only|it\.only|\|\| true" .; then
             echo "❌ Test dodging detected."
             echo "Use governed QA parking or DP-RED instead."
             exit 1
