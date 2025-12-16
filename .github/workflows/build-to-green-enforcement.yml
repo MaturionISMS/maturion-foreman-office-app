@@ -70,10 +70,72 @@ jobs:
           name: test-debt-report
           path: test-debt-report.json
           
+  validate-dp-red-compliance:
+    name: "Validate DP-RED Compliance"
+    runs-on: ubuntu-latest
+    needs: enforce-zero-test-debt
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          
+      - name: Validate DP-RED Registry
+        id: dp_red
+        run: |
+          echo "🔍 Validating DP-RED registry compliance..."
+          echo ""
+          
+          # Run validation with human-readable output first
+          set +e  # Don't exit on error
+          python foreman/scripts/validate-dp-red-compliance.py \
+            --registry foreman/qa/dp-red-registry.json \
+            --phase-file foreman/qa/current-phase.json \
+            --test-dir tests
+          HUMAN_EXIT=$?
+          set -e  # Re-enable exit on error
+          
+          echo ""
+          echo "---"
+          echo ""
+          
+          # Generate JSON report for artifact
+          set +e
+          python foreman/scripts/validate-dp-red-compliance.py \
+            --registry foreman/qa/dp-red-registry.json \
+            --phase-file foreman/qa/current-phase.json \
+            --test-dir tests \
+            --json > dp-red-compliance-report.json
+          JSON_EXIT=$?
+          set -e
+          
+          # Check exit code and fail if validation failed
+          if [ $HUMAN_EXIT -ne 0 ] || [ $JSON_EXIT -ne 0 ]; then
+            echo ""
+            echo "❌ DP-RED VALIDATION FAILED"
+            echo "::error::DP-RED registry validation failed - build BLOCKED"
+            echo ""
+            echo "For DP-RED policy details, see: foreman/qa/dp-red-registry-spec.md"
+            exit 1
+          else
+            echo "✅ DP-RED validation passed"
+          fi
+          
+      - name: Upload DP-RED Compliance Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dp-red-compliance-report
+          path: dp-red-compliance-report.json
+          
   enforce-100-percent-pass:
     name: "Enforce 100% Pass Requirement"
     runs-on: ubuntu-latest
-    needs: enforce-zero-test-debt
+    needs: validate-dp-red-compliance
     
     steps:
       - name: Checkout code
@@ -164,7 +226,7 @@ jobs:
   enforce-constitutional-compliance:
     name: "Enforce Constitutional Compliance"
     runs-on: ubuntu-latest
-    needs: [enforce-zero-test-debt, enforce-100-percent-pass, enforce-no-suppressed-failures]
+    needs: [enforce-zero-test-debt, validate-dp-red-compliance, enforce-100-percent-pass, enforce-no-suppressed-failures]
     
     steps:
       - name: Checkout code
@@ -203,6 +265,7 @@ jobs:
           echo "## Enforcement Status" >> enforcement-summary.md
           echo "" >> enforcement-summary.md
           echo "- ✅ Zero Test Debt: Enforced" >> enforcement-summary.md
+          echo "- ✅ DP-RED Compliance: Validated" >> enforcement-summary.md
           echo "- ✅ 100% Pass Requirement: Enforced" >> enforcement-summary.md
           echo "- ✅ No Suppressed Failures: Enforced" >> enforcement-summary.md
           echo "- ✅ Constitutional Compliance: Verified" >> enforcement-summary.md
@@ -213,6 +276,7 @@ jobs:
           echo "- BUILD_PHILOSOPHY.md (Supreme Authority)" >> enforcement-summary.md
           echo "- Governance Supremacy Rule" >> enforcement-summary.md
           echo "- Zero Test Debt Constitutional Rule" >> enforcement-summary.md
+          echo "- DP-RED Registry Policy" >> enforcement-summary.md
           echo "- Build to Green Rule" >> enforcement-summary.md
           echo "" >> enforcement-summary.md
           echo "**Green means GREEN. No exceptions. No compromises.**" >> enforcement-summary.md
@@ -245,15 +309,16 @@ jobs:
           echo "This build has passed all Build-to-Green enforcement checks:"
           echo ""
           echo "1. ✅ Zero test debt verified"
-          echo "2. ✅ 100% pass requirement met"
-          echo "3. ✅ No suppressed failures"
-          echo "4. ✅ Constitutional compliance verified"
+          echo "2. ✅ DP-RED compliance validated"
+          echo "3. ✅ 100% pass requirement met"
+          echo "4. ✅ No suppressed failures"
+          echo "5. ✅ Constitutional compliance verified"
           echo ""
           echo "**Build is APPROVED for merge.**"
           echo ""
           echo "---"
           echo "Enforced by: Build-to-Green Enforcement Workflow"
-          echo "Authority: BUILD_PHILOSOPHY.md + Governance Supremacy Rule"
+          echo "Authority: BUILD_PHILOSOPHY.md + Governance Supremacy Rule + DP-RED Policy"
           
       - name: Comment on PR (if PR)
         if: github.event_name == 'pull_request'
@@ -264,5 +329,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '✅ **Build-to-Green Enforcement: PASSED**\n\nAll constitutional requirements met:\n- Zero test debt\n- 100% pass rate\n- No suppressed failures\n- Full compliance\n\n**Build approved for merge.**'
+              body: '✅ **Build-to-Green Enforcement: PASSED**\n\nAll constitutional requirements met:\n- Zero test debt\n- DP-RED compliance\n- 100% pass rate\n- No suppressed failures\n- Full compliance\n\n**Build approved for merge.**'
             })
