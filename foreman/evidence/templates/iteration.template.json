@@ -1,4 +1,5 @@
 {
+  "$schema": "../EVIDENCE_SCHEMA_CANON.json#/schemas/iteration",
   "task_id": "<task-id>",
   "iteration_number": 1,
   "timestamp_started": "<ISO 8601 timestamp>",
@@ -47,6 +48,18 @@
     "required": "yes | no",
     "reason": "<reason for escalation if required>",
     "attempts_on_same_test": 0
+  },
+  "evidence_metadata": {
+    "schema_version": "1.0.0",
+    "immutable": true,
+    "parent_evidence_id": "<reference to build-initiation evidence>",
+    "governance_gate_version": "1.0.0",
+    "compliance_mappings": [
+      "ISO_27001:A.12.1.2",
+      "ISO_27001:A.14.2.9",
+      "NIST_800_53:SA-11",
+      "COBIT:BAI06.01"
+    ]
   },
   "notes": ""
 }

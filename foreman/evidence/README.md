@@ -2,7 +2,8 @@
 
 **Purpose**: Store complete evidence trails for all build tasks  
 **Status**: Mandatory for all builds  
-**Authority**: BUILD_PHILOSOPHY.md Section XII (Evidence Requirements)
+**Authority**: BUILD_PHILOSOPHY.md Section XII (Evidence Requirements)  
+**Schema Version**: 1.0.0 (EVIDENCE_SCHEMA_CANON.json)
 
 ---
 
@@ -17,6 +18,23 @@ This directory contains **structured evidence** for every build task executed in
 - Quality assurance
 - Continuous improvement
 
+**All evidence must pass through the Governance Gate** before being accepted into the system.
+
+---
+
+## Canonical Schema
+
+All evidence MUST conform to the canonical schema: **`EVIDENCE_SCHEMA_CANON.json`**
+
+This schema defines:
+- Required fields for each evidence type
+- Data types and formats (ISO 8601 timestamps, UUIDs, etc.)
+- Immutability requirements
+- Traceability requirements (parent_evidence_id)
+- Compliance control mappings
+
+**See:** `EVIDENCE_SCHEMA_CANON.json` for complete schema definitions
+
 ---
 
 ## Directory Structure
@@ -24,6 +42,9 @@ This directory contains **structured evidence** for every build task executed in
 ```
 foreman/evidence/
 ├── README.md (this file)
+├── EVIDENCE_SCHEMA_CANON.json (canonical schema - MANDATORY)
+├── TEST_EVIDENCE_CONTROL_MAPPING.md (test-evidence-control mappings)
+├── GOVERNANCE_GATE_SPEC.md (governance gate specification)
 ├── templates/
 │   ├── build-initiation.template.json
 │   ├── validation-results.template.json
@@ -237,12 +258,57 @@ Every build MUST have:
 
 ---
 
+## Governance Gate
+
+### What is the Governance Gate?
+
+The **Governance Gate** is the validation checkpoint that ensures all evidence:
+- Conforms to `EVIDENCE_SCHEMA_CANON.json`
+- Is marked as immutable (`immutable: true`)
+- Has complete traceability (parent_evidence_id)
+- Has valid ISO 8601 timestamps
+- Is complete with all required fields
+
+**No evidence enters the system without passing through the Governance Gate.**
+
+### Validation Rules
+
+1. **Schema Conformance** (MANDATORY) - Evidence must match canonical schema
+2. **Immutability** (MANDATORY) - Evidence must be immutable after generation
+3. **Traceability** (MANDATORY) - Evidence must have parent references
+4. **Timestamp Validity** (MANDATORY) - Timestamps must be ISO 8601 and chronological
+5. **Completeness** (MANDATORY) - All required fields must be present
+6. **Compliance Mapping** (RECOMMENDED) - Evidence should include compliance mappings
+
+### Governance Gate Actions
+
+**If Evidence is Valid:**
+- ✅ Accept evidence into system
+- ✅ Write to file system
+- ✅ Log to governance memory
+- ✅ Update compliance tracking
+
+**If Evidence is Invalid:**
+- ❌ Reject evidence
+- ❌ Return detailed errors
+- ❌ Do NOT write to file system
+- ❌ Log rejection to governance memory
+- ❌ Escalate if repeated rejections
+
+### Documentation
+
+See `GOVERNANCE_GATE_SPEC.md` for complete specification.
+
+---
+
 ## Evidence Validation
 
 ### Checklist for Complete Evidence
 
 ```
 Build Evidence Completeness Checklist:
+□ Evidence conforms to EVIDENCE_SCHEMA_CANON.json
+□ Evidence passes Governance Gate validation
 □ build-initiation.json exists and is valid
 □ validation-results.json exists and is valid
 □ At least one iteration file exists
@@ -253,6 +319,8 @@ Build Evidence Completeness Checklist:
 □ All timestamps are ISO 8601 format
 □ All file paths are absolute and correct
 □ All JSON files are valid JSON
+□ evidence_metadata.immutable === true for all evidence
+□ Parent references (parent_evidence_id) present where required
 ```
 
 **If ANY unchecked** → Evidence is incomplete

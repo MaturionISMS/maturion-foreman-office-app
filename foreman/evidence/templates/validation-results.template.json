@@ -1,4 +1,5 @@
 {
+  "$schema": "../EVIDENCE_SCHEMA_CANON.json#/schemas/validation-results",
   "task_id": "<task-id>",
   "validation_timestamp": "<ISO 8601 timestamp>",
   "validated_by": "foreman",
@@ -118,5 +119,16 @@
   "rejection_reason": "<reason if rejected>",
   "action_required": "<what must be fixed if rejected>",
   "philosophy_reference": "/BUILD_PHILOSOPHY.md",
-  "timestamp_completed": "<ISO 8601 timestamp>"
+  "timestamp_completed": "<ISO 8601 timestamp>",
+  "evidence_metadata": {
+    "schema_version": "1.0.0",
+    "immutable": true,
+    "governance_gate_version": "1.0.0",
+    "compliance_mappings": [
+      "ISO_27001:A.14.2.1",
+      "ISO_27001:A.18.2.2",
+      "NIST_800_53:SA-11",
+      "COBIT:BAI03.01"
+    ]
+  }
 }
