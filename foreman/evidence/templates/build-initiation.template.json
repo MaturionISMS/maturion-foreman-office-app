@@ -1,4 +1,5 @@
 {
+  "$schema": "../EVIDENCE_SCHEMA_CANON.json#/schemas/build-initiation",
   "task_id": "<unique-task-identifier>",
   "build_type": "build_to_green",
   "module": "<module-name>",
@@ -23,12 +24,9 @@
   },
   "qa_summary": {
     "total_tests": 0,
-    "passing_tests": 0,
-    "failing_tests": 0,
-    "test_files": [
-      "<path-to-test-file-1>",
-      "<path-to-test-file-2>"
-    ]
+    "passing": 0,
+    "failing": 0,
+    "skipped": 0
   },
   "expected_deliverables": [
     "All QA tests passing (100%)",
@@ -43,5 +41,15 @@
     "special_requirements": []
   },
   "evidence_location": "foreman/evidence/builds/<task-id>/",
+  "evidence_metadata": {
+    "schema_version": "1.0.0",
+    "immutable": true,
+    "governance_gate_version": "1.0.0",
+    "compliance_mappings": [
+      "ISO_27001:A.12.1.1",
+      "NIST_CSF:ID.AM-1",
+      "COBIT:APO09.03"
+    ]
+  },
   "notes": ""
 }

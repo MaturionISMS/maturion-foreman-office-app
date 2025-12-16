@@ -1,0 +1,880 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "1.0.0",
+  "description": "Canonical Evidence Schema for Maturion ISMS - Ensures evidence is fully consumable by Governance Gate",
+  "last_updated": "2025-12-16",
+  "authority": "BUILD_PHILOSOPHY.md Section XII (Evidence Requirements)",
+  
+  "definitions": {
+    "iso8601_timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z$",
+      "description": "ISO 8601 timestamp format"
+    },
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "description": "UUID v4 format"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^task-[a-z0-9\\-]+$",
+      "description": "Task identifier format"
+    },
+    "builder_type": {
+      "type": "string",
+      "enum": ["ui-builder", "api-builder", "schema-builder", "integration-builder", "qa-builder", "foreman"],
+      "description": "Builder agent type"
+    },
+    "qa_status": {
+      "type": "object",
+      "required": ["total_tests", "passing", "failing", "skipped"],
+      "properties": {
+        "total_tests": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "passing": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "failing": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "skipped": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "description": "QA test execution status"
+    },
+    "file_change": {
+      "type": "object",
+      "required": ["file", "changes"],
+      "properties": {
+        "file": {
+          "type": "string",
+          "description": "Path to modified file"
+        },
+        "changes": {
+          "type": "string",
+          "description": "Description of changes made"
+        },
+        "lines_added": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "lines_removed": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "validation_check": {
+      "type": "object",
+      "required": ["check", "result"],
+      "properties": {
+        "check": {
+          "type": "string",
+          "description": "Description of validation check"
+        },
+        "result": {
+          "type": "string",
+          "enum": ["pass", "fail"]
+        },
+        "details": {
+          "type": "string",
+          "description": "Additional details about the check"
+        }
+      }
+    }
+  },
+  
+  "schemas": {
+    "build-initiation": {
+      "$id": "https://maturion.io/schemas/evidence/build-initiation/v1.0.0",
+      "type": "object",
+      "required": [
+        "task_id",
+        "build_type",
+        "timestamp_started",
+        "initiated_by",
+        "instruction_received",
+        "builder_assigned",
+        "expected_deliverables",
+        "evidence_location",
+        "evidence_metadata"
+      ],
+      "properties": {
+        "task_id": {
+          "$ref": "#/definitions/task_id"
+        },
+        "build_type": {
+          "type": "string",
+          "enum": ["build_to_green"],
+          "description": "Type of build task"
+        },
+        "module": {
+          "type": "string",
+          "description": "Module name"
+        },
+        "timestamp_started": {
+          "$ref": "#/definitions/iso8601_timestamp"
+        },
+        "initiated_by": {
+          "type": "string",
+          "enum": ["foreman"],
+          "description": "Who initiated the build"
+        },
+        "instruction_received": {
+          "type": "object",
+          "required": ["format", "architecture_reference", "qa_suite_location", "qa_current_status", "acceptance_criteria"],
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "Build to Green",
+              "description": "Must be exactly 'Build to Green'"
+            },
+            "architecture_reference": {
+              "type": "string",
+              "description": "Path to architecture document"
+            },
+            "qa_suite_location": {
+              "type": "string",
+              "description": "Path to QA test suite"
+            },
+            "qa_current_status": {
+              "type": "string",
+              "enum": ["RED"],
+              "description": "QA suite must be RED (failing)"
+            },
+            "failing_tests_count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "acceptance_criteria": {
+              "type": "string",
+              "description": "Completion criteria"
+            }
+          }
+        },
+        "builder_assigned": {
+          "$ref": "#/definitions/builder_type"
+        },
+        "architecture_summary": {
+          "type": "object",
+          "properties": {
+            "key_components": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "scope": {
+              "type": "string"
+            }
+          }
+        },
+        "qa_summary": {
+          "$ref": "#/definitions/qa_status",
+          "description": "Initial QA status"
+        },
+        "expected_deliverables": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "build_context": {
+          "type": "object",
+          "properties": {
+            "dependencies": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "integration_points": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "special_requirements": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "evidence_location": {
+          "type": "string",
+          "pattern": "^foreman/evidence/builds/",
+          "description": "Directory where all evidence for this build is stored"
+        },
+        "evidence_metadata": {
+          "type": "object",
+          "required": ["schema_version", "immutable", "governance_gate_version"],
+          "properties": {
+            "schema_version": {
+              "type": "string",
+              "const": "1.0.0"
+            },
+            "immutable": {
+              "type": "boolean",
+              "const": true,
+              "description": "Evidence must be immutable after generation"
+            },
+            "governance_gate_version": {
+              "type": "string",
+              "description": "Version of governance gate that will consume this evidence"
+            },
+            "compliance_mappings": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Compliance controls this evidence supports"
+            }
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    
+    "validation-results": {
+      "$id": "https://maturion.io/schemas/evidence/validation-results/v1.0.0",
+      "type": "object",
+      "required": [
+        "task_id",
+        "validation_timestamp",
+        "validated_by",
+        "validation_results",
+        "overall_validation_status",
+        "validation_summary",
+        "decision",
+        "evidence_metadata"
+      ],
+      "properties": {
+        "task_id": {
+          "$ref": "#/definitions/task_id"
+        },
+        "validation_timestamp": {
+          "$ref": "#/definitions/iso8601_timestamp"
+        },
+        "validated_by": {
+          "type": "string",
+          "enum": ["foreman"],
+          "description": "Who performed the validation"
+        },
+        "validation_results": {
+          "type": "object",
+          "required": [
+            "instruction_format_validation",
+            "architecture_validation",
+            "qa_suite_validation",
+            "acceptance_criteria_validation"
+          ],
+          "properties": {
+            "instruction_format_validation": {
+              "type": "object",
+              "required": ["status", "checks"],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": ["pass", "fail"]
+                },
+                "checks": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/validation_check"
+                  },
+                  "minItems": 1
+                }
+              }
+            },
+            "architecture_validation": {
+              "type": "object",
+              "required": ["status", "checks"],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": ["pass", "fail"]
+                },
+                "checks": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/validation_check"
+                  },
+                  "minItems": 1
+                }
+              }
+            },
+            "qa_suite_validation": {
+              "type": "object",
+              "required": ["status", "checks"],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": ["pass", "fail"]
+                },
+                "checks": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/validation_check"
+                  },
+                  "minItems": 1
+                }
+              }
+            },
+            "acceptance_criteria_validation": {
+              "type": "object",
+              "required": ["status", "checks"],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": ["pass", "fail"]
+                },
+                "checks": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/validation_check"
+                  },
+                  "minItems": 1
+                }
+              }
+            }
+          }
+        },
+        "overall_validation_status": {
+          "type": "string",
+          "enum": ["pass", "fail"]
+        },
+        "validation_summary": {
+          "type": "object",
+          "required": ["total_checks", "passed_checks", "failed_checks", "pass_rate"],
+          "properties": {
+            "total_checks": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "passed_checks": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "failed_checks": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "pass_rate": {
+              "type": "string",
+              "pattern": "^\\d+%$"
+            }
+          }
+        },
+        "decision": {
+          "type": "string",
+          "enum": ["PROCEED", "REJECT"]
+        },
+        "rejection_reason": {
+          "type": "string",
+          "description": "Required if decision is REJECT"
+        },
+        "action_required": {
+          "type": "string",
+          "description": "Required if decision is REJECT"
+        },
+        "philosophy_reference": {
+          "type": "string",
+          "const": "/BUILD_PHILOSOPHY.md"
+        },
+        "timestamp_completed": {
+          "$ref": "#/definitions/iso8601_timestamp"
+        },
+        "evidence_metadata": {
+          "type": "object",
+          "required": ["schema_version", "immutable", "governance_gate_version"],
+          "properties": {
+            "schema_version": {
+              "type": "string",
+              "const": "1.0.0"
+            },
+            "immutable": {
+              "type": "boolean",
+              "const": true
+            },
+            "governance_gate_version": {
+              "type": "string"
+            },
+            "compliance_mappings": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    
+    "iteration": {
+      "$id": "https://maturion.io/schemas/evidence/iteration/v1.0.0",
+      "type": "object",
+      "required": [
+        "task_id",
+        "iteration_number",
+        "timestamp_started",
+        "timestamp_completed",
+        "qa_status_before",
+        "target_test",
+        "implementation",
+        "qa_status_after",
+        "result",
+        "next_action",
+        "evidence_metadata"
+      ],
+      "properties": {
+        "task_id": {
+          "$ref": "#/definitions/task_id"
+        },
+        "iteration_number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Sequential iteration number"
+        },
+        "timestamp_started": {
+          "$ref": "#/definitions/iso8601_timestamp"
+        },
+        "timestamp_completed": {
+          "$ref": "#/definitions/iso8601_timestamp"
+        },
+        "duration_seconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "qa_status_before": {
+          "$ref": "#/definitions/qa_status"
+        },
+        "target_test": {
+          "type": "object",
+          "required": ["test_name", "test_file"],
+          "properties": {
+            "test_name": {
+              "type": "string"
+            },
+            "test_file": {
+              "type": "string"
+            },
+            "test_description": {
+              "type": "string"
+            },
+            "failure_reason": {
+              "type": "string"
+            }
+          }
+        },
+        "implementation": {
+          "type": "object",
+          "required": ["approach", "files_modified", "minimal_code_principle"],
+          "properties": {
+            "approach": {
+              "type": "string",
+              "description": "Description of implementation approach"
+            },
+            "files_modified": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/file_change"
+              },
+              "minItems": 0
+            },
+            "minimal_code_principle": {
+              "type": "string",
+              "enum": ["yes", "no"],
+              "description": "Whether minimal code principle was followed"
+            },
+            "explanation": {
+              "type": "string"
+            }
+          }
+        },
+        "qa_status_after": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/qa_status"
+            },
+            {
+              "type": "object",
+              "required": ["test_debt_detected"],
+              "properties": {
+                "test_debt_detected": {
+                  "type": "string",
+                  "enum": ["yes", "no"],
+                  "description": "Whether test debt was detected"
+                }
+              }
+            }
+          ]
+        },
+        "result": {
+          "type": "object",
+          "required": ["target_test_status", "progress", "regressions_detected"],
+          "properties": {
+            "target_test_status": {
+              "type": "string",
+              "enum": ["pass", "fail"]
+            },
+            "progress": {
+              "type": "string"
+            },
+            "new_failures": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "regressions_detected": {
+              "type": "string",
+              "enum": ["yes", "no"]
+            }
+          }
+        },
+        "next_action": {
+          "type": "string",
+          "enum": ["continue", "final_validation", "escalate"]
+        },
+        "escalation": {
+          "type": "object",
+          "required": ["required"],
+          "properties": {
+            "required": {
+              "type": "string",
+              "enum": ["yes", "no"]
+            },
+            "reason": {
+              "type": "string"
+            },
+            "attempts_on_same_test": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "evidence_metadata": {
+          "type": "object",
+          "required": ["schema_version", "immutable", "parent_evidence_id"],
+          "properties": {
+            "schema_version": {
+              "type": "string",
+              "const": "1.0.0"
+            },
+            "immutable": {
+              "type": "boolean",
+              "const": true
+            },
+            "parent_evidence_id": {
+              "type": "string",
+              "description": "Reference to build-initiation evidence"
+            },
+            "governance_gate_version": {
+              "type": "string"
+            },
+            "compliance_mappings": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    
+    "final-validation": {
+      "$id": "https://maturion.io/schemas/evidence/final-validation/v1.0.0",
+      "type": "object",
+      "required": [
+        "task_id",
+        "validation_timestamp",
+        "qa_completeness",
+        "build_quality",
+        "interface_integrity",
+        "evidence_trail",
+        "overall_status",
+        "evidence_metadata"
+      ],
+      "properties": {
+        "task_id": {
+          "$ref": "#/definitions/task_id"
+        },
+        "validation_timestamp": {
+          "$ref": "#/definitions/iso8601_timestamp"
+        },
+        "qa_completeness": {
+          "type": "object",
+          "required": ["all_tests_passing", "zero_test_failures", "zero_test_errors", "zero_skipped_tests", "zero_test_debt"],
+          "properties": {
+            "all_tests_passing": {
+              "type": "boolean",
+              "const": true
+            },
+            "zero_test_failures": {
+              "type": "boolean",
+              "const": true
+            },
+            "zero_test_errors": {
+              "type": "boolean",
+              "const": true
+            },
+            "zero_skipped_tests": {
+              "type": "boolean",
+              "const": true
+            },
+            "zero_test_debt": {
+              "type": "boolean",
+              "const": true
+            },
+            "test_statistics": {
+              "$ref": "#/definitions/qa_status"
+            }
+          }
+        },
+        "build_quality": {
+          "type": "object",
+          "required": ["typescript_compilation", "lint_check", "build_success", "no_console_errors"],
+          "properties": {
+            "typescript_compilation": {
+              "type": "string",
+              "enum": ["pass", "fail"]
+            },
+            "lint_check": {
+              "type": "object",
+              "required": ["status", "errors", "warnings"],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": ["pass", "fail"]
+                },
+                "errors": {
+                  "type": "integer",
+                  "const": 0
+                },
+                "warnings": {
+                  "type": "integer",
+                  "const": 0
+                }
+              }
+            },
+            "build_success": {
+              "type": "boolean",
+              "const": true
+            },
+            "no_console_errors": {
+              "type": "boolean",
+              "const": true
+            }
+          }
+        },
+        "interface_integrity": {
+          "type": "object",
+          "required": ["all_union_values_present", "all_imports_valid", "no_breaking_changes", "pre_build_validation_passed"],
+          "properties": {
+            "all_union_values_present": {
+              "type": "boolean",
+              "const": true
+            },
+            "all_imports_valid": {
+              "type": "boolean",
+              "const": true
+            },
+            "no_breaking_changes": {
+              "type": "boolean",
+              "const": true
+            },
+            "pre_build_validation_passed": {
+              "type": "boolean",
+              "const": true
+            }
+          }
+        },
+        "evidence_trail": {
+          "type": "object",
+          "required": ["build_iterations_documented", "test_results_captured", "code_changes_logged", "completion_timestamp"],
+          "properties": {
+            "build_iterations_documented": {
+              "type": "boolean",
+              "const": true
+            },
+            "test_results_captured": {
+              "type": "boolean",
+              "const": true
+            },
+            "code_changes_logged": {
+              "type": "boolean",
+              "const": true
+            },
+            "completion_timestamp": {
+              "$ref": "#/definitions/iso8601_timestamp"
+            },
+            "total_iterations": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "overall_status": {
+          "type": "string",
+          "enum": ["GREEN", "BLOCKED"],
+          "description": "GREEN means all validations passed, ready to report completion"
+        },
+        "blocking_issues": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Issues preventing GREEN status (must be empty for GREEN)"
+        },
+        "evidence_metadata": {
+          "type": "object",
+          "required": ["schema_version", "immutable", "governance_gate_version"],
+          "properties": {
+            "schema_version": {
+              "type": "string",
+              "const": "1.0.0"
+            },
+            "immutable": {
+              "type": "boolean",
+              "const": true
+            },
+            "governance_gate_version": {
+              "type": "string"
+            },
+            "compliance_mappings": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Compliance controls this evidence supports"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  
+  "governance_gate_requirements": {
+    "description": "Requirements for evidence to pass through Governance Gate",
+    "validation_rules": [
+      {
+        "rule": "schema_conformance",
+        "description": "Evidence must conform to canonical schema for its type",
+        "enforcement": "MANDATORY",
+        "action_on_violation": "REJECT evidence, return validation errors"
+      },
+      {
+        "rule": "immutability",
+        "description": "Evidence must be marked as immutable and never modified post-generation",
+        "enforcement": "MANDATORY",
+        "action_on_violation": "REJECT evidence, flag integrity violation"
+      },
+      {
+        "rule": "traceability",
+        "description": "All evidence must include parent_evidence_id or build_initiation_id for chain traceability",
+        "enforcement": "MANDATORY",
+        "action_on_violation": "REJECT evidence, require traceability metadata"
+      },
+      {
+        "rule": "timestamp_validity",
+        "description": "All timestamps must be ISO 8601 format and chronologically consistent",
+        "enforcement": "MANDATORY",
+        "action_on_violation": "REJECT evidence, require valid timestamps"
+      },
+      {
+        "rule": "completeness",
+        "description": "All required fields must be present with valid values",
+        "enforcement": "MANDATORY",
+        "action_on_violation": "REJECT evidence, list missing/invalid fields"
+      },
+      {
+        "rule": "compliance_mapping",
+        "description": "Evidence should include compliance_mappings for audit trail",
+        "enforcement": "RECOMMENDED",
+        "action_on_violation": "WARN, allow evidence but note gap"
+      }
+    ]
+  },
+  
+  "audit_replay_support": {
+    "description": "Evidence structure supports complete audit replay of build process",
+    "replay_procedure": [
+      "Load build-initiation evidence to establish initial state",
+      "Load validation-results evidence to verify pre-conditions met",
+      "Load all iteration evidence in sequence to replay build progression",
+      "Load final-validation evidence to verify completion state",
+      "Compare final state from replay with actual completion state",
+      "Flag any discrepancies as potential integrity issues"
+    ],
+    "required_evidence_chain": [
+      "build-initiation (1 required)",
+      "validation-results (1 required)",
+      "iteration (1+ required)",
+      "final-validation (1 required for successful builds)"
+    ]
+  },
+  
+  "compliance_control_mapping": {
+    "description": "How evidence maps to compliance controls in compliance-control-library.json",
+    "mappings": [
+      {
+        "evidence_type": "build-initiation",
+        "controls": [
+          "ISO_27001:A.8.1 - Responsibility for assets (architecture reference)",
+          "ISO_27001:A.12.1 - Operational procedures (build initiation)",
+          "NIST_CSF:ID.AM - Asset Management (task identification)",
+          "COBIT:APO09 - Service Agreements (acceptance criteria)"
+        ]
+      },
+      {
+        "evidence_type": "validation-results",
+        "controls": [
+          "ISO_27001:A.14.2 - Security in development (architecture validation)",
+          "ISO_27001:A.18.2 - Compliance reviews (validation checks)",
+          "NIST_800_53:SA-11 - Developer Testing (QA suite validation)",
+          "COBIT:BAI03 - Solutions Development (validation gates)"
+        ]
+      },
+      {
+        "evidence_type": "iteration",
+        "controls": [
+          "ISO_27001:A.12.1.2 - Change management (code changes)",
+          "ISO_27001:A.14.2.9 - System acceptance testing (test progression)",
+          "NIST_800_53:SA-11 - Developer Testing (iteration testing)",
+          "COBIT:BAI06 - Manage Changes (iteration tracking)"
+        ]
+      },
+      {
+        "evidence_type": "final-validation",
+        "controls": [
+          "ISO_27001:A.14.2.8 - System security testing (final QA)",
+          "ISO_27001:A.14.2.9 - System acceptance testing (final validation)",
+          "NIST_800_53:SA-11 - Developer Testing (comprehensive validation)",
+          "NIST_800_53:CM-4 - Security Impact Analysis (interface integrity)",
+          "COBIT:BAI03.10 - Maintain systems (build quality)",
+          "COBIT:APO11 - Quality Management (quality gates)"
+        ]
+      }
+    ]
+  }
+}
