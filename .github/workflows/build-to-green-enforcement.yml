@@ -32,14 +32,32 @@ jobs:
       - name: Detect Test Debt
         id: test_debt
         run: |
-          echo "🔍 Scanning for test debt..."
-          python foreman/scripts/detect-test-debt.py --test-dir tests --json > test-debt-report.json
+          echo "🔍 Scanning for test debt (including suppression patterns)..."
+          echo ""
           
-          # Check exit code
-          if [ $? -ne 0 ]; then
+          # Run detection with human-readable output first
+          set +e  # Don't exit on error
+          python foreman/scripts/detect-test-debt.py --test-dir tests
+          HUMAN_EXIT=$?
+          set -e  # Re-enable exit on error
+          
+          echo ""
+          echo "---"
+          echo ""
+          
+          # Generate JSON report for artifact
+          set +e
+          python foreman/scripts/detect-test-debt.py --test-dir tests --json > test-debt-report.json
+          JSON_EXIT=$?
+          set -e
+          
+          # Check exit code and fail if debt detected
+          if [ $HUMAN_EXIT -ne 0 ] || [ $JSON_EXIT -ne 0 ]; then
+            echo ""
             echo "❌ TEST DEBT DETECTED"
-            cat test-debt-report.json
             echo "::error::Test debt detected - build BLOCKED by Zero Test Debt Constitutional Rule"
+            echo ""
+            echo "📋 Remember: Use Enhancement Parking Lot (foreman/admin/enhancement-parking-lot-spec.md) for incomplete features"
             exit 1
           else
             echo "✅ No test debt detected"
@@ -74,7 +92,7 @@ jobs:
       - name: Validate QA Green (100% Pass)
         id: qa_green
         run: |
-          echo "🔍 Validating QA green status..."
+          echo "🔍 Validating QA green status (excluding wave0_minimum_red intentionally RED tests)..."
           python foreman/scripts/validate-qa-green.py --test-dir tests --json > qa-green-report.json
           
           # Check exit code
@@ -115,10 +133,10 @@ jobs:
           
       - name: Check for Suppressed Failures
         run: |
-          echo "🔍 Checking for suppressed failures..."
+          echo "🔍 Checking for suppressed failures (excluding wave0_minimum_red intentionally RED tests)..."
           
-          # Run tests with strict mode
-          python -m pytest tests/ -v --strict-markers --tb=short -W error 2>&1 | tee test-output.txt
+          # Run tests with strict mode, excluding wave0
+          python -m pytest tests/ --ignore=tests/wave0_minimum_red -v --strict-markers --tb=short -W error 2>&1 | tee test-output.txt
           EXIT_CODE=${PIPESTATUS[0]}
           
           # Check for any indication of suppressed failures
@@ -129,10 +147,15 @@ jobs:
           fi
           
           # Check for .only() in test files (should have been caught by test debt check)
-          if find tests -name "*.py" -o -name "*.js" -o -name "*.ts" | xargs grep -l "\.only(" 2>/dev/null; then
-            echo "❌ FOCUSED TESTS DETECTED"
-            echo "::error::.only() tests detected - all tests must run"
-            exit 1
+          # Use -f to check if tests directory exists before searching
+          if [ -d tests ]; then
+            ONLY_MATCHES=$(find tests -type f \( -name "*.py" -o -name "*.js" -o -name "*.ts" \) -exec grep -l "\.only(" {} + || echo "")
+            if [ -n "$ONLY_MATCHES" ]; then
+              echo "❌ FOCUSED TESTS DETECTED"
+              echo "$ONLY_MATCHES"
+              echo "::error::.only() tests detected - all tests must run"
+              exit 1
+            fi
           fi
           
           echo "✅ No suppressed failures detected"
