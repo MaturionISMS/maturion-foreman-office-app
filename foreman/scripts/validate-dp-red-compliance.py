@@ -10,11 +10,9 @@ Authority: foreman/qa/dp-red-registry-spec.md
 
 import json
 import sys
-import os
 from pathlib import Path
 from datetime import datetime
-from typing import Dict, List, Tuple, Set
-import subprocess
+from typing import Dict, List, Tuple, Set, Optional
 import argparse
 
 
@@ -287,19 +285,25 @@ class DPREDValidator:
                     f"Found {len(entries)} entries. All tests must be GREEN before build phase."
                 )
     
-    def _get_failing_tests(self) -> Set[str]:
-        """Get list of currently failing tests."""
-        try:
-            # Run pytest to collect test results
-            # Use --collect-only to avoid actually running tests (faster)
-            # Then check which tests are known to fail from previous runs
-            
-            # For now, return None to indicate we can't verify
-            # In production, this would integrate with test runner
-            return None
-            
-        except Exception as e:
-            return None
+    def _get_failing_tests(self) -> Optional[Set[str]]:
+        """Get list of currently failing tests.
+        
+        Returns None if test execution is not available or fails.
+        In production, this would integrate with the test runner.
+        """
+        # NOTE: Test mapping validation is currently a warning-only feature
+        # because we cannot reliably execute tests during validation.
+        # This prevents false positives from blocking merges.
+        # 
+        # In a full implementation, this would:
+        # 1. Run pytest with --collect-only to list tests
+        # 2. Run pytest to get actual results
+        # 3. Return set of failing test IDs/paths
+        #
+        # For now, we return None to indicate "cannot verify"
+        # which triggers a warning instead of an error.
+        
+        return None
     
     def _generate_report(self) -> Dict:
         """Generate validation report."""
@@ -313,7 +317,7 @@ class DPREDValidator:
         
         report = {
             'success': len(self.errors) == 0,
-            'timestamp': datetime.utcnow().isoformat() + 'Z',
+            'timestamp': datetime.now().astimezone().isoformat(),
             'schema_version': self.SCHEMA_VERSION,
             'current_phase': self.current_phase,
             'registry_phase': self.registry.get('phase') if self.registry else None,
