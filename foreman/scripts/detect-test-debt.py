@@ -38,6 +38,16 @@ class TestDebtDetector:
         r'@unittest\.skip',
     ]
     
+    # Patterns for conditional suppression (test dodging)
+    SUPPRESSION_PATTERNS = [
+        r'\|\|\s*true\b',  # || true
+        r'2>/dev/null',    # Stderr suppression
+        r'2>&1\s*\|\s*true',  # Combined suppression
+        r'--passWithNoTests',  # Jest pass with no tests
+        r'-x\s+\|\|\s*true',  # Exit on first failure suppressed
+        r';\s*true\s*$',  # Command followed by true to ignore exit code
+    ]
+    
     TODO_PATTERNS = [
         r'#\s*TODO',
         r'#\s*FIXME',
@@ -72,9 +82,56 @@ class TestDebtDetector:
         
         for test_file in test_files:
             self._scan_file(test_file)
+        
+        # Also scan CI/workflow files for suppression patterns
+        self._scan_ci_files()
             
         has_debt = len(self.violations) > 0
         return has_debt, self.violations
+        
+    def _scan_ci_files(self):
+        """Scan CI/workflow files and scripts for suppression patterns"""
+        ci_paths = [
+            Path(".github/workflows"),
+            Path(".github/actions"),
+            Path("scripts"),
+        ]
+        
+        for ci_path in ci_paths:
+            if not ci_path.exists():
+                continue
+                
+            # Find YAML and shell script files
+            ci_files = list(ci_path.glob("**/*.yml"))
+            ci_files.extend(ci_path.glob("**/*.yaml"))
+            ci_files.extend(ci_path.glob("**/*.sh"))
+            
+            for ci_file in ci_files:
+                self._scan_file_for_suppression(ci_file)
+    
+    def _scan_file_for_suppression(self, file_path: Path):
+        """Scan a file specifically for suppression patterns"""
+        try:
+            content = file_path.read_text()
+            lines = content.split('\n')
+            
+            for line_num, line in enumerate(lines, 1):
+                # Check only suppression patterns in CI files
+                for pattern in self.SUPPRESSION_PATTERNS:
+                    if re.search(pattern, line):
+                        self.violations.append({
+                            "type": "test_suppression",
+                            "file": str(file_path),
+                            "line": line_num,
+                            "content": line.strip(),
+                            "pattern": pattern,
+                            "severity": "CRITICAL",
+                            "message": "Test failure suppression detected in CI/script - hiding failures is forbidden",
+                            "remedy": "Remove suppression and fix the underlying failures"
+                        })
+        except Exception as e:
+            # Silently skip files that can't be read
+            pass
         
     def _find_test_files(self) -> List[Path]:
         """Find all test files in test directory"""
@@ -108,8 +165,10 @@ class TestDebtDetector:
                             "file": str(file_path),
                             "line": line_num,
                             "content": line.strip(),
+                            "pattern": pattern,
                             "severity": "HIGH",
-                            "message": "Skipped test detected - tests must not be skipped"
+                            "message": "Skipped test detected - tests must not be skipped",
+                            "remedy": "Use Enhancement Parking Lot (foreman/admin/enhancement-parking-lot-spec.md) to track incomplete features"
                         })
                         
                 # TODO/FIXME patterns
@@ -120,8 +179,24 @@ class TestDebtDetector:
                             "file": str(file_path),
                             "line": line_num,
                             "content": line.strip(),
+                            "pattern": pattern,
                             "severity": "HIGH",
-                            "message": "TODO/FIXME marker in test - tests must be complete"
+                            "message": "TODO/FIXME marker in test - tests must be complete",
+                            "remedy": "Complete the test or use Enhancement Parking Lot to track future work"
+                        })
+                        
+                # Suppression patterns (test dodging)
+                for pattern in self.SUPPRESSION_PATTERNS:
+                    if re.search(pattern, line):
+                        self.violations.append({
+                            "type": "test_suppression",
+                            "file": str(file_path),
+                            "line": line_num,
+                            "content": line.strip(),
+                            "pattern": pattern,
+                            "severity": "CRITICAL",
+                            "message": "Test failure suppression detected - hiding failures is forbidden",
+                            "remedy": "Fix failing tests or use Enhancement Parking Lot for incomplete features"
                         })
                         
             # Check for stub patterns (multi-line)
@@ -133,8 +208,10 @@ class TestDebtDetector:
                         "file": str(file_path),
                         "line": line_num,
                         "content": match.group(0).strip()[:100],
+                        "pattern": pattern,
                         "severity": "HIGH",
-                        "message": "Stub or incomplete test detected"
+                        "message": "Stub or incomplete test detected",
+                        "remedy": "Complete the test with proper assertions or remove it"
                     })
                     
             # Check for commented out test blocks
@@ -170,7 +247,8 @@ class TestDebtDetector:
                             "line": comment_start,
                             "content": f"Commented test block ({len(comment_lines)} lines)",
                             "severity": "HIGH",
-                            "message": "Commented out test code detected - remove or uncomment"
+                            "message": "Commented out test code detected - remove or uncomment",
+                            "remedy": "Uncomment and fix the test, or delete if no longer needed"
                         })
                         
                 in_comment_block = False
@@ -182,9 +260,11 @@ class TestDebtDetector:
             return "✅ No test debt detected"
             
         report_lines = [
-            "❌ TEST DEBT DETECTED",
+            "❌ TEST DEBT DETECTED - BUILD BLOCKED",
             "=" * 80,
             f"Total violations: {len(self.violations)}",
+            "",
+            "GREEN must never be achieved by omission.",
             "",
             "VIOLATIONS:",
             ""
@@ -199,19 +279,31 @@ class TestDebtDetector:
             by_type[vtype].append(violation)
             
         for vtype, violations in sorted(by_type.items()):
-            report_lines.append(f"{vtype.upper().replace('_', ' ')}: {len(violations)}")
-            for v in violations[:10]:  # Show first 10 of each type
-                report_lines.append(f"  - {v['file']}:{v['line']}")
-                report_lines.append(f"    {v['content'][:100]}")
+            report_lines.append(f"\n{vtype.upper().replace('_', ' ')}: {len(violations)}")
+            report_lines.append("-" * 80)
+            for i, v in enumerate(violations[:10], 1):  # Show first 10 of each type
+                report_lines.append(f"\n{i}. File: {v['file']}")
+                report_lines.append(f"   Line: {v['line']}")
+                report_lines.append(f"   Pattern: {v.get('pattern', 'N/A')}")
+                report_lines.append(f"   Code: {v['content'][:100]}")
+                report_lines.append(f"   ❌ Issue: {v['message']}")
+                report_lines.append(f"   ✅ Fix: {v.get('remedy', 'See Zero Test Debt Constitutional Rule')}")
             if len(violations) > 10:
-                report_lines.append(f"  ... and {len(violations) - 10} more")
+                report_lines.append(f"\n... and {len(violations) - 10} more")
             report_lines.append("")
             
         report_lines.extend([
             "=" * 80,
             "Build BLOCKED by Zero Test Debt Constitutional Rule",
+            "",
             "All test debt must be fixed before merge.",
-            "See: foreman/governance/zero-test-debt-constitutional-rule.md"
+            "",
+            "📋 APPROVED ALTERNATIVE FOR INCOMPLETE FEATURES:",
+            "   Use Enhancement Parking Lot to explicitly track deferred work:",
+            "   foreman/admin/enhancement-parking-lot-spec.md",
+            "",
+            "For complete guidance, see:",
+            "   foreman/governance/zero-test-debt-constitutional-rule.md"
         ])
         
         return '\n'.join(report_lines)

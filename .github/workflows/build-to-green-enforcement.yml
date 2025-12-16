@@ -129,10 +129,15 @@ jobs:
           fi
           
           # Check for .only() in test files (should have been caught by test debt check)
-          if find tests -name "*.py" -o -name "*.js" -o -name "*.ts" | xargs grep -l "\.only(" 2>/dev/null; then
-            echo "❌ FOCUSED TESTS DETECTED"
-            echo "::error::.only() tests detected - all tests must run"
-            exit 1
+          # Use -f to check if tests directory exists before searching
+          if [ -d tests ]; then
+            ONLY_MATCHES=$(find tests -type f \( -name "*.py" -o -name "*.js" -o -name "*.ts" \) -exec grep -l "\.only(" {} + || echo "")
+            if [ -n "$ONLY_MATCHES" ]; then
+              echo "❌ FOCUSED TESTS DETECTED"
+              echo "$ONLY_MATCHES"
+              echo "::error::.only() tests detected - all tests must run"
+              exit 1
+            fi
           fi
           
           echo "✅ No suppressed failures detected"
