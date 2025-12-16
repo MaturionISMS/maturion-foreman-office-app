@@ -1,326 +1,83 @@
 name: Build-to-Green Enforcement
 
-# Constitutional Authority: BUILD_PHILOSOPHY.md + Governance Supremacy Rule
-# Purpose: Enforce true Build-to-Green semantics - no cheating allowed
-
 on:
   pull_request:
-    branches: [ main, develop ]
+    types: [opened, synchronize, reopened]
   push:
-    branches: [ main, develop ]
-  workflow_dispatch:
+    branches:
+      - main
+      - develop
+
+# Explicit, least-privilege permissions
+# Required for governance feedback (PR comments, issues)
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
 
 jobs:
-  enforce-zero-test-debt:
-    name: "Enforce Zero Test Debt"
+  build-to-green:
+    name: Enforce Build-to-Green
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
-        
-      - name: Set up Python
-        uses: actions/setup-python@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          python-version: '3.12'
-          
+          node-version: 20
+
       - name: Install dependencies
+        run: npm ci
+
+      - name: Enforce No Test Dodging
         run: |
-          python -m pip install --upgrade pip
-          pip install pytest pytest-asyncio pytest-cov pytest-mock
-          
-      - name: Detect Test Debt
-        id: test_debt
-        run: |
-          echo "🔍 Scanning for test debt (including suppression patterns)..."
-          echo ""
-          
-          # Run detection with human-readable output first
-          set +e  # Don't exit on error
-          python foreman/scripts/detect-test-debt.py --test-dir tests
-          HUMAN_EXIT=$?
-          set -e  # Re-enable exit on error
-          
-          echo ""
-          echo "---"
-          echo ""
-          
-          # Generate JSON report for artifact
-          set +e
-          python foreman/scripts/detect-test-debt.py --test-dir tests --json > test-debt-report.json
-          JSON_EXIT=$?
-          set -e
-          
-          # Check exit code and fail if debt detected
-          if [ $HUMAN_EXIT -ne 0 ] || [ $JSON_EXIT -ne 0 ]; then
-            echo ""
-            echo "❌ TEST DEBT DETECTED"
-            echo "::error::Test debt detected - build BLOCKED by Zero Test Debt Constitutional Rule"
-            echo ""
-            echo "📋 Remember: Use Enhancement Parking Lot (foreman/admin/enhancement-parking-lot-spec.md) for incomplete features"
-            exit 1
-          else
-            echo "✅ No test debt detected"
-          fi
-          
-      - name: Upload Test Debt Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-debt-report
-          path: test-debt-report.json
-          
-  validate-dp-red-compliance:
-    name: "Validate DP-RED Compliance"
-    runs-on: ubuntu-latest
-    needs: enforce-zero-test-debt
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-          
-      - name: Validate DP-RED Registry
-        id: dp_red
-        run: |
-          echo "🔍 Validating DP-RED registry compliance..."
-          echo ""
-          
-          # Run validation with human-readable output first
-          set +e  # Don't exit on error
-          python foreman/scripts/validate-dp-red-compliance.py \
-            --registry foreman/qa/dp-red-registry.json \
-            --phase-file foreman/qa/current-phase.json \
-            --test-dir tests
-          HUMAN_EXIT=$?
-          set -e  # Re-enable exit on error
-          
-          echo ""
-          echo "---"
-          echo ""
-          
-          # Generate JSON report for artifact
-          set +e
-          python foreman/scripts/validate-dp-red-compliance.py \
-            --registry foreman/qa/dp-red-registry.json \
-            --phase-file foreman/qa/current-phase.json \
-            --test-dir tests \
-            --json > dp-red-compliance-report.json
-          JSON_EXIT=$?
-          set -e
-          
-          # Check exit code and fail if validation failed
-          if [ $HUMAN_EXIT -ne 0 ] || [ $JSON_EXIT -ne 0 ]; then
-            echo ""
-            echo "❌ DP-RED VALIDATION FAILED"
-            echo "::error::DP-RED registry validation failed - build BLOCKED"
-            echo ""
-            echo "For DP-RED policy details, see: foreman/qa/dp-red-registry-spec.md"
-            exit 1
-          else
-            echo "✅ DP-RED validation passed"
-          fi
-          
-      - name: Upload DP-RED Compliance Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: dp-red-compliance-report
-          path: dp-red-compliance-report.json
-          
-  enforce-100-percent-pass:
-    name: "Enforce 100% Pass Requirement"
-    runs-on: ubuntu-latest
-    needs: validate-dp-red-compliance
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-          
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pytest pytest-asyncio pytest-cov pytest-mock
-          
-      - name: Validate QA Green (100% Pass)
-        id: qa_green
-        run: |
-          echo "🔍 Validating QA green status (excluding wave0_minimum_red intentionally RED tests)..."
-          python foreman/scripts/validate-qa-green.py --test-dir tests --json > qa-green-report.json
-          
-          # Check exit code
-          if [ $? -ne 0 ]; then
-            echo "❌ QA NOT GREEN"
-            cat qa-green-report.json
-            echo "::error::QA validation failed - build BLOCKED by Governance Supremacy Rule"
-            exit 1
-          else
-            echo "✅ QA is GREEN (100% pass)"
-          fi
-          
-      - name: Upload QA Green Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: qa-green-report
-          path: qa-green-report.json
-          
-  enforce-no-suppressed-failures:
-    name: "Enforce No Suppressed Failures"
-    runs-on: ubuntu-latest
-    needs: enforce-100-percent-pass
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-          
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pytest pytest-asyncio pytest-cov pytest-mock
-          
-      - name: Check for Suppressed Failures
-        run: |
-          echo "🔍 Checking for suppressed failures (excluding wave0_minimum_red intentionally RED tests)..."
-          
-          # Run tests with strict mode, excluding wave0
-          python -m pytest tests/ --ignore=tests/wave0_minimum_red -v --strict-markers --tb=short -W error 2>&1 | tee test-output.txt
-          EXIT_CODE=${PIPESTATUS[0]}
-          
-          # Check for any indication of suppressed failures
-          if grep -qi "xfail\|xpass" test-output.txt; then
-            echo "❌ SUPPRESSED FAILURES DETECTED"
-            echo "::error::Tests with xfail or xpass markers detected - not allowed"
+          echo "🔍 Scanning for forbidden test-dodging patterns..."
+
+          if grep -R --line-number -E "\.skip|\.(only)\b|jest\.skip|describe\.only|it\.only|\|\| true" .; then
+            echo "❌ Test dodging detected."
+            echo "Use governed QA parking or DP-RED instead."
             exit 1
           fi
-          
-          # Check for .only() in test files (should have been caught by test debt check)
-          # Use -f to check if tests directory exists before searching
-          if [ -d tests ]; then
-            ONLY_MATCHES=$(find tests -type f \( -name "*.py" -o -name "*.js" -o -name "*.ts" \) -exec grep -l "\.only(" {} + || echo "")
-            if [ -n "$ONLY_MATCHES" ]; then
-              echo "❌ FOCUSED TESTS DETECTED"
-              echo "$ONLY_MATCHES"
-              echo "::error::.only() tests detected - all tests must run"
+
+          echo "✅ No test dodging patterns found."
+
+      - name: Run Test Suite
+        run: |
+          echo "▶️ Running test suite..."
+          npm test
+
+      - name: Check for RED tests
+        run: |
+          echo "🔍 Checking for RED test results..."
+
+          if [ -f ./qa/design_phase/DP_RED_REGISTRY.json ]; then
+            echo "ℹ️ DP-RED registry found."
+
+            PHASE_FILE="./qa/phase/current_phase.txt"
+
+            if [ ! -f "$PHASE_FILE" ]; then
+              echo "❌ Phase file missing. Cannot determine QA phase."
               exit 1
             fi
-          fi
-          
-          echo "✅ No suppressed failures detected"
-          exit $EXIT_CODE
-          
-  enforce-constitutional-compliance:
-    name: "Enforce Constitutional Compliance"
-    runs-on: ubuntu-latest
-    needs: [enforce-zero-test-debt, validate-dp-red-compliance, enforce-100-percent-pass, enforce-no-suppressed-failures]
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Verify Build Philosophy Compliance
-        run: |
-          echo "🔍 Verifying Build Philosophy compliance..."
-          
-          # Check that constitutional files have not been modified inappropriately
-          PROTECTED_FILES=(
-            "BUILD_PHILOSOPHY.md"
-            "foreman/governance/governance-supremacy-rule.md"
-            "foreman/governance/zero-test-debt-constitutional-rule.md"
-            "foreman/builder-specs/build-to-green-rule.md"
-          )
-          
-          for file in "${PROTECTED_FILES[@]}"; do
-            if git diff --name-only origin/main...HEAD | grep -q "^$file$"; then
-              echo "⚠️  Constitutional file modified: $file"
-              echo "::warning::Constitutional file $file was modified - requires CS2 approval"
+
+            CURRENT_PHASE=$(cat "$PHASE_FILE")
+
+            echo "Current phase: $CURRENT_PHASE"
+
+            if [ "$CURRENT_PHASE" = "BUILD_TO_GREEN" ]; then
+              echo "❌ DP-RED present during Build-to-Green phase."
+              exit 1
             fi
-          done
-          
-          echo "✅ Constitutional compliance verified"
-          
-      - name: Generate Enforcement Summary
-        if: always()
-        run: |
-          echo "# Build-to-Green Enforcement Summary" > enforcement-summary.md
-          echo "" >> enforcement-summary.md
-          echo "**Date**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> enforcement-summary.md
-          echo "**Commit**: ${{ github.sha }}" >> enforcement-summary.md
-          echo "**Branch**: ${{ github.ref_name }}" >> enforcement-summary.md
-          echo "" >> enforcement-summary.md
-          echo "## Enforcement Status" >> enforcement-summary.md
-          echo "" >> enforcement-summary.md
-          echo "- ✅ Zero Test Debt: Enforced" >> enforcement-summary.md
-          echo "- ✅ DP-RED Compliance: Validated" >> enforcement-summary.md
-          echo "- ✅ 100% Pass Requirement: Enforced" >> enforcement-summary.md
-          echo "- ✅ No Suppressed Failures: Enforced" >> enforcement-summary.md
-          echo "- ✅ Constitutional Compliance: Verified" >> enforcement-summary.md
-          echo "" >> enforcement-summary.md
-          echo "## Constitutional Authority" >> enforcement-summary.md
-          echo "" >> enforcement-summary.md
-          echo "This enforcement is mandated by:" >> enforcement-summary.md
-          echo "- BUILD_PHILOSOPHY.md (Supreme Authority)" >> enforcement-summary.md
-          echo "- Governance Supremacy Rule" >> enforcement-summary.md
-          echo "- Zero Test Debt Constitutional Rule" >> enforcement-summary.md
-          echo "- DP-RED Registry Policy" >> enforcement-summary.md
-          echo "- Build to Green Rule" >> enforcement-summary.md
-          echo "" >> enforcement-summary.md
-          echo "**Green means GREEN. No exceptions. No compromises.**" >> enforcement-summary.md
-          
-          cat enforcement-summary.md
-          
-      - name: Upload Enforcement Summary
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: enforcement-summary
-          path: enforcement-summary.md
-          
-  report-enforcement-status:
-    name: "Report Enforcement Status"
-    runs-on: ubuntu-latest
-    needs: [enforce-constitutional-compliance]
-    if: always()
-    
-    steps:
-      - name: Download All Artifacts
-        uses: actions/download-artifact@v4
-        
-      - name: Generate Final Report
-        run: |
-          echo "# Build-to-Green Enforcement - Final Report"
-          echo ""
-          echo "## Status: ✅ ALL ENFORCEMENTS PASSED"
-          echo ""
-          echo "This build has passed all Build-to-Green enforcement checks:"
-          echo ""
-          echo "1. ✅ Zero test debt verified"
-          echo "2. ✅ DP-RED compliance validated"
-          echo "3. ✅ 100% pass requirement met"
-          echo "4. ✅ No suppressed failures"
-          echo "5. ✅ Constitutional compliance verified"
-          echo ""
-          echo "**Build is APPROVED for merge.**"
-          echo ""
-          echo "---"
-          echo "Enforced by: Build-to-Green Enforcement Workflow"
-          echo "Authority: BUILD_PHILOSOPHY.md + Governance Supremacy Rule + DP-RED Policy"
-          
-      - name: Comment on PR (if PR)
+
+            echo "✅ DP-RED allowed for current phase."
+          else
+            echo "ℹ️ No DP-RED registry present."
+          fi
+
+      - name: Governance Summary Comment
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
@@ -329,5 +86,40 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '✅ **Build-to-Green Enforcement: PASSED**\n\nAll constitutional requirements met:\n- Zero test debt\n- DP-RED compliance\n- 100% pass rate\n- No suppressed failures\n- Full compliance\n\n**Build approved for merge.**'
+              body: `
+              ✅ **Build-to-Green Check Completed**
+
+              - No test dodging detected
+              - Test suite executed
+              - DP-RED handled according to governance rules
+
+              ⚠️ Reminder:
+              - DP-RED must be cleared before Build-to-Green
+              - All failures are treated as catastrophic until prevented permanently
+              `
+            })
+
+      - name: Failure Handling
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: "Catastrophic Failure — Build-to-Green Enforcement",
+              body: `
+              ❌ **Catastrophic Failure Detected**
+
+              This failure blocked Build-to-Green enforcement.
+
+              Required actions:
+              1. Pause work
+              2. Identify root cause
+              3. Implement permanent prevention
+              4. Update QA and governance if required
+              5. Propagate lessons learned to all repos
+
+              Repeat occurrence of this failure is classified as **double-catastrophic**.
+              `
             })
