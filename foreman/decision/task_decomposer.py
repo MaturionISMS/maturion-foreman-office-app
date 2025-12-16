@@ -3,4 +3,16 @@
 
 class TaskDecomposer:
     """Stub class for task decomposition logic"""
-    pass
+    
+    def decompose(self, architecture):
+        """
+        Decompose architecture into tasks.
+        
+        Args:
+            architecture: Architecture specification
+            
+        Returns:
+            List of tasks
+        """
+        # Stub implementation - returns empty list
+        return []
