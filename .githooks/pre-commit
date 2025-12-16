@@ -46,18 +46,18 @@ fi
 # Check for skip/todo/only patterns in staged test files
 echo "2. Checking staged test files for violations..."
 
-STAGED_TEST_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E 'test.*\.(py|js|ts)$' || true)
+STAGED_TEST_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E 'test.*\.(py|js|ts)$'; exit 0)
 
 if [ -n "$STAGED_TEST_FILES" ]; then
     VIOLATIONS_FOUND=0
     
     for file in $STAGED_TEST_FILES; do
-        # Check for .skip(), .todo(), .only()
+        # Check for test skip/focus patterns
         if grep -nE '\.skip\(|\.todo\(|\.only\(' "$file" > /dev/null 2>&1; then
             if [ $VIOLATIONS_FOUND -eq 0 ]; then
                 echo -e "${RED}❌ Test debt patterns found in staged files:${NC}"
             fi
-            echo "  - $file: Contains .skip(), .todo(), or .only()"
+            echo "  - $file: Contains test skip or focus patterns"
             VIOLATIONS_FOUND=1
         fi
         
