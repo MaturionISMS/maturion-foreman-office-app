@@ -100,6 +100,14 @@ it('should validate', () => {
 // tests/ directory in jest.config exclude list
 ```
 
+```bash
+# ❌ FORBIDDEN - Command-line suppression (hiding failures)
+pytest tests/ || true              # Exit code suppression
+npm test 2>/dev/null               # Stderr suppression
+./run-tests.sh 2>&1 | true         # Combined suppression
+jest --passWithNoTests             # Pass without running tests
+```
+
 #### 7. Failing Tests Carried Forward
 ```bash
 # ❌ FORBIDDEN
@@ -210,18 +218,26 @@ echo "✅ No test debt detected"
 **Automated checks in CI/CD pipeline**:
 
 ```yaml
-# .github/workflows/qa-validation.yml
-- name: Check for Test Debt
+# .github/workflows/build-to-green-enforcement.yml
+- name: Detect Test Debt
   run: |
-    # Fail if skipped tests found
-    ! grep -r "\.skip\|\.todo\|\.only" tests/
+    # Use comprehensive detection script that checks:
+    # - .skip, .todo, .only patterns
+    # - TODO/FIXME markers in tests
+    # - Stub tests with no assertions
+    # - Command-line suppression (|| true, 2>/dev/null, etc.)
+    # - Suppression in CI/workflow files
+    python foreman/scripts/detect-test-debt.py --test-dir tests
     
-    # Fail if TODO/FIXME in tests
-    ! grep -r "TODO\|FIXME" tests/*.test.*
-    
-    # Verify all tests run
-    npm test -- --coverage --maxWorkers=100%
+    # Script exits with code 1 if any debt detected
+    # Provides actionable error messages with:
+    # - File path and line number
+    # - Matched pattern
+    # - Issue description
+    # - Remedy (including Enhancement Parking Lot reference)
 ```
+
+**See**: `.github/workflows/build-to-green-enforcement.yml` for full implementation
 
 ### Foreman Pre-Build Validation
 

@@ -32,14 +32,32 @@ jobs:
       - name: Detect Test Debt
         id: test_debt
         run: |
-          echo "🔍 Scanning for test debt..."
-          python foreman/scripts/detect-test-debt.py --test-dir tests --json > test-debt-report.json
+          echo "🔍 Scanning for test debt (including suppression patterns)..."
+          echo ""
           
-          # Check exit code
-          if [ $? -ne 0 ]; then
+          # Run detection with human-readable output first
+          set +e  # Don't exit on error
+          python foreman/scripts/detect-test-debt.py --test-dir tests
+          HUMAN_EXIT=$?
+          set -e  # Re-enable exit on error
+          
+          echo ""
+          echo "---"
+          echo ""
+          
+          # Generate JSON report for artifact
+          set +e
+          python foreman/scripts/detect-test-debt.py --test-dir tests --json > test-debt-report.json
+          JSON_EXIT=$?
+          set -e
+          
+          # Check exit code and fail if debt detected
+          if [ $HUMAN_EXIT -ne 0 ] || [ $JSON_EXIT -ne 0 ]; then
+            echo ""
             echo "❌ TEST DEBT DETECTED"
-            cat test-debt-report.json
             echo "::error::Test debt detected - build BLOCKED by Zero Test Debt Constitutional Rule"
+            echo ""
+            echo "📋 Remember: Use Enhancement Parking Lot (foreman/admin/enhancement-parking-lot-spec.md) for incomplete features"
             exit 1
           else
             echo "✅ No test debt detected"
