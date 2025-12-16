@@ -1,0 +1,39 @@
+{
+  "failure_id": "FLCI-YYYYMMDD-NNN",
+  "before_coverage": {
+    "total_tests": 0,
+    "coverage_percentage": 0.0,
+    "covered_lines": 0,
+    "total_lines": 0,
+    "by_test_type": {
+      "unit": 0,
+      "integration": 0,
+      "e2e": 0,
+      "regression": 0
+    }
+  },
+  "after_coverage": {
+    "total_tests": 0,
+    "coverage_percentage": 0.0,
+    "covered_lines": 0,
+    "total_lines": 0,
+    "by_test_type": {
+      "unit": 0,
+      "integration": 0,
+      "e2e": 0,
+      "regression": 0
+    }
+  },
+  "coverage_improvement": {
+    "tests_added": 1,
+    "lines_added": 0,
+    "percentage_increase": 0.0,
+    "gap_filled": "<Description of coverage gap that was filled (minimum 20 characters)>"
+  },
+  "evidence_metadata": {
+    "schema_version": "1.0.0",
+    "immutable": true,
+    "parent_evidence_id": "FLCI-YYYYMMDD-NNN/failure-report.json",
+    "governance_gate_version": "1.0.0"
+  }
+}

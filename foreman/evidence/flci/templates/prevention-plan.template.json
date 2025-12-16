@@ -1,0 +1,55 @@
+{
+  "failure_id": "FLCI-YYYYMMDD-NNN",
+  "immediate_fix": {
+    "applied": true,
+    "description": "<Description of the immediate fix (minimum 20 characters)>",
+    "fix_timestamp": "YYYY-MM-DDTHH:MM:SS.sssZ",
+    "fix_pr": "<Link to PR that contains the fix>",
+    "validation_method": "<How the fix was validated>"
+  },
+  "permanent_prevention": {
+    "test_coverage_updates": {
+      "tests_added": [
+        {
+          "type": "unit",
+          "file_path": "<Path to test file>",
+          "test_name": "<Name of the test>",
+          "purpose": "<What this test prevents (minimum 20 characters)>",
+          "coverage_gap_filled": "<What coverage gap this fills>"
+        }
+      ],
+      "coverage_gap_analysis": "<Analysis of what test coverage was missing and why (minimum 30 characters)>"
+    },
+    "architecture_updates": {
+      "required": false,
+      "updates": []
+    },
+    "governance_updates": {
+      "required": false,
+      "updates": []
+    },
+    "prevention_mechanism": "<Detailed explanation of how this defect will be caught forever (minimum 50 characters)>"
+  },
+  "validation": {
+    "prevention_validated": true,
+    "validated_by": "Foreman",
+    "validation_timestamp": "YYYY-MM-DDTHH:MM:SS.sssZ",
+    "validation_notes": "<Notes from validation>",
+    "validation_evidence": [
+      "<Link to test run showing prevention works>",
+      "<Link to CI passing with new tests>"
+    ]
+  },
+  "evidence_metadata": {
+    "schema_version": "1.0.0",
+    "immutable": true,
+    "parent_evidence_id": "FLCI-YYYYMMDD-NNN/failure-report.json",
+    "governance_gate_version": "1.0.0",
+    "compliance_mappings": [
+      "ISO_27001:A.16.1.6 - Learning from information security incidents",
+      "ISO_27001:A.14.2.8 - System security testing",
+      "NIST_800_53:SA-11 - Developer Testing and Evaluation",
+      "COBIT:APO11 - Manage Quality"
+    ]
+  }
+}
