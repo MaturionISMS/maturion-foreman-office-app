@@ -1,0 +1,121 @@
+#!/bin/bash
+#
+# Pre-commit Hook for Build-to-Green Enforcement
+#
+# Constitutional Authority: Zero Test Debt Constitutional Rule
+# Purpose: Prevent test debt from entering the repository
+#
+# Installation:
+#   cp .githooks/pre-commit .git/hooks/pre-commit
+#   chmod +x .git/hooks/pre-commit
+#
+
+set -e
+
+echo "🔍 Build-to-Green Enforcement: Pre-commit checks..."
+echo ""
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Check if test debt detection script exists
+if [ ! -f "foreman/scripts/detect-test-debt.py" ]; then
+    echo -e "${YELLOW}⚠️  Test debt detection script not found${NC}"
+    echo "Skipping test debt check"
+    exit 0
+fi
+
+# Run test debt detection
+echo "1. Checking for test debt..."
+if python3 foreman/scripts/detect-test-debt.py --test-dir tests > /dev/null 2>&1; then
+    echo -e "${GREEN}✅ No test debt detected${NC}"
+else
+    echo -e "${RED}❌ TEST DEBT DETECTED${NC}"
+    echo ""
+    python3 foreman/scripts/detect-test-debt.py --test-dir tests
+    echo ""
+    echo -e "${RED}Commit BLOCKED by Zero Test Debt Constitutional Rule${NC}"
+    echo "Please fix all test debt before committing."
+    echo ""
+    exit 1
+fi
+
+# Check for skip/todo/only patterns in staged test files
+echo "2. Checking staged test files for violations..."
+
+STAGED_TEST_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E 'test.*\.(py|js|ts)$' || true)
+
+if [ -n "$STAGED_TEST_FILES" ]; then
+    VIOLATIONS_FOUND=0
+    
+    for file in $STAGED_TEST_FILES; do
+        # Check for .skip(), .todo(), .only()
+        if grep -nE '\.skip\(|\.todo\(|\.only\(' "$file" > /dev/null 2>&1; then
+            if [ $VIOLATIONS_FOUND -eq 0 ]; then
+                echo -e "${RED}❌ Test debt patterns found in staged files:${NC}"
+            fi
+            echo "  - $file: Contains .skip(), .todo(), or .only()"
+            VIOLATIONS_FOUND=1
+        fi
+        
+        # Check for TODO/FIXME in test files
+        if grep -nE '(TODO|FIXME|XXX)' "$file" > /dev/null 2>&1; then
+            if [ $VIOLATIONS_FOUND -eq 0 ]; then
+                echo -e "${RED}❌ Test debt patterns found in staged files:${NC}"
+            fi
+            echo "  - $file: Contains TODO/FIXME markers"
+            VIOLATIONS_FOUND=1
+        fi
+    done
+    
+    if [ $VIOLATIONS_FOUND -eq 1 ]; then
+        echo ""
+        echo -e "${RED}Commit BLOCKED by Zero Test Debt Constitutional Rule${NC}"
+        echo "Please remove test debt markers before committing."
+        echo ""
+        exit 1
+    fi
+    
+    echo -e "${GREEN}✅ No violations in staged test files${NC}"
+else
+    echo "   No test files staged for commit"
+fi
+
+# Check for modifications to protected constitutional files
+echo "3. Checking for protected file modifications..."
+
+PROTECTED_FILES=(
+    "BUILD_PHILOSOPHY.md"
+    "foreman/governance/governance-supremacy-rule.md"
+    "foreman/governance/zero-test-debt-constitutional-rule.md"
+    "foreman/builder-specs/build-to-green-rule.md"
+)
+
+PROTECTED_MODIFIED=0
+for file in "${PROTECTED_FILES[@]}"; do
+    if git diff --cached --name-only | grep -q "^$file$"; then
+        if [ $PROTECTED_MODIFIED -eq 0 ]; then
+            echo -e "${YELLOW}⚠️  Constitutional file(s) modified:${NC}"
+        fi
+        echo "  - $file"
+        PROTECTED_MODIFIED=1
+    fi
+done
+
+if [ $PROTECTED_MODIFIED -eq 1 ]; then
+    echo ""
+    echo -e "${YELLOW}⚠️  You are modifying constitutional files.${NC}"
+    echo "This requires CS2 approval. Proceed with caution."
+    echo ""
+    # Don't block, but warn
+fi
+
+# All checks passed
+echo ""
+echo -e "${GREEN}✅ All pre-commit checks passed${NC}"
+echo ""
+
+exit 0
