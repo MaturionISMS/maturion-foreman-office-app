@@ -10,11 +10,43 @@ Expected: All tests RED (failing) until implementation exists.
 import pytest
 import json
 from pathlib import Path
-from jsonschema import validate, ValidationError, Draft7Validator
+from jsonschema import validate, ValidationError, Draft7Validator, RefResolver
 from datetime import datetime
 
 
 SCHEMA_PATH = Path("foreman/evidence/EVIDENCE_SCHEMA_CANON.json")
+
+
+def get_validator_for_evidence_type(evidence_type):
+    """
+    Get a JSON schema validator for a specific evidence type.
+    
+    Args:
+        evidence_type: Type of evidence (build-initiation, iteration, etc.)
+    
+    Returns:
+        Draft7Validator configured with schema and resolver
+    """
+    with open(SCHEMA_PATH) as f:
+        canon = json.load(f)
+    
+    # We need to pass the entire canon as the base schema so refs can be resolved
+    # But we only want to validate against one schema, so we'll pull out the schema
+    # and create a custom root schema that includes both definitions and the target schema
+    
+    evidence_schema = canon['schemas'][evidence_type]
+    
+    # Create a root schema that includes definitions from canon
+    root_schema = {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "definitions": canon.get('definitions', {}),
+        **evidence_schema  # Merge the evidence schema into root
+    }
+    
+    # Create validator with the combined schema
+    validator = Draft7Validator(root_schema)
+    
+    return validator
 
 
 @pytest.mark.evidence
@@ -26,7 +58,7 @@ class TestEvidenceSchemaValidation:
         """
         Test that EVIDENCE_SCHEMA_CANON.json exists and is valid JSON.
         
-        Expected to FAIL: No canonical schema exists yet.
+        Expected to PASS: Schema now exists.
         """
         assert SCHEMA_PATH.exists(), \
             f"Canonical evidence schema must exist at {SCHEMA_PATH}"
@@ -45,12 +77,9 @@ class TestEvidenceSchemaValidation:
         """
         Test that valid build-initiation evidence passes schema validation.
         
-        Expected to FAIL: No schema validator implemented yet.
+        Expected to PASS: Schema validation now works.
         """
-        with open(SCHEMA_PATH) as f:
-            canon = json.load(f)
-        
-        schema = canon['schemas']['build-initiation']
+        validator = get_validator_for_evidence_type('build-initiation')
         
         # Valid evidence
         valid_evidence = {
@@ -79,18 +108,15 @@ class TestEvidenceSchemaValidation:
         }
         
         # Should not raise ValidationError
-        validate(instance=valid_evidence, schema=schema)
+        validator.validate(valid_evidence)
     
     def test_build_initiation_schema_rejects_invalid_evidence(self):
         """
         Test that invalid build-initiation evidence fails schema validation.
         
-        Expected to FAIL: No schema validator implemented yet.
+        Expected to PASS: Schema validation rejects invalid evidence.
         """
-        with open(SCHEMA_PATH) as f:
-            canon = json.load(f)
-        
-        schema = canon['schemas']['build-initiation']
+        validator = get_validator_for_evidence_type('build-initiation')
         
         # Invalid evidence - missing required fields
         invalid_evidence = {
@@ -99,7 +125,7 @@ class TestEvidenceSchemaValidation:
         }
         
         with pytest.raises(ValidationError):
-            validate(instance=invalid_evidence, schema=schema)
+            validator.validate(invalid_evidence)
     
     def test_build_initiation_enforces_immutability_flag(self):
         """
