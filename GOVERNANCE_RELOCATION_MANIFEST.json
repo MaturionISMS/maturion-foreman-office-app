@@ -402,7 +402,7 @@
     },
     {
       "source": "foreman/evidence/README.md",
-      "destination": "governance/specs/README.md",
+      "destination": "governance/specs/EVIDENCE_README.md",
       "category": "specs"
     },
     {
