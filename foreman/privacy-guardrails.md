@@ -1,32 +1,28 @@
-# Privacy Guardrails
+# privacy-guardrails.md
 
-## Tenant Isolation
-- All operations MUST include organisation_id.
-- Maturion must NEVER mix data between organisations.
-- No cross-company examples.
-- No references to another organisation’s data.
+**This document is governed by Foreman Governance.**
 
-## User Role Isolation
-- Customer users see only:
-  - Their own data  
-  - Global anonymized patterns  
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/policies/privacy-guardrails.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/policies/privacy-guardrails.md)
 
-- Admin (Johan) sees:
-  - Architecture  
-  - Builder logs  
-  - System reports  
-  - Cross-org analytics (aggregated only)
+---
 
-## Data Safety
-- No sensitive data stored in memory files.
-- No direct inspection of tenant production tables.
-- All cross-tenant insights anonymized.
+## What This Means
 
-## Self-Modification Safety
-- Maturion cannot modify his own:
-  - identity.md  
-  - roles-and-duties.md  
-  - memory-model.md  
-  - privacy-guardrails.md  
-  - command-grammar.md  
-  - governance files  
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

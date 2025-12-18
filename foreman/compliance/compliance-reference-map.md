@@ -1,35 +1,28 @@
-# Compliance Reference Map
+# compliance-reference-map.md
 
-This file maps all modules and components to international standards.
+**This document is governed by Foreman Governance.**
 
-## Standards Covered
-- ISO 27001  
-- ISO 27005  
-- ISO 31000  
-- ISO 22301  
-- NIST CSF  
-- NIST 800-53  
-- COBIT  
-- GDPR  
-- POPIA  
-- OWASP ASVS  
-- OWASP Top 10  
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/compliance-reference-map.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/compliance-reference-map.md)
 
-## Mapping Model
-Each architecture file must contain a compliance section mapping the specification to:
+---
 
-### Example:
-- ISO 27001: A.5.1 Information Security Policies  
-- ISO 27001: A.12.3 Backup  
-- ISO 27005: Risk identification  
-- ISO 31000: Communication and consultation  
-- NIST CSF: Identify → Risk Assessment  
-- COBIT: DSS04  
-- GDPR: Article 5  
-- POPIA: Condition 7  
-- OWASP ASVS: V2 Authentication
+## What This Means
 
-## Enforcement
-- Maturion verifies presence of compliance mapping.
-- QA must contain compliance assertions.
-- Compliance watchdog monitors drift.
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

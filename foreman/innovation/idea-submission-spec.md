@@ -1,26 +1,28 @@
-# Idea Submission Specification
+# idea-submission-spec.md
 
-## Purpose
-Allow users to submit enhancement ideas.
+**This document is governed by Foreman Governance.**
 
-## Submission Requirements
-- Title
-- Description
-- Context of usage
-- Module(s) affected
-- Business value
-- Screenshots (optional)
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/idea-submission-spec.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/idea-submission-spec.md)
 
-## Maturion Responsibilities
-- Summarize the idea
-- Confirm summary with user
-- Add metadata tags:
-  - UX
-  - New Feature
-  - Enhancement
-  - Compliance
-  - Integration
-  - Performance
-  - Architecture
+---
 
-- Submit idea into Innovation Board
+## What This Means
+
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

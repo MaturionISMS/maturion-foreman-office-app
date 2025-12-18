@@ -1,24 +1,28 @@
-# Architecture Folder Structure
+# architecture-folder-structure.md
 
-Every module MUST follow the structure:
+**This document is governed by Foreman Governance.**
 
-/apps/{module-name}/architecture/
-    true-north/
-    architecture/
-    integrations/
-    data/
-    frontend/
-    backend/
-    qa/
-    guides/
-    planning/
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/policies/architecture-folder-structure.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/policies/architecture-folder-structure.md)
 
-Each directory contains:
-- true-north: high-level definition  
-- architecture: design files  
-- data: schemas & models  
-- frontend: UI specs  
-- backend: edge & logic specs  
-- qa: QA & QA-of-QA  
-- guides: implementation guides  
-- planning: sprint plans & changelogs  
+---
+
+## What This Means
+
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

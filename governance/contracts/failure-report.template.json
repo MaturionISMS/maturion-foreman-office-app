@@ -1,0 +1,52 @@
+{
+  "failure_id": "FLCI-YYYYMMDD-NNN",
+  "reported_date": "YYYY-MM-DDTHH:MM:SS.sssZ",
+  "severity": {
+    "level": "catastrophic",
+    "justification": "<Why this severity level was assigned>",
+    "occurrence_count": 1,
+    "previous_occurrence_refs": []
+  },
+  "objective_description": {
+    "what_failed": "<Clear, objective description of what failed>",
+    "observable_behavior": "<Observable behavior that indicates failure>",
+    "expected_behavior": "<What should have happened instead>"
+  },
+  "context": {
+    "type": "field_live",
+    "location": {
+      "description": "<Specific screen, API endpoint, or workflow>",
+      "module": "<Module name>",
+      "component": "<Component name>",
+      "file_path": "<File path where failure originated>",
+      "line_number": 0
+    },
+    "user_impact": "<Impact on users>",
+    "affected_users": 0
+  },
+  "root_cause_analysis": {
+    "primary_bucket": "missing_qa_coverage",
+    "detailed_analysis": "<Detailed analysis of what went wrong and why (minimum 50 characters)>",
+    "why_escaped_b2g": "<Explanation of how this escaped Build-to-Green (minimum 30 characters)>",
+    "contributing_factors": [
+      "<Contributing factor 1>",
+      "<Contributing factor 2>"
+    ]
+  },
+  "discovery_details": {
+    "discovered_by": "<Person or system that discovered the failure>",
+    "discovery_timestamp": "YYYY-MM-DDTHH:MM:SS.sssZ",
+    "discovery_method": "<How was this discovered (user report, automated monitoring, etc.)>"
+  },
+  "evidence_metadata": {
+    "schema_version": "1.0.0",
+    "immutable": true,
+    "governance_gate_version": "1.0.0",
+    "compliance_mappings": [
+      "ISO_27001:A.16.1 - Management of information security incidents",
+      "ISO_27001:A.16.1.4 - Assessment of information security events",
+      "NIST_800_53:IR-4 - Incident Handling",
+      "COBIT:DSS02 - Manage Service Requests and Incidents"
+    ]
+  }
+}

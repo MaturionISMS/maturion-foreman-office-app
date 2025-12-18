@@ -1,58 +1,28 @@
-# Behaviour Log Specification
+# behaviour-log-spec.md
 
-## Purpose
+**This document is governed by Foreman Governance.**
 
-Define how runtime behaviour events are captured in a **privacy-preserving**, meta-level form so they can:
-
-- Feed risk management,
-- Drive upgrades,
-- Support incident analysis,
-- And generate long-term lessons.
-
-No tenant-identifying fields are allowed.
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/behaviour-log-spec.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/behaviour-log-spec.md)
 
 ---
 
-## 1. Event Structure
+## What This Means
 
-Each event must have:
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
 
-- `event_id` – unique meta identifier
-- `timestamp` – ISO 8601
-- `environment_id` – matches `environment-map.json`
-- `module_id` – e.g. `ERM`, `RISK_ASSESSMENT`, `THREAT`
-- `category` – e.g. `health_check`, `ai_drift`, `compliance_alert`, `user_feedback_aggregate`
-- `severity` – `INFO | NOTICE | WARNING | ERROR | CRITICAL`
-- `summary` – short plain-language description
-- `details_ref` – optional reference to an internal log, never raw content
-- `related_risks` – references to risk IDs in `runtime-risk-model-spec.md`
-- `version_tag` – platform/app version
+## How to Access
 
----
+Visit the canonical location above to access the current version of this document.
 
-## 2. Privacy Rules
+## Repository Structure
 
-- No user names, tenant names, email addresses, or free-text fields that could contain secrets.
-- Event payloads are **labels and counts**, not raw text.
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
 
----
-
-## 3. Storage & Access
-
-- Behaviour events can be aggregated for:
-  - Upgrade insights (`upgrade-insights-schema.json`)
-  - Historical issues (`historical-issues-schema.json`)
-  - Architectural lessons (`architectural-lessons.md`)
-
-- Granular raw logs stay outside Foreman; only structured summaries enter the memory spine.
-
----
-
-## 4. QA-of-QA
-
-Foreman must ensure that:
-
-- Behaviour events cannot bypass privacy guardrails.
-- Every CRITICAL event is either:
-  - Linked to an incident record, or
-  - Explicitly classified as false positive with justification.
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

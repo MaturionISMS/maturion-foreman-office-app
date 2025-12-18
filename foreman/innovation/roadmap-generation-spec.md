@@ -1,15 +1,28 @@
-# Roadmap Generation Specification
+# roadmap-generation-spec.md
 
-## Inputs
-- Innovation Board
-- Compliance issues
-- Internal admin ideas
-- Technical debt
-- User surveys
-- Foreman recommendations
+**This document is governed by Foreman Governance.**
 
-## Output
-- Quarterly roadmap
-- Release notes
-- Build priorities
-- Dependencies tracking
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/roadmap-generation-spec.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/roadmap-generation-spec.md)
+
+---
+
+## What This Means
+
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

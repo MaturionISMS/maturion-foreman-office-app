@@ -1,19 +1,28 @@
-# Compliance Watchdog Specification
+# compliance-watchdog-spec.md
 
-## Purpose
-Monitor ongoing compliance of tenants and platform.
+**This document is governed by Foreman Governance.**
 
-## Monitored Items
-- Access logs
-- Behaviour anomalies
-- Data leakage attempts
-- Policy failures
-- Configuration drift
-- Missing required artifacts
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/compliance-watchdog-spec.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/compliance-watchdog-spec.md)
 
-## Actions
-- Alert tenant
-- Alert admin
-- Lock affected module
-- Start compliance case
-- Generate remediation recommendations
+---
+
+## What This Means
+
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

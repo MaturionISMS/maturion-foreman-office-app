@@ -1,12 +1,28 @@
-# AI Self-Improvement Specification
+# ai-self-improvement-spec.md
 
-## Purpose
-Allow Maturion to learn safely.
+**This document is governed by Foreman Governance.**
 
-## Rules
-- No self-modification without admin approval
-- All improvements must be logged
-- Enhancements must pass QA & QA-of-QA
-- No changes to guardrails unless explicitly authorized
-- Must generate PRs for improvements
-- Learning must be anonymized
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/ai-self-improvement-spec.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/ai-self-improvement-spec.md)
+
+---
+
+## What This Means
+
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

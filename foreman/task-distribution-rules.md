@@ -1,48 +1,28 @@
-# Task Distribution and Sequencing Rules
+# task-distribution-rules.md
 
-## 1. Sequencing
-No task may begin until:
-- architecture is complete  
-- QA is complete  
-- QA-of-QA is complete
-- **Memory Fabric is validated and ready**
+**This document is governed by Foreman Governance.**
 
-## 2. Parallelization
-Builders may work in parallel IF:
-- tasks do not depend on one another  
-- sequencing rules allow it  
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/task-distribution-rules.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/task-distribution-rules.md)
 
-## 3. Integration Stage
-After builders finish:
-- Maturion performs integration QA  
-- Maturion performs drift QA  
-- Maturion checks inter-module links
-- **Maturion writes build outcomes to memory**
+---
 
-## 4. Human Approval
-No module is considered “built” until:
-- Maturion approves  
-- Johan approves  
+## What This Means
 
-## 5. Memory Integration
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
 
-### Pre-Build Memory Requirements
-Before any task distribution:
-- Load relevant memories (architectural decisions, past build outcomes, learnings)
-- Validate memory readiness
-- Ensure memory write capability
+## How to Access
 
-### During Build Memory Usage
-- Consult memory for task dependencies
-- Reference historical build patterns
-- Check for known issues or gotchas
-- Use memory to inform sequencing decisions
+Visit the canonical location above to access the current version of this document.
 
-### Post-Build Memory Recording
-- Record all task outcomes
-- Log builder coordination results
-- Document integration validations
-- Capture lessons learned
+## Repository Structure
 
-### Memory as Readiness Gate
-**Task distribution cannot begin until Memory Fabric passes validation.**
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

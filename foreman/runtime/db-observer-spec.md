@@ -1,66 +1,28 @@
-# DB Observer Specification
+# db-observer-spec.md
 
-## Purpose
+**This document is governed by Foreman Governance.**
 
-Define how Maturion/Foreman conceptually **observe** database behaviour without accessing raw tenant records.
-
-The DB Observer focuses on:
-
-- Structural health (migrations, indices)
-- Performance (latency, contention, throughput)
-- Anomalies (sudden spikes, timeouts, unusual patterns)
-
-No business content or tenant information is exposed.
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/db-observer-spec.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/db-observer-spec.md)
 
 ---
 
-## 1. Observed Metrics
+## What This Means
 
-### 1.1 Structural
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
 
-- Pending migrations count
-- Failed migrations count
-- Schema drift indicators (unexpected columns/tables vs canonical schemas)
+## How to Access
 
-### 1.2 Performance
+Visit the canonical location above to access the current version of this document.
 
-- Read/write latency bands per module
-- Connection pool utilisation
-- Deadlock and lock-wait incidents
+## Repository Structure
 
-### 1.3 Reliability
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
 
-- Transaction failure rates
-- Retry counts
-- Timeouts per module
-
----
-
-## 2. Anomaly Categories
-
-- **Performance Degradation**
-- **Schema Drift**
-- **Data Volume Surges**
-- **High Error Density in Specific Module**
-
-Each anomaly:
-
-- Links to a **module** and **environment** (no tenant id)
-- Is assigned a severity level (mapped to `watchdog-rules.json`)
-
----
-
-## 3. Outputs
-
-The DB Observer produces meta-events that follow the structure in:
-
-- `foreman/runtime/behaviour-log-spec.md`
-- `foreman/runtime/incident-detection-spec.md`
-
----
-
-## 4. Integration
-
-- **Risk Model** → `runtime-risk-model-spec.md`
-- **Upgrade triggers** → `upgrade-insights-schema.json`
-- **Compliance** → can tag any violations affecting data retention or integrity
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

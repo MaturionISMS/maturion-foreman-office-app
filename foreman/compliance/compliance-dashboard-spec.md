@@ -1,19 +1,28 @@
-# Compliance Dashboard Specification
+# compliance-dashboard-spec.md
 
-## Purpose
-Display compliance posture in real time.
+**This document is governed by Foreman Governance.**
 
-## Metrics
-- Compliance score (per module)
-- Control violations count
-- Severity of violations
-- Compliance trends over time
-- Required remediation steps
-- Tenant-level compliance score
-- Platform-level compliance score
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/dashboards/compliance-dashboard-spec.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/dashboards/compliance-dashboard-spec.md)
 
-## Drill Down
-- Control-specific failures
-- Module-specific issues
-- QA vs Compliance mismatch
-- Evidence attachments
+---
+
+## What This Means
+
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

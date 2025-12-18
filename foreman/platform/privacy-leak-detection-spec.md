@@ -1,19 +1,28 @@
-# Privacy Leak Detection Specification
+# privacy-leak-detection-spec.md
 
-## Purpose
-Assure customers their data never leaks.
+**This document is governed by Foreman Governance.**
 
-## Detection Categories
-- Cross-tenant access
-- Role boundary violations
-- Sensitive data exposure
-- Abnormal export behaviour
-- Unauthorized data replication
-- Suspicious OpenAI model prompts
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/privacy-leak-detection-spec.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/privacy-leak-detection-spec.md)
 
-## Response Levels
-1. Warning  
-2. Block + notify tenant  
-3. Escalate to admin  
-4. Automatic shutdown of module  
-5. Investigation case creation  
+---
+
+## What This Means
+
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

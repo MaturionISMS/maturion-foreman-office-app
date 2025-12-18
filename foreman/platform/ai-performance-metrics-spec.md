@@ -1,30 +1,28 @@
-# AI Performance Metrics Specification
+# ai-performance-metrics-spec.md
 
-## Purpose
-Show how effectively Maturion operates.
+**This document is governed by Foreman Governance.**
 
-## Metrics
-### Per Tenant
-- total AI calls
-- total tokens used
-- cost per tenant
-- most-used models
-- module-level usage
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/ai-performance-metrics-spec.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/ai-performance-metrics-spec.md)
 
-### Per Module
-- token usage
-- average call length
-- AI dependencies
-- cost drivers
+---
 
-### Per User
-- usage patterns
-- model selection
-- error history
-- AI maturity score
+## What This Means
 
-### Global
-- total operational cost
-- peak usage times
-- slow call detection
-- optimization recommendations
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

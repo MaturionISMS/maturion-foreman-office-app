@@ -1,15 +1,28 @@
-# QA-of-QA Specification
+# qa-of-qa.md
 
-## Purpose
-QA-of-QA ensures that:
-- QA covers ALL required behaviours  
-- No architectural requirement is untested  
-- No integration requirement is untested  
-- No UX requirement is untested  
-- No failure mode is ignored  
+**This document is governed by Foreman Governance.**
 
-## Rules
-1. Every architecture requirement must map to at least one QA test.
-2. Every QA test must map to one architecture requirement.
-3. Missing mappings are blockers.
-4. Maturion runs QA-of-QA BEFORE delegating to builders.
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/qa-of-qa.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/qa-of-qa.md)
+
+---
+
+## What This Means
+
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

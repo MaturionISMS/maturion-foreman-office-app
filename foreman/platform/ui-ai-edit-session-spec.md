@@ -1,12 +1,28 @@
-# AI Editing Session Specification
+# ui-ai-edit-session-spec.md
 
-## Purpose
-Allow admin to override Maturion’s `.agent` files safely.
+**This document is governed by Foreman Governance.**
 
-## Workflow
-1. Admin enters “AI Editing Mode”.
-2. Maturion enters restricted config state.
-3. Proposed changes appear side-by-side with existing spec.
-4. Admin approves or rejects.
-5. Foreman generates PR.
-6. Foreman returns to normal mode.
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/ui-ai-edit-session-spec.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/ui-ai-edit-session-spec.md)
+
+---
+
+## What This Means
+
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

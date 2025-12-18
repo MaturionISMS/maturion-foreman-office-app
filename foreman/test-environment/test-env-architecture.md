@@ -1,56 +1,28 @@
-# Test Environment Architecture
+# test-env-architecture.md
 
-## Purpose
+**This document is governed by Foreman Governance.**
 
-Describes how the test environment mirrors production:
-
-- Same module boundaries
-- Similar configuration (minus secrets)
-- Simulated or masked external dependencies
-- Ability to exercise full ISMS workflows without tenant risk
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/test-env-architecture.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/test-env-architecture.md)
 
 ---
 
-## 1. Structure
+## What This Means
 
-The test environment consists of:
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
 
-1. **Application Layer**
-   - All ISMS modules deployed in test mode
-   - Feature flags enabled for testing
-   - Monitoring enabled but in test mode
+## How to Access
 
-2. **Data Layer**
-   - Separate database instance (never production)
-   - Synthetic or masked data only
-   - Schema mirroring production
+Visit the canonical location above to access the current version of this document.
 
-3. **Integration Layer**
-   - Mock external services where appropriate
-   - Test connectors for edge functions
-   - Internal module integration paths identical to production
+## Repository Structure
 
-4. **AI Layer**
-   - Same AI routing logic
-   - Test-safe prompts and guardrails
-   - Ability to test drift detection
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
 
----
-
-## 2. Isolation Rules
-
-- Test environment **MUST NOT** connect to production databases.
-- Test environment **MUST NOT** send real notifications to users.
-- Test environment **MUST** maintain clear visual indicators (headers, banners) that it is not production.
-
----
-
-## 3. Data Policy Reference
-
-See `foreman/test-environment/test-env-data-policy.md` for strict rules on test data.
-
----
-
-## 4. Deployment Sequencing
-
-See `foreman/test-environment/test-env-deployment-plan.md` for how builder agents deploy to test.
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.
