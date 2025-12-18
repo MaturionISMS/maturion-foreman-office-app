@@ -1,23 +1,28 @@
-# Compliance QA Specification
+# compliance-qa-spec.md
 
-## Purpose
-Ensure each module is compliant with required standards.
+**This document is governed by Foreman Governance.**
 
-## QA Requirements
-Every module must include:
-- Compliance mapping section
-- Compliance test cases
-- Positive and negative compliance tests
-- Evidence documentation
-- Control-specific validation
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/compliance-qa-spec.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/compliance-qa-spec.md)
 
-## Tests
-- Required controls present?
-- Control implementation documented?
-- QA tests mapped to compliance controls?
-- Any violated controls?
+---
 
-## Output
-- Compliance Score (0–100)
-- Violated controls list
-- Non-compliance severity (Low → Critical)
+## What This Means
+
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

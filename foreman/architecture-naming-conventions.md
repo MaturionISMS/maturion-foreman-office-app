@@ -1,26 +1,28 @@
-# Naming Conventions
+# architecture-naming-conventions.md
 
-## Filename Pattern
-`{MODULE}_{COMPONENT}_v{MAJOR}.{MINOR}.md`
+**This document is governed by Foreman Governance.**
 
-Examples:
-- ERM_EDGE_FUNCTIONS_v1.1.md
-- THREAT_WATCHDOG_LOGIC_v1.0.md
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/policies/architecture-naming-conventions.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/policies/architecture-naming-conventions.md)
 
-## Versioning
-- v0.X = draft  
-- v1.X = production  
-- v2.X = second generation  
+---
 
-## Components Keyword List
-- TRUE_NORTH  
-- ARCHITECTURE  
-- IMPLEMENTATION_GUIDE  
-- WIREFRAMES  
-- EDGE_FUNCTIONS  
-- EXPORT_SPEC  
-- FRONTEND_COMPONENT_MAP  
-- INTEGRATION_SPEC  
-- DATABASE_SCHEMA  
-- QA_IMPLEMENTATION_PLAN  
-- SPRINT_PLAN  
+## What This Means
+
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

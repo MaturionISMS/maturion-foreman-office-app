@@ -1,69 +1,28 @@
-# System Health Checks Specification
+# system-health-checks-spec.md
 
-## Purpose
+**This document is governed by Foreman Governance.**
 
-Define the **standard health checks** Foreman expects Maturion to run across:
-
-- Platform-level services
-- Module boundaries
-- AI subsystems
-- Integrations
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/system-health-checks-spec.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/system-health-checks-spec.md)
 
 ---
 
-## 1. Health Check Categories
+## What This Means
 
-1. **Core Platform**
-   - Uptime per service
-   - Error rates
-   - Latency SLOs
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
 
-2. **Module-Specific**
-   - Key workflows (e.g., risk assessment creation, WRAC submission)
-   - Expected integration flows
+## How to Access
 
-3. **AI Health**
-   - Model availability
-   - Routing success rate
-   - Safety engine availability
+Visit the canonical location above to access the current version of this document.
 
-4. **Integration Health**
-   - Edge functions
-   - External connectors
-   - Internal module calls
+## Repository Structure
 
----
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
 
-## 2. Health Check States
-
-- `HEALTHY`
-- `DEGRADED`
-- `UNSTABLE`
-- `DOWN`
-
-Each health check must include:
-
-- `module_id`
-- `check_id`
-- `environment_id`
-- `state`
-- `timestamp`
-- `summary`
-
----
-
-## 3. Output Format
-
-Health check results are aggregated into the behaviour log format defined in:
-
-- `foreman/runtime/behaviour-log-spec.md`
-
-They also contribute to the **runtime export** (see `upgrade/runtime-export-spec.md`).
-
----
-
-## 4. QA Expectations
-
-- Health checks must run on a predictable schedule.
-- Test environment must validate health checks before production rollout.
-- Failures with severity `UNSTABLE` or above must link to at least one risk entry in `runtime-risk-model-spec.md`.
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

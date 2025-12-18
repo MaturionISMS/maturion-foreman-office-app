@@ -1,0 +1,65 @@
+{
+  "$schema": "../EVIDENCE_SCHEMA_CANON.json#/schemas/iteration",
+  "task_id": "<task-id>",
+  "iteration_number": 1,
+  "timestamp_started": "<ISO 8601 timestamp>",
+  "timestamp_completed": "<ISO 8601 timestamp>",
+  "duration_seconds": 0,
+  "qa_status_before": {
+    "total_tests": 0,
+    "passing": 0,
+    "failing": 0,
+    "skipped": 0
+  },
+  "target_test": {
+    "test_name": "<name of test being targeted>",
+    "test_file": "<path to test file>",
+    "test_description": "<what this test validates>",
+    "failure_reason": "<why test was failing>"
+  },
+  "implementation": {
+    "approach": "<description of implementation approach>",
+    "files_modified": [
+      {
+        "file": "<path to file>",
+        "changes": "<description of changes made>",
+        "lines_added": 0,
+        "lines_removed": 0
+      }
+    ],
+    "minimal_code_principle": "yes | no",
+    "explanation": "<why this implementation was chosen>"
+  },
+  "qa_status_after": {
+    "total_tests": 0,
+    "passing": 0,
+    "failing": 0,
+    "skipped": 0,
+    "test_debt_detected": "yes | no"
+  },
+  "result": {
+    "target_test_status": "pass | fail",
+    "progress": "<description of progress made>",
+    "new_failures": [],
+    "regressions_detected": "yes | no"
+  },
+  "next_action": "continue | final_validation | escalate",
+  "escalation": {
+    "required": "yes | no",
+    "reason": "<reason for escalation if required>",
+    "attempts_on_same_test": 0
+  },
+  "evidence_metadata": {
+    "schema_version": "1.0.0",
+    "immutable": true,
+    "parent_evidence_id": "<reference to build-initiation evidence>",
+    "governance_gate_version": "1.0.0",
+    "compliance_mappings": [
+      "ISO_27001:A.12.1.2",
+      "ISO_27001:A.14.2.9",
+      "NIST_800_53:SA-11",
+      "COBIT:BAI06.01"
+    ]
+  },
+  "notes": ""
+}

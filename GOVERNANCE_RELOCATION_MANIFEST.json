@@ -1,0 +1,745 @@
+{
+  "moved_files": [
+    {
+      "source": "foreman/governance/governance-supremacy-rule.md",
+      "destination": "governance/policies/governance-supremacy-rule.md",
+      "category": "policies"
+    },
+    {
+      "source": "foreman/governance/zero-test-debt-constitutional-rule.md",
+      "destination": "governance/policies/zero-test-debt-constitutional-rule.md",
+      "category": "policies"
+    },
+    {
+      "source": "foreman/governance/design-freeze-rule.md",
+      "destination": "governance/policies/design-freeze-rule.md",
+      "category": "policies"
+    },
+    {
+      "source": "foreman/governance/dp-red-policy.md",
+      "destination": "governance/policies/dp-red-policy.md",
+      "category": "policies"
+    },
+    {
+      "source": "foreman/platform/ai-cost-optimization-policy.md",
+      "destination": "governance/policies/ai-cost-optimization-policy.md",
+      "category": "policies"
+    },
+    {
+      "source": "foreman/platform/image-generation-policy.md",
+      "destination": "governance/policies/image-generation-policy.md",
+      "category": "policies"
+    },
+    {
+      "source": "foreman/platform/security-escalation-policy.md",
+      "destination": "governance/policies/security-escalation-policy.md",
+      "category": "policies"
+    },
+    {
+      "source": "foreman/innovation/idea-voting-policy.md",
+      "destination": "governance/policies/idea-voting-policy.md",
+      "category": "policies"
+    },
+    {
+      "source": "foreman/innovation/threshold-policy.md",
+      "destination": "governance/policies/threshold-policy.md",
+      "category": "policies"
+    },
+    {
+      "source": "foreman/change-management/change-policy.md",
+      "destination": "governance/policies/change-policy.md",
+      "category": "policies"
+    },
+    {
+      "source": "foreman/privacy-guardrails.md",
+      "destination": "governance/policies/privacy-guardrails.md",
+      "category": "policies"
+    },
+    {
+      "source": "foreman/memory-model.md",
+      "destination": "governance/policies/memory-model.md",
+      "category": "policies"
+    },
+    {
+      "source": "foreman/versioning-rules.md",
+      "destination": "governance/policies/versioning-rules.md",
+      "category": "policies"
+    },
+    {
+      "source": "foreman/architecture-naming-conventions.md",
+      "destination": "governance/policies/architecture-naming-conventions.md",
+      "category": "policies"
+    },
+    {
+      "source": "foreman/architecture-folder-structure.md",
+      "destination": "governance/policies/architecture-folder-structure.md",
+      "category": "policies"
+    },
+    {
+      "source": "foreman/architecture-standardisation-policy.md",
+      "destination": "governance/policies/architecture-standardisation-policy.md",
+      "category": "policies"
+    },
+    {
+      "source": "foreman/constitution/architecture-design-checklist.md",
+      "destination": "governance/contracts/architecture-design-checklist.md",
+      "category": "contracts"
+    },
+    {
+      "source": "foreman/qa/quality-integrity-contract.md",
+      "destination": "governance/contracts/quality-integrity-contract.md",
+      "category": "contracts"
+    },
+    {
+      "source": "foreman/evidence/GOVERNANCE_GATE_SPEC.md",
+      "destination": "governance/contracts/GOVERNANCE_GATE_SPEC.md",
+      "category": "contracts"
+    },
+    {
+      "source": "foreman/governance/build-to-green-enforcement-spec.md",
+      "destination": "governance/specs/build-to-green-enforcement-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/governance/foreman-execution-state-model.md",
+      "destination": "governance/specs/foreman-execution-state-model.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/compliance/compliance-qa-spec.md",
+      "destination": "governance/specs/compliance-qa-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/compliance/compliance-watchdog-spec.md",
+      "destination": "governance/specs/compliance-watchdog-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/compliance/compliance-reference-map.md",
+      "destination": "governance/specs/compliance-reference-map.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/qa-governance.md",
+      "destination": "governance/specs/qa-governance.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/qa-of-qa.md",
+      "destination": "governance/specs/qa-of-qa.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/qa-minimum-coverage-requirements.md",
+      "destination": "governance/specs/qa-minimum-coverage-requirements.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/minimum-architecture-template.md",
+      "destination": "governance/specs/minimum-architecture-template.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/architecture-validation-checklist.md",
+      "destination": "governance/specs/architecture-validation-checklist.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/qa-of-qa-validation-checklist.md",
+      "destination": "governance/specs/qa-of-qa-validation-checklist.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/module-readiness-report-template.md",
+      "destination": "governance/specs/module-readiness-report-template.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/task-distribution-rules.md",
+      "destination": "governance/specs/task-distribution-rules.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/innovation/idea-submission-spec.md",
+      "destination": "governance/specs/idea-submission-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/innovation/idea-summarisation-rules.md",
+      "destination": "governance/specs/idea-summarisation-rules.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/innovation/innovation-workflow-spec.md",
+      "destination": "governance/specs/innovation-workflow-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/innovation/roadmap-generation-spec.md",
+      "destination": "governance/specs/roadmap-generation-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/survey/survey-engine-spec.md",
+      "destination": "governance/specs/survey-engine-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/survey/survey-ai-analysis-spec.md",
+      "destination": "governance/specs/survey-ai-analysis-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/admin/enhancement-parking-lot-spec.md",
+      "destination": "governance/specs/enhancement-parking-lot-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/admin/admin-innovation-chat-spec.md",
+      "destination": "governance/specs/admin-innovation-chat-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/admin/ai-self-improvement-spec.md",
+      "destination": "governance/specs/ai-self-improvement-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/runtime/ai-drift-monitor-spec.md",
+      "destination": "governance/specs/ai-drift-monitor-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/runtime/behaviour-log-spec.md",
+      "destination": "governance/specs/behaviour-log-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/runtime/db-observer-spec.md",
+      "destination": "governance/specs/db-observer-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/runtime/incident-detection-spec.md",
+      "destination": "governance/specs/incident-detection-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/runtime/runtime-risk-model-spec.md",
+      "destination": "governance/specs/runtime-risk-model-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/runtime/runtime-state-spec.md",
+      "destination": "governance/specs/runtime-state-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/runtime/system-health-checks-spec.md",
+      "destination": "governance/specs/system-health-checks-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/self-test/self-test-spec.md",
+      "destination": "governance/specs/self-test-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/test-environment/test-env-architecture.md",
+      "destination": "governance/specs/test-env-architecture.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/test-environment/test-env-data-policy.md",
+      "destination": "governance/specs/test-env-data-policy.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/platform/privacy-leak-detection-spec.md",
+      "destination": "governance/specs/privacy-leak-detection-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/platform/watchdog-standard-spec.md",
+      "destination": "governance/specs/watchdog-standard-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/platform/ui-branding-standard.md",
+      "destination": "governance/specs/ui-branding-standard.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/platform/ui-theme-overrides.md",
+      "destination": "governance/specs/ui-theme-overrides.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/platform/ui-navigation-spec.md",
+      "destination": "governance/specs/ui-navigation-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/platform/ui-multiwindow-spec.md",
+      "destination": "governance/specs/ui-multiwindow-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/platform/ui-ai-edit-session-spec.md",
+      "destination": "governance/specs/ui-ai-edit-session-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/platform/image-model-routing-spec.md",
+      "destination": "governance/specs/image-model-routing-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/platform/ai-performance-metrics-spec.md",
+      "destination": "governance/specs/ai-performance-metrics-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/platform/ai-usage-analytics-spec.md",
+      "destination": "governance/specs/ai-usage-analytics-spec.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/platform/qa-dashboard-spec.md",
+      "destination": "governance/dashboards/qa-dashboard-spec.md",
+      "category": "dashboards"
+    },
+    {
+      "source": "foreman/platform/governance-qa-dashboard-spec.md",
+      "destination": "governance/dashboards/governance-qa-dashboard-spec.md",
+      "category": "dashboards"
+    },
+    {
+      "source": "foreman/compliance/compliance-dashboard-spec.md",
+      "destination": "governance/dashboards/compliance-dashboard-spec.md",
+      "category": "dashboards"
+    },
+    {
+      "source": "foreman/innovation/innovation-dashboard-spec.md",
+      "destination": "governance/dashboards/innovation-dashboard-spec.md",
+      "category": "dashboards"
+    },
+    {
+      "source": "foreman/compliance/compliance-control-library.json",
+      "destination": "governance/specs/compliance-control-library.json",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/evidence/EVIDENCE_SCHEMA_CANON.json",
+      "destination": "governance/specs/EVIDENCE_SCHEMA_CANON.json",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/evidence/flci/FLCI_EVIDENCE_SCHEMA.json",
+      "destination": "governance/specs/FLCI_EVIDENCE_SCHEMA.json",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/self-test/self-test-schema.json",
+      "destination": "governance/specs/self-test-schema.json",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/change-management/change-log-schema.json",
+      "destination": "governance/specs/change-log-schema.json",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/evidence/templates/build-initiation.template.json",
+      "destination": "governance/contracts/build-initiation.template.json",
+      "category": "contracts"
+    },
+    {
+      "source": "foreman/evidence/templates/iteration.template.json",
+      "destination": "governance/contracts/iteration.template.json",
+      "category": "contracts"
+    },
+    {
+      "source": "foreman/evidence/templates/validation-results.template.json",
+      "destination": "governance/contracts/validation-results.template.json",
+      "category": "contracts"
+    },
+    {
+      "source": "foreman/evidence/flci/templates/failure-report.template.json",
+      "destination": "governance/contracts/failure-report.template.json",
+      "category": "contracts"
+    },
+    {
+      "source": "foreman/evidence/flci/templates/prevention-plan.template.json",
+      "destination": "governance/contracts/prevention-plan.template.json",
+      "category": "contracts"
+    },
+    {
+      "source": "foreman/evidence/flci/templates/test-coverage-delta.template.json",
+      "destination": "governance/contracts/test-coverage-delta.template.json",
+      "category": "contracts"
+    },
+    {
+      "source": "foreman/evidence/templates/completion-report.template.md",
+      "destination": "governance/contracts/completion-report.template.md",
+      "category": "contracts"
+    },
+    {
+      "source": "foreman/evidence/flci/templates/completion-validation.template.md",
+      "destination": "governance/contracts/completion-validation.template.md",
+      "category": "contracts"
+    },
+    {
+      "source": "foreman/evidence/flci/templates/root-cause-analysis.template.md",
+      "destination": "governance/contracts/root-cause-analysis.template.md",
+      "category": "contracts"
+    },
+    {
+      "source": "foreman/evidence/TEST_EVIDENCE_CONTROL_MAPPING.md",
+      "destination": "governance/specs/TEST_EVIDENCE_CONTROL_MAPPING.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/evidence/README.md",
+      "destination": "governance/specs/EVIDENCE_README.md",
+      "category": "specs"
+    },
+    {
+      "source": "foreman/evidence/flci/README.md",
+      "destination": "governance/specs/FLCI_README.md",
+      "category": "specs"
+    }
+  ],
+  "pointer_readmes": [
+    {
+      "path": "foreman/governance/governance-supremacy-rule.md",
+      "points_to": "governance/policies/governance-supremacy-rule.md"
+    },
+    {
+      "path": "foreman/governance/zero-test-debt-constitutional-rule.md",
+      "points_to": "governance/policies/zero-test-debt-constitutional-rule.md"
+    },
+    {
+      "path": "foreman/governance/design-freeze-rule.md",
+      "points_to": "governance/policies/design-freeze-rule.md"
+    },
+    {
+      "path": "foreman/governance/dp-red-policy.md",
+      "points_to": "governance/policies/dp-red-policy.md"
+    },
+    {
+      "path": "foreman/platform/ai-cost-optimization-policy.md",
+      "points_to": "governance/policies/ai-cost-optimization-policy.md"
+    },
+    {
+      "path": "foreman/platform/image-generation-policy.md",
+      "points_to": "governance/policies/image-generation-policy.md"
+    },
+    {
+      "path": "foreman/platform/security-escalation-policy.md",
+      "points_to": "governance/policies/security-escalation-policy.md"
+    },
+    {
+      "path": "foreman/innovation/idea-voting-policy.md",
+      "points_to": "governance/policies/idea-voting-policy.md"
+    },
+    {
+      "path": "foreman/innovation/threshold-policy.md",
+      "points_to": "governance/policies/threshold-policy.md"
+    },
+    {
+      "path": "foreman/change-management/change-policy.md",
+      "points_to": "governance/policies/change-policy.md"
+    },
+    {
+      "path": "foreman/privacy-guardrails.md",
+      "points_to": "governance/policies/privacy-guardrails.md"
+    },
+    {
+      "path": "foreman/memory-model.md",
+      "points_to": "governance/policies/memory-model.md"
+    },
+    {
+      "path": "foreman/versioning-rules.md",
+      "points_to": "governance/policies/versioning-rules.md"
+    },
+    {
+      "path": "foreman/architecture-naming-conventions.md",
+      "points_to": "governance/policies/architecture-naming-conventions.md"
+    },
+    {
+      "path": "foreman/architecture-folder-structure.md",
+      "points_to": "governance/policies/architecture-folder-structure.md"
+    },
+    {
+      "path": "foreman/architecture-standardisation-policy.md",
+      "points_to": "governance/policies/architecture-standardisation-policy.md"
+    },
+    {
+      "path": "foreman/constitution/architecture-design-checklist.md",
+      "points_to": "governance/contracts/architecture-design-checklist.md"
+    },
+    {
+      "path": "foreman/qa/quality-integrity-contract.md",
+      "points_to": "governance/contracts/quality-integrity-contract.md"
+    },
+    {
+      "path": "foreman/evidence/GOVERNANCE_GATE_SPEC.md",
+      "points_to": "governance/contracts/GOVERNANCE_GATE_SPEC.md"
+    },
+    {
+      "path": "foreman/governance/build-to-green-enforcement-spec.md",
+      "points_to": "governance/specs/build-to-green-enforcement-spec.md"
+    },
+    {
+      "path": "foreman/governance/foreman-execution-state-model.md",
+      "points_to": "governance/specs/foreman-execution-state-model.md"
+    },
+    {
+      "path": "foreman/compliance/compliance-qa-spec.md",
+      "points_to": "governance/specs/compliance-qa-spec.md"
+    },
+    {
+      "path": "foreman/compliance/compliance-watchdog-spec.md",
+      "points_to": "governance/specs/compliance-watchdog-spec.md"
+    },
+    {
+      "path": "foreman/compliance/compliance-reference-map.md",
+      "points_to": "governance/specs/compliance-reference-map.md"
+    },
+    {
+      "path": "foreman/qa-governance.md",
+      "points_to": "governance/specs/qa-governance.md"
+    },
+    {
+      "path": "foreman/qa-of-qa.md",
+      "points_to": "governance/specs/qa-of-qa.md"
+    },
+    {
+      "path": "foreman/qa-minimum-coverage-requirements.md",
+      "points_to": "governance/specs/qa-minimum-coverage-requirements.md"
+    },
+    {
+      "path": "foreman/minimum-architecture-template.md",
+      "points_to": "governance/specs/minimum-architecture-template.md"
+    },
+    {
+      "path": "foreman/architecture-validation-checklist.md",
+      "points_to": "governance/specs/architecture-validation-checklist.md"
+    },
+    {
+      "path": "foreman/qa-of-qa-validation-checklist.md",
+      "points_to": "governance/specs/qa-of-qa-validation-checklist.md"
+    },
+    {
+      "path": "foreman/module-readiness-report-template.md",
+      "points_to": "governance/specs/module-readiness-report-template.md"
+    },
+    {
+      "path": "foreman/task-distribution-rules.md",
+      "points_to": "governance/specs/task-distribution-rules.md"
+    },
+    {
+      "path": "foreman/innovation/idea-submission-spec.md",
+      "points_to": "governance/specs/idea-submission-spec.md"
+    },
+    {
+      "path": "foreman/innovation/idea-summarisation-rules.md",
+      "points_to": "governance/specs/idea-summarisation-rules.md"
+    },
+    {
+      "path": "foreman/innovation/innovation-workflow-spec.md",
+      "points_to": "governance/specs/innovation-workflow-spec.md"
+    },
+    {
+      "path": "foreman/innovation/roadmap-generation-spec.md",
+      "points_to": "governance/specs/roadmap-generation-spec.md"
+    },
+    {
+      "path": "foreman/survey/survey-engine-spec.md",
+      "points_to": "governance/specs/survey-engine-spec.md"
+    },
+    {
+      "path": "foreman/survey/survey-ai-analysis-spec.md",
+      "points_to": "governance/specs/survey-ai-analysis-spec.md"
+    },
+    {
+      "path": "foreman/admin/enhancement-parking-lot-spec.md",
+      "points_to": "governance/specs/enhancement-parking-lot-spec.md"
+    },
+    {
+      "path": "foreman/admin/admin-innovation-chat-spec.md",
+      "points_to": "governance/specs/admin-innovation-chat-spec.md"
+    },
+    {
+      "path": "foreman/admin/ai-self-improvement-spec.md",
+      "points_to": "governance/specs/ai-self-improvement-spec.md"
+    },
+    {
+      "path": "foreman/runtime/ai-drift-monitor-spec.md",
+      "points_to": "governance/specs/ai-drift-monitor-spec.md"
+    },
+    {
+      "path": "foreman/runtime/behaviour-log-spec.md",
+      "points_to": "governance/specs/behaviour-log-spec.md"
+    },
+    {
+      "path": "foreman/runtime/db-observer-spec.md",
+      "points_to": "governance/specs/db-observer-spec.md"
+    },
+    {
+      "path": "foreman/runtime/incident-detection-spec.md",
+      "points_to": "governance/specs/incident-detection-spec.md"
+    },
+    {
+      "path": "foreman/runtime/runtime-risk-model-spec.md",
+      "points_to": "governance/specs/runtime-risk-model-spec.md"
+    },
+    {
+      "path": "foreman/runtime/runtime-state-spec.md",
+      "points_to": "governance/specs/runtime-state-spec.md"
+    },
+    {
+      "path": "foreman/runtime/system-health-checks-spec.md",
+      "points_to": "governance/specs/system-health-checks-spec.md"
+    },
+    {
+      "path": "foreman/self-test/self-test-spec.md",
+      "points_to": "governance/specs/self-test-spec.md"
+    },
+    {
+      "path": "foreman/test-environment/test-env-architecture.md",
+      "points_to": "governance/specs/test-env-architecture.md"
+    },
+    {
+      "path": "foreman/test-environment/test-env-data-policy.md",
+      "points_to": "governance/specs/test-env-data-policy.md"
+    },
+    {
+      "path": "foreman/platform/privacy-leak-detection-spec.md",
+      "points_to": "governance/specs/privacy-leak-detection-spec.md"
+    },
+    {
+      "path": "foreman/platform/watchdog-standard-spec.md",
+      "points_to": "governance/specs/watchdog-standard-spec.md"
+    },
+    {
+      "path": "foreman/platform/ui-branding-standard.md",
+      "points_to": "governance/specs/ui-branding-standard.md"
+    },
+    {
+      "path": "foreman/platform/ui-theme-overrides.md",
+      "points_to": "governance/specs/ui-theme-overrides.md"
+    },
+    {
+      "path": "foreman/platform/ui-navigation-spec.md",
+      "points_to": "governance/specs/ui-navigation-spec.md"
+    },
+    {
+      "path": "foreman/platform/ui-multiwindow-spec.md",
+      "points_to": "governance/specs/ui-multiwindow-spec.md"
+    },
+    {
+      "path": "foreman/platform/ui-ai-edit-session-spec.md",
+      "points_to": "governance/specs/ui-ai-edit-session-spec.md"
+    },
+    {
+      "path": "foreman/platform/image-model-routing-spec.md",
+      "points_to": "governance/specs/image-model-routing-spec.md"
+    },
+    {
+      "path": "foreman/platform/ai-performance-metrics-spec.md",
+      "points_to": "governance/specs/ai-performance-metrics-spec.md"
+    },
+    {
+      "path": "foreman/platform/ai-usage-analytics-spec.md",
+      "points_to": "governance/specs/ai-usage-analytics-spec.md"
+    },
+    {
+      "path": "foreman/platform/qa-dashboard-spec.md",
+      "points_to": "governance/dashboards/qa-dashboard-spec.md"
+    },
+    {
+      "path": "foreman/platform/governance-qa-dashboard-spec.md",
+      "points_to": "governance/dashboards/governance-qa-dashboard-spec.md"
+    },
+    {
+      "path": "foreman/compliance/compliance-dashboard-spec.md",
+      "points_to": "governance/dashboards/compliance-dashboard-spec.md"
+    },
+    {
+      "path": "foreman/innovation/innovation-dashboard-spec.md",
+      "points_to": "governance/dashboards/innovation-dashboard-spec.md"
+    },
+    {
+      "path": "foreman/compliance/compliance-control-library_POINTER.md",
+      "points_to": "governance/specs/compliance-control-library.json"
+    },
+    {
+      "path": "foreman/evidence/EVIDENCE_SCHEMA_CANON_POINTER.md",
+      "points_to": "governance/specs/EVIDENCE_SCHEMA_CANON.json"
+    },
+    {
+      "path": "foreman/evidence/flci/FLCI_EVIDENCE_SCHEMA_POINTER.md",
+      "points_to": "governance/specs/FLCI_EVIDENCE_SCHEMA.json"
+    },
+    {
+      "path": "foreman/self-test/self-test-schema_POINTER.md",
+      "points_to": "governance/specs/self-test-schema.json"
+    },
+    {
+      "path": "foreman/change-management/change-log-schema_POINTER.md",
+      "points_to": "governance/specs/change-log-schema.json"
+    },
+    {
+      "path": "foreman/evidence/templates/build-initiation.template_POINTER.md",
+      "points_to": "governance/contracts/build-initiation.template.json"
+    },
+    {
+      "path": "foreman/evidence/templates/iteration.template_POINTER.md",
+      "points_to": "governance/contracts/iteration.template.json"
+    },
+    {
+      "path": "foreman/evidence/templates/validation-results.template_POINTER.md",
+      "points_to": "governance/contracts/validation-results.template.json"
+    },
+    {
+      "path": "foreman/evidence/flci/templates/failure-report.template_POINTER.md",
+      "points_to": "governance/contracts/failure-report.template.json"
+    },
+    {
+      "path": "foreman/evidence/flci/templates/prevention-plan.template_POINTER.md",
+      "points_to": "governance/contracts/prevention-plan.template.json"
+    },
+    {
+      "path": "foreman/evidence/flci/templates/test-coverage-delta.template_POINTER.md",
+      "points_to": "governance/contracts/test-coverage-delta.template.json"
+    },
+    {
+      "path": "foreman/evidence/templates/completion-report.template.md",
+      "points_to": "governance/contracts/completion-report.template.md"
+    },
+    {
+      "path": "foreman/evidence/flci/templates/completion-validation.template.md",
+      "points_to": "governance/contracts/completion-validation.template.md"
+    },
+    {
+      "path": "foreman/evidence/flci/templates/root-cause-analysis.template.md",
+      "points_to": "governance/contracts/root-cause-analysis.template.md"
+    },
+    {
+      "path": "foreman/evidence/TEST_EVIDENCE_CONTROL_MAPPING.md",
+      "points_to": "governance/specs/TEST_EVIDENCE_CONTROL_MAPPING.md"
+    },
+    {
+      "path": "foreman/evidence/README.md",
+      "points_to": "governance/specs/README.md"
+    },
+    {
+      "path": "foreman/evidence/flci/README.md",
+      "points_to": "governance/specs/README.md"
+    }
+  ],
+  "issues": []
+}

@@ -1,0 +1,62 @@
+# Architecture Validation Checklist
+
+This checklist is executed by Maturion BEFORE builders are allowed to begin.
+
+## 1. True North
+- [ ] Does it exist?
+- [ ] Does it define module vision & purpose?
+- [ ] Does it align with ISMS True North?
+
+## 2. Architecture Spec
+- [ ] Exists?
+- [ ] Includes module processes?
+- [ ] Includes boundaries?
+- [ ] Includes functional decomposition?
+
+## 3. Integration Spec
+- [ ] Exists?
+- [ ] Declares all inbound/outbound interactions?
+- [ ] Declares all events and API flows?
+- [ ] Declares cross-module dependencies?
+
+## 4. Data Spec
+- [ ] Database schema exists?
+- [ ] Includes all required models?
+- [ ] Includes validation rules?
+- [ ] Includes special scales (if required)?
+
+## 5. Frontend Spec
+- [ ] Component map complete?
+- [ ] Wireframes complete?
+- [ ] Coverage for all user roles?
+
+## 6. Backend Spec
+If module needs backend:
+- [ ] Edge Functions defined?
+- [ ] Export Spec defined?
+- [ ] Watchdog Logic defined?
+- [ ] Model Routing defined?
+
+## 7. QA Spec
+- [ ] QA Plan exists?
+- [ ] Covers ALL architecture components?
+- [ ] No missing mappings?
+
+## 8. Implementation Guide
+- [ ] Steps complete?
+- [ ] Task breakdown sensible?
+
+## 9. Sprint Plan
+- [ ] Tasks sequenced?
+- [ ] Dependencies identified?
+
+## 10. Changelog
+- [ ] Version present?
+- [ ] Correct format?
+
+## FINAL VALIDATION
+- [ ] No missing files  
+- [ ] No inconsistencies  
+- [ ] No contradictions  
+- [ ] No ambiguous requirements  
+

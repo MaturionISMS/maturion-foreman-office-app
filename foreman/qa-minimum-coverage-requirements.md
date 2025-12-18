@@ -1,47 +1,28 @@
-# Minimum QA Coverage Requirements
+# qa-minimum-coverage-requirements.md
 
-## 1. Architecture Coverage
-- Every architecture requirement must map to a QA test.
+**This document is governed by Foreman Governance.**
 
-## 2. Data Coverage
-- All schema fields must have test coverage.
-- All validation rules must be tested.
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/qa-minimum-coverage-requirements.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/qa-minimum-coverage-requirements.md)
 
-## 3. Frontend Coverage
-- Every UI component must have:
-  - Render test
-  - Behaviour test
-  - Integration test
-  - Error-state test
+---
 
-## 4. Backend Coverage
-- Edge Functions:
-  - Success test
-  - Failure test
-  - Timeout test
-  - Auth test
+## What This Means
 
-- Watchdog Logic:
-  - Trigger correctness
-  - Severity mapping
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
 
-## 5. Integration Coverage
-- All calls between modules must be tested:
-  - success paths
-  - error paths
-  - missing data scenarios
+## How to Access
 
-## 6. Performance Baselines
-- API response time limits:
-  - <300ms simple  
-  - <800ms complex  
-  - <1500ms analytics or risk calculations  
+Visit the canonical location above to access the current version of this document.
 
-## 7. Negative Test Cases
-- Required for:
-  - invalid inputs  
-  - permission issues  
-  - broken connections  
-  - missing required fields  
+## Repository Structure
 
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
 
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

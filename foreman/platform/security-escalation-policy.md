@@ -1,15 +1,28 @@
-# Security Escalation Policy
+# security-escalation-policy.md
 
-## Severity Levels
-1. Low — informational
-2. Medium — user misconfigurations
-3. High — potential breach
-4. Critical — active breach
+**This document is governed by Foreman Governance.**
 
-## Escalation Steps
-- notify tenant
-- notify admin
-- lock affected component
-- isolate tenant environment (if needed)
-- produce investigation file
-- involve human review
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/policies/security-escalation-policy.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/policies/security-escalation-policy.md)
+
+---
+
+## What This Means
+
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

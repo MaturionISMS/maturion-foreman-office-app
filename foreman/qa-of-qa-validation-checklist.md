@@ -1,26 +1,28 @@
-# QA-of-QA Validation Checklist
+# qa-of-qa-validation-checklist.md
 
-## 1. Completeness
-- [ ] Every architecture requirement has a test.
-- [ ] Every integration requirement has a test.
-- [ ] Every data requirement has a test.
+**This document is governed by Foreman Governance.**
 
-## 2. Traceability
-- [ ] All tests link back to architecture sections.
-- [ ] Missing mappings flagged.
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/qa-of-qa-validation-checklist.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/qa-of-qa-validation-checklist.md)
 
-## 3. Coverage
-- [ ] Unit tests
-- [ ] Integration tests
-- [ ] Negative tests
-- [ ] UI behavioural tests
-- [ ] Backend behavioural tests
+---
 
-## 4. QA Design
-- [ ] No redundant tests.
-- [ ] No blind spots.
-- [ ] All edge cases covered.
+## What This Means
 
-## Final Rule
-If any section fails, builders MUST NOT begin work.
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
 
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

@@ -1,24 +1,28 @@
-# Innovation Workflow Specification
+# innovation-workflow-spec.md
 
-## Workflow Steps
-1. User submits idea  
-2. Maturion summarises  
-3. User confirms summary  
-4. Idea moves to Innovation Board  
-5. Voting begins  
-6. Maturion detects thresholds  
-7. Threshold triggers:
-   - 70% → Johan attention  
-   - 80% → Under consideration  
-   - 90% → Architecture backlog  
+**This document is governed by Foreman Governance.**
 
-8. Foreman drafts:
-   - Architecture  
-   - Integration  
-   - QA  
-   - Dependencies  
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/innovation-workflow-spec.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/innovation-workflow-spec.md)
 
-9. Johan approves  
-10. Builders implement  
-11. QA → QA-of-QA → Integration  
-12. Release
+---
+
+## What This Means
+
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

@@ -1,197 +1,28 @@
-# Build Completion Report
+# completion-report.template.md
 
-## Task Information
+**This document is governed by Foreman Governance.**
 
-**Task ID**: `<task-id>`  
-**Module**: `<module-name>`  
-**Build Type**: Build to Green  
-**Builder**: `<builder-agent-name>`
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/contracts/completion-report.template.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/contracts/completion-report.template.md)
 
 ---
 
-## Build Summary
+## What This Means
 
-**Status**: ✅ COMPLETE | ❌ FAILED  
-**Started**: `<ISO 8601 timestamp>`  
-**Completed**: `<ISO 8601 timestamp>`  
-**Total Duration**: `<duration in minutes>`  
-**Total Iterations**: `<number>`
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
 
----
+## How to Access
 
-## QA Results
+Visit the canonical location above to access the current version of this document.
 
-### Final Test Status
+## Repository Structure
 
-- **Total Tests**: X
-- **Passing**: X (100%)
-- **Failing**: 0
-- **Skipped**: 0
-- **Test Debt**: ZERO ✅
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
 
-### QA Validation
-
-- ✅ All tests passing (100%)
-- ✅ Zero test failures
-- ✅ Zero test errors
-- ✅ Zero skipped tests
-- ✅ Zero test debt
-
-**QA Status**: 🟢 GREEN
-
----
-
-## Build Quality
-
-### Quality Checks
-
-- ✅ TypeScript compilation: PASS
-- ✅ Lint: PASS (zero errors, zero warnings)
-- ✅ Build: PASS (no build errors)
-- ✅ Console: CLEAN (no errors)
-
-### Interface Integrity
-
-- ✅ All Record<UnionType, T> complete
-- ✅ All imports reference exported members
-- ✅ No breaking changes (or CS2 approved)
-- ✅ Pre-build validation script: PASS
-
-**Build Quality**: ✅ VALIDATED
-
----
-
-## Iteration Summary
-
-| Iteration | Target Test | Status | Duration |
-|-----------|-------------|--------|----------|
-| 1 | `<test-name>` | Pass | Xs |
-| 2 | `<test-name>` | Pass | Xs |
-| ... | ... | ... | ... |
-
-**Total Iterations**: X  
-**Average Duration per Iteration**: Xs
-
----
-
-## Evidence Trail
-
-### Evidence Files
-
-- ✅ Build initiation: `build-initiation.json`
-- ✅ Validation results: `validation-results.json`
-- ✅ Iteration logs: `iterations/iteration-*.json` (X files)
-- ✅ Final validation: `final-validation.json`
-- ✅ QA results: `qa-results.json`
-- ✅ Completion report: `completion-report.md` (this file)
-
-**Evidence Location**: `foreman/evidence/builds/<task-id>/`
-
----
-
-## Deliverables
-
-### Expected Deliverables Status
-
-1. ✅ All QA tests passing (100%)
-2. ✅ Zero test debt
-3. ✅ Build quality validated
-4. ✅ Evidence trail complete
-5. ✅ Completion report submitted
-
-**All Deliverables**: ✅ MET
-
----
-
-## Architecture Conformance
-
-- ✅ All architecture components implemented
-- ✅ No deviations from architecture
-- ✅ No features added beyond specification
-- ✅ Module boundaries respected
-
-**Architecture Conformance**: ✅ VALIDATED
-
----
-
-## Governance Compliance
-
-- ✅ Governance Supremacy Rule (GSR): COMPLIANT
-- ✅ Zero Test Debt Rule: COMPLIANT
-- ✅ Build to Green Rule: COMPLIANT
-- ✅ Quality Integrity Contract (QIC): COMPLIANT
-- ✅ Build Philosophy: COMPLIANT
-
-**Governance Status**: ✅ FULLY COMPLIANT
-
----
-
-## Issues and Resolutions
-
-### Issues Encountered
-
-<List any issues encountered during build>
-
-1. Issue 1: `<description>`
-   - Resolution: `<how it was resolved>`
-   - Iteration: `<iteration number>`
-
-### Escalations
-
-<List any escalations to Foreman or Johan>
-
-- None | `<escalation details>`
-
----
-
-## Lessons Learned
-
-### What Went Well
-
-<Document what worked well in this build>
-
-### Challenges
-
-<Document any challenges faced>
-
-### Process Improvements
-
-<Suggest any process improvements for future builds>
-
----
-
-## Foreman Validation
-
-**Validated By**: Maturion Foreman  
-**Validation Date**: `<ISO 8601 timestamp>`  
-**Validation Status**: ✅ APPROVED | ❌ REJECTED
-
-**Foreman Comments**:
-
-<Foreman's assessment of the build>
-
----
-
-## Human Approval
-
-**Approved By**: `<name>`  
-**Approval Date**: `<ISO 8601 timestamp>`  
-**Status**: ✅ APPROVED | ⏳ PENDING | ❌ REJECTED
-
-**Comments**:
-
-<Human reviewer comments>
-
----
-
-## Final Status
-
-**Build Status**: ✅ SUCCESS - All tests GREEN, all quality checks PASS  
-**Ready for Merge**: ✅ YES | ❌ NO  
-**Next Steps**: `<next steps if any>`
-
----
-
-*Generated by Maturion Foreman*  
-*Evidence Trail Complete*  
-*Build Philosophy Compliance: 100%*
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

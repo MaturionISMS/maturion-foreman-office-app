@@ -1,44 +1,28 @@
-# Runtime Risk Model Specification
+# runtime-risk-model-spec.md
 
-## Purpose
+**This document is governed by Foreman Governance.**
 
-Bridge the **live platform risks** to the SRMF/ERM risk constructs.
-
----
-
-## 1. Risk Categories
-
-- **Platform Availability**
-- **Data Integrity**
-- **Security & Privacy**
-- **Compliance**
-- **AI Behaviour**
-- **User Experience / Adoption**
-
-Each runtime risk:
-
-- Links to ERM framework elements where applicable.
-- References one or more behaviour events or incidents.
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/runtime-risk-model-spec.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/runtime-risk-model-spec.md)
 
 ---
 
-## 2. Risk Entry Fields
+## What This Means
 
-- `risk_id`
-- `title`
-- `category`
-- `severity` – mapped to ERM scales
-- `likelihood` – coarse rating (LOW/MEDIUM/HIGH)
-- `impact` – coarse rating
-- `current_controls` – high-level description
-- `proposed_actions`
-- `status` – `MONITORED | ACTION_REQUIRED | RESOLVED`
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
 
-The structured storage format is described in `ai-memory/knowledge-base-schema.json`.
+## How to Access
 
----
+Visit the canonical location above to access the current version of this document.
 
-## 3. QA Rules
+## Repository Structure
 
-- Every CRITICAL incident must have at least one risk entry.
-- Risks must use the same language and concepts as the ERM module True North documents.
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

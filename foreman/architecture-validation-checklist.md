@@ -1,62 +1,28 @@
-# Architecture Validation Checklist
+# architecture-validation-checklist.md
 
-This checklist is executed by Maturion BEFORE builders are allowed to begin.
+**This document is governed by Foreman Governance.**
 
-## 1. True North
-- [ ] Does it exist?
-- [ ] Does it define module vision & purpose?
-- [ ] Does it align with ISMS True North?
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/architecture-validation-checklist.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/architecture-validation-checklist.md)
 
-## 2. Architecture Spec
-- [ ] Exists?
-- [ ] Includes module processes?
-- [ ] Includes boundaries?
-- [ ] Includes functional decomposition?
+---
 
-## 3. Integration Spec
-- [ ] Exists?
-- [ ] Declares all inbound/outbound interactions?
-- [ ] Declares all events and API flows?
-- [ ] Declares cross-module dependencies?
+## What This Means
 
-## 4. Data Spec
-- [ ] Database schema exists?
-- [ ] Includes all required models?
-- [ ] Includes validation rules?
-- [ ] Includes special scales (if required)?
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
 
-## 5. Frontend Spec
-- [ ] Component map complete?
-- [ ] Wireframes complete?
-- [ ] Coverage for all user roles?
+## How to Access
 
-## 6. Backend Spec
-If module needs backend:
-- [ ] Edge Functions defined?
-- [ ] Export Spec defined?
-- [ ] Watchdog Logic defined?
-- [ ] Model Routing defined?
+Visit the canonical location above to access the current version of this document.
 
-## 7. QA Spec
-- [ ] QA Plan exists?
-- [ ] Covers ALL architecture components?
-- [ ] No missing mappings?
+## Repository Structure
 
-## 8. Implementation Guide
-- [ ] Steps complete?
-- [ ] Task breakdown sensible?
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
 
-## 9. Sprint Plan
-- [ ] Tasks sequenced?
-- [ ] Dependencies identified?
-
-## 10. Changelog
-- [ ] Version present?
-- [ ] Correct format?
-
-## FINAL VALIDATION
-- [ ] No missing files  
-- [ ] No inconsistencies  
-- [ ] No contradictions  
-- [ ] No ambiguous requirements  
-
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

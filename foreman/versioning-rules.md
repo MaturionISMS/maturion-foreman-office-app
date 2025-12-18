@@ -1,20 +1,28 @@
-# Versioning Rules
+# versioning-rules.md
 
-v0.1 → draft  
-v0.2 → corrections  
-v1.0 → final build-ready  
-v1.1 → enhancement  
-v2.0 → major redesign  
+**This document is governed by Foreman Governance.**
 
-Rules:
-- Major version increments require Foreman review + Johan approval.
-- Minor increments require Foreman approval.
-- Drafts must NOT be used for building.
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/policies/versioning-rules.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/policies/versioning-rules.md)
 
-## Memory Integration
+---
 
-All version changes must be recorded in the Memory Fabric:
-- Major version increments must document rationale in memory
-- Breaking changes must reference memory entries
-- Version history feeds into architectural memory
-- Memory Fabric itself follows versioning rules
+## What This Means
+
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
+
+## How to Access
+
+Visit the canonical location above to access the current version of this document.
+
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

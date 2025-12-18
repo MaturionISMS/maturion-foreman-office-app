@@ -1,52 +1,28 @@
-# Incident Detection Specification
+# incident-detection-spec.md
 
-## Purpose
+**This document is governed by Foreman Governance.**
 
-Describe how behaviour events are escalated into **incidents** and how severity is determined.
-
----
-
-## 1. Incident Triggers
-
-Incidents can start from:
-
-- Behaviour log patterns
-- Watchdog rule violations
-- Compliance engine alerts
-- Manual admin reports
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/incident-detection-spec.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/incident-detection-spec.md)
 
 ---
 
-## 2. Incident Structure
+## What This Means
 
-- `incident_id`
-- `detected_at`
-- `first_seen_event_ids`
-- `severity` – `CRITICAL | HIGH | MEDIUM | LOW`
-- `status` – `OPEN | INVESTIGATING | MITIGATED | CLOSED`
-- `module_ids` – affected modules
-- `environments` – envs involved
-- `root_cause_hypothesis`
-- `temporary_mitigations`
-- `permanent_fixes_ref` – references into change records
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
 
-The canonical schema is defined in `foreman/ai-memory/historical-issues-schema.json`.
+## How to Access
 
----
+Visit the canonical location above to access the current version of this document.
 
-## 3. Severity Guidelines
+## Repository Structure
 
-- **CRITICAL** – security breach, data integrity loss, or platform-wide outage.
-- **HIGH** – major functional degradation or near-miss security issues.
-- **MEDIUM** – limited module impact; does not threaten global platform.
-- **LOW** – minor issues with clear workaround.
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
 
----
-
-## 4. Integration
-
-- Incidents feed:
-  - Risk model updates
-  - Upgrade insights
-  - Architectural lessons
-  - Change requests (new tasks for Foreman/builders)
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

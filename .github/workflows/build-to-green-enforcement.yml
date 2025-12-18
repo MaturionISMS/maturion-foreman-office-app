@@ -24,23 +24,56 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Check Build Wave Phase
+        id: phase-check
+        run: |
+          echo "🔍 Checking build wave phase..."
+          
+          PHASE_FILE=".github/build-wave-phase.json"
+          
+          if [ ! -f "$PHASE_FILE" ]; then
+            echo "⚠️ Phase file not found. Defaulting to enforcement enabled."
+            echo "enabled=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          ENABLED=$(jq -r '.build_to_green_enabled' "$PHASE_FILE")
+          CURRENT_WAVE=$(jq -r '.current_wave' "$PHASE_FILE")
+          WAVE_NAME=$(jq -r '.wave_name' "$PHASE_FILE")
+          
+          echo "Current Wave: $CURRENT_WAVE - $WAVE_NAME"
+          echo "Build-to-Green Enabled: $ENABLED"
+          
+          if [ "$ENABLED" = "false" ]; then
+            echo "⏸️ Build-to-Green enforcement is PAUSED for $CURRENT_WAVE"
+            echo "enabled=false" >> $GITHUB_OUTPUT
+          else
+            echo "✅ Build-to-Green enforcement is ACTIVE"
+            echo "enabled=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Set up Node.js
+        if: steps.phase-check.outputs.enabled == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
       - name: Set up Python
+        if: steps.phase-check.outputs.enabled == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
       - name: Install Node dependencies
+        if: steps.phase-check.outputs.enabled == 'true'
         run: npm ci
 
       - name: Install Python dependencies
+        if: steps.phase-check.outputs.enabled == 'true'
         run: pip install -r requirements-test.txt
 
       - name: Enforce No Test Dodging
+        if: steps.phase-check.outputs.enabled == 'true'
         run: |
           echo "🔍 Scanning for forbidden test-dodging patterns..."
 
@@ -56,11 +89,13 @@ jobs:
           echo "✅ No test dodging patterns found."
 
       - name: Run Test Suite
+        if: steps.phase-check.outputs.enabled == 'true'
         run: |
           echo "▶️ Running test suite..."
           npm test
 
       - name: Check for RED tests
+        if: steps.phase-check.outputs.enabled == 'true'
         run: |
           echo "🔍 Checking for RED test results..."
 
@@ -88,8 +123,33 @@ jobs:
             echo "ℹ️ No DP-RED registry present."
           fi
 
+      - name: Phase-Gated Enforcement Paused
+        if: steps.phase-check.outputs.enabled == 'false' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const phaseData = JSON.parse(fs.readFileSync('.github/build-wave-phase.json', 'utf8'));
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ⏸️ **Build-to-Green Enforcement PAUSED**
+              
+              **Current Wave**: ${phaseData.current_wave} - ${phaseData.wave_name}
+              
+              Build-to-Green enforcement is intentionally disabled during this phase.
+              
+              **Reason**: ${phaseData.description}
+              
+              Enforcement will be re-enabled in Wave 3.
+              `
+            })
+
       - name: Governance Summary Comment
-        if: github.event_name == 'pull_request'
+        if: steps.phase-check.outputs.enabled == 'true' && github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           script: |

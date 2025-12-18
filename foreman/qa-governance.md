@@ -1,53 +1,28 @@
-# QA Governance
+# qa-governance.md
 
-## Levels of QA
+**This document is governed by Foreman Governance.**
 
-### Level 1 — Builder QA
-Builders test:
-- functional correctness  
-- schema correctness  
-- UI correctness  
-- edge logic correctness  
-- integration correctness  
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/qa-governance.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/specs/qa-governance.md)
 
-### Level 2 — Foreman QA
-Maturion tests:
-- completeness of QA  
-- alignment with architecture  
-- sequence correctness  
-- boundary protection  
-- inter-module integration  
+---
 
-### Level 3 — Human QA (Johan)
-Final human inspection for:
-- completeness  
-- UX quality  
-- requirement fulfillment  
-- domain correctness
+## What This Means
 
-## Memory Fabric Integration
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
 
-The Memory Fabric is a mandatory subsystem for QA governance:
+## How to Access
 
-### Memory Requirements for QA
-- All QA validation outcomes must be recorded in memory
-- All QA coverage gaps must be logged to memory
-- All regression detections must be written to memory
-- QA patterns and learnings must feed into memory
+Visit the canonical location above to access the current version of this document.
 
-### Memory-Informed QA
-QA validation must consult memory for:
-- Historical test failures and patterns
-- Common regression points
-- Integration testing lessons
-- Coverage gaps from previous builds
-- Builder QA quality trends
+## Repository Structure
 
-### QA Readiness Includes Memory
-Builds cannot proceed until:
-- ✅ Memory Fabric validated
-- ✅ QA seed memories present
-- ✅ Historical QA patterns loaded
-- ✅ Memory read/write functional
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
 
-**Memory validation is at the same level as QA coverage validation.**
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.

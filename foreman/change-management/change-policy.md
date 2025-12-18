@@ -1,29 +1,28 @@
-# Change Management Policy
+# change-policy.md
 
-## Purpose
+**This document is governed by Foreman Governance.**
 
-Define mandatory rules for all changes affecting:
-
-- Architecture
-- Code
-- AI routing/behaviour
-- Configuration
-- Compliance/QA logic
+**The canonical version is located at:** [https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/policies/change-policy.md](https://github.com/MaturionISMS/maturion-foreman-governance/tree/main/governance/policies/change-policy.md)
 
 ---
 
-## Principles
+## What This Means
 
-1. **Risk-aware** – every change has an explicit risk assessment.
-2. **Test-first** – all changes must be validated in the test environment.
-3. **Rollback-ready** – every change has a viable rollback plan.
-4. **Traceable** – changes are recorded in `change-log-schema.json`.
-5. **Segregation of Duties** – builder agents implement; Foreman governs.
+This file has been relocated to the **maturion-foreman-governance** repository to:
+- Centralize FM-level governance artefacts
+- Separate governance from implementation
+- Maintain a single source of truth for governance policies, contracts, and specifications
 
----
+## How to Access
 
-## Scope
+Visit the canonical location above to access the current version of this document.
 
-- Applies to all Maturion ISMS modules.
-- Applies to both Foreman and runtime Maturion adjustments.
-- Includes configuration changes in external systems if they influence behaviour.
+## Repository Structure
+
+FM-level governance is now organized in the maturion-foreman-governance repository under:
+- `governance/policies/` - Governance policies and rules
+- `governance/contracts/` - Contracts and checklists
+- `governance/specs/` - Specifications and standards
+- `governance/dashboards/` - Dashboard specifications
+
+This change is normalization only. No enforcement, CI, doctrine, or runtime changes were made.
