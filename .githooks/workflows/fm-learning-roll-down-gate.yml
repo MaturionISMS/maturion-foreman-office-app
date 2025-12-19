@@ -1,0 +1,106 @@
+name: FM Learning Roll-Down Gate
+
+on:
+  pull_request:
+    paths:
+      - "architecture/**"
+      - ".agent"
+      - ".github/workflows/**"
+  push:
+    branches:
+      - main
+
+jobs:
+  fm-learning-roll-down-gate:
+    name: Enforce Learning Roll-Down & Agent State
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify BUILD_ACTIVE exists
+        run: |
+          if [ ! -f "architecture/BUILD_ACTIVE" ]; then
+            echo "❌ LEARNING BLOCK: architecture/BUILD_ACTIVE missing."
+            echo "FM must declare active build."
+            exit 1
+          fi
+
+      - name: Resolve active build id
+        id: build
+        run: |
+          BUILD_ID="$(cat architecture/BUILD_ACTIVE | tr -d '\r' | tr -d '\n')"
+          if [ -z "$BUILD_ID" ]; then
+            echo "❌ LEARNING BLOCK: BUILD_ACTIVE is empty."
+            exit 1
+          fi
+
+          BUILD_DIR="architecture/builds/${BUILD_ID}"
+          if [ ! -d "$BUILD_DIR" ]; then
+            echo "❌ LEARNING BLOCK: Build directory not found: $BUILD_DIR"
+            exit 1
+          fi
+
+          echo "build_dir=$BUILD_DIR" >> "$GITHUB_OUTPUT"
+          echo "build_id=$BUILD_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Check for learning.md when failures occurred
+        run: |
+          BUILD_DIR="${{ steps.build.outputs.build_dir }}"
+          LEARNING_FILE="${BUILD_DIR}/learning.md"
+
+          if [ ! -f "$LEARNING_FILE" ]; then
+            echo "❌ LEARNING BLOCK: learning.md is missing."
+            echo "All failures must be rolled down into architecture learning."
+            echo "Agent state: FIX / ESCALATE / HALT. Never conclude."
+            exit 1
+          fi
+
+          echo "✅ learning.md present"
+
+      - name: Enforce learning roll-down semantics
+        run: |
+          BUILD_DIR="${{ steps.build.outputs.build_dir }}"
+          LEARNING_FILE="${BUILD_DIR}/learning.md"
+
+          REQUIRED_MARKERS=(
+            "LEARNING_REQUIRED:"
+            "LEARNING_STATUS:"
+            "SOURCE_EVENT:"
+            "ARCHITECTURE_IMPACT:"
+            "GOVERNANCE_UPDATE_REQUIRED:"
+            "SUMMARY:"
+          )
+
+          for MARKER in "${REQUIRED_MARKERS[@]}"; do
+            if ! grep -q "$MARKER" "$LEARNING_FILE"; then
+              echo "❌ LEARNING BLOCK: learning.md missing marker: $MARKER"
+              exit 1
+            fi
+          done
+
+          echo "✅ learning.md structure valid"
+
+      - name: Block agent conclusion if learning is unresolved
+        run: |
+          BUILD_DIR="${{ steps.build.outputs.build_dir }}"
+          LEARNING_FILE="${BUILD_DIR}/learning.md"
+
+          LEARNING_REQUIRED=$(grep "LEARNING_REQUIRED:" "$LEARNING_FILE" | awk '{print $2}')
+          LEARNING_STATUS=$(grep "LEARNING_STATUS:" "$LEARNING_FILE" | awk '{print $2}')
+
+          if [ "$LEARNING_REQUIRED" = "YES" ] && [ "$LEARNING_STATUS" != "RESOLVED" ]; then
+            echo "❌ LEARNING BLOCK: Learning is required but not resolved."
+            echo "Agents are not permitted to conclude while learning is OPEN."
+            echo "Agent state: FIX / ESCALATE / HALT. Never conclude."
+            exit 1
+          fi
+
+          echo "✅ Learning resolved or not required"
+
+      - name: Learning Roll-Down Gate Passed
+        run: |
+          echo "✅ FM LEARNING ROLL-DOWN GATE PASSED"
+          echo "All required learnings have been rolled into architecture."
+          echo "Agents may proceed only because system completeness is preserved."
