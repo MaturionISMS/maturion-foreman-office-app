@@ -1,0 +1,125 @@
+name: FM Architecture Gate (Completeness + Agent State)
+
+on:
+  pull_request:
+    paths:
+      - "architecture/**"
+      - ".agent"
+      - ".github/workflows/**"
+  push:
+    branches:
+      - main
+
+jobs:
+  fm-architecture-gate:
+    name: Enforce Architecture 100% + Block Agent Conclusion
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify .agent exists (entry gate)
+        run: |
+          if [ ! -f ".agent" ]; then
+            echo "❌ GOVERNANCE BLOCK: .agent is missing."
+            echo "Agents may not act without a valid .agent contract."
+            exit 1
+          fi
+          echo "✅ .agent present"
+
+      - name: Verify BUILD_ACTIVE exists
+        run: |
+          if [ ! -f "architecture/BUILD_ACTIVE" ]; then
+            echo "❌ ARCHITECTURE BLOCK: architecture/BUILD_ACTIVE is missing."
+            echo "FM must declare the active build id."
+            echo "Agent state: FIX / ESCALATE / HALT. Never conclude."
+            exit 1
+          fi
+          echo "✅ BUILD_ACTIVE present"
+
+      - name: Resolve active build id
+        id: build
+        run: |
+          BUILD_ID="$(cat architecture/BUILD_ACTIVE | tr -d '\r' | tr -d '\n')"
+          if [ -z "$BUILD_ID" ]; then
+            echo "❌ ARCHITECTURE BLOCK: BUILD_ACTIVE is empty."
+            echo "FM must set a non-empty build id."
+            echo "Agent state: FIX / ESCALATE / HALT. Never conclude."
+            exit 1
+          fi
+
+          BUILD_DIR="architecture/builds/${BUILD_ID}"
+          if [ ! -d "$BUILD_DIR" ]; then
+            echo "❌ ARCHITECTURE BLOCK: Build directory not found: $BUILD_DIR"
+            echo "FM must compile architecture into architecture/builds/<build-id>/"
+            echo "Agent state: FIX / ESCALATE / HALT. Never conclude."
+            exit 1
+          fi
+
+          echo "build_id=$BUILD_ID" >> "$GITHUB_OUTPUT"
+          echo "build_dir=$BUILD_DIR" >> "$GITHUB_OUTPUT"
+          echo "✅ Active build: $BUILD_ID"
+
+      - name: Verify required architecture artifacts exist
+        run: |
+          BUILD_DIR="${{ steps.build.outputs.build_dir }}"
+          REQUIRED_FILES=(
+            "${BUILD_DIR}/compilation.md"
+            "${BUILD_DIR}/validation.md"
+            "${BUILD_DIR}/drift-report.md"
+          )
+
+          for FILE in "${REQUIRED_FILES[@]}"; do
+            if [ ! -f "$FILE" ]; then
+              echo "❌ ARCHITECTURE BLOCK: Missing required artifact: $FILE"
+              echo "Architecture must mirror a complete working app."
+              echo "Agent state: FIX / ESCALATE / HALT. Never conclude."
+              exit 1
+            fi
+          done
+
+          echo "✅ Required artifacts present"
+
+      - name: Enforce Architecture Completeness = 100%
+        run: |
+          BUILD_DIR="${{ steps.build.outputs.build_dir }}"
+          VALIDATION="${BUILD_DIR}/validation.md"
+
+          REQUIRED_MARKERS=(
+            "ARCHITECTURE_COMPLETENESS: 100%"
+            "CHECKLIST_STATUS: PASS"
+            "DRIFT_STATUS: NONE"
+            "CANONICAL_CHECKLIST_REF:"
+          )
+
+          for MARKER in "${REQUIRED_MARKERS[@]}"; do
+            if ! grep -q "$MARKER" "$VALIDATION"; then
+              echo "❌ ARCHITECTURE BLOCK: validation.md missing marker: $MARKER"
+              echo "FM must produce a PASS/100% validation report with canonical checklist reference."
+              echo "Agent state: FIX / ESCALATE / HALT. Never conclude."
+              exit 1
+            fi
+          done
+
+          echo "✅ validation.md declares 100% + PASS + canonical reference"
+
+      - name: Enforce Drift Report = NONE
+        run: |
+          BUILD_DIR="${{ steps.build.outputs.build_dir }}"
+          DRIFT="${BUILD_DIR}/drift-report.md"
+
+          if ! grep -q "DRIFT_STATUS: NONE" "$DRIFT"; then
+            echo "❌ DRIFT BLOCK: drift-report.md does not declare DRIFT_STATUS: NONE"
+            echo "Open drift means architecture is incomplete."
+            echo "Agent state: ESCALATE / HALT. Never conclude."
+            exit 1
+          fi
+
+          echo "✅ Drift status is NONE"
+
+      - name: Enforce “No Agent Conclusion While Incomplete” (hard banner)
+        run: |
+          echo "✅ FM ARCHITECTURE GATE PASSED"
+          echo "Architecture completeness is declared 100% and drift is NONE."
+          echo "Only now may agents proceed toward completion/hand-over."
