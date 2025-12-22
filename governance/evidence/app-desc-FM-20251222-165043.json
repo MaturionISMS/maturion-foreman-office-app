@@ -1,0 +1,57 @@
+{
+  "validation_id": "app-desc-FM-20251222-165043",
+  "timestamp": "2025-12-22T16:50:43.330060",
+  "app_name": "FM",
+  "status": "FAIL",
+  "checks": [
+    {
+      "check": "canonical_location",
+      "status": "PASS",
+      "message": "App Description found at canonical location",
+      "evidence": {
+        "path": "/home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/docs/governance/FM_APP_DESCRIPTION.md",
+        "exists": true,
+        "size": 8106
+      }
+    },
+    {
+      "check": "authority_markers",
+      "status": "FAIL",
+      "message": "Missing authority markers: version",
+      "evidence": {
+        "owner": true,
+        "status": true,
+        "version": false
+      }
+    },
+    {
+      "check": "content_completeness",
+      "status": "PASS",
+      "message": "All required content sections present",
+      "evidence": {
+        "purpose": true,
+        "scope": true,
+        "success_criteria": true
+      }
+    },
+    {
+      "check": "approval_status",
+      "status": "PASS",
+      "message": "App Description is approved and ready",
+      "evidence": {
+        "is_approved": true,
+        "has_blocking_markers": false
+      }
+    }
+  ],
+  "errors": [
+    "BLOCKING: App Description missing required markers: version"
+  ],
+  "warnings": [],
+  "evidence": {
+    "canonical_path": "/home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/docs/governance/FM_APP_DESCRIPTION.md",
+    "content_length": 8072,
+    "owner": "** Johan Ras",
+    "status": "Authoritative"
+  }
+}

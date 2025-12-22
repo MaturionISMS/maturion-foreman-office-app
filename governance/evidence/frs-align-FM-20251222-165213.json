@@ -1,0 +1,21 @@
+{
+  "validation_id": "frs-align-FM-20251222-165213",
+  "timestamp": "2025-12-22T16:52:13.091680",
+  "app_name": "FM",
+  "status": "FAIL",
+  "checks": [
+    {
+      "check": "app_description_validity",
+      "status": "FAIL",
+      "message": "App Description not marked as Authoritative or Approved",
+      "evidence": {}
+    }
+  ],
+  "errors": [
+    "BLOCKING: App Description must be authoritative before FRS validation"
+  ],
+  "warnings": [],
+  "evidence": {
+    "app_description_path": "/home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/docs/governance/FM_APP_DESCRIPTION.md"
+  }
+}
