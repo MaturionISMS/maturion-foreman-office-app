@@ -33,12 +33,40 @@ This gate exists to prevent:
 
 ## III. Gate Preconditions (ALL MANDATORY)
 
-### Precondition 1: Architecture Compilation Contract = PASS
+### Precondition 1: App Description Exists and Is Authoritative
+
+**Requirement**: App Description must exist, be authoritative, and be explicitly referenced by Requirements Specification.
+
+**Validation**:
+- App Description file exists at `docs/governance/{APP}_APP_DESCRIPTION.md`
+- App Description marked as "Authoritative" or "Approved"
+- App Description owner identified (Product Owner: Johan Ras for FM)
+- Requirements Specification explicitly references App Description
+- Requirements Specification contains derivation statement: "This specification is derived from `{APP}_APP_DESCRIPTION.md`"
+- App Description → FRS Alignment Checklist (see `governance/contracts/app-description-frs-alignment-checklist.md`) resolves to **PASS**
+
+**Evidence Required**:
+- `architecture/builds/<build-id>/app-description-validation.md` confirming presence and authority
+- `architecture/builds/<build-id>/app-description-frs-alignment-checklist-result.md` showing PASS
+- Requirements Specification header showing App Description reference
+
+**Blocking Conditions**:
+- App Description missing
+- App Description not marked authoritative
+- Requirements Specification does not reference App Description
+- Derivation lineage unclear
+- App Description → FRS Alignment Checklist != PASS
+- FRS contradicts App Description
+
+---
+
+### Precondition 2: Architecture Compilation Contract = PASS
 
 **Requirement**: Architecture must be complete, frozen, and validated.
 
 **Validation**:
 - Architecture Compilation Contract (see `governance/architecture/ARCHITECTURE_COMPILATION_CONTRACT.md`) resolves to **PASS**
+- All required input artifacts validated (including App Description)
 - All architecture elements mapped and validated
 - Architecture completeness = 100%
 - Drift status = NONE
@@ -51,13 +79,14 @@ This gate exists to prevent:
 
 **Blocking Conditions**:
 - Architecture Compilation Contract != PASS
+- App Description validation failed (blocks compilation)
 - Architecture completeness < 100%
 - FL/CI prevention plan missing or incomplete
 - Any applicable failure class not addressed
 
 ---
 
-### Precondition 2: QA Derivation & Coverage Rules = PASS
+### Precondition 3: QA Derivation & Coverage Rules = PASS
 
 **Requirement**: QA must be fully derived, implemented, and GREEN.
 
@@ -84,7 +113,7 @@ This gate exists to prevent:
 
 ---
 
-### Precondition 3: FL/CI Learning Integration = COMPLETE
+### Precondition 4: FL/CI Learning Integration = COMPLETE
 
 **Requirement**: All applicable historical failure classes must be addressed.
 
@@ -111,7 +140,7 @@ This gate exists to prevent:
 
 ---
 
-### Precondition 4: Deployment and Runtime Validation = COMPLETE
+### Precondition 5: Deployment and Runtime Validation = COMPLETE
 
 **Requirement**: Deployment and runtime behavior must be validated.
 
@@ -137,7 +166,7 @@ This gate exists to prevent:
 
 ---
 
-### Precondition 5: Governance Checklist = PASS
+### Precondition 6: Governance Checklist = PASS
 
 **Requirement**: All governance checklist items must be satisfied.
 
@@ -157,7 +186,7 @@ This gate exists to prevent:
 
 ---
 
-### Precondition 6: Scope Freeze = CONFIRMED
+### Precondition 7: Scope Freeze = CONFIRMED
 
 **Requirement**: Architecture and requirements must be frozen.
 
@@ -178,7 +207,7 @@ This gate exists to prevent:
 
 ---
 
-### Precondition 7: Zero Test Debt = CONFIRMED
+### Precondition 8: Zero Test Debt = CONFIRMED
 
 **Requirement**: No test debt permitted.
 
@@ -204,13 +233,14 @@ This gate exists to prevent:
 
 ### PASS Criteria (ALL must be true)
 
-1. ✅ Architecture Compilation Contract = PASS
-2. ✅ QA Derivation & Coverage Rules = PASS
-3. ✅ FL/CI Learning Integration = COMPLETE
-4. ✅ Deployment and Runtime Validation = COMPLETE
-5. ✅ Governance Checklist = PASS
-6. ✅ Scope Freeze = CONFIRMED
-7. ✅ Zero Test Debt = CONFIRMED
+1. ✅ App Description Exists and Is Authoritative
+2. ✅ Architecture Compilation Contract = PASS
+3. ✅ QA Derivation & Coverage Rules = PASS
+4. ✅ FL/CI Learning Integration = COMPLETE
+5. ✅ Deployment and Runtime Validation = COMPLETE
+6. ✅ Governance Checklist = PASS
+7. ✅ Scope Freeze = CONFIRMED
+8. ✅ Zero Test Debt = CONFIRMED
 
 **If ALL preconditions satisfied: PASS → Build authorization granted**
 
@@ -218,13 +248,14 @@ This gate exists to prevent:
 
 ### FAIL Criteria (ANY indicates FAIL)
 
-1. ❌ Architecture Compilation Contract != PASS
-2. ❌ QA Derivation & Coverage Rules != PASS
-3. ❌ FL/CI Learning Integration != COMPLETE
-4. ❌ Deployment and Runtime Validation != COMPLETE
-5. ❌ Governance Checklist != PASS
-6. ❌ Scope Freeze != CONFIRMED
-7. ❌ Zero Test Debt != CONFIRMED
+1. ❌ App Description missing or not authoritative
+2. ❌ Architecture Compilation Contract != PASS
+3. ❌ QA Derivation & Coverage Rules != PASS
+4. ❌ FL/CI Learning Integration != COMPLETE
+5. ❌ Deployment and Runtime Validation != COMPLETE
+6. ❌ Governance Checklist != PASS
+7. ❌ Scope Freeze != CONFIRMED
+8. ❌ Zero Test Debt != CONFIRMED
 
 **If ANY precondition fails: FAIL → Build authorization BLOCKED**
 
