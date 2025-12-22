@@ -55,3 +55,6 @@ htmlcov/
 # Self-test generated reports (should be regenerated on each run)
 /self-test-report.json
 /self-test-report.md
+
+# Governance evidence (generated artifacts - should not be committed)
+governance/evidence/*.json
