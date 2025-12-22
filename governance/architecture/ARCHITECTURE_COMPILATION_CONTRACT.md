@@ -31,32 +31,57 @@ Architecture compilation is the process by which:
 
 ### Required Input Artifacts
 
-1. **Requirements Specification**
-   - Complete, unambiguous requirements
-   - Explicitly scoped (in-scope / out-of-scope)
-   - Traceable to business objectives
-   - Versioned and frozen
+1. **App Description (Upstream Authority)**
+   - Authoritative product intent
+   - Defines purpose, scope, and success criteria
+   - Owner: Product Owner (Johan Ras for FM)
+   - Location: `docs/governance/{APP}_APP_DESCRIPTION.md`
+   - Status: Approved and authoritative
+   
+   **Validation Requirements**:
+   - ✅ Exists and is accessible
+   - ✅ Marked as "Authoritative" or "Approved"
+   - ✅ Owner explicitly identified
+   - ✅ Version identified
+   - ✅ Approval status confirmed
+   - ✅ Purpose clearly defined
+   - ✅ Scope explicitly stated
+   - ✅ Success criteria defined
 
-2. **Governance Checklists**
+2. **Functional Requirements Specification (Derived from App Description)**
+   - Complete, unambiguous requirements
+   - **MUST explicitly reference App Description** (see `governance/contracts/app-description-frs-alignment-checklist.md`)
+   - Explicitly scoped (in-scope / out-of-scope)
+   - Traceable to App Description and business objectives
+   - Versioned and frozen
+   
+   **Additional Requirements**:
+   - ✅ Contains derivation statement: "Derived from `{APP}_APP_DESCRIPTION.md`"
+   - ✅ FRS purpose aligns with App Description purpose
+   - ✅ FRS scope aligns with App Description scope
+   - ✅ FRS does not contradict App Description
+
+3. **Governance Checklists**
    - Architecture Design Checklist (from corporate governance canon)
    - QA-of-QA Validation Checklist
+   - **App Description → FRS Alignment Checklist** (see `governance/contracts/app-description-frs-alignment-checklist.md`)
    - Compliance requirements (if applicable)
    - Security requirements (if applicable)
 
-3. **Architectural Constraints**
+4. **Architectural Constraints**
    - Module boundary definitions
    - Integration contracts
    - Technology stack constraints
    - Performance requirements
    - Scalability requirements
 
-4. **Dependency Map**
+5. **Dependency Map**
    - External dependencies (libraries, services, APIs)
    - Internal dependencies (other modules)
    - Version constraints
    - License compatibility verification
 
-5. **Historical Failure Class Registry**
+6. **Historical Failure Class Registry**
    - FL/CI failure evidence records (from `foreman/evidence/flci/`)
    - Architectural lessons learned (from `foreman/ai-memory/architectural-lessons.md`)
    - Historical issue patterns (from `foreman/ai-memory/build-wave-*-historical-issues.json`)
@@ -72,28 +97,48 @@ Each input artifact MUST:
 - ✅ Be frozen (marked as immutable for this build)
 - ✅ Pass governance checklist validation
 
+**Additional Validation for App Description and FRS**:
+- ✅ App Description → FRS Alignment Checklist MUST PASS (see `governance/contracts/app-description-frs-alignment-checklist.md`)
+- ✅ FRS explicitly references App Description
+- ✅ No contradictions between App Description and FRS
+
 **If any input artifact fails validation, architecture compilation MUST NOT proceed.**
 
 ---
 
 ## IV. Architecture Compilation Process
 
-### Phase 1: Requirements → Architecture Elements
+### Phase 1: App Description → Requirements Specification → Architecture Elements
 
 **Process**:
-1. Decompose requirements into architecture elements
-2. Map each requirement to one or more architecture components
-3. Define interfaces between components
-4. Specify data flows and state management
-5. Document error handling and edge cases
+1. **Validate App Description** (Pre-Phase 1)
+   - Confirm App Description exists at `docs/governance/{APP}_APP_DESCRIPTION.md`
+   - Confirm App Description is authoritative and approved
+   - Execute App Description → FRS Alignment Checklist
+   - BLOCK if checklist does not PASS
+
+2. **Validate FRS Derivation**
+   - Confirm FRS explicitly references App Description
+   - Confirm FRS aligns with App Description (purpose, scope, success criteria)
+   - Confirm no contradictions between App Description and FRS
+
+3. **Decompose Requirements into Architecture Elements**
+   - Decompose requirements into architecture elements
+   - Map each requirement to one or more architecture components
+   - Define interfaces between components
+   - Specify data flows and state management
+   - Document error handling and edge cases
 
 **Output**: Architecture Component Specification
 
 **Validation**:
+- ✅ App Description → FRS Alignment Checklist PASSED
+- ✅ FRS explicitly references App Description
 - ✅ Every requirement is mapped to at least one architecture element
 - ✅ Every architecture element traces back to at least one requirement
 - ✅ No orphaned requirements (unmapped)
 - ✅ No orphaned architecture elements (unmapped)
+- ✅ Architecture elements align with App Description intent
 
 ---
 
