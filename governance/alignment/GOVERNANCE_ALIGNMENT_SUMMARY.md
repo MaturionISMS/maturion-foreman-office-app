@@ -1,9 +1,10 @@
 # Governance Alignment Summary
 
-**Status**: Complete  
+**Status**: Complete (Updated 2025-12-22)  
 **Date**: 2025-12-22  
 **Authority**: Corporate Governance Canon  
-**Issue**: Align Foreman App Governance with Canonical PR Gate & Agent QA Enforcement Model
+**Issue**: Align Foreman App Governance with Canonical PR Gate & Agent QA Enforcement Model  
+**Update**: Added Agent Role Gate Applicability and PR Gate Release Checklist enforcement
 
 ---
 
@@ -13,9 +14,30 @@ Align all Foreman App (FM) internal governance structures with the finalized and
 
 **Objective**: Ensure FM governance logic mirrors canonical gatekeeping requirements without reintroducing CI-discovery, duplicate enforcement, or governance reinterpretation.
 
+**Update (2025-12-22)**: Incorporated agent-role-based gate applicability and checklist-driven predictability invariant.
+
 ---
 
 ## II. Canonical Principles Implemented
+
+### 0. Agent Role Determines Gate Applicability (NEW)
+
+**Principle**: Agent role determines which PR gates apply, not file paths or heuristics.
+
+**FM Implementation**:
+- ✅ All workflows detect agent role from PR label, `.agent` file, or PR title
+- ✅ FM Architecture Gate applies ONLY to FM Agent role
+- ✅ Builder QA Gate applies ONLY to Builder role  
+- ✅ Non-applicable gates skip gracefully (no failure)
+- ✅ Path-based gate inference eliminated
+- ✅ Predictability invariant: If all checklist items satisfied, gate MUST pass
+
+**Evidence**: 
+- `governance/alignment/AGENT_ROLE_GATE_APPLICABILITY_REFERENCE.md`
+- `governance/alignment/PR_GATE_RELEASE_CHECKLISTS_REFERENCE.md`
+- Updated `.github/workflows/fm-architecture-gate.yml`
+
+---
 
 ### 1. Builder QA Reports as Sole Source of Truth
 

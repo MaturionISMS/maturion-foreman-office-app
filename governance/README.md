@@ -41,7 +41,54 @@ governance/
 
 ## Key Documents
 
-### Governance Alignment
+### Governance Alignment (Canonical References)
+
+**NEW - [alignment/AGENT_ROLE_GATE_APPLICABILITY_REFERENCE.md](alignment/AGENT_ROLE_GATE_APPLICABILITY_REFERENCE.md)**
+- **Canonical Reference** to `maturion-foreman-governance/AGENT_ROLE_GATE_APPLICABILITY.md`
+- Defines agent-role-based gate applicability (not path-based)
+- Ensures FM workflows respect agent role as sole determinant
+- Implements predictability invariant
+
+**NEW - [alignment/PR_GATE_RELEASE_CHECKLISTS_REFERENCE.md](alignment/PR_GATE_RELEASE_CHECKLISTS_REFERENCE.md)**
+- **Canonical Reference** to PR Gate Release Checklists
+- Ensures FM gates enforce checklists only (no additional requirements)
+- Implements: "If all checklist items satisfied, gate MUST pass"
+
+**[alignment/TWO_GATEKEEPER_MODEL.md](alignment/TWO_GATEKEEPER_MODEL.md)**
+- Defines dual gatekeeper authority structure
+- Gatekeeper 1: Governance Administrator
+- Gatekeeper 2: FM Builder
+- Both defer to canonical governance
+
+**[alignment/AGENT_SCOPED_QA_BOUNDARIES.md](alignment/AGENT_SCOPED_QA_BOUNDARIES.md)**
+- Enforces strict agent QA separation
+- Builder QA by builders only
+- Governance QA by governance agents only
+- FM QA by FM agents only
+
+**[alignment/PR_GATE_REQUIREMENTS_CANON.md](alignment/PR_GATE_REQUIREMENTS_CANON.md)**
+- Canonical gate semantics
+- READY/NOT_READY declarations
+- Enforcement-only validation
+
+**[alignment/PR_GATE_FAILURE_HANDLING_PROTOCOL.md](alignment/PR_GATE_FAILURE_HANDLING_PROTOCOL.md)**
+- Canonical failure classifications
+- Escalation semantics
+- Emergency authorization constraints
+
+**[alignment/GOVERNANCE_RIPPLE_COMPATIBILITY.md](alignment/GOVERNANCE_RIPPLE_COMPATIBILITY.md)**
+- Downward ripple: Canon → FM
+- Upward ripple: FM lessons → Canon
+- Evolution without hard-coded assumptions
+
+**[alignment/FM_REPOSITORY_QA_CLARIFICATION.md](alignment/FM_REPOSITORY_QA_CLARIFICATION.md)**
+- FM tests orchestration/enforcement/monitoring
+- Not ISMS module implementation
+
+**[alignment/GOVERNANCE_ALIGNMENT_SUMMARY.md](alignment/GOVERNANCE_ALIGNMENT_SUMMARY.md)**
+- Complete alignment status
+- Evidence of canonical principle implementation
+- Update log
 
 **[alignment/GOVERNANCE_ALIGNMENT_OVERVIEW.md](alignment/GOVERNANCE_ALIGNMENT_OVERVIEW.md)**
 - Defines relationship with corporate governance canon
