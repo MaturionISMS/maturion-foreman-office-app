@@ -5,6 +5,7 @@ __pycache__/
 *.so
 .Python
 build/
+!governance/build/  # Exception: governance build directory contains policy documents
 develop-eggs/
 dist/
 downloads/
