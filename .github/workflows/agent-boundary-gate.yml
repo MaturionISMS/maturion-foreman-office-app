@@ -1,0 +1,211 @@
+name: Agent QA Boundary Enforcement
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+      - develop
+
+# Explicit, least-privilege permissions
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  enforce-agent-boundaries:
+    name: Enforce Agent-Scoped QA Boundaries
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Find QA Reports in PR
+        id: find-reports
+        run: |
+          echo "🔍 Searching for QA reports in repository..."
+          
+          # Find all QA report JSON files
+          QA_REPORTS=$(find . -type f \( -name "*qa-report*.json" -o -name "*qa_report*.json" \) | tr '\n' ' ')
+          
+          if [ -z "$QA_REPORTS" ]; then
+            echo "ℹ️ No QA reports found in this PR"
+            echo "found=false" >> $GITHUB_OUTPUT
+          else
+            echo "✅ Found QA reports: $QA_REPORTS"
+            echo "reports=$QA_REPORTS" >> $GITHUB_OUTPUT
+            echo "found=true" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Validate Agent Boundaries
+        if: steps.find-reports.outputs.found == 'true'
+        run: |
+          echo "🔒 Validating agent-scoped QA boundaries..."
+          
+          python governance/scripts/validate_agent_boundaries.py \
+            --reports "${{ steps.find-reports.outputs.reports }}" \
+            --current-repo "${{ github.repository }}"
+      
+      - name: Report Success
+        if: success() && steps.find-reports.outputs.found == 'true' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ✅ **Agent QA Boundary Enforcement PASSED**
+              
+              All QA reports correctly attributed to appropriate agents:
+              - Builder QA by Builder agents only ✅
+              - Governance QA by Governance agents only ✅
+              - FM QA by FM agents only ✅
+              
+              No cross-agent QA execution detected.
+              Agent-scoped QA boundaries respected.
+              
+              **Gatekeeper 1 approves governance compliance.**
+              `
+            })
+      
+      - name: No Reports Found
+        if: steps.find-reports.outputs.found == 'false' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ℹ️ **Agent QA Boundary Enforcement - No Reports**
+              
+              No QA reports found in this PR.
+              
+              This is acceptable if:
+              - This is a documentation-only change
+              - This is a governance-only change
+              - QA reports will be added in subsequent commits
+              
+              If QA reports are expected, ensure they are:
+              - Named with pattern \`*qa-report*.json\` or \`*qa_report*.json\`
+              - Committed to the repository
+              - In JSON format with proper agent attribution
+              `
+            })
+      
+      - name: Report Catastrophic Violation
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Create catastrophic failure issue
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: "🚨 CATASTROPHIC: Agent QA Boundary Violation",
+              labels: ['catastrophic-failure', 'governance-violation', 'requires-escalation'],
+              body: `
+              # CATASTROPHIC GOVERNANCE VIOLATION
+              
+              **Type**: Agent-Scoped QA Boundary Violation  
+              **PR**: #${context.issue.number}  
+              **Commit**: ${context.sha}  
+              **Detected**: ${new Date().toISOString()}
+              
+              ---
+              
+              ## Violation
+              
+              Agent-scoped QA boundary violation detected in PR #${context.issue.number}.
+              
+              This is a **catastrophic governance violation** that breaks fundamental separation of duties in QA execution.
+              
+              ---
+              
+              ## Possible Causes
+              
+              - ❌ Builder agent executed Governance QA
+              - ❌ Governance agent executed Builder QA
+              - ❌ FM agent executed Builder QA
+              - ❌ QA report missing agent attribution
+              - ❌ QA report attributed to wrong agent
+              
+              ---
+              
+              ## REQUIRED ACTIONS (Mandatory)
+              
+              1. ⛔ **HALT** all related work immediately
+              2. 🔍 **IDENTIFY** which agent executed wrong QA scope
+              3. 🗑️ **REMOVE** violating QA report(s)
+              4. ✅ **EXECUTE** QA in correct agent scope
+              5. 📝 **UPDATE** agent contract to prevent recurrence
+              6. ⬆️ **ESCALATE** to @JohanRas788 (Owner)
+              
+              ---
+              
+              ## Impact
+              
+              - Merge **BLOCKED** until violation resolved
+              - PR cannot proceed
+              - Root cause analysis **MANDATORY**
+              - Prevention measures **REQUIRED**
+              
+              ---
+              
+              ## References
+              
+              - [Agent-Scoped QA Boundaries](../governance/alignment/AGENT_SCOPED_QA_BOUNDARIES.md)
+              - [Two-Gatekeeper Model](../governance/alignment/TWO_GATEKEEPER_MODEL.md)
+              - [PR Gate Failure Handling](../governance/alignment/PR_GATE_FAILURE_HANDLING_PROTOCOL.md)
+              
+              ---
+              
+              **Authority**: Corporate Governance Canon  
+              **Enforcement**: Automatic (no override permitted)  
+              **Escalation**: Mandatory to Owner
+              `
+            });
+            
+            // Comment on PR
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              🚨 **CATASTROPHIC GOVERNANCE VIOLATION**
+              
+              Agent-scoped QA boundary violation detected.
+              
+              This is a **catastrophic governance violation** requiring immediate escalation.
+              
+              **Catastrophic Failure Issue Created**: #${issue.data.number}
+              
+              ---
+              
+              ## REQUIRED ACTIONS
+              
+              1. ⛔ HALT all related work
+              2. 🔍 Review workflow logs for violation details
+              3. 🗑️ Remove violating QA report
+              4. ✅ Execute QA in correct agent scope
+              5. 📝 Update agent contract
+              6. ⬆️ Escalate to @JohanRas788
+              
+              ---
+              
+              **Merge BLOCKED until violation resolved.**
+              
+              See issue #${issue.data.number} for full details.
+              `
+            });
