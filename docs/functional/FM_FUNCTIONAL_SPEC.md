@@ -1,10 +1,11 @@
 # FM (Foreman) Functional Specification v1
 
-**Version**: 1.0.0  
+**Version**: 1.1.0  
 **Status**: Authoritative Functional Baseline  
 **Authority**: Johan Ras (Owner)  
 **Executor**: Governance Administrator (FM Repo)  
 **Date**: 2025-12-22  
+**Last Updated**: 2025-12-22 (v1.1.0 - Incorporated FM App Description)  
 **Classification**: Pre-Architecture, Governance-Aligned
 
 ---
@@ -19,6 +20,8 @@ Governance Repository (Constitutional Authority)
     ↓
 BUILD_PHILOSOPHY.md (Supreme Build Authority)
     ↓
+FM_APP_DESCRIPTION.md (Authoritative Product Intent)
+    ↓
 FM_FUNCTIONAL_SPEC.md (THIS DOCUMENT - Functional Baseline)
     ↓
 FM Architecture (Derived from this specification)
@@ -27,6 +30,11 @@ FM QA Design (Derived from architecture)
     ↓
 FM Implementation (Governed by QA and Architecture)
 ```
+
+**Upstream Authority**:
+- This specification incorporates the **FM App Description** (`docs/governance/FM_APP_DESCRIPTION.md`) as authoritative product intent
+- All functional requirements implied by the App Description are captured here
+- The App Description defines what the FM Office App *is* as a product and how it is used
 
 **Non-Negotiable Rules**:
 - No architecture may be designed that contradicts this specification
@@ -63,6 +71,17 @@ FM provides the **missing continuous supervisory layer**:
 - **Safe batch execution** of large programs
 
 FM is the **brain and cockpit** of the Maturion build system.
+
+### 1.3 The FM Office App
+
+The **FM Office App** is the **live embodiment of FM** — a one-man operations control centre through which Johan oversees, directs, governs, and interacts with the entire automated build factory.
+
+**Critical Principle**: If the FM Office App is unavailable, **the factory is effectively blind**.
+
+The app is:
+- **NOT a passive dashboard or reporting tool**
+- **NOT a Kanban board, ticket tracker, CI console, IDE, or prompt playground**
+- **THE primary operational interface** for continuous supervision, decision-making, and factory control
 
 ---
 
@@ -336,7 +355,52 @@ FM enforces the **Five Core Principles of Build Philosophy**:
 
 ## 5. FM ↔ Johan Interaction Model
 
-### 5.1 Interaction Requirements
+### 5.1 Primary Interaction: Conversational Interface
+
+The **primary interaction model** for the FM Office App is a **persistent conversational interface** between Johan and FM (Maturion).
+
+**Key Properties**:
+- FM can **initiate conversations**, not just respond to queries
+- FM asks clarifying questions until intent is unambiguous
+- FM proposes interpretations and waits for approval
+- Conversations persist across time, projects, and builds
+- Conversations are **first-class operational artifacts**
+- This is NOT a stateless chat window — it is a living operational dialogue
+
+**Chat UX Requirements**:
+- FM messages and Johan messages are visually distinct (left/right alignment, role coloring)
+- Role badges clearly identify speaker
+- Persistent history (never lost)
+- Searchable across all conversations
+- Linkable to builds, PRs, incidents, parking station items
+
+**Why Conversational First**:
+- Johan provides partial, vague, or incomplete instructions (expected and acceptable)
+- FM absorbs informality and converts it into deterministic, governed execution
+- Clarification happens naturally through dialogue, not rigid forms
+
+### 5.2 Ping-Based Attention System
+
+FM actively monitors execution and uses **pings** to get Johan's attention when needed.
+
+**Ping Triggers**:
+- Clarification required
+- Approval required (plan, decision, condition)
+- Milestone reached
+- Progress stall detected
+- Governance guardrail hit
+- Escalation required (governance, technical, decision, external)
+
+**Ping Properties**:
+- **Audible** (sound notification)
+- **Visible** (UI indicator)
+- **Prioritized** (informational / attention / critical)
+
+**Critical Rule**: FM never waits silently. If FM needs input, FM pings.
+
+### 5.3 Interaction Requirements
+
+### 5.3 Interaction Requirements
 
 FM must provide a **live, project-specific interaction surface** that:
 - Presents plans for approval before execution
@@ -347,7 +411,46 @@ FM must provide a **live, project-specific interaction surface** that:
 
 **Critical**: This interaction MUST NOT depend solely on GitHub comments.
 
-### 5.2 Interaction Patterns
+### 5.4 Intent → Execution Loop
+
+**Step 1: Intent Intake**
+
+Johan provides:
+- Partial thoughts
+- Vague objectives
+- Rough ideas
+- Sometimes contradictory statements
+
+This is **expected and acceptable**.
+
+**Step 2: Clarification Loop**
+
+FM MUST:
+- Interrogate ambiguity
+- Surface assumptions
+- Propose interpretations
+- Refuse to proceed on unresolved uncertainty
+
+FM repeats clarification until intent is unambiguous.
+
+**Step 3: Requirement Specification**
+
+FM produces a clear requirement specification and presents it for approval.
+
+**Approval Options**:
+- **Approve** → Requirements frozen, execution may begin
+- **Do Not Approve** → Clarification loop restarts
+- **Approve with Conditions** → Opens focused chat to capture constraints
+
+**Step 4: Execution**
+
+Once approved:
+- Requirements are frozen (immutable for that execution)
+- Architecture and QA are derived
+- Execution begins under governance
+- FM reports progress continuously
+
+### 5.5 Interaction Patterns
 
 **Pattern 1: Plan Approval**
 ```
@@ -377,7 +480,7 @@ Johan: Decides on action
 FM: Executes decision
 ```
 
-### 5.3 Escalation Classification
+### 5.6 Escalation Classification
 
 FM classifies all blockers:
 - **Governance** (e.g., QA failure, architecture violation)
@@ -391,7 +494,60 @@ Classification helps Johan prioritize and respond appropriately.
 
 ## 6. Monitoring and Visibility Requirements
 
-### 6.1 Real-Time Visibility
+### 6.1 Operational Dashboard (Home View)
+
+The **home view** of the FM Office App is an **operations control dashboard** providing immediate situational awareness.
+
+**Display Model**: Robot / Traffic-Light (RAG - Red/Amber/Green)
+
+**Core Operational Domains** (Wave 0):
+- Build Health
+- Governance Compliance
+- Architecture Completeness
+- QA Status
+- PR Gate Health
+- CI Health
+- Escalations
+- Backlog / Queue Health
+- Builder Availability
+- Evidence Completeness
+- Learning Promotion Status
+
+**Each Domain Shows**:
+- **Current RAG State** (Green / Amber / Red)
+- **Short human-readable reason(s)** (why this state?)
+- **Timestamp of last change**
+
+**Critical Rule**: No domain may be Red or Amber without an **explainable reason**.
+
+### 6.2 Progressive Drill-Down (Mandatory)
+
+Every dashboard element MUST support **progressive drill-down**, all the way to root cause.
+
+**Example Drill-Down Chain**:
+```
+Governance Compliance → Red
+  ↓
+Repository (which repo?)
+  ↓
+Specific PR (which PR?)
+  ↓
+Failing Gate (which gate?)
+  ↓
+Failing Check (which check?)
+  ↓
+Evidence / Logs (what failed?)
+  ↓
+Root Cause (why did it fail?)
+  ↓
+Proposed Remediation (how to fix?)
+  ↓
+Action Buttons (execute fix)
+```
+
+**Product Defect**: A Red or Amber state without drill-down capability is a **product defect**.
+
+### 6.3 Real-Time Visibility
 
 At any moment, Johan must be able to see:
 
@@ -431,7 +587,30 @@ At any moment, Johan must be able to see:
    - Context and options
    - Priority/urgency
 
-### 6.2 Evidence and Provenance
+### 6.4 Message Inbox and Quick Actions
+
+A sidebar **Messages / Requests** view provides centralized access to all outstanding items requiring Johan's attention.
+
+**Inbox Contents**:
+- All outstanding FM requests
+- Pending approvals (plans, requirements, decisions)
+- Unresolved escalations
+- Milestone notifications
+- Blocker reports
+
+**Quick Actions** (One-Click):
+Each inbox item supports immediate action:
+- **Approve** → Accept and proceed
+- **Do Not Approve** → Reject and request rework
+- **Approve with Conditions** → Opens focused chat to capture constraints
+
+**Purpose**:
+- Enables full factory control from desktop or mobile
+- Reduces friction in approval workflows
+- Centralizes all decision points
+- Prevents silent stalls on approvals
+
+### 6.5 Evidence and Provenance
 
 For every action, FM records:
 - **Who**: Which actor (FM, Builder, Johan)
@@ -450,7 +629,103 @@ For every action, FM records:
 
 ---
 
-## 7. Builder Orchestration
+## 7. Parking Station (Continuous Improvement Intake)
+
+### 7.1 Purpose
+
+The **Parking Station** is a persistent intake area for continuous improvement of the Maturion platform itself.
+
+**Not Passive**: The Parking Station is an **active system** for capturing, discussing, and converting improvement ideas into executable requirements.
+
+### 7.2 Parking Station Items
+
+**Item Sources**:
+- Johan (strategic improvements)
+- FM (detected inefficiencies, automation opportunities)
+- Builders (execution friction points)
+- Governance agents (governance enhancements)
+
+**Item Structure**:
+Each Parking Station item includes:
+- **Title** (short description)
+- **Description** (detailed explanation)
+- **Category** (governance / architecture / QA / feature / infrastructure / UX / analytics)
+- **Impact Estimate** (low / medium / high)
+- **Urgency** (immediate / short-term / long-term)
+- **Related Artifacts** (chat link, PR, incident, build)
+- **Status** (new / discussion / requirement / deferred / closed)
+
+### 7.3 Parking Station → Execution Flow
+
+For each item, Johan can:
+1. **Start a Discussion** → Launches guided conversation with FM
+2. **Convert to Requirement** → Follows Intent → Execution Loop (§5.4)
+3. **Defer** → Move to backlog with rationale
+4. **Close** → Reject with rationale
+
+**Discussion → Requirement Process**:
+1. Johan initiates discussion
+2. FM clarifies intent (same as §5.4 Clarification Loop)
+3. FM produces requirement specification
+4. Johan approves (with or without conditions)
+5. Requirement enters standard FM pipeline (Planning → Architecture → QA → Build)
+
+### 7.4 Learning Integration
+
+Parking Station items contribute to:
+- FL-CI (Foreman Learning - Continuous Improvement)
+- Governance evolution
+- Builder capability enhancement
+- Platform maturity
+
+---
+
+## 8. Analytics Interface
+
+### 8.1 Purpose
+
+The **Analytics Interface** provides operational intelligence and trend analysis for the Maturion platform.
+
+**Access**: Left sidebar of FM Office App
+
+### 8.2 Analytics Capabilities
+
+1. **View Predefined Metrics**
+   - Operational dashboards (build velocity, QA pass rate, governance violations, etc.)
+   - Trend charts and time-series data
+   - Builder performance metrics
+   - Execution efficiency metrics
+
+2. **Conversational Analysis**
+   - Ask FM to analyze data ("Why did QA pass rate drop last week?")
+   - Request insights on trends or anomalies
+   - Natural language queries on platform health
+
+3. **Custom Metrics and Dashboards**
+   - Request new metrics or dashboards
+   - FM creates and presents for approval
+   - Once approved, metrics become permanent
+
+4. **Drill-Down to Source**
+   - All analytics must support drill-down to source artifacts
+   - From metric → data point → execution event → evidence
+
+### 8.3 Analytics Scope
+
+**In Scope (Wave 0)**:
+- Operational metrics (build health, governance compliance, QA status)
+- Builder performance and efficiency
+- Execution trends (velocity, blockers, escalations)
+- Learning analytics (pattern recognition, improvement tracking)
+
+**Future Enhancements**:
+- Predictive analytics (failure prediction, capacity planning)
+- Cost analytics (model usage, execution cost)
+- Advanced anomaly detection
+
+---
+
+## 9. Builder Orchestration
 
 ### 7.1 Builder Backend Selection
 
@@ -507,7 +782,7 @@ FM may escalate to more capable models when:
 
 ---
 
-## 8. Relationship to PIT (Project Implementation Tracker)
+## 10. Relationship to PIT (Project Implementation Tracker)
 
 ### 8.1 PIT Emergence by Design
 
@@ -533,25 +808,32 @@ Future PIT UI will consume this data without requiring FM changes.
 
 ---
 
-## 9. Scope (Explicit Boundaries)
+## 11. Scope (Explicit Boundaries)
 
-### 9.1 In Scope (Wave 0 and Beyond)
+### 11.1 In Scope (Wave 0 and Beyond)
 
 FM MUST provide:
 - Program/wave/task execution structure
 - Continuous supervision and state tracking
 - Governance enforcement (GSR, Build Philosophy)
 - Builder orchestration and coordination
+- **Conversational interface as primary interaction model**
+- **Ping-based attention system**
+- **Operational dashboard with RAG status model**
+- **Progressive drill-down to root cause**
+- **Message inbox with quick actions**
 - Real-time visibility for Johan
 - Plan approval workflow
 - Decision request workflow
 - Progress reporting with evidence
 - Blocker escalation with classification
+- **Parking Station for continuous improvement**
+- **Analytics interface for operational intelligence**
 - Provenance and audit trail
 - PIT-compatible telemetry generation
 - Heartbeat and stall detection
 
-### 9.2 Out of Scope (Explicit Exclusions)
+### 11.2 Out of Scope (Explicit Exclusions)
 
 FM does NOT include (Wave 0):
 - Full PIT UI (comes later, uses FM telemetry)
@@ -559,13 +841,14 @@ FM does NOT include (Wave 0):
 - Billing or user management (external system)
 - External integrations beyond GitHub
 - Multi-tenant operation (single-tenant initially)
-- Advanced analytics dashboards (future)
+- Predictive analytics (future enhancement)
+- Cost analytics (future enhancement)
 
 **Rationale**: Keep Wave 0 focused on core supervisory capabilities. Additional features layered on after foundation is solid.
 
 ---
 
-## 10. Success Criteria
+## 12. Success Criteria
 
 ### 10.1 FM is Successful When
 
@@ -608,7 +891,7 @@ FM is operationally ready when:
 
 ---
 
-## 11. Governance Compliance and Alignment
+## 13. Governance Compliance and Alignment
 
 ### 11.1 FM MUST Comply With (Upstream Governance)
 
@@ -665,7 +948,7 @@ FM is subject to and enforces:
 
 ---
 
-## 12. Autonomy and Human-in-the-Loop
+## 14. Autonomy and Human-in-the-Loop
 
 ### 12.1 Autonomy Boundaries (Class A1)
 
@@ -695,7 +978,7 @@ FM MUST escalate to Johan when:
 
 ---
 
-## 13. Memory and Context Persistence
+## 15. Memory and Context Persistence
 
 ### 13.1 FM Never Forgets
 
@@ -728,30 +1011,44 @@ FM memory includes:
 
 ---
 
-## 14. Non-Functional Requirements
+## 16. Non-Functional Requirements
 
-### 14.1 Performance
+### 16.1 Performance
 
 - **Heartbeat Interval**: Every N seconds (configurable, default 60s)
 - **Stall Detection**: If no update in 2x heartbeat interval
 - **Response Time**: Johan interactions respond within 2 seconds
 - **Query Performance**: Dashboard queries complete within 1 second
 
-### 14.2 Reliability
+### 16.2 UI Scale and Performance
+
+The FM Office App must assume:
+- **Millions of transactions** (platform-wide execution events)
+- **Thousands of concurrent activities** (programs, waves, tasks executing simultaneously)
+- **Long-running builds** (hours to days)
+- **Continuous operation** (24/7/365)
+
+**UI Design Principles**:
+- **Signal over noise** (summarize, don't overwhelm)
+- **Summarization over raw data** (aggregate views, drill-down for details)
+- **Drill-down on demand** (progressive disclosure)
+- **Responsive at scale** (performance does not degrade with data volume)
+
+### 16.3 Reliability
 
 - **Availability**: 99.9% uptime for FM supervisor
 - **Fault Tolerance**: Single builder failure does not stop program
 - **Data Persistence**: All state persisted to durable storage
 - **Recovery**: FM can resume from last known state after failure
 
-### 14.3 Security
+### 16.4 Security
 
 - **Authentication**: Johan must authenticate to access FM
 - **Authorization**: Only authorized users can approve plans or make decisions
 - **Audit Trail**: All actions logged immutably
 - **No Secret Exposure**: Never log or display secrets
 
-### 14.4 Maintainability
+### 16.5 Maintainability
 
 - **Version Control**: All governance and memory in Git
 - **Auditability**: Full provenance for all actions
@@ -760,7 +1057,7 @@ FM memory includes:
 
 ---
 
-## 15. What FM Refuses to Do (Explicit Refusals)
+## 17. What FM Refuses to Do (Explicit Refusals)
 
 FM MUST refuse to:
 
@@ -800,7 +1097,7 @@ FM MUST refuse to:
 
 ---
 
-## 16. Technology and Implementation Constraints
+## 18. Technology and Implementation Constraints
 
 ### 16.1 Technology Independence
 
@@ -831,7 +1128,7 @@ FM MAY integrate with (future):
 
 ---
 
-## 17. Open Questions and Dependencies (To Be Resolved)
+## 19. Open Questions and Dependencies (To Be Resolved)
 
 ### 17.1 Architecture Design Phase Will Define
 
@@ -853,7 +1150,23 @@ FM MAY integrate with (future):
 
 ---
 
-## 18. Version History and Change Log
+## 20. Version History and Change Log
+
+**Version 1.1.0** (2025-12-22):
+- **Incorporated FM App Description** as authoritative product intent
+- Added conversational interface as primary interaction model (§5.1)
+- Added ping-based attention system for proactive notifications (§5.2)
+- Added detailed intent → execution loop with approval workflow (§5.4)
+- Added operational dashboard with RAG (Robot/Traffic-Light) status model (§6.1)
+- Added progressive drill-down requirements for root cause analysis (§6.2)
+- Added message inbox with quick actions for centralized decision-making (§6.4)
+- Added Parking Station for continuous improvement intake (§7)
+- Added Analytics Interface for operational intelligence (§8)
+- Added UI-specific scale and performance requirements (§16.2)
+- Updated scope to include app-level functional requirements (§11.1)
+- Updated summary to reflect new capabilities (§21)
+- **All changes are additive** - no conflicts with v1.0.0
+- **Governance alignment preserved** - all additions remain governance-compliant
 
 **Version 1.0.0** (2025-12-22):
 - Initial FM Functional Specification
@@ -869,15 +1182,22 @@ FM MAY integrate with (future):
 
 ---
 
-## 19. Summary: FM in One Page
+## 21. Summary: FM in One Page
 
-**What FM Is**: An always-on AI supervisor that plans, governs, monitors, and controls AI-assisted software execution.
+**What FM Is**: An always-on AI supervisor that plans, governs, monitors, and controls AI-assisted software execution through a conversational, operations-focused interface.
 
 **Core Capabilities**:
 - Program/wave/task orchestration
 - Continuous supervision and state tracking
 - Governance enforcement (GSR, Build Philosophy)
 - Builder coordination and backend selection
+- **Conversational interface** as primary interaction model
+- **Ping-based attention system** for proactive notifications
+- **Operational dashboard** with RAG status model (Green/Amber/Red)
+- **Progressive drill-down** to root cause for all issues
+- **Message inbox with quick actions** for frictionless decision-making
+- **Parking Station** for continuous improvement intake
+- **Analytics interface** for operational intelligence
 - Real-time visibility and interaction with Johan
 - Blocker escalation and decision requests
 - Evidence and provenance capture
@@ -897,11 +1217,17 @@ FM MAY integrate with (future):
 - Refuses partial passes, test debt, ambiguity, protected path modifications
 - Never sleeps, never loses context
 
-**Success**: Johan is never blind, execution never stalls silently, governance enforced automatically, large backlogs executed safely.
+**Product Identity**:
+- One-man operations control centre (not a passive dashboard)
+- Live embodiment of FM
+- If unavailable, the factory is blind
+- Absorbs informality, delivers deterministic governed execution
+
+**Success**: Johan is never blind, execution never stalls silently, governance enforced automatically, large backlogs executed safely, continuous improvement compounds.
 
 ---
 
-**END OF FM FUNCTIONAL SPECIFICATION v1**
+**END OF FM FUNCTIONAL SPECIFICATION v1.1**
 
 This specification is **frozen** until architecture and QA design complete.  
 No interpretation, deviation, or modification without Owner (Johan) approval.
