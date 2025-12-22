@@ -437,6 +437,54 @@ def main():
     print(f"Module: {module_name}")
     print(f"Repository: {repo_root}\n")
     
+    # GOVERNANCE GATE: Validate all governance prerequisites before planning
+    print("🛡️  Running Governance Gate validation...")
+    print("=" * 80)
+    governance_gate_script = repo_root / "governance" / "scripts" / "governance-gate.py"
+    
+    if governance_gate_script.exists():
+        import subprocess
+        try:
+            result = subprocess.run(
+                [sys.executable, str(governance_gate_script), "FM"],
+                cwd=str(repo_root),
+                capture_output=True,
+                text=True,
+                timeout=120
+            )
+            
+            # Print governance gate output
+            print(result.stdout)
+            if result.stderr:
+                print(result.stderr)
+            
+            if result.returncode != 0:
+                print("\n❌ GOVERNANCE GATE BLOCKED BUILD PLANNING")
+                print("\nBuild planning cannot proceed until all governance requirements are satisfied.")
+                print("\nReview governance gate output above and address all blocking issues.")
+                print("\nFor more information, see:")
+                print("  - governance/build/BUILD_AUTHORIZATION_GATE.md")
+                print("  - governance/reports/FM_EXECUTION_GOVERNANCE_ALIGNMENT_GAP_ANALYSIS.md")
+                sys.exit(1)
+            
+            print("\n✅ Governance gate passed. Proceeding with build planning...\n")
+            
+        except subprocess.TimeoutExpired:
+            print("\n❌ Governance gate validation timed out")
+            print("Build planning blocked due to validation timeout.")
+            sys.exit(1)
+        except Exception as e:
+            print(f"\n❌ Error running governance gate: {e}")
+            print("Build planning blocked due to governance validation error.")
+            sys.exit(1)
+    else:
+        print("⚠️  WARNING: Governance gate script not found")
+        print("Build planning proceeding without governance validation (non-compliant)")
+        print()
+    
+    print("=" * 80)
+    print()
+    
     planner = BuildPlanner(repo_root)
     result = planner.generate_build_plan(module_name)
     

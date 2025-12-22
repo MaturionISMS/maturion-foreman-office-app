@@ -593,12 +593,16 @@ class BuildTaskGenerator:
         if not output_file:
             output_file = self.repo_root / "build-tasks.json"
         
+        # Load governance evidence for lineage
+        governance_evidence = self._load_governance_evidence()
+        
         task_data = {
             'version': '1.0',
             'generated': datetime.now().isoformat(),
             'module': self.module_name,
             'build_wave': 0,
             'total_tasks': len(self.tasks),
+            'governance_lineage': governance_evidence,  # Add governance lineage
             'tasks_by_builder': {
                 'schema-builder': len([t for t in self.tasks if t['builder'] == 'schema-builder']),
                 'api-builder': len([t for t in self.tasks if t['builder'] == 'api-builder']),
@@ -611,13 +615,70 @@ class BuildTaskGenerator:
                 'This is Build Wave 0 - tasks are for orchestration validation',
                 'Tasks follow builder capability boundaries',
                 'All tasks include QA gates and acceptance criteria',
-                'Dependencies ensure proper sequencing'
+                'Dependencies ensure proper sequencing',
+                'Governance lineage tracked for audit trail'
             ]
         }
         
         try:
             with open(output_file, 'w') as f:
                 json.dump(task_data, f, indent=2)
+            print(f"✓ Build tasks written: {output_file}")
+            return True
+        except Exception as e:
+            self.errors.append(f"Failed to save tasks: {e}")
+            return False
+    
+    def _load_governance_evidence(self) -> Dict:
+        """Load governance evidence for lineage tracking"""
+        evidence = {
+            'app_description': None,
+            'frs_reference': None,
+            'architecture_compilation': None,
+            'build_authorization_gate': None
+        }
+        
+        # Check for App Description
+        app_desc_paths = [
+            self.repo_root / "docs" / "governance" / "FM_APP_DESCRIPTION.md",
+            self.repo_root / "APP_DESCRIPTION.md"
+        ]
+        for path in app_desc_paths:
+            if path.exists():
+                evidence['app_description'] = {
+                    'path': str(path),
+                    'exists': True
+                }
+                break
+        
+        # Check for FRS/True North
+        frs_path = self.repo_root / "foreman" / "architecture" / "FOREMAN_TRUE_NORTH_v1.0.md"
+        if frs_path.exists():
+            evidence['frs_reference'] = {
+                'path': str(frs_path),
+                'exists': True
+            }
+        
+        # Check for latest governance gate evidence
+        evidence_dir = self.repo_root / "governance" / "evidence"
+        if evidence_dir.exists():
+            # Find latest build-gate evidence
+            gate_files = sorted(evidence_dir.glob("build-gate-*.json"), reverse=True)
+            if gate_files:
+                evidence['build_authorization_gate'] = {
+                    'evidence_file': str(gate_files[0]),
+                    'timestamp': gate_files[0].stat().st_mtime
+                }
+            
+            # Find latest arch-compile evidence
+            arch_files = sorted(evidence_dir.glob("arch-compile-*.json"), reverse=True)
+            if arch_files:
+                evidence['architecture_compilation'] = {
+                    'evidence_file': str(arch_files[0]),
+                    'timestamp': arch_files[0].stat().st_mtime
+                }
+        
+        return evidence
             print(f"✓ Build tasks saved to: {output_file}")
             return True
         except Exception as e:

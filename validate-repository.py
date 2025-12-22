@@ -45,6 +45,7 @@ class RepositoryValidator:
         self.validate_folder_structure()
         self.validate_specification_files()
         self.validate_governance_completeness()
+        self.validate_governance_execution()  # NEW: Validate governance enforcement
         self.validate_qa_specs()
         self.validate_compliance()
         self.validate_innovation_survey_admin()
@@ -235,6 +236,62 @@ class RepositoryValidator:
                 self.validation_results['errors'].append(f"Missing governance file: {file_path}")
         
         print(f"  ✓ Checked {len(required_governance_files)} governance files\n")
+    
+    def validate_governance_execution(self):
+        """Validate governance execution layer (NEW)"""
+        print("🛡️  Validating Governance Execution Layer...")
+        
+        # Check for governance scripts
+        governance_scripts = [
+            'governance/scripts/validate-app-description.py',
+            'governance/scripts/validate-frs-alignment.py',
+            'governance/scripts/validate-architecture-compilation.py',
+            'governance/scripts/validate-build-authorization-gate.py',
+            'governance/scripts/governance-gate.py'
+        ]
+        
+        for script in governance_scripts:
+            script_path = self.repo_root / script
+            if script_path.exists():
+                self.validation_results['governance_completeness'].append({
+                    'file': script,
+                    'status': 'PASS',
+                    'message': 'Governance validator present'
+                })
+            else:
+                self.validation_results['governance_completeness'].append({
+                    'file': script,
+                    'status': 'FAIL',
+                    'message': 'Governance validator missing'
+                })
+                self.validation_results['errors'].append(
+                    f"Missing governance validator: {script}"
+                )
+        
+        # Check if execution scripts call governance gate
+        execution_scripts = ['plan-build.py', 'create-build-tasks.py']
+        for script in execution_scripts:
+            script_path = self.repo_root / script
+            if script_path.exists():
+                with open(script_path, 'r', encoding='utf-8', errors='ignore') as f:
+                    content = f.read()
+                    if 'governance-gate.py' in content or 'governance_gate' in content:
+                        self.validation_results['governance_completeness'].append({
+                            'file': script,
+                            'status': 'PASS',
+                            'message': 'Calls governance gate'
+                        })
+                    else:
+                        self.validation_results['governance_completeness'].append({
+                            'file': script,
+                            'status': 'WARN',
+                            'message': 'Does not call governance gate'
+                        })
+                        self.validation_results['warnings'].append(
+                            f"{script} should call governance-gate.py before execution"
+                        )
+        
+        print()
     
     def validate_qa_specs(self):
         """Validate QA and QA-of-QA specifications"""
