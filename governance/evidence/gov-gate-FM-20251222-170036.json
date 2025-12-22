@@ -1,0 +1,42 @@
+{
+  "gate_id": "gov-gate-FM-20251222-170036",
+  "timestamp": "2025-12-22T17:00:36.857841",
+  "app_name": "FM",
+  "strict_mode": false,
+  "status": "FAIL",
+  "validations": {
+    "app_description": {
+      "script": "validate-app-description.py",
+      "passed": true,
+      "has_warnings": false,
+      "exit_code": 0,
+      "output": "\ud83d\udd0d Validating App Description for FM...\n\n\n======================================================================\nAPP DESCRIPTION VALIDATION RESULTS - FM\n======================================================================\n\nOverall Status: \u2705 PASS\nValidation ID: app-desc-FM-20251222-170036\nTimestamp: 2025-12-22T17:00:36.886060\n\n\ud83d\udccb Checks Performed: 4\n  \u2705 canonical_location: App Description found at canonical location\n  \u2705 authority_markers: All authority markers present\n  \u2705 content_completeness: All required content sections present\n  \u2705 approval_status: App Description is approved and ready\n\n======================================================================\n\n\ud83d\udccb Evidence written to: /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/governance/evidence/app-desc-FM-20251222-170036.json\n"
+    },
+    "frs_alignment": {
+      "script": "validate-frs-alignment.py",
+      "passed": false,
+      "has_warnings": false,
+      "exit_code": 1,
+      "output": "\ud83d\udd0d Validating FRS Alignment for FM...\n\n\n======================================================================\nFRS ALIGNMENT VALIDATION RESULTS - FM\n======================================================================\n\nOverall Status: \u274c FAIL\nValidation ID: frs-align-FM-20251222-170036\nTimestamp: 2025-12-22T17:00:36.920627\n\n\ud83d\udccb Checks Performed: 5\n  \u2705 app_description_validity: App Description exists and is authoritative\n  \u2705 frs_existence: FRS found at FOREMAN_TRUE_NORTH_v1.0.md\n  \u274c app_description_reference: FRS does not explicitly reference App Description\n  \u2705 frs_app_desc_alignment: FRS aligns with App Description structure and content\n  \u2705 no_contradictions: No obvious contradictions detected\n\n\u274c Errors (1):\n  - BLOCKING: FRS must explicitly state it derives from FM_APP_DESCRIPTION.md\n\n======================================================================\n\n\ud83d\udccb Evidence written to: /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/governance/evidence/frs-align-FM-20251222-170036.json\n"
+    },
+    "architecture_compilation": {
+      "script": "validate-architecture-compilation.py",
+      "passed": false,
+      "has_warnings": true,
+      "exit_code": 1,
+      "output": "\ud83d\udd0d Validating Architecture Compilation for FM...\n\n\n======================================================================\nARCHITECTURE COMPILATION VALIDATION RESULTS - FM\n======================================================================\n\nOverall Status: \u274c FAIL\nValidation ID: arch-compile-FM-20251222-170036\nTimestamp: 2025-12-22T17:00:36.957519\n\n\ud83d\udccb Checks Performed: 4\n  \u2705 input_artifacts: All required input artifacts present\n  \u274c architecture_completeness: Architecture incomplete: 0% (0/0 components)\n  \u274c no_placeholders: Found TBD/TODO markers in 4 file(s)\n  \u26a0\ufe0f  frozen_status: Architecture lacks explicit version or freeze marker\n\n\u274c Errors (2):\n  - BLOCKING: Architecture must be 100% complete. Current: 0%\n  - BLOCKING: Architecture contains placeholder markers in: foreman/architecture/FOREMAN_ARCHITECTURE_VALIDATION_v1.0.md, foreman/architecture/FOREMAN_ARCHITECTURE_v1.0.md, foreman/architecture/FOREMAN_BACKEND_SPEC_v1.0.md\n\n\u26a0\ufe0f  Warnings (1):\n  - Architecture should have explicit version or freeze marker\n\n======================================================================\n\n\ud83d\udccb Evidence written to: /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/governance/evidence/arch-compile-FM-20251222-170036.json\n"
+    },
+    "build_authorization_gate": {
+      "script": "validate-build-authorization-gate.py",
+      "passed": false,
+      "has_warnings": true,
+      "exit_code": 1,
+      "output": "\ud83d\udea6 Build Authorization Gate Validation for FM\n======================================================================\n\nChecking all preconditions per BUILD_AUTHORIZATION_GATE.md...\n\n\ud83d\udccb Precondition 1: App Description + FRS Alignment...\n  \u274c FAIL - FRS not aligned with App Description\n\n\ud83c\udfd7\ufe0f  Precondition 2: Architecture Compilation Contract...\n  \u274c FAIL - Architecture compilation not complete\n\n\ud83e\uddea Precondition 3: QA Derivation & Coverage...\n  \u2705 PASS - QA tests exist\n\n\ud83d\udcda Precondition 4: FL/CI Learning Integration...\n  \u2705 PASS - FL/CI evidence present\n\n\ud83d\ude80 Precondition 5: Deployment & Runtime Validation...\n  \u2705 PASS - Runtime specs exist\n\n\u2705 Precondition 6: Governance Checklist...\n  \u2705 PASS - Governance checklists exist\n\n\ud83d\udd12 Precondition 7: Scope Freeze...\n  \u26a0\ufe0f  WARN - No explicit freeze marker\n\n\ud83d\udee1\ufe0f  Precondition 8: Zero Regression Verification...\n  \u2705 PASS - Test infrastructure present\n\n\n======================================================================\nBUILD AUTHORIZATION GATE DECISION - FM\n======================================================================\n\n\ud83d\udd34 BUILD BLOCKED\n\nOne or more preconditions not satisfied. Build cannot proceed.\n\nValidation ID: build-gate-FM-20251222-170037\nTimestamp: 2025-12-22T17:00:37.002560\nDecision: BLOCKED\n\n\ud83d\udccb Preconditions Status (8):\n  \u274c PC1: App Description + FRS Alignment: App Description valid but FRS alignment failed\n  \u274c PC2: Architecture Compilation Contract: Architecture compilation incomplete\n  \u2705 PC3: QA Derivation & Coverage: QA tests present and collectible\n  \u2705 PC4: FL/CI Learning Integration: FL/CI evidence directory exists\n  \u2705 PC5: Deployment & Runtime Validation: Runtime specifications present\n  \u2705 PC6: Governance Checklist: Governance checklists present\n  \u26a0\ufe0f  PC7: Scope Freeze: Architecture lacks explicit freeze marker\n  \u2705 PC8: Zero Regression Verification: Test infrastructure exists for regression checks\n\n\u274c Blocking Errors (2):\n  - PC1 BLOCKING: FRS must explicitly derive from App Description\n  - PC2 BLOCKING: Architecture must be 100% complete with no TBD markers\n\n\u26a0\ufe0f  Warnings (1):\n  - PC7 WARNING: Architecture should have explicit freeze marker\n\n======================================================================\n\ud83d\udccb Evidence written to: /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/governance/evidence/build-gate-FM-20251222-170037.json\n\n\n"
+    }
+  },
+  "decision": "BLOCKED",
+  "errors": [
+    "One or more critical governance validations failed"
+  ],
+  "warnings": []
+}
