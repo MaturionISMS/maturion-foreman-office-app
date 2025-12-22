@@ -138,8 +138,10 @@ class AgentBoundaryValidator:
         # Check repository attribution (if strict checking enabled)
         if agent_type != 'builder':  # Builder can be in any ISMS repo
             expected = self.EXPECTED_REPOS[agent_type]
-            if not any(repository.startswith(prefix) if isinstance(prefix, str) and not prefix.startswith('[') 
-                      else repository in expected for prefix in expected):
+            # Check if repository matches any of the expected patterns
+            matches = any(repository == expected_repo or repository.startswith(expected_repo) 
+                         for expected_repo in expected)
+            if not matches:
                 return {
                     'valid': False,
                     'violation_type': 'INCORRECT_REPOSITORY_ATTRIBUTION',
