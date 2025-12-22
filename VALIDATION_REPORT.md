@@ -6,7 +6,7 @@ MATURION AI FOREMAN - REPOSITORY VALIDATION REPORT
 --------------------------------------------------------------------------------
 Activation Readiness: REQUIRES ATTENTION BEFORE ACTIVATION ⚠️
 Total Errors: 0
-Total Warnings: 78
+Total Warnings: 79
 Recommendations: 2
 
 📁 FOLDER STRUCTURE VALIDATION
@@ -165,7 +165,8 @@ WRAC:
 
 ⚖️  GOVERNANCE COMPLETENESS
 --------------------------------------------------------------------------------
-Status: 18/18 governance files validated
+Status: 24/25 governance files validated
+  ⚠ create-build-tasks.py: WARN
 
 ✅ QA AND QA-OF-QA SPECIFICATIONS
 --------------------------------------------------------------------------------
@@ -283,6 +284,7 @@ Status: 5/5 JSON files validated
 76. WRAC: Missing IMPLEMENTATION_GUIDE specification
 77. WRAC: Missing SPRINT_PLAN specification
 78. WRAC: Missing CHANGELOG specification
+79. create-build-tasks.py should call governance-gate.py before execution
 
 💡 RECOMMENDATIONS
 --------------------------------------------------------------------------------
@@ -291,7 +293,7 @@ Status: 5/5 JSON files validated
    Details: [{'module': 'COURSE_CRAFTER', 'missing': ['Phase 1 (True North)/TRUE_NORTH', 'Phase 2 (Architecture & Data)/DATABASE_SCHEMA', 'Phase 2 (Architecture & Data)/FRONTEND_COMPONENT_MAP', 'Phase 2 (Architecture & Data)/WIREFRAMES', 'Phase 3 (Backend & Integration)/EDGE_FUNCTIONS', 'Phase 3 (Backend & Integration)/EXPORT_SPEC', 'Phase 4 (QA & Implementation)/QA_IMPLEMENTATION_PLAN', 'Phase 4 (QA & Implementation)/IMPLEMENTATION_GUIDE', 'Phase 4 (QA & Implementation)/SPRINT_PLAN', 'Phase 5 (Advanced Features)/CHANGELOG']}, {'module': 'ERM', 'missing': ['Phase 1 (True North)/TRUE_NORTH', 'Phase 2 (Architecture & Data)/DATABASE_SCHEMA', 'Phase 2 (Architecture & Data)/FRONTEND_COMPONENT_MAP', 'Phase 2 (Architecture & Data)/WIREFRAMES', 'Phase 3 (Backend & Integration)/EDGE_FUNCTIONS', 'Phase 3 (Backend & Integration)/INTEGRATION_MAP', 'Phase 3 (Backend & Integration)/EXPORT_SPEC', 'Phase 4 (QA & Implementation)/QA_IMPLEMENTATION_PLAN', 'Phase 4 (QA & Implementation)/IMPLEMENTATION_GUIDE', 'Phase 4 (QA & Implementation)/SPRINT_PLAN', 'Phase 5 (Advanced Features)/CHANGELOG']}, {'module': 'PIT', 'missing': ['Phase 1 (True North)/TRUE_NORTH', 'Phase 2 (Architecture & Data)/DATABASE_SCHEMA', 'Phase 2 (Architecture & Data)/FRONTEND_COMPONENT_MAP', 'Phase 2 (Architecture & Data)/WIREFRAMES', 'Phase 3 (Backend & Integration)/EDGE_FUNCTIONS', 'Phase 3 (Backend & Integration)/INTEGRATION_MAP', 'Phase 3 (Backend & Integration)/EXPORT_SPEC', 'Phase 4 (QA & Implementation)/QA_IMPLEMENTATION_PLAN', 'Phase 4 (QA & Implementation)/IMPLEMENTATION_GUIDE', 'Phase 4 (QA & Implementation)/SPRINT_PLAN', 'Phase 5 (Advanced Features)/CHANGELOG', 'Phase 5 (Advanced Features)/WATCHDOG_LOGIC', 'Phase 5 (Advanced Features)/MODEL_ROUTING_SPEC']}, {'module': 'THREAT', 'missing': ['Phase 1 (True North)/TRUE_NORTH', 'Phase 2 (Architecture & Data)/DATABASE_SCHEMA', 'Phase 2 (Architecture & Data)/FRONTEND_COMPONENT_MAP', 'Phase 2 (Architecture & Data)/WIREFRAMES', 'Phase 3 (Backend & Integration)/EDGE_FUNCTIONS', 'Phase 3 (Backend & Integration)/INTEGRATION_MAP', 'Phase 3 (Backend & Integration)/EXPORT_SPEC', 'Phase 4 (QA & Implementation)/QA_IMPLEMENTATION_PLAN', 'Phase 4 (QA & Implementation)/IMPLEMENTATION_GUIDE', 'Phase 4 (QA & Implementation)/SPRINT_PLAN', 'Phase 5 (Advanced Features)/CHANGELOG', 'Phase 5 (Advanced Features)/WATCHDOG_LOGIC', 'Phase 5 (Advanced Features)/MODEL_ROUTING_SPEC']}, {'module': 'VULNERABILITY', 'missing': ['Phase 1 (True North)/TRUE_NORTH', 'Phase 2 (Architecture & Data)/DATABASE_SCHEMA', 'Phase 2 (Architecture & Data)/FRONTEND_COMPONENT_MAP', 'Phase 2 (Architecture & Data)/WIREFRAMES', 'Phase 3 (Backend & Integration)/EDGE_FUNCTIONS', 'Phase 3 (Backend & Integration)/INTEGRATION_MAP', 'Phase 3 (Backend & Integration)/EXPORT_SPEC', 'Phase 4 (QA & Implementation)/QA_IMPLEMENTATION_PLAN', 'Phase 4 (QA & Implementation)/IMPLEMENTATION_GUIDE', 'Phase 4 (QA & Implementation)/SPRINT_PLAN', 'Phase 5 (Advanced Features)/CHANGELOG', 'Phase 5 (Advanced Features)/WATCHDOG_LOGIC', 'Phase 5 (Advanced Features)/MODEL_ROUTING_SPEC']}, {'module': 'RISK_ASSESSMENT', 'missing': ['Phase 1 (True North)/TRUE_NORTH', 'Phase 2 (Architecture & Data)/DATABASE_SCHEMA', 'Phase 2 (Architecture & Data)/FRONTEND_COMPONENT_MAP', 'Phase 2 (Architecture & Data)/WIREFRAMES', 'Phase 3 (Backend & Integration)/EDGE_FUNCTIONS', 'Phase 4 (QA & Implementation)/QA_IMPLEMENTATION_PLAN', 'Phase 4 (QA & Implementation)/IMPLEMENTATION_GUIDE', 'Phase 4 (QA & Implementation)/SPRINT_PLAN', 'Phase 5 (Advanced Features)/CHANGELOG']}, {'module': 'WRAC', 'missing': ['Phase 1 (True North)/TRUE_NORTH', 'Phase 2 (Architecture & Data)/DATABASE_SCHEMA', 'Phase 2 (Architecture & Data)/FRONTEND_COMPONENT_MAP', 'Phase 2 (Architecture & Data)/WIREFRAMES', 'Phase 3 (Backend & Integration)/EDGE_FUNCTIONS', 'Phase 4 (QA & Implementation)/QA_IMPLEMENTATION_PLAN', 'Phase 4 (QA & Implementation)/IMPLEMENTATION_GUIDE', 'Phase 4 (QA & Implementation)/SPRINT_PLAN', 'Phase 5 (Advanced Features)/CHANGELOG']}]
 
 2. 🟢 [LOW] Quality Improvement
-   Review and address 78 warnings for optimal governance
+   Review and address 79 warnings for optimal governance
 
 ================================================================================
 FINAL ACTIVATION READINESS STATUS: REQUIRES ATTENTION BEFORE ACTIVATION ⚠️
