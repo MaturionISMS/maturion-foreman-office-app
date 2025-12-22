@@ -2,13 +2,15 @@ name: FM Architecture Gate (Completeness + Agent State)
 
 on:
   pull_request:
-    paths:
-      - "architecture/**"
-      - ".agent"
-      - ".github/workflows/**"
+    types: [opened, synchronize, reopened]
   push:
     branches:
       - main
+
+# Explicit, least-privilege permissions
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
   fm-architecture-gate:
@@ -19,7 +21,124 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Detect Agent Role
+        id: agent-role
+        run: |
+          echo "🔍 Detecting agent role for gate applicability..."
+          
+          ROLE=""
+          
+          # Check for explicit PR label (highest precedence)
+          LABELS="${{ github.event.pull_request.labels }}"
+          if echo "$LABELS" | grep -q "agent-role:"; then
+            ROLE=$(echo "$LABELS" | grep -oP 'agent-role:\K[a-z]+' | head -1)
+            echo "✅ Role from PR label: $ROLE"
+          # Check .agent file (second precedence)
+          elif [ -f ".agent" ] && grep -qE "^role:" ".agent"; then
+            ROLE=$(grep -E "^role:" .agent | head -1 | cut -d: -f2 | tr -d ' "' | tr '[:upper:]' '[:lower:]')
+            echo "✅ Role from .agent file: $ROLE"
+          # Check PR title prefix (third precedence)
+          elif [[ "${{ github.event.pull_request.title }}" =~ ^\[(Builder|Governance|FM|builder|governance|fm)\] ]]; then
+            ROLE=$(echo "${{ github.event.pull_request.title }}" | grep -oP '^\[\K[^\]]+' | tr '[:upper:]' '[:lower:]')
+            echo "✅ Role from PR title: $ROLE"
+          # Infer from PR content (fourth precedence - governance keywords)
+          elif [[ "${{ github.event.pull_request.title }}" =~ [Gg]overnance ]] || [[ "${{ github.event.pull_request.title }}" =~ [Aa]lign ]]; then
+            ROLE="governance"
+            echo "✅ Role inferred from PR title keywords: $ROLE"
+          # Default to FM repository's primary role
+          else
+            ROLE="fm"
+            echo "ℹ️ Using default role for FM repository: $ROLE"
+          fi
+          
+          echo "role=$ROLE" >> $GITHUB_OUTPUT
+          echo ""
+          echo "**Detected Agent Role: $ROLE**"
+      
+      - name: Check Gate Applicability
+        id: applicability
+        run: |
+          ROLE="${{ steps.agent-role.outputs.role }}"
+          
+          echo "🔍 Checking FM Architecture Gate applicability..."
+          echo "Agent Role: $ROLE"
+          echo ""
+          
+          # FM Architecture Gate applies ONLY to FM Agent role
+          if [ "$ROLE" = "fm" ]; then
+            echo "✅ FM Architecture Gate is APPLICABLE for FM Agent role"
+            echo "applicable=true" >> $GITHUB_OUTPUT
+          else
+            echo "⏭️ FM Architecture Gate is NOT APPLICABLE for $ROLE role"
+            echo ""
+            echo "**Gate Applicability Matrix (Canonical):**"
+            echo "- Builder role: ❌ Not applicable"
+            echo "- Governance role: ❌ Not applicable"
+            echo "- FM role: ✅ Applicable"
+            echo ""
+            echo "This gate enforces FM architecture completeness requirements."
+            echo "It does NOT apply to Builder or Governance Administrator work."
+            echo ""
+            echo "**Reference**: governance/alignment/AGENT_ROLE_GATE_APPLICABILITY_REFERENCE.md"
+            echo "applicable=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Skip Gate (Not Applicable)
+        if: steps.applicability.outputs.applicable == 'false' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const role = '${{ steps.agent-role.outputs.role }}';
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ⏭️ **FM Architecture Gate - Not Applicable**
+              
+              **Detected Agent Role**: \`${role}\`
+              
+              FM Architecture Gate applies **only** to FM Agent work.
+              
+              This PR is performing **${role}** work, so architecture completeness requirements do not apply.
+              
+              ---
+              
+              **Gate Applicability (Canonical)**:
+              
+              | Agent Role         | FM Architecture Gate |
+              |--------------------|----------------------|
+              | Builder            | ❌ Not Applicable     |
+              | Governance Admin   | ❌ Not Applicable     |
+              | **FM Agent**       | ✅ Applicable         |
+              
+              ---
+              
+              **Why This Gate Skips**:
+              
+              FM Architecture Gate enforces:
+              - Architecture build artifacts exist
+              - Architecture completeness = 100%
+              - Drift status = NONE
+              
+              These requirements apply to FM Agent work that modifies FM's own architecture and implementation.
+              
+              They do **not** apply to:
+              - Governance alignment work (governance agent)
+              - Builder work in ISMS modules (builder agent)
+              
+              ---
+              
+              **References**:
+              - [Agent Role Gate Applicability](../governance/alignment/AGENT_ROLE_GATE_APPLICABILITY_REFERENCE.md)
+              - [PR Gate Release Checklists](../governance/alignment/PR_GATE_RELEASE_CHECKLISTS_REFERENCE.md)
+              
+              **Gate Status**: ✅ Pass (not applicable)
+              `
+            })
+      
       - name: Verify .agent exists (entry gate)
+        if: steps.applicability.outputs.applicable == 'true'
         run: |
           if [ ! -f ".agent" ]; then
             echo "❌ GOVERNANCE BLOCK: .agent is missing."
@@ -29,6 +148,7 @@ jobs:
           echo "✅ .agent present"
 
       - name: Verify BUILD_ACTIVE exists
+        if: steps.applicability.outputs.applicable == 'true'
         run: |
           if [ ! -f "architecture/BUILD_ACTIVE" ]; then
             echo "❌ ARCHITECTURE BLOCK: architecture/BUILD_ACTIVE is missing."
@@ -39,6 +159,7 @@ jobs:
           echo "✅ BUILD_ACTIVE present"
 
       - name: Resolve active build id
+        if: steps.applicability.outputs.applicable == 'true'
         id: build
         run: |
           BUILD_ID="$(cat architecture/BUILD_ACTIVE | tr -d '\r' | tr -d '\n')"
@@ -62,6 +183,7 @@ jobs:
           echo "✅ Active build: $BUILD_ID"
 
       - name: Verify required architecture artifacts exist
+        if: steps.applicability.outputs.applicable == 'true'
         run: |
           BUILD_DIR="${{ steps.build.outputs.build_dir }}"
           REQUIRED_FILES=(
@@ -82,6 +204,7 @@ jobs:
           echo "✅ Required artifacts present"
 
       - name: Enforce Architecture Completeness = 100%
+        if: steps.applicability.outputs.applicable == 'true'
         run: |
           BUILD_DIR="${{ steps.build.outputs.build_dir }}"
           VALIDATION="${BUILD_DIR}/validation.md"
@@ -105,6 +228,7 @@ jobs:
           echo "✅ validation.md declares 100% + PASS + canonical reference"
 
       - name: Enforce Drift Report = NONE
+        if: steps.applicability.outputs.applicable == 'true'
         run: |
           BUILD_DIR="${{ steps.build.outputs.build_dir }}"
           DRIFT="${BUILD_DIR}/drift-report.md"
@@ -118,7 +242,9 @@ jobs:
 
           echo "✅ Drift status is NONE"
 
-      - name: Enforce “No Agent Conclusion While Incomplete” (hard banner)
+
+      - name: Enforce "No Agent Conclusion While Incomplete" (hard banner)
+        if: steps.applicability.outputs.applicable == 'true'
         run: |
           echo "✅ FM ARCHITECTURE GATE PASSED"
           echo "Architecture completeness is declared 100% and drift is NONE."

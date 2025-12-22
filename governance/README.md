@@ -41,7 +41,54 @@ governance/
 
 ## Key Documents
 
-### Governance Alignment
+### Governance Alignment (Canonical References)
+
+**NEW - [alignment/AGENT_ROLE_GATE_APPLICABILITY_REFERENCE.md](alignment/AGENT_ROLE_GATE_APPLICABILITY_REFERENCE.md)**
+- **Canonical Reference** to `maturion-foreman-governance/AGENT_ROLE_GATE_APPLICABILITY.md`
+- Defines agent-role-based gate applicability (not path-based)
+- Ensures FM workflows respect agent role as sole determinant
+- Implements predictability invariant
+
+**NEW - [alignment/PR_GATE_RELEASE_CHECKLISTS_REFERENCE.md](alignment/PR_GATE_RELEASE_CHECKLISTS_REFERENCE.md)**
+- **Canonical Reference** to PR Gate Release Checklists
+- Ensures FM gates enforce checklists only (no additional requirements)
+- Implements: "If all checklist items satisfied, gate MUST pass"
+
+**[alignment/TWO_GATEKEEPER_MODEL.md](alignment/TWO_GATEKEEPER_MODEL.md)**
+- Defines dual gatekeeper authority structure
+- Gatekeeper 1: Governance Administrator
+- Gatekeeper 2: FM Builder
+- Both defer to canonical governance
+
+**[alignment/AGENT_SCOPED_QA_BOUNDARIES.md](alignment/AGENT_SCOPED_QA_BOUNDARIES.md)**
+- Enforces strict agent QA separation
+- Builder QA by builders only
+- Governance QA by governance agents only
+- FM QA by FM agents only
+
+**[alignment/PR_GATE_REQUIREMENTS_CANON.md](alignment/PR_GATE_REQUIREMENTS_CANON.md)**
+- Canonical gate semantics
+- READY/NOT_READY declarations
+- Enforcement-only validation
+
+**[alignment/PR_GATE_FAILURE_HANDLING_PROTOCOL.md](alignment/PR_GATE_FAILURE_HANDLING_PROTOCOL.md)**
+- Canonical failure classifications
+- Escalation semantics
+- Emergency authorization constraints
+
+**[alignment/GOVERNANCE_RIPPLE_COMPATIBILITY.md](alignment/GOVERNANCE_RIPPLE_COMPATIBILITY.md)**
+- Downward ripple: Canon → FM
+- Upward ripple: FM lessons → Canon
+- Evolution without hard-coded assumptions
+
+**[alignment/FM_REPOSITORY_QA_CLARIFICATION.md](alignment/FM_REPOSITORY_QA_CLARIFICATION.md)**
+- FM tests orchestration/enforcement/monitoring
+- Not ISMS module implementation
+
+**[alignment/GOVERNANCE_ALIGNMENT_SUMMARY.md](alignment/GOVERNANCE_ALIGNMENT_SUMMARY.md)**
+- Complete alignment status
+- Evidence of canonical principle implementation
+- Update log
 
 **[alignment/GOVERNANCE_ALIGNMENT_OVERVIEW.md](alignment/GOVERNANCE_ALIGNMENT_OVERVIEW.md)**
 - Defines relationship with corporate governance canon
@@ -95,6 +142,33 @@ governance/
 
 ---
 
+## Two-Gatekeeper Model (Canonical Alignment)
+
+**Status**: Active and Enforced  
+**Authority**: Corporate Governance Canon  
+**Last Updated**: 2025-12-22
+
+FM governance operates under a **dual gatekeeper model** where:
+
+### Gatekeeper 1: Governance Administrator (Agent-Level)
+- **Role**: Validate governance artifacts and schemas
+- **Scope**: Governance compliance, canonical alignment, drift detection
+- **Authority**: Read-only on Builder QA results
+- **Prohibitions**: NO Builder QA execution, NO implementation defect discovery
+
+### Gatekeeper 2: Foreman App Builder (FM Runtime Layer)
+- **Role**: Orchestrate enforcement workflows
+- **Scope**: Aggregate governance signals, enforce merge eligibility
+- **Authority**: Enforcement only, no override
+- **Prohibitions**: NO governance rule interpretation, NO canonical gate weakening
+
+**Neither gatekeeper may override the other.**  
+**Both defer to canonical governance.**
+
+See: [Two-Gatekeeper Model](alignment/TWO_GATEKEEPER_MODEL.md)
+
+---
+
 ## Governance Flow
 
 ```
@@ -134,6 +208,59 @@ FM Execution Constraints (this repo)
 2. **No governance reinterpretation** - FM does not modify governance meaning
 3. **No governance weakening** - FM does not reduce governance requirements
 4. **Adoption only** - FM adopts and executes governance as defined upstream
+
+---
+
+## Canonical Governance Alignment (Critical)
+
+**Status**: Active and Enforced  
+**Date Aligned**: 2025-12-22  
+**Authority**: Corporate Governance Canon
+
+FM governance has been aligned with the finalized and **GREEN** governance canon. The following canonical specifications define FM enforcement behavior:
+
+### Core Alignment Specifications
+
+1. **[PR Gate Requirements (Canonical Mirror)](alignment/PR_GATE_REQUIREMENTS_CANON.md)**
+   - Builder QA Reports as sole source of truth
+   - PR gates as enforcement-only (no CI-discovery)
+   - Canonical failure classifications
+   - Gate semantics and requirements
+
+2. **[Agent-Scoped QA Boundaries](alignment/AGENT_SCOPED_QA_BOUNDARIES.md)**
+   - Builder QA by Builder agents only
+   - Governance QA by Governance agents only
+   - FM QA by FM agents only
+   - Cross-agent QA = catastrophic violation
+
+3. **[Two-Gatekeeper Model](alignment/TWO_GATEKEEPER_MODEL.md)**
+   - Gatekeeper 1: Governance Administrator (governance artifacts)
+   - Gatekeeper 2: FM Builder (Builder QA enforcement)
+   - Neither overrides the other
+   - Both defer to canonical governance
+
+4. **[PR Gate Failure Handling Protocol](alignment/PR_GATE_FAILURE_HANDLING_PROTOCOL.md)**
+   - Canonical failure categories
+   - Failure classification semantics
+   - Escalation protocols
+   - Emergency override rules
+
+5. **[Governance Ripple Compatibility](alignment/GOVERNANCE_RIPPLE_COMPATIBILITY.md)**
+   - Downward ripple: Canon → FM (automatic propagation)
+   - Upward ripple: FM → Canon (lesson learned promotion)
+   - No hard-coded assumptions
+   - Version compatibility support
+
+### Explicit Prohibitions
+
+FM governance enforcement MUST NOT:
+- ❌ Reintroduce CI-discovery logic
+- ❌ Duplicate PR gate enforcement
+- ❌ Reinterpret governance intent
+- ❌ Perform Builder QA
+- ❌ Act as alternative authority
+
+Any such behavior is a governance violation.
 
 ---
 

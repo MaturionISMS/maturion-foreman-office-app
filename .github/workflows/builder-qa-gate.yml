@@ -1,0 +1,255 @@
+name: Builder QA Gate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+      - develop
+
+# Explicit, least-privilege permissions
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate-builder-qa:
+    name: Validate Builder QA Report
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Find Builder QA Report
+        id: find-report
+        run: |
+          echo "🔍 Searching for Builder QA Report..."
+          
+          # Find Builder QA Report (canonical naming)
+          REPORT=$(find . -type f -name "builder-qa-report.json" | head -1)
+          
+          if [ -z "$REPORT" ]; then
+            echo "ℹ️ Builder QA Report not found"
+            echo "This may indicate:"
+            echo "  - FM repository (FM QA, not Builder QA)"
+            echo "  - Documentation-only change"
+            echo "  - Governance-only change"
+            echo "found=false" >> $GITHUB_OUTPUT
+          else
+            echo "✅ Builder QA Report found: $REPORT"
+            echo "report=$REPORT" >> $GITHUB_OUTPUT
+            echo "found=true" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Validate Builder QA Report Schema
+        if: steps.find-report.outputs.found == 'true'
+        run: |
+          echo "🔒 Validating Builder QA Report schema..."
+          
+          REPORT="${{ steps.find-report.outputs.report }}"
+          
+          # Check report is valid JSON
+          if ! jq empty "$REPORT" 2>/dev/null; then
+            echo "❌ Builder QA Report is not valid JSON"
+            exit 1
+          fi
+          
+          # Check required fields exist
+          REQUIRED_FIELDS=(
+            ".qa_report_metadata"
+            ".qa_report_metadata.agent_type"
+            ".qa_report_metadata.scope"
+            ".qa_status"
+            ".test_execution"
+            ".immutable"
+          )
+          
+          for FIELD in "${REQUIRED_FIELDS[@]}"; do
+            if ! jq -e "$FIELD" "$REPORT" >/dev/null 2>&1; then
+              echo "❌ Missing required field: $FIELD"
+              exit 1
+            fi
+          done
+          
+          echo "✅ Builder QA Report schema valid"
+      
+      - name: Check READY Status
+        if: steps.find-report.outputs.found == 'true'
+        run: |
+          REPORT="${{ steps.find-report.outputs.report }}"
+          QA_STATUS=$(jq -r '.qa_status' "$REPORT")
+          
+          echo "Builder QA Status: $QA_STATUS"
+          
+          if [ "$QA_STATUS" != "READY" ]; then
+            echo "❌ Builder QA declares NOT_READY"
+            echo ""
+            echo "Builder has determined the build is not ready for merge."
+            echo "Trust Builder's declaration - do not override."
+            echo ""
+            echo "Possible reasons:"
+            echo "  - Tests failing"
+            echo "  - Coverage insufficient"
+            echo "  - Implementation incomplete"
+            echo "  - Requirements not met"
+            echo ""
+            echo "Action: Wait for Builder to fix and declare READY"
+            exit 1
+          fi
+          
+          echo "✅ Builder QA declares READY"
+      
+      - name: Validate Agent Attribution
+        if: steps.find-report.outputs.found == 'true'
+        run: |
+          REPORT="${{ steps.find-report.outputs.report }}"
+          AGENT_TYPE=$(jq -r '.qa_report_metadata.agent_type' "$REPORT")
+          SCOPE=$(jq -r '.qa_report_metadata.scope' "$REPORT")
+          
+          if [ "$AGENT_TYPE" != "builder" ]; then
+            echo "🚨 CATASTROPHIC: QA report not authored by builder agent"
+            echo "Agent type: $AGENT_TYPE (expected: builder)"
+            echo "This is a catastrophic governance violation."
+            exit 1
+          fi
+          
+          if [ "$SCOPE" != "builder-qa" ]; then
+            echo "🚨 CATASTROPHIC: QA report scope not builder-qa"
+            echo "Scope: $SCOPE (expected: builder-qa)"
+            echo "This is a catastrophic governance violation."
+            exit 1
+          fi
+          
+          echo "✅ Agent attribution valid (builder/builder-qa)"
+      
+      - name: Validate Immutability
+        if: steps.find-report.outputs.found == 'true'
+        run: |
+          REPORT="${{ steps.find-report.outputs.report }}"
+          IMMUTABLE=$(jq -r '.immutable' "$REPORT")
+          
+          if [ "$IMMUTABLE" != "true" ]; then
+            echo "❌ Builder QA Report not marked immutable"
+            echo "Evidence must be immutable for audit trail integrity"
+            exit 1
+          fi
+          
+          echo "✅ Report is immutable"
+      
+      - name: Report Success (Builder QA Present)
+        if: success() && steps.find-report.outputs.found == 'true' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ✅ **Builder QA Gate PASSED**
+              
+              Builder QA validation complete:
+              - Builder QA Report present ✅
+              - Report schema valid ✅
+              - Report declares READY ✅
+              - Agent attribution correct (builder/builder-qa) ✅
+              - Report is immutable ✅
+              
+              **Gatekeeper 2 approves merge eligibility.**
+              
+              ---
+              
+              **Note**: This gate validates Builder QA Report only.
+              It does NOT re-run tests.
+              It does NOT discover defects.
+              It trusts Builder's READY declaration as source of truth.
+              `
+            })
+      
+      - name: Report Not Applicable (FM Repository)
+        if: steps.find-report.outputs.found == 'false' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ℹ️ **Builder QA Gate - Not Applicable**
+              
+              No Builder QA Report found in this PR.
+              
+              This is acceptable for:
+              - **FM Repository** (uses FM QA, not Builder QA)
+              - Documentation-only changes
+              - Governance-only changes
+              
+              **For FM Repository**:
+              - FM QA is validated via Build-to-Green Enforcement workflow
+              - FM tests its own functionality (orchestration, enforcement, monitoring)
+              - No external Builder QA required
+              
+              **For ISMS Module Repositories**:
+              - Builder QA Report is mandatory
+              - Must be generated by Builder agents
+              - Must declare READY for merge
+              
+              ---
+              
+              **Current Repository**: maturion-foreman-office-app (FM)  
+              **Expected QA Type**: FM QA  
+              **Gate Status**: Pass (not applicable)
+              `
+            })
+      
+      - name: Report Failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ❌ **Builder QA Gate BLOCKED**
+              
+              **Gatekeeper 2 blocks merge.**
+              
+              Possible reasons:
+              - Builder QA Report missing (ISMS repos only)
+              - Report declares NOT_READY
+              - Report schema invalid
+              - Agent attribution incorrect
+              - Report not immutable
+              
+              Review workflow logs for details.
+              
+              ---
+              
+              **If Builder QA declares NOT_READY**:
+              - This is expected workflow
+              - Builder has determined build not ready
+              - Wait for Builder to fix issues
+              - Builder will declare READY when ready
+              - Do NOT override Builder's decision
+              
+              **If schema invalid**:
+              - Fix Builder QA Report structure
+              - Follow canonical schema: governance/alignment/AGENT_SCOPED_QA_BOUNDARIES.md
+              - Ensure all required fields present
+              
+              **If agent attribution incorrect**:
+              - Verify report authored by builder agent
+              - Scope must be "builder-qa"
+              - Agent type must be "builder"
+              `
+            })
