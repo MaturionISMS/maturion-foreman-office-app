@@ -26,23 +26,28 @@ jobs:
         run: |
           echo "🔍 Detecting agent role for gate applicability..."
           
-          # Default role for FM repository
-          ROLE="fm"
+          ROLE=""
           
           # Check for explicit PR label (highest precedence)
           LABELS="${{ github.event.pull_request.labels }}"
           if echo "$LABELS" | grep -q "agent-role:"; then
             ROLE=$(echo "$LABELS" | grep -oP 'agent-role:\K[a-z]+' | head -1)
             echo "✅ Role from PR label: $ROLE"
-          # Check .agent file
-          elif [ -f ".agent" ] && grep -qE "role|authority" ".agent"; then
-            ROLE=$(grep -E "role|authority" .agent | head -1 | cut -d: -f2 | tr -d ' "' | tr '[:upper:]' '[:lower:]')
+          # Check .agent file (second precedence)
+          elif [ -f ".agent" ] && grep -qE "^role:" ".agent"; then
+            ROLE=$(grep -E "^role:" .agent | head -1 | cut -d: -f2 | tr -d ' "' | tr '[:upper:]' '[:lower:]')
             echo "✅ Role from .agent file: $ROLE"
-          # Check PR title prefix
+          # Check PR title prefix (third precedence)
           elif [[ "${{ github.event.pull_request.title }}" =~ ^\[(Builder|Governance|FM|builder|governance|fm)\] ]]; then
             ROLE=$(echo "${{ github.event.pull_request.title }}" | grep -oP '^\[\K[^\]]+' | tr '[:upper:]' '[:lower:]')
             echo "✅ Role from PR title: $ROLE"
+          # Infer from PR content (fourth precedence - governance keywords)
+          elif [[ "${{ github.event.pull_request.title }}" =~ [Gg]overnance ]] || [[ "${{ github.event.pull_request.title }}" =~ [Aa]lign ]]; then
+            ROLE="governance"
+            echo "✅ Role inferred from PR title keywords: $ROLE"
+          # Default to FM repository's primary role
           else
+            ROLE="fm"
             echo "ℹ️ Using default role for FM repository: $ROLE"
           fi
           
