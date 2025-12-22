@@ -56,6 +56,13 @@ Architecture compilation is the process by which:
    - Version constraints
    - License compatibility verification
 
+5. **Historical Failure Class Registry**
+   - FL/CI failure evidence records (from `foreman/evidence/flci/`)
+   - Architectural lessons learned (from `foreman/ai-memory/architectural-lessons.md`)
+   - Historical issue patterns (from `foreman/ai-memory/build-wave-*-historical-issues.json`)
+   - Known failure classes and prevention mechanisms
+   - Applicability assessment for current build
+
 ### Input Validation Requirements
 
 Each input artifact MUST:
@@ -110,6 +117,51 @@ Each input artifact MUST:
 
 ---
 
+### Phase 2A: FL/CI Learning Integration (Mandatory)
+
+**Purpose**: Ensure architecture explicitly addresses historical failure classes and incorporates lessons learned.
+
+**Process**:
+1. **Identify Applicable Failure Classes**
+   - Review FL/CI evidence directory (`foreman/evidence/flci/`)
+   - Review architectural lessons (`foreman/ai-memory/architectural-lessons.md`)
+   - Review historical issues for similar patterns
+   - Determine which failure classes apply to current build context
+
+2. **Document Prevention Mechanisms**
+   - For each applicable failure class, document:
+     - How the architecture prevents recurrence
+     - What safeguards are in place
+     - What tests will validate prevention
+     - What deployment/runtime checks exist
+   - Location: `architecture/builds/<build-id>/flci-prevention-plan.md`
+
+3. **Validate Completeness**
+   - Every applicable failure class MUST have documented prevention
+   - Every prevention mechanism MUST be testable OR explicitly marked non-testable with risk acceptance
+   - Non-testable risks MUST be documented with:
+     - Why testing is not feasible
+     - Alternative validation approach
+     - Risk acceptance authority (Johan Ras)
+     - Monitoring/detection strategy
+
+**Output**: FL/CI Prevention Plan
+
+**Validation**:
+- ✅ All applicable failure classes identified
+- ✅ All failure classes have prevention mechanisms documented
+- ✅ All prevention mechanisms are either testable or explicitly risk-accepted
+- ✅ Non-testable risks have complete documentation and authority
+- ✅ No "will address later" or "add tests later" statements
+
+**Failure Handling**:
+- If any applicable failure class lacks prevention: **BLOCK compilation**
+- If any prevention mechanism is untestable without risk acceptance: **BLOCK compilation**
+- If "add tests later" pattern detected: **BLOCK compilation**
+- Escalate to Johan Ras with gap analysis and proposed remediation
+
+---
+
 ### Phase 3: Implementation Specification → Frozen Architecture Artifacts
 
 **Process**:
@@ -125,6 +177,7 @@ Each input artifact MUST:
 - `architecture/builds/<build-id>/compilation.md` - Architecture compilation report
 - `architecture/builds/<build-id>/validation.md` - Validation report (must show 100% completeness)
 - `architecture/builds/<build-id>/drift-report.md` - Drift detection report (must show NONE)
+- `architecture/builds/<build-id>/flci-prevention-plan.md` - FL/CI failure prevention documentation
 - `architecture/builds/<build-id>/interfaces/` - Interface definitions
 - `architecture/builds/<build-id>/models/` - Data model definitions
 - `architecture/builds/<build-id>/deployment/` - Deployment specifications
@@ -149,7 +202,9 @@ Each input artifact MUST:
    - Must explicitly state: `ARCHITECTURE_COMPLETENESS: 100%`
    - Must explicitly state: `CHECKLIST_STATUS: PASS`
    - Must explicitly state: `DRIFT_STATUS: NONE`
+   - Must explicitly state: `FLCI_PREVENTION_STATUS: COMPLETE`
    - Must reference canonical checklist used for validation
+   - Must list all applicable failure classes and their prevention status
 
 4. **Traceability Matrix**
    - Requirements → Architecture Elements mapping
@@ -163,10 +218,11 @@ Each input artifact MUST:
 ### Definition
 
 The **architecture freeze point** is the moment when:
-1. All compilation phases complete successfully
-2. Validation report shows PASS/100%/NONE
-3. Architecture artifacts are marked immutable
-4. Build authorization becomes possible
+1. All compilation phases complete successfully (including FL/CI learning integration)
+2. Validation report shows PASS/100%/NONE/COMPLETE
+3. FL/CI prevention plan is complete and validated
+4. Architecture artifacts are marked immutable
+5. Build authorization becomes possible
 
 ### After Freeze Point
 
@@ -206,12 +262,15 @@ If architecture must change after freeze:
 4. ✅ Architecture completeness = 100%
 5. ✅ Governance checklist status = PASS
 6. ✅ Drift status = NONE
-7. ✅ All interfaces fully specified
-8. ✅ All data models complete
-9. ✅ All module boundaries defined
-10. ✅ Traceability matrix complete
-11. ✅ No "TBD", "TODO", or placeholder content
-12. ✅ Architecture artifacts frozen and immutable
+7. ✅ FL/CI prevention status = COMPLETE
+8. ✅ All applicable failure classes identified and addressed
+9. ✅ All interfaces fully specified
+10. ✅ All data models complete
+11. ✅ All module boundaries defined
+12. ✅ Traceability matrix complete
+13. ✅ No "TBD", "TODO", or placeholder content
+14. ✅ No "add tests later" or deferred testing statements
+15. ✅ Architecture artifacts frozen and immutable
 
 **If ALL criteria above are satisfied: PASS**
 
@@ -223,12 +282,15 @@ If architecture must change after freeze:
 4. ❌ Architecture completeness < 100%
 5. ❌ Governance checklist status != PASS
 6. ❌ Drift status != NONE
-7. ❌ Any interface incompletely specified
-8. ❌ Any data model incomplete
-9. ❌ Any module boundary unclear
-10. ❌ Traceability matrix incomplete
-11. ❌ Any "TBD", "TODO", or placeholder content found
-12. ❌ Architecture artifacts not frozen
+7. ❌ FL/CI prevention status != COMPLETE
+8. ❌ Any applicable failure class not addressed
+9. ❌ Any interface incompletely specified
+10. ❌ Any data model incomplete
+11. ❌ Any module boundary unclear
+12. ❌ Traceability matrix incomplete
+13. ❌ Any "TBD", "TODO", or placeholder content found
+14. ❌ Any "add tests later" or deferred testing statements found
+15. ❌ Architecture artifacts not frozen
 
 **If ANY criterion above is true: FAIL**
 

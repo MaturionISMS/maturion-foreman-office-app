@@ -41,16 +41,40 @@ If module needs backend:
 - [ ] QA Plan exists?
 - [ ] Covers ALL architecture components?
 - [ ] No missing mappings?
+- [ ] Deployment and configuration changes have test coverage?
+- [ ] Runtime behavior changes have test coverage?
+- [ ] Non-testable risks explicitly documented and risk-accepted?
+- [ ] No "add tests later" statements present?
 
-## 8. Implementation Guide
+## 8. Deployment and Runtime Invariants
+- [ ] Deployment architecture fully specified?
+- [ ] Environment/provider requirements documented?
+- [ ] Migration execution responsibility defined?
+- [ ] Runtime configuration validated?
+- [ ] Deployment failure modes documented?
+- [ ] Rollback procedures defined?
+- [ ] Environment-specific constraints identified?
+- [ ] Provider compatibility verified?
+
+## 9. FL/CI Learning Integration
+- [ ] Historical failure classes reviewed?
+- [ ] Applicable failure classes identified?
+- [ ] Prevention mechanisms documented for each applicable failure?
+- [ ] Prevention mechanisms are testable OR risk-accepted?
+- [ ] Non-testable failure scenarios explicitly documented?
+- [ ] Monitoring/detection strategy defined for non-testable risks?
+- [ ] Risk acceptance obtained from Johan Ras (if needed)?
+- [ ] No known failure patterns unaddressed?
+
+## 10. Implementation Guide
 - [ ] Steps complete?
 - [ ] Task breakdown sensible?
 
-## 9. Sprint Plan
+## 11. Sprint Plan
 - [ ] Tasks sequenced?
 - [ ] Dependencies identified?
 
-## 10. Changelog
+## 12. Changelog
 - [ ] Version present?
 - [ ] Correct format?
 
@@ -58,5 +82,8 @@ If module needs backend:
 - [ ] No missing files  
 - [ ] No inconsistencies  
 - [ ] No contradictions  
-- [ ] No ambiguous requirements  
+- [ ] No ambiguous requirements
+- [ ] All deployment and runtime invariants addressed
+- [ ] All FL/CI learning requirements satisfied
+- [ ] No deferred testing or "add tests later" statements  
 

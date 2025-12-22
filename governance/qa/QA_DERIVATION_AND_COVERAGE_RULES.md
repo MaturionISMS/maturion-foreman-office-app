@@ -69,12 +69,16 @@ Architecture → Derived QA Assertions → Tests → Coverage = Proof
 6. **Error Handling** - Exception paths, error recovery, fallbacks
 7. **Performance** - Latency, throughput, resource usage
 8. **Security** - Authentication, authorization, data protection
+9. **Deployment** - Deployment scripts, configuration management, environment setup
+10. **Runtime Configuration** - Environment variables, feature flags, runtime parameters
+11. **Migrations** - Database migrations, data transformations, schema changes
 
 **Mapping Requirement**:
 - Each architecture element MUST map to ≥1 QA assertion
 - Each QA assertion MUST trace back to ≥1 architecture element
 - No unmapped architecture elements permitted
 - No orphaned QA assertions permitted
+- Deployment and configuration changes are VALID and REQUIRED test targets
 
 ---
 
@@ -92,6 +96,9 @@ For each architecture element, generate assertions that prove:
 - **Constraint Satisfaction**: Element satisfies all constraints
 - **Error Handling**: Element handles errors as specified
 - **Integration**: Element integrates correctly with other elements
+- **Deployment Validation**: Deployment succeeds in target environments (if applicable)
+- **Configuration Validation**: Configuration changes behave as expected (if applicable)
+- **Migration Validation**: Data migrations execute correctly and preserve data integrity (if applicable)
 
 **Step 3: Create Traceability Matrix**
 - Architecture Element ID → QA Assertion IDs
@@ -113,8 +120,13 @@ For each architecture element, generate assertions that prove:
 | Error Handling | 2 (error triggered, error recovered) |
 | Performance | 1 (meets requirement under load) |
 | Security | 3 (authenticated access, unauthorized blocked, data protected) |
+| Deployment | 2 (deployment succeeds, rollback works) |
+| Runtime Configuration | 2 (configuration loads correctly, invalid config handled) |
+| Migrations | 3 (migration executes, data preserved, rollback works) |
 
 **Total minimum assertions = sum across all architecture elements.**
+
+**Note**: Deployment, configuration, and migration elements are first-class architecture elements and MUST have test coverage unless explicitly documented as non-testable with risk acceptance.
 
 ---
 
@@ -526,7 +538,70 @@ Future FM Agent will:
 
 ---
 
-## XV. Success Criteria
+## XV. FL/CI Learning Integration (Mandatory)
+
+### Purpose
+
+Ensure QA derivation incorporates historical failure classes and lessons learned to prevent recurrence.
+
+### Requirements
+
+1. **Historical Failure Class Review**
+   - Before deriving QA assertions, review:
+     - FL/CI evidence directory (`foreman/evidence/flci/`)
+     - Architectural lessons (`foreman/ai-memory/architectural-lessons.md`)
+     - Historical issues (`foreman/ai-memory/build-wave-*-historical-issues.json`)
+   - Identify failure classes applicable to current build
+
+2. **Failure Prevention Tests**
+   - For each applicable failure class, generate tests that:
+     - Validate the failure cannot occur
+     - Validate prevention mechanisms work
+     - Validate monitoring/detection works (if non-testable)
+   - Document traceability: Failure Class ID → Prevention Test IDs
+
+3. **Non-Testable Risk Documentation**
+   - If a failure class cannot be fully tested:
+     - Document WHY testing is not feasible
+     - Document alternative validation approach
+     - Document monitoring/detection strategy
+     - Obtain risk acceptance from Johan Ras
+     - Include in `architecture/builds/<build-id>/non-testable-risks.md`
+
+4. **"Add Tests Later" Prohibition**
+   - The phrase "add tests later" or equivalent is **ABSOLUTELY FORBIDDEN**
+   - Tests MUST exist before build authorization
+   - Tests MAY be RED during development (DP-RED)
+   - Tests MUST be GREEN before build authorization
+   - No deferrals, no exceptions
+
+5. **FL/CI Learning Coverage Validation**
+   - Validate that every applicable failure class has:
+     - ✅ Prevention tests implemented, OR
+     - ✅ Non-testable risk documented and accepted
+   - Generate FL/CI coverage report
+   - Include in QA Coverage Validation Report
+
+### Failure Handling
+
+If FL/CI learning integration is incomplete:
+1. **BLOCK build authorization**
+2. **Generate gap report**: List failure classes without prevention tests
+3. **Escalate to Johan Ras**
+4. **Implement missing tests OR document non-testable risks**
+5. **Re-validate coverage = 100%**
+6. **Log failure**: `FAILURE_TYPE: FLCI_LEARNING_INTEGRATION_INCOMPLETE`
+
+### Evidence Requirements
+
+For each build:
+- `architecture/builds/<build-id>/flci-coverage-report.md` - FL/CI learning coverage
+- `architecture/builds/<build-id>/non-testable-risks.md` - Non-testable risks and acceptance
+- FL/CI traceability in main traceability matrix
+
+---
+
+## XVI. Success Criteria
 
 QA derivation and coverage is successful when:
 1. ✅ All architecture elements have QA assertions
@@ -535,11 +610,14 @@ QA derivation and coverage is successful when:
 4. ✅ Coverage = 100%
 5. ✅ Traceability matrix complete
 6. ✅ No test debt
-7. ✅ Build authorization possible
+7. ✅ FL/CI learning integration complete
+8. ✅ All applicable failure classes have prevention tests OR risk acceptance
+9. ✅ No "add tests later" statements present
+10. ✅ Build authorization possible
 
 ---
 
-## XVI. References
+## XVII. References
 
 - **Corporate Governance Canon**: https://github.com/MaturionISMS/maturion-foreman-governance
 - **Architecture Compilation Contract**: `governance/architecture/ARCHITECTURE_COMPILATION_CONTRACT.md`

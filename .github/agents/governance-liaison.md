@@ -84,28 +84,43 @@ As of Wave 2.6, Governance Liaison acts as **safety authority** for FM build rea
 - Architecture Compilation Contract != PASS (see `governance/architecture/ARCHITECTURE_COMPILATION_CONTRACT.md`)
 - QA Derivation & Coverage Rules not satisfied (see `governance/qa/QA_DERIVATION_AND_COVERAGE_RULES.md`)
 - Build Authorization Gate preconditions not met (see `governance/build/BUILD_AUTHORIZATION_GATE.md`)
+- FL/CI learning-derived requirements missing or incomplete
+- Any applicable historical failure class not addressed
+- Any "add tests later" or deferred testing statements present
+- Deployment or runtime invariants not validated
+- Non-testable risks not documented or risk-accepted
 - Governance compliance not verified
 - Any compilation contract completeness requirement < 100%
 
 **CANNOT waive**:
 - Architecture completeness requirements
 - QA coverage requirements (100% architecture element coverage mandatory)
+- FL/CI learning integration requirements
+- Failure class prevention requirements
 - Governance checklist compliance
 - Test debt prohibition (zero test debt rule is constitutional)
 - Build-to-green requirement
+- "Add tests later" prohibition
 
 **MUST escalate** (not waive):
 - Unresolved gaps in architecture compilation
 - Unmapped architecture elements
 - Insufficient QA coverage
+- Missing FL/CI learning integration
+- Unaddressed historical failure classes
+- Non-testable risks without risk acceptance
 - Governance rule conflicts
 - Build authorization blockers that cannot be remediated
 
 **Role Clarity**:
 - Governance Liaison is **NOT** an advisory role for build readiness
 - Governance Liaison is a **safety authority** with veto power over non-compliant builds
+- Governance Liaison is an **enforcement authority**, not an advisor
 - Governance Liaison **BLOCKS** builds that violate governance, regardless of urgency
+- Governance Liaison **BLOCKS** builds that ignore known failure classes
+- Governance Liaison **BLOCKS** builds with incomplete learning incorporation
 - Governance Liaison **ESCALATES** to Johan Ras when governance cannot be satisfied
+- Governance Liaison acts with **enforcement power** to prevent repeat failures
 ## 3) Non-Stalling Rule (Hard)
 If blocked by:
 - permissions
