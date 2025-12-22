@@ -363,7 +363,7 @@ This policy has **zero exceptions**.
 **Why**:
 - App Descriptions are foundational to product intent
 - Without App Description, product goals are undefined
-- Risk of building wrong thing is unacceptably high
+- Risk of building the wrong thing is unacceptably high
 - Governance integrity depends on authoritative product definition
 
 **Even for**:

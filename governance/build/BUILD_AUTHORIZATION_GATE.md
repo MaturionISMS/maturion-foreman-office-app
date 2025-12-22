@@ -42,7 +42,11 @@ This gate exists to prevent:
 - App Description marked as "Authoritative" or "Approved"
 - App Description owner identified (Product Owner: Johan Ras for FM)
 - Requirements Specification explicitly references App Description
-- Requirements Specification contains derivation statement: "This specification is derived from `{APP}_APP_DESCRIPTION.md`"
+- Requirements Specification contains derivation statement in one of the following acceptable formats:
+  - "This specification is derived from `{APP}_APP_DESCRIPTION.md`"
+  - "Derived from `{APP}_APP_DESCRIPTION.md`"
+  - "Based on `{APP}_APP_DESCRIPTION.md`"
+  - "Upstream authority: `{APP}_APP_DESCRIPTION.md`"
 - App Description → FRS Alignment Checklist (see `governance/contracts/app-description-frs-alignment-checklist.md`) resolves to **PASS**
 
 **Evidence Required**:

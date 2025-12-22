@@ -187,7 +187,7 @@ APP_DESCRIPTION.md (Authoritative Product Intent)
 FM_FUNCTIONAL_SPEC.md (Functional Baseline)
 ```
 
-This relationship exists **implicitly** but is NOT **governancly enforced**.
+This relationship exists **implicitly** but is NOT **enforced through governance**.
 
 ---
 

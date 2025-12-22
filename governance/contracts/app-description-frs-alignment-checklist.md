@@ -10,6 +10,8 @@
 
 ## I. Overview
 
+**Note**: Throughout this checklist, `{APP}` is a placeholder that should be replaced with the actual application identifier (e.g., `FM` for Foreman, `COURSE_CRAFTER` for Course Crafter, `RISK_REGISTER` for Risk Register).
+
 This checklist validates that:
 1. App Description exists and is authoritative
 2. Functional Requirement Specification (FRS) derives from App Description
