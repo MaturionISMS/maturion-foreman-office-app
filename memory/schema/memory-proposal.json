@@ -1,0 +1,337 @@
+{
+  "description": "Memory Write Proposal Schema - Defines structure for memory write proposals submitted to governance",
+  "version": "1.0.0",
+  "schema": {
+    "proposal_id": {
+      "type": "string",
+      "description": "Unique identifier for this proposal",
+      "required": true,
+      "format": "prop-YYYY-MM-DD-NNN",
+      "example": "prop-2024-12-23-001"
+    },
+    "proposed_by": {
+      "type": "string",
+      "description": "Agent or entity submitting the proposal",
+      "required": true,
+      "allowed_values": [
+        "foreman",
+        "runtime-agent",
+        "ui-builder",
+        "api-builder",
+        "schema-builder",
+        "integration-builder",
+        "qa-builder"
+      ],
+      "example": "runtime-agent"
+    },
+    "proposed_at": {
+      "type": "string",
+      "format": "ISO8601",
+      "description": "Timestamp when proposal was submitted",
+      "required": true,
+      "example": "2024-12-23T10:30:00Z"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the proposal",
+      "required": true,
+      "allowed_values": [
+        "pending",
+        "under_review",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending",
+      "example": "pending"
+    },
+    "proposed_memory": {
+      "type": "object",
+      "description": "The memory entry being proposed for addition to the fabric",
+      "required": true,
+      "properties": {
+        "scope": {
+          "type": "string",
+          "description": "Memory scope where entry would be created",
+          "required": true,
+          "allowed_values": [
+            "global",
+            "foreman",
+            "isms",
+            "partpulse",
+            "runtime",
+            "platform"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "description": "Human-readable title for the memory entry",
+          "required": true,
+          "max_length": 200
+        },
+        "summary": {
+          "type": "string",
+          "description": "Brief summary of the memory entry",
+          "required": true,
+          "max_length": 500
+        },
+        "importance": {
+          "type": "string",
+          "description": "Importance level (proposals typically for high/critical only)",
+          "required": true,
+          "allowed_values": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ],
+          "note": "Low/medium importance entries typically don't require proposals"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Categorization tags",
+          "required": true,
+          "example": ["runtime", "pattern", "auto-fix"]
+        },
+        "details": {
+          "type": "object",
+          "description": "Additional details about the memory",
+          "required": false,
+          "properties": {
+            "rationale": {
+              "type": "string",
+              "description": "Why this memory is valuable"
+            },
+            "context": {
+              "type": "string",
+              "description": "Background context"
+            },
+            "evidence": {
+              "type": "string",
+              "description": "Supporting evidence (anonymized)"
+            },
+            "constraints": {
+              "type": "array",
+              "description": "Any constraints or limitations"
+            },
+            "examples": {
+              "type": "array",
+              "description": "Example scenarios (anonymized)"
+            }
+          }
+        }
+      }
+    },
+    "rationale": {
+      "type": "string",
+      "description": "Detailed justification for this memory proposal",
+      "required": true,
+      "min_length": 50,
+      "example": "This pattern successfully resolved 5 similar incidents in the past week. Recording it will improve future incident response time."
+    },
+    "evidence_count": {
+      "type": "number",
+      "description": "Number of occurrences or observations supporting this proposal",
+      "required": false,
+      "example": 5
+    },
+    "first_observed": {
+      "type": "string",
+      "format": "ISO8601",
+      "description": "When this pattern was first observed",
+      "required": false,
+      "example": "2024-12-15T08:00:00Z"
+    },
+    "last_observed": {
+      "type": "string",
+      "format": "ISO8601",
+      "description": "When this pattern was last observed",
+      "required": false,
+      "example": "2024-12-22T16:45:00Z"
+    },
+    "review_notes": {
+      "type": "array",
+      "description": "Notes added during governance review",
+      "required": false,
+      "items": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "ISO8601",
+            "description": "When note was added"
+          },
+          "reviewer": {
+            "type": "string",
+            "description": "Who added the note"
+          },
+          "note": {
+            "type": "string",
+            "description": "Content of the note"
+          }
+        }
+      },
+      "example": []
+    },
+    "decision": {
+      "type": "object",
+      "description": "Final decision details (populated when approved/rejected)",
+      "required": false,
+      "properties": {
+        "made_by": {
+          "type": "string",
+          "description": "Who made the decision"
+        },
+        "made_at": {
+          "type": "string",
+          "format": "ISO8601",
+          "description": "When decision was made"
+        },
+        "decision_type": {
+          "type": "string",
+          "allowed_values": ["approved", "rejected"],
+          "description": "The decision"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Rationale for the decision"
+        },
+        "created_memory_id": {
+          "type": "string",
+          "description": "If approved, the ID of the created memory entry"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata for tracking",
+      "required": false,
+      "properties": {
+        "agent_version": {
+          "type": "string",
+          "description": "Version of the agent that submitted proposal"
+        },
+        "submission_context": {
+          "type": "string",
+          "description": "Context in which proposal was submitted"
+        },
+        "related_incident_ids": {
+          "type": "array",
+          "description": "Related incident IDs (if applicable)"
+        },
+        "related_build_ids": {
+          "type": "array",
+          "description": "Related build IDs (if applicable)"
+        }
+      }
+    }
+  },
+  "validation_rules": {
+    "privacy": [
+      "proposed_memory MUST NOT contain PII",
+      "proposed_memory MUST NOT contain tenant-specific data",
+      "proposed_memory MUST NOT contain customer secrets",
+      "rationale and evidence MUST be anonymized"
+    ],
+    "governance": [
+      "High/critical importance entries MUST go through proposal process",
+      "Proposals MUST have clear rationale (min 50 characters)",
+      "Proposals MUST align with memory schema",
+      "Proposals MUST NOT duplicate existing memories"
+    ],
+    "lifecycle": [
+      "Status MUST progress: pending → under_review → (approved|rejected)",
+      "Approved proposals MUST have decision object",
+      "Rejected proposals MUST have decision.reason",
+      "Proposals MUST NOT be modified after status is approved/rejected"
+    ]
+  },
+  "usage_guidelines": {
+    "submission": [
+      "Agents submit proposals via proposal client API",
+      "Proposals stored in /memory/proposals/pending/",
+      "Proposals do NOT affect memory fabric until approved",
+      "Agents MUST NOT create memory entries directly for high/critical importance"
+    ],
+    "review": [
+      "Governance reviewers access pending proposals",
+      "Reviewers add notes via review_notes array",
+      "Reviewers make final decision (approve/reject)",
+      "Decision triggers memory creation (if approved) or archival (if rejected)"
+    ],
+    "approval": [
+      "Approved proposals converted to memory entries",
+      "Memory entry created in appropriate scope directory",
+      "Proposal moved to /memory/proposals/approved/",
+      "Proposal maintains link to created memory ID"
+    ],
+    "rejection": [
+      "Rejected proposals archived with reason",
+      "NO memory entry created",
+      "Proposal moved to /memory/proposals/rejected/",
+      "Agent informed of rejection (via logs)"
+    ]
+  },
+  "integration_points": {
+    "submission": [
+      "TypeScript: submitMemoryProposal() in proposal-client.ts",
+      "Python: submit_memory_proposal() in memory_proposal_client.py"
+    ],
+    "review": [
+      "Governance dashboard displays pending proposals",
+      "Human reviewers access via governance UI",
+      "CLI tools for bulk review operations"
+    ],
+    "decision": [
+      "Approval triggers memory creation via existing memory client",
+      "Rejection updates proposal status only"
+    ]
+  },
+  "examples": {
+    "runtime_pattern_proposal": {
+      "proposal_id": "prop-2024-12-23-001",
+      "proposed_by": "runtime-agent",
+      "proposed_at": "2024-12-23T10:30:00Z",
+      "status": "pending",
+      "proposed_memory": {
+        "scope": "runtime",
+        "title": "Database Connection Timeout Auto-Fix Pattern",
+        "summary": "Detected pattern for automatically recovering from database connection timeouts by restarting connection pool",
+        "importance": "high",
+        "tags": ["runtime", "auto-fix", "database", "pattern"],
+        "details": {
+          "rationale": "This pattern successfully resolved 5 incidents automatically",
+          "context": "Occurs during high load periods",
+          "evidence": "Pattern observed across multiple deployments"
+        }
+      },
+      "rationale": "Recording this pattern will enable faster auto-fix responses for similar incidents in the future. Pattern has proven reliable across multiple occurrences.",
+      "evidence_count": 5,
+      "first_observed": "2024-12-15T08:00:00Z",
+      "last_observed": "2024-12-22T16:45:00Z",
+      "review_notes": []
+    },
+    "governance_decision_proposal": {
+      "proposal_id": "prop-2024-12-23-002",
+      "proposed_by": "foreman",
+      "proposed_at": "2024-12-23T14:15:00Z",
+      "status": "pending",
+      "proposed_memory": {
+        "scope": "foreman",
+        "title": "Module Boundary Validation Rule",
+        "summary": "New rule requiring explicit dependency declarations between ISMS modules",
+        "importance": "critical",
+        "tags": ["governance", "architecture", "module-boundary"],
+        "details": {
+          "rationale": "Prevent implicit dependencies that violate module isolation",
+          "context": "Discovered during Wave 1 build validation",
+          "constraints": ["All modules must declare dependencies in module manifest"]
+        }
+      },
+      "rationale": "This rule emerged from multiple build failures caused by undeclared cross-module dependencies. Making it explicit will prevent future governance violations.",
+      "review_notes": []
+    }
+  }
+}
