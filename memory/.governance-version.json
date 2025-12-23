@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2024-12-23T16:40:00Z",
+  "checksum": "initial",
+  "schema_version": "1.0.0",
+  "files": [
+    {
+      "path": "memory/global/seed-architecture-memory.json",
+      "checksum": "pending"
+    },
+    {
+      "path": "memory/global/seed-autonomy-memory.json",
+      "checksum": "pending"
+    },
+    {
+      "path": "memory/global/seed-build-philosophy-memory.json",
+      "checksum": "pending"
+    },
+    {
+      "path": "memory/global/seed-governance-memory.json",
+      "checksum": "pending"
+    },
+    {
+      "path": "memory/global/seed-runtime-agent-memory.json",
+      "checksum": "pending"
+    }
+  ],
+  "description": "Initial governance memory version manifest"
+}
