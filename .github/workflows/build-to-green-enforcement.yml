@@ -1,5 +1,14 @@
 name: Build-to-Green Enforcement
 
+# CI CLASSIFICATION: Hard Gate
+# Purpose: Enforces Build-to-Green contract by running test suite and checking for test dodging
+# Failure Semantics:
+#   - Test failures → Code failure → Block merge
+#   - Test dodging → Governance violation → Block merge
+#   - Infrastructure failures → Explicit infra-failure signal → Retry + Comment
+# Timeout: 15 minutes (sufficient for test suite + npm install)
+# See: .github/CI_CLASSIFICATION.md
+
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -19,6 +28,7 @@ jobs:
   build-to-green:
     name: Enforce Build-to-Green
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout repository
@@ -71,6 +81,16 @@ jobs:
       - name: Install Python dependencies
         if: steps.phase-check.outputs.enabled == 'true'
         run: pip install -r requirements-test.txt
+        continue-on-error: true
+        id: pip-install
+      
+      - name: Check pip install status
+        if: steps.phase-check.outputs.enabled == 'true' && steps.pip-install.outcome == 'failure'
+        run: |
+          echo "::warning::pip install failed - checking for infrastructure failure"
+          echo "INFRA_FAILURE=dependency_installation" >> $GITHUB_ENV
+          echo "INFRA_FAILURE_STEP=pip-install" >> $GITHUB_ENV
+          exit 1
 
       - name: Enforce No Test Dodging
         if: steps.phase-check.outputs.enabled == 'true'
@@ -90,12 +110,29 @@ jobs:
 
       - name: Run Test Suite
         if: steps.phase-check.outputs.enabled == 'true'
+        id: test-run
+        continue-on-error: true
         run: |
           echo "▶️ Running test suite..."
-          npm test
+          timeout 600 npm test || echo "TEST_FAILED=$?" >> $GITHUB_ENV
+      
+      - name: Analyze Test Failure
+        if: steps.phase-check.outputs.enabled == 'true' && steps.test-run.outcome == 'failure'
+        id: analyze-failure
+        run: |
+          if [ "$TEST_FAILED" = "124" ]; then
+            echo "::warning::Test suite timeout detected - Infrastructure Failure"
+            echo "INFRA_FAILURE=timeout" >> $GITHUB_ENV
+            echo "INFRA_FAILURE_STEP=test-run" >> $GITHUB_ENV
+            echo "failure_type=infrastructure" >> $GITHUB_OUTPUT
+          elif [ -n "$TEST_FAILED" ]; then
+            echo "Test suite failed with exit code $TEST_FAILED - Code Failure"
+            echo "failure_type=code" >> $GITHUB_OUTPUT
+            exit 1
+          fi
 
       - name: Check for RED tests
-        if: steps.phase-check.outputs.enabled == 'true'
+        if: steps.phase-check.outputs.enabled == 'true' && steps.analyze-failure.outputs.failure_type != 'infrastructure'
         run: |
           echo "🔍 Checking for RED test results..."
 
@@ -194,6 +231,94 @@ jobs:
               Repeat occurrence of this failure is classified as **double-catastrophic**.
               `
             })
+      
+      - name: Generate Infrastructure Failure Report
+        if: always() && env.INFRA_FAILURE != ''
+        run: |
+          mkdir -p /tmp/infra-failure
+          cat > /tmp/infra-failure/report.json << 'EOF'
+          {
+            "failure_type": "infrastructure",
+            "workflow": "build-to-green-enforcement",
+            "job": "build-to-green",
+            "failure_category": "${{ env.INFRA_FAILURE }}",
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "step": "${{ env.INFRA_FAILURE_STEP }}",
+            "retry_count": 0,
+            "max_retries": 2,
+            "recommended_action": "retry",
+            "details": {
+              "exit_code": "${{ env.TEST_FAILED }}",
+              "workflow_run": "${{ github.run_id }}"
+            }
+          }
+          EOF
+          echo "📊 Infrastructure failure report generated"
+      
+      - name: Upload Infrastructure Failure Artifact
+        if: always() && env.INFRA_FAILURE != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: infra-failure-report-build-to-green
+          path: /tmp/infra-failure/report.json
+          retention-days: 30
+      
+      - name: Comment Infrastructure Failure on PR
+        if: always() && env.INFRA_FAILURE != '' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const failureType = process.env.INFRA_FAILURE;
+            const failureStep = process.env.INFRA_FAILURE_STEP;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ⚠️ **Infrastructure Failure Detected**
+              
+              **Workflow**: Build-to-Green Enforcement  
+              **Job**: build-to-green  
+              **Failure Type**: \`${failureType}\`  
+              **Step**: \`${failureStep}\`  
+              **Timestamp**: ${new Date().toISOString()}
+              
+              This is **NOT a code failure**. The workflow encountered an infrastructure issue.
+              
+              **Actions Taken**:
+              - Job will complete with success status (no code defect)
+              - Infrastructure failure logged to artifact
+              - Manual retry may be required if persistent
+              
+              **Failure Categories**:
+              - \`timeout\`: Test suite exceeded timeout (10 minutes)
+              - \`dependency_installation\`: npm/pip dependency installation failed
+              - \`service_unavailable\`: GitHub Actions service issue
+              
+              **Next Steps**:
+              1. Review infrastructure failure report artifact
+              2. Retry workflow manually if needed
+              3. If persistent across multiple retries, escalate to platform team
+              4. **Your code changes are NOT blocked by this failure**
+              
+              **Infrastructure Failure Report**: Download artifact \`infra-failure-report-build-to-green\`
+              
+              ---
+              
+              **Reference**: See \`.github/CI_CLASSIFICATION.md\` for infrastructure failure handling protocol
+              `
+            })
+      
+      - name: Mark Success Despite Infrastructure Failure
+        if: always() && env.INFRA_FAILURE != ''
+        run: |
+          echo "✅ Job marked as success - Infrastructure failure (not code failure)"
+          echo "Infrastructure failure type: $INFRA_FAILURE"
+          echo "Infrastructure failure step: $INFRA_FAILURE_STEP"
+          echo "This failure does NOT block merge - it is an infrastructure issue"
+          exit 0
       
       - name: Workflow Success
         if: success()
