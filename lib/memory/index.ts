@@ -51,3 +51,27 @@ export {
 
 // Memory Client (existing)
 export { MemoryClient } from './client';
+
+// Audit Logger
+export {
+  AuditLogger,
+  AccessAuditEntry,
+  WriteAuditEntry,
+  PrivacyScanEntry,
+  AuditQueryFilter,
+  AuditStatistics
+} from './audit-logger';
+
+// Observability Service
+export {
+  ObservabilityService,
+  MemoryHealthResponse,
+  LifecycleHistoryResponse,
+  AccessAuditResponse,
+  WriteAuditResponse,
+  PrivacyComplianceResponse,
+  PerformanceMetricsResponse,
+  PerformanceDataPoint,
+  ScopeStatus,
+  HealthMetrics
+} from './observability-service';
