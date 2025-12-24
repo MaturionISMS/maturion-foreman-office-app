@@ -75,3 +75,20 @@ export {
   ScopeStatus,
   HealthMetrics
 } from './observability-service';
+
+// Dashboard
+export {
+  ForemanMemoryPanel,
+  WatchdogMemoryMonitor,
+  JohanMemoryOversight,
+  DashboardAlert,
+  DashboardDataBuilder,
+  AlertSeverity
+} from './dashboard';
+
+// Observability Integration
+export {
+  MemoryObservabilityIntegration,
+  createMemoryObservability,
+  ObservabilityConfig
+} from './observability-integration';
