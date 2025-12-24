@@ -1,0 +1,64 @@
+{
+  "simulation_tenant": "org-test-001",
+  "description": "Sample learning memory for simulated tenant (PRIVACY-PRESERVING, NOT REAL DATA)",
+  "memories": [
+    {
+      "id": "mem-sim-learn-001",
+      "scope": "tenant:org-test-001",
+      "organisation_id": "org-test-001",
+      "memory_type": "learning",
+      "privacy_level": "admin_only",
+      "title": "Feature Adoption - Risk Register Usage",
+      "summary": "Risk register feature adoption: 78% of users access weekly, 45% add new risks monthly (n=45 users, 90 days)",
+      "created_at": "2024-12-15T10:00:00Z",
+      "author": "runtime",
+      "importance": "low",
+      "tags": ["learning", "feature_adoption", "risk_management"],
+      "details": {
+        "rationale": "Understand feature usage to improve UX",
+        "context": "Aggregated usage pattern from 45 users over 90 days",
+        "aggregate_minimum": 45,
+        "privacy_notes": "No user identifiers, no specific timestamps, aggregate statistics only",
+        "insights": {
+          "weekly_access_rate": "78%",
+          "monthly_contribution_rate": "45%",
+          "most_used_features": ["view risks", "filter by status", "export report"],
+          "improvement_opportunity": "Risk impact calculator rarely used (12%), may need better visibility"
+        }
+      }
+    },
+    {
+      "id": "mem-sim-learn-002",
+      "scope": "tenant:org-test-001",
+      "organisation_id": "org-test-001",
+      "memory_type": "learning",
+      "privacy_level": "admin_only",
+      "title": "Workflow Insight - Policy Review Cycle",
+      "summary": "Policy review workflow: 85% completed within 7 days, 15% require extension (n=20 reviews)",
+      "created_at": "2024-12-18T14:00:00Z",
+      "author": "runtime",
+      "importance": "medium",
+      "tags": ["learning", "workflow", "policy", "efficiency"],
+      "details": {
+        "rationale": "Optimize policy review workflow",
+        "context": "Aggregated pattern from 20 policy reviews",
+        "aggregate_minimum": 20,
+        "privacy_notes": "No policy names, no reviewer names, no specific dates",
+        "insights": {
+          "completion_rate_7_days": "85%",
+          "extension_required": "15%",
+          "common_extension_reason": "awaiting stakeholder input",
+          "improvement_opportunity": "Pre-alert stakeholders before review starts"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "total_entries": 2,
+    "simulation_only": true,
+    "privacy_preserving": true,
+    "aggregate_minimum_met": true,
+    "no_pii": true,
+    "privacy_compliant": true
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "simulation_tenant": "org-test-001",
+  "description": "Sample configuration memory for simulated tenant (NOT REAL DATA)",
+  "memories": [
+    {
+      "id": "mem-sim-config-001",
+      "scope": "tenant:org-test-001",
+      "organisation_id": "org-test-001",
+      "memory_type": "config",
+      "privacy_level": "tenant_private",
+      "title": "Custom Compliance Framework - ISO 27001 Extended",
+      "summary": "Tenant has configured extended ISO 27001 controls with custom risk assessment criteria",
+      "created_at": "2024-12-01T10:00:00Z",
+      "author": "human",
+      "importance": "high",
+      "tags": ["config", "compliance", "iso27001"],
+      "details": {
+        "rationale": "Organization requires enhanced controls beyond standard ISO 27001",
+        "context": "Regulated industry with additional security requirements",
+        "constraints": [
+          "Must maintain ISO 27001 base controls",
+          "Additional controls must be auditable",
+          "Risk scoring uses custom matrix"
+        ]
+      }
+    },
+    {
+      "id": "mem-sim-config-002",
+      "scope": "tenant:org-test-001",
+      "organisation_id": "org-test-001",
+      "memory_type": "config",
+      "privacy_level": "tenant_private",
+      "title": "Approval Workflow - Two-Stage Review",
+      "summary": "Organization requires two-stage approval for policy changes: Manager + Compliance Officer",
+      "created_at": "2024-12-05T14:30:00Z",
+      "author": "human",
+      "importance": "medium",
+      "tags": ["config", "workflow", "governance"],
+      "details": {
+        "rationale": "Enhanced oversight for policy changes",
+        "context": "Compliance mandate requires dual approval",
+        "constraints": [
+          "Manager approval required first",
+          "Compliance officer has veto power",
+          "Changes locked during approval process"
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "total_entries": 2,
+    "simulation_only": true,
+    "no_persistence": true,
+    "privacy_compliant": true
+  }
+}

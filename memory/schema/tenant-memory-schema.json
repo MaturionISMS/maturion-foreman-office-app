@@ -1,0 +1,297 @@
+{
+  "description": "Tenant-Specific Memory Schema Extension (Design Only)",
+  "version": "1.0.0-design",
+  "status": "NOT_ACTIVE",
+  "activation_required": true,
+  "governance_approval": "required",
+  
+  "tenant_memory_extension": {
+    "scope_extension": {
+      "description": "Extension to memory-entry.json scope field to support tenant-specific memory",
+      "new_scope_pattern": "tenant:{org_id}",
+      "examples": [
+        "tenant:org-uuid-1234-5678",
+        "tenant:org-abc-def-ghi"
+      ],
+      "validation": {
+        "pattern": "^tenant:[a-z0-9-]+$",
+        "org_id_format": "lowercase alphanumeric with hyphens only"
+      }
+    },
+    
+    "tenant_isolation": {
+      "description": "Tenant isolation requirements for memory entries",
+      "rules": [
+        "Each tenant memory entry MUST include organisation_id in metadata",
+        "Memory queries MUST filter by organisation_id",
+        "No cross-tenant references permitted",
+        "No wildcard or aggregate queries across tenants",
+        "All tenant memory access requires authenticated tenant context"
+      ],
+      "enforcement": {
+        "database": "Row-level security with organisation_id filter",
+        "api": "Middleware enforces tenant context from JWT",
+        "file_system": "Separate directories per org_id"
+      }
+    },
+    
+    "privacy_requirements": {
+      "description": "Privacy and PII requirements for tenant memory",
+      "prohibited_content": [
+        "User names, emails, or identifiable information",
+        "Individual user actions or behaviors",
+        "Raw audit logs containing PII",
+        "Specific document contents",
+        "Financial or health information",
+        "Any data that violates GDPR or privacy laws"
+      ],
+      "allowed_content": [
+        "Anonymized patterns (min 10 users aggregated)",
+        "Configuration preferences",
+        "Non-identifiable workflow insights",
+        "Aggregate statistics",
+        "Privacy-preserving learning insights"
+      ],
+      "validation": {
+        "pii_detection": "Required before write",
+        "aggregate_minimum": 10,
+        "anonymization": "Required for all operational memory"
+      }
+    },
+    
+    "tenant_metadata": {
+      "description": "Required metadata for tenant memory entries",
+      "required_fields": {
+        "organisation_id": {
+          "type": "string",
+          "description": "Tenant organization UUID",
+          "required": true,
+          "format": "UUID or semantic identifier"
+        },
+        "tenant_scope": {
+          "type": "string",
+          "description": "Tenant-specific scope value",
+          "required": true,
+          "pattern": "tenant:{org_id}"
+        },
+        "memory_type": {
+          "type": "string",
+          "description": "Type of tenant memory",
+          "required": true,
+          "allowed_values": [
+            "config",
+            "operational",
+            "learning",
+            "admin_insight"
+          ]
+        },
+        "privacy_level": {
+          "type": "string",
+          "description": "Privacy level of this memory",
+          "required": true,
+          "allowed_values": [
+            "public",
+            "tenant_private",
+            "admin_only"
+          ]
+        },
+        "retention_policy": {
+          "type": "string",
+          "description": "How long to retain this memory",
+          "required": false,
+          "allowed_values": [
+            "permanent",
+            "90_days",
+            "180_days",
+            "365_days"
+          ]
+        }
+      }
+    },
+    
+    "tenant_memory_types": {
+      "config": {
+        "description": "Tenant configuration memory",
+        "examples": [
+          "Custom compliance frameworks",
+          "Organization policies",
+          "Approval workflows",
+          "Risk assessment criteria"
+        ],
+        "privacy_level": "tenant_private",
+        "retention": "permanent"
+      },
+      "operational": {
+        "description": "Operational patterns (anonymized)",
+        "examples": [
+          "Incident response patterns (anonymized)",
+          "Audit preparation lessons",
+          "Compliance validation outcomes"
+        ],
+        "privacy_level": "admin_only",
+        "retention": "365_days",
+        "privacy_requirements": "MUST be anonymized, min 10 users aggregated"
+      },
+      "learning": {
+        "description": "Learning insights (privacy-preserving)",
+        "examples": [
+          "Usage patterns (aggregated)",
+          "Feature adoption feedback",
+          "User workflow improvements"
+        ],
+        "privacy_level": "admin_only",
+        "retention": "180_days",
+        "privacy_requirements": "MUST be privacy-preserving, no PII"
+      },
+      "admin_insight": {
+        "description": "Admin intelligence insights",
+        "examples": [
+          "System optimization recommendations",
+          "Best practice suggestions",
+          "Compliance trend analysis"
+        ],
+        "privacy_level": "admin_only",
+        "retention": "365_days"
+      }
+    }
+  },
+  
+  "access_control": {
+    "description": "Access control model for tenant memory",
+    "authentication": {
+      "required": true,
+      "method": "JWT with organisation_id claim"
+    },
+    "authorization": {
+      "tenant_user": {
+        "can_read": ["config with privacy_level=public or tenant_private"],
+        "can_write": ["config entries only"],
+        "cannot_read": ["operational, learning, admin_insight"],
+        "cannot_write": ["operational, learning, admin_insight"]
+      },
+      "tenant_admin": {
+        "can_read": ["all tenant memory for their org"],
+        "can_write": ["config, limited operational"],
+        "cannot_read": ["other tenants' memory"],
+        "cannot_write": ["other tenants' memory"]
+      },
+      "platform_admin": {
+        "can_read": ["all memory (with audit log)"],
+        "can_write": ["none (read-only for platform admin)"],
+        "special_permissions": ["can activate kill-switch", "can delete tenant memory"]
+      }
+    }
+  },
+  
+  "kill_switch": {
+    "description": "Emergency deactivation mechanism",
+    "activation_file": "/memory/tenant/KILL_SWITCH_ACTIVE",
+    "behavior": {
+      "when_active": {
+        "tenant_memory_reads": "return empty array",
+        "tenant_memory_writes": "fail silently (logged)",
+        "global_memory": "unaffected",
+        "system_behavior": "continues with global memory only"
+      },
+      "activation": {
+        "method": "touch /memory/tenant/KILL_SWITCH_ACTIVE",
+        "authority": "Johan Ras (Governance) or Platform Admin",
+        "scenarios": [
+          "Security vulnerability discovered",
+          "Cross-tenant data leak detected",
+          "Privacy violation suspected",
+          "Compliance audit failure"
+        ]
+      },
+      "deactivation": {
+        "method": "rm /memory/tenant/KILL_SWITCH_ACTIVE",
+        "authority": "Johan Ras (Governance) only",
+        "requirements": [
+          "Root cause identified and fixed",
+          "Security audit passed",
+          "Governance approval obtained"
+        ]
+      }
+    }
+  },
+  
+  "deletion_policy": {
+    "description": "Tenant memory deletion (GDPR compliance)",
+    "tenant_deletion": {
+      "triggers": [
+        "Tenant requests deletion (right to be forgotten)",
+        "Tenant account terminated",
+        "Retention policy expired",
+        "Governance directive"
+      ],
+      "scope": "All memory entries with matching organisation_id",
+      "cascade": true,
+      "recovery": false,
+      "audit_log": "Required, permanent record of deletion"
+    },
+    "deletion_procedure": {
+      "command": "python3 scripts/delete-tenant-memory.py --tenant {org_id} --confirm",
+      "confirmation_required": true,
+      "audit_entry_created": true,
+      "irreversible": true
+    }
+  },
+  
+  "simulation_mode": {
+    "description": "Simulation mode for testing (not activated)",
+    "purpose": "Enable testing without real data or persistence",
+    "characteristics": {
+      "data_source": "Synthetic fixtures in /memory/tenant/simulation/",
+      "persistence": "None",
+      "reset": "Instant, one-command",
+      "isolation": "Enforced in simulation",
+      "pii_detection": "Validation only"
+    },
+    "simulation_tenants": [
+      "org-test-001",
+      "org-test-002"
+    ]
+  },
+  
+  "compliance": {
+    "gdpr": {
+      "right_to_access": "Tenant can export all their memory in JSON format",
+      "right_to_deletion": "One-command deletion, cascading, audit trail",
+      "right_to_portability": "Export in standard JSON schema",
+      "privacy_by_design": "No PII in memory, anonymized patterns only"
+    },
+    "iso_27001": {
+      "access_control": "Role-based, authenticated, audited",
+      "data_classification": "Tenant memory marked as tenant-private",
+      "audit_trail": "All access logged with organisation_id"
+    }
+  },
+  
+  "activation_status": {
+    "current_status": "NOT_ACTIVE",
+    "schema_status": "DESIGN_ONLY",
+    "runtime_status": "NOT_IMPLEMENTED",
+    "persistence_status": "DISABLED",
+    "activation_authority": "Johan Ras (Governance)",
+    "activation_requirements": [
+      "Security audit completed",
+      "Privacy impact assessment approved",
+      "Tenant isolation tested",
+      "Compliance validated",
+      "Performance benchmarks met",
+      "Monitoring configured",
+      "Kill-switch tested",
+      "Deletion procedures tested",
+      "GDPR compliance verified",
+      "Governance approval documented"
+    ]
+  },
+  
+  "references": {
+    "architecture": "/memory/TENANT_MEMORY_ARCHITECTURE.md",
+    "not_active_notice": "/memory/tenant/NOT_ACTIVE.md",
+    "simulation_mode": "/memory/tenant/SIMULATION_MODE.md",
+    "base_schema": "/memory/schema/memory-entry.json",
+    "global_memory_runtime": "/GLOBAL_MEMORY_RUNTIME_README.md"
+  }
+}
