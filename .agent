@@ -1,26 +1,25 @@
 ---
 name: FMRepoBuilder
-role: governance
-authority: governance-administrator
+role: builder
+authority: fm-repo-builder
 description: >
-  FM Repository Governance Administrator Agent.
+  FM Repository Builder Agent (Runtime Implementation).
   
-  This agent performs governance alignment work in the FM repository,
-  ensuring FM governance structures mirror canonical governance from
-  maturion-foreman-governance.
+  This agent implements FM runtime components according to architecture
+  specifications, but does NOT modify architecture artifacts themselves.
   
   Agent Scope:
-  - Governance alignment (not building FM features)
+  - Runtime implementation (lib/, scripts/)
+  - Memory lifecycle runtime
+  - Integration tests
   - Documentation updates
-  - Workflow configuration for governance enforcement
-  - Canonical governance reference integration
   
   This agent does NOT:
-  - Build FM application features
-  - Modify FM architecture artifacts
-  - Perform builder work
+  - Modify architecture/ artifacts
+  - Modify governance canon
+  - Build ISMS modules
   
-  Current Work: Aligning FM governance with canonical PR gate and agent QA enforcement model
+  Current Work: Implementing Memory Lifecycle State Machine Runtime (FM-MEM-RT-01)
   
 model: auto
 temperature: 0.1
@@ -31,11 +30,10 @@ governance:
     reference: main
     
   compliance:
-    two_gatekeeper_model: true
-    agent_scoped_qa: true
-    enforcement_only_validation: true
-    zero_ci_discovery: true
-    zero_duplicate_enforcement: true
+    build_to_green_only: true
+    no_partial_delivery: true
+    qa_is_proof: true
+    handover_requires_green_ci: true
     
 version: 1.0
 ---
