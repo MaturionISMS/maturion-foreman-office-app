@@ -49,6 +49,39 @@ export {
   HealthAlert
 } from './health-monitor';
 
+// CHP Authorization
+export {
+  CHPAuthorizationService,
+  chpAuthorization,
+  ActorType,
+  MemoryScope,
+  AuthorizationResult,
+  AuthorizationRequest
+} from './chp-authorization';
+
+// CHP Proposal Generator
+export {
+  CHPProposalGenerator,
+  chpProposalGenerator,
+  ProposalCategory,
+  ProposalSeverity,
+  ApprovalAuthority,
+  CHPProposal,
+  ProposalEvidence,
+  RecommendedAction,
+  Precedent,
+  ProposalGenerationOptions
+} from './chp-proposal-generator';
+
+// CHP Client
+export {
+  CHPClient,
+  chpClient,
+  CHPReadRequest,
+  CHPReadResult,
+  CHPMode
+} from './chp-client';
+
 // Memory Client (existing)
 export { MemoryClient } from './client';
 
