@@ -22,6 +22,8 @@ This is **adoption and execution framing**, not governance creation.
 ```
 governance/
 ├── README.md                              # This file
+├── canon/                                 # Canonical governance definitions
+│   └── FOREMAN_AUTHORITY_AND_SUPERVISION_MODEL.md  # Foreman POLC authority model
 ├── alignment/                             # Governance alignment documentation
 │   └── GOVERNANCE_ALIGNMENT_OVERVIEW.md   # How FM adopts corporate governance
 ├── policies/                              # FM-specific execution policies
@@ -40,6 +42,17 @@ governance/
 ---
 
 ## Key Documents
+
+### Canonical Governance Definitions
+
+**NEW - [canon/FOREMAN_AUTHORITY_AND_SUPERVISION_MODEL.md](canon/FOREMAN_AUTHORITY_AND_SUPERVISION_MODEL.md)**
+- **Canonical Definition** of Foreman as managerial authority (not executor)
+- Formalizes POLC model (Planning, Organizing, Leading, Control) as mandatory
+- Defines builder appointment authority and supervision obligations
+- Establishes escalation boundaries (hard stop vs soft stop)
+- Defines non-delegable responsibilities
+- Explicitly prohibits builder self-governance
+- Defines relationships with governance canon, builders, watchdog, and human owner
 
 ### Governance Alignment (Canonical References)
 
