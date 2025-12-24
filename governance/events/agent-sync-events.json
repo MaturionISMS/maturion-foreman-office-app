@@ -1,0 +1,7 @@
+{
+  "events": [],
+  "last_updated": null,
+  "schema_version": "1.0.0",
+  "description": "Audit log for agent context synchronisation events",
+  "authority": "governance/workflows/AGENT_CONTEXT_SYNC_WORKFLOW.md"
+}
