@@ -1,0 +1,65 @@
+{
+  "simulation_tenant": "org-test-001",
+  "description": "Sample operational memory for simulated tenant (ANONYMIZED, NOT REAL DATA)",
+  "memories": [
+    {
+      "id": "mem-sim-ops-001",
+      "scope": "tenant:org-test-001",
+      "organisation_id": "org-test-001",
+      "memory_type": "operational",
+      "privacy_level": "admin_only",
+      "title": "Incident Response Pattern - Authentication Anomaly",
+      "summary": "Aggregated pattern: 87% of authentication anomalies resolved by password reset within 15 minutes (n=23 incidents)",
+      "created_at": "2024-12-10T09:00:00Z",
+      "author": "runtime",
+      "importance": "medium",
+      "tags": ["operational", "incident", "authentication", "pattern"],
+      "details": {
+        "rationale": "Capture effective response pattern for future incidents",
+        "context": "Anonymized pattern from 23+ authentication anomaly incidents",
+        "aggregate_minimum": 23,
+        "privacy_notes": "No user identifiers, no specific timestamps, no sensitive details",
+        "pattern": {
+          "trigger": "Authentication anomaly detected",
+          "response": "Password reset notification sent",
+          "resolution_time": "15 minutes (median)",
+          "success_rate": "87%"
+        }
+      }
+    },
+    {
+      "id": "mem-sim-ops-002",
+      "scope": "tenant:org-test-001",
+      "organisation_id": "org-test-001",
+      "memory_type": "operational",
+      "privacy_level": "admin_only",
+      "title": "Audit Preparation - Control Evidence Collection",
+      "summary": "Aggregated pattern: Control evidence collection takes 3-5 days with 12+ users involved (n=4 audits)",
+      "created_at": "2024-12-12T11:00:00Z",
+      "author": "runtime",
+      "importance": "medium",
+      "tags": ["operational", "audit", "compliance", "pattern"],
+      "details": {
+        "rationale": "Improve audit preparation efficiency",
+        "context": "Anonymized pattern from 4 audit preparation cycles",
+        "aggregate_minimum": 4,
+        "privacy_notes": "No auditor names, no specific dates, no document titles",
+        "pattern": {
+          "trigger": "Audit scheduled",
+          "preparation_time": "3-5 days",
+          "users_involved": "12+ (anonymized)",
+          "bottleneck": "Control evidence collection",
+          "improvement_opportunity": "Pre-collect common evidence"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "total_entries": 2,
+    "simulation_only": true,
+    "anonymized": true,
+    "aggregate_minimum_met": true,
+    "no_pii": true,
+    "privacy_compliant": true
+  }
+}
