@@ -282,14 +282,14 @@ All surveys align with governance canon introduced in:
         ┌───────────┴───────────┐
         │                       │
         ▼                       ▼
-┌───────────────────┐  ┌────────────────────┐  ┌──────────────┐
-│ WS2: Observability│  │ WS3: CHP Integration│  │ WS4: Canon   │
-│ (BLOCKING)        │  │ (BLOCKING)          │  │ Clarify      │
-│ → APIs, Dashboards│  │ → Auth, Audit,      │  │ (NON-BLOCK)  │
-│                   │  │   Proposals         │  │ → Foreman    │
-└─────────┬─────────┘  └──────────┬─────────┘  │   Watchdog   │
-          │                       │             │   Roles      │
-          └───────────┬───────────┘             └──────────────┘
+┌───────────────────┐  ┌────────────────────┐
+│ WS2: Observability│  │ WS3: CHP Integration│
+│ (BLOCKING)        │  │ (BLOCKING)          │
+│ → APIs, Dashboards│  │ → Auth, Audit,      │
+│                   │  │   Proposals         │
+└─────────┬─────────┘  └──────────┬─────────┘
+          │                       │
+          └───────────┬───────────┘
                       │
                       ▼
             ┌──────────────────┐
@@ -297,11 +297,21 @@ All surveys align with governance canon introduced in:
             │ Console Features │
             │ (DEPENDENT)      │
             └──────────────────┘
+
+INDEPENDENT (can run anytime, no dependencies):
+┌──────────────┐
+│ WS4: Canon   │
+│ Clarify      │
+│ (NON-BLOCK)  │
+│ → Foreman    │
+│   Watchdog   │
+│   Roles      │
+└──────────────┘
 ```
 
 **Critical Path:** WS1 → WS2 → WS5
 
-**Parallel Work:** WS3 can run parallel with WS2 after WS1 completes. WS4 can run anytime (governance work).
+**Parallel Work:** WS3 can run parallel with WS2 after WS1 completes. WS4 is independent and can run anytime (governance work).
 
 ---
 
