@@ -1,0 +1,277 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://maturion.com/schemas/agent-sync-event.json",
+  "title": "Agent Synchronisation Event",
+  "description": "Schema for completed agent context synchronisation events (audit log)",
+  "type": "object",
+  "required": [
+    "event_id",
+    "timestamp",
+    "event_type",
+    "canonical_trigger",
+    "affected_agents",
+    "outcome",
+    "validation_results"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Unique identifier for this sync event",
+      "pattern": "^sync-[0-9]{3,}$",
+      "examples": ["sync-001", "sync-042"]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp when sync completed"
+    },
+    "event_type": {
+      "type": "string",
+      "const": "AGENT_CONTEXT_SYNC",
+      "description": "Type of event (always AGENT_CONTEXT_SYNC)"
+    },
+    "canonical_trigger": {
+      "type": "object",
+      "required": ["commit_sha", "governance_area", "change_type"],
+      "properties": {
+        "trigger_event_id": {
+          "type": "string",
+          "description": "Reference to trigger event that initiated this sync"
+        },
+        "commit_sha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{7,40}$",
+          "description": "Canonical commit that triggered this sync"
+        },
+        "governance_area": {
+          "type": "string",
+          "description": "Governance area that changed"
+        },
+        "change_type": {
+          "type": "string",
+          "enum": ["ADDED", "MODIFIED", "REMOVED", "DEPRECATED"]
+        }
+      }
+    },
+    "affected_agents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "agent_file",
+          "agent_role",
+          "update_type",
+          "version_before",
+          "version_after"
+        ],
+        "properties": {
+          "agent_file": {
+            "type": "string",
+            "description": "Path to agent context file",
+            "examples": [
+              ".github/agents/foreman.agent.md",
+              "governance/agents/foreman-office.agent.contract.md"
+            ]
+          },
+          "agent_role": {
+            "type": "string",
+            "enum": ["governance", "builder", "liaison", "fm-app"],
+            "description": "Role of this agent"
+          },
+          "update_type": {
+            "type": "string",
+            "enum": ["ADDITIVE", "MODIFICATION", "BREAKING", "NO_UPDATE_REQUIRED"],
+            "description": "Type of update applied to agent context"
+          },
+          "version_before": {
+            "type": "string",
+            "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+            "description": "Agent version before sync (semver)"
+          },
+          "version_after": {
+            "type": "string",
+            "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+            "description": "Agent version after sync (semver)"
+          },
+          "approval": {
+            "type": "object",
+            "required": ["required", "approver", "approval_timestamp"],
+            "properties": {
+              "required": {
+                "type": "boolean",
+                "description": "Whether approval was required"
+              },
+              "approver": {
+                "type": "string",
+                "description": "Who approved the update",
+                "examples": ["governance-administrator", "johan-ras", "auto-approved"]
+              },
+              "approval_timestamp": {
+                "type": "string",
+                "format": "date-time",
+                "description": "When approval was granted"
+              },
+              "approval_reference": {
+                "type": "string",
+                "description": "Reference to approval artifact (issue, PR, etc.)"
+              }
+            }
+          },
+          "sections_updated": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of agent context sections that were updated",
+            "examples": [
+              "responsibilities.governance",
+              "constraints",
+              "protected_paths"
+            ]
+          }
+        }
+      }
+    },
+    "outcome": {
+      "type": "string",
+      "enum": ["SUCCESS", "FAILURE", "PARTIAL", "ROLLED_BACK"],
+      "description": "Overall outcome of sync operation"
+    },
+    "validation_results": {
+      "type": "object",
+      "required": ["pre_update", "post_update"],
+      "properties": {
+        "pre_update": {
+          "type": "string",
+          "enum": ["PASS", "FAIL", "SKIPPED"],
+          "description": "Pre-update validation result"
+        },
+        "post_update": {
+          "type": "string",
+          "enum": ["PASS", "FAIL", "SKIPPED"],
+          "description": "Post-update validation result"
+        },
+        "validation_errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "agent_file": {
+                "type": "string"
+              },
+              "error_type": {
+                "type": "string",
+                "examples": ["SYNTAX_ERROR", "SCHEMA_VIOLATION", "REFERENCE_BROKEN"]
+              },
+              "error_message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "audit_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Paths to audit artifacts (before/after snapshots, diffs)",
+      "examples": [
+        "governance/events/agent-sync-001-before.md",
+        "governance/events/agent-sync-001-after.md",
+        "governance/events/agent-sync-001-diff.patch"
+      ]
+    },
+    "duration_seconds": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Total time taken for sync operation in seconds"
+    },
+    "rollback_performed": {
+      "type": "boolean",
+      "default": false,
+      "description": "True if rollback was performed due to failure"
+    },
+    "rollback_reason": {
+      "type": "string",
+      "description": "Reason for rollback (if performed)"
+    },
+    "escalation_required": {
+      "type": "boolean",
+      "default": false,
+      "description": "True if escalation to human required"
+    },
+    "escalation_details": {
+      "type": "object",
+      "properties": {
+        "escalation_level": {
+          "type": "string",
+          "enum": ["ADMIN_AGENT", "JOHAN"]
+        },
+        "escalation_reason": {
+          "type": "string"
+        },
+        "escalation_timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "operator": {
+      "type": "string",
+      "description": "Who/what performed the sync",
+      "examples": ["automated-monitor", "admin-agent", "johan-ras"]
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes about this sync event"
+    }
+  },
+  "examples": [
+    {
+      "event_id": "sync-001",
+      "timestamp": "2025-12-24T10:30:00Z",
+      "event_type": "AGENT_CONTEXT_SYNC",
+      "canonical_trigger": {
+        "trigger_event_id": "trigger-001",
+        "commit_sha": "abc123def456",
+        "governance_area": "compliance-controls",
+        "change_type": "ADDED"
+      },
+      "affected_agents": [
+        {
+          "agent_file": ".github/agents/foreman.agent.md",
+          "agent_role": "governance",
+          "update_type": "ADDITIVE",
+          "version_before": "1.0.0",
+          "version_after": "1.1.0",
+          "approval": {
+            "required": true,
+            "approver": "governance-administrator",
+            "approval_timestamp": "2025-12-24T10:25:00Z",
+            "approval_reference": "issue-123"
+          },
+          "sections_updated": [
+            "responsibilities.compliance"
+          ]
+        }
+      ],
+      "outcome": "SUCCESS",
+      "validation_results": {
+        "pre_update": "PASS",
+        "post_update": "PASS"
+      },
+      "audit_artifacts": [
+        "governance/events/agent-sync/sync-001/foreman-before.md",
+        "governance/events/agent-sync/sync-001/foreman-after.md",
+        "governance/events/agent-sync/sync-001/foreman-diff.patch"
+      ],
+      "duration_seconds": 12.5,
+      "rollback_performed": false,
+      "escalation_required": false,
+      "operator": "automated-monitor"
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://maturion.com/schemas/agent-sync-trigger-event.json",
+  "title": "Agent Sync Trigger Event",
+  "description": "Schema for trigger events that initiate agent context synchronisation",
+  "type": "object",
+  "required": [
+    "event_id",
+    "timestamp",
+    "trigger_category",
+    "priority",
+    "canonical_commit",
+    "canonical_repository",
+    "governance_area",
+    "change_type",
+    "change_description",
+    "affected_files",
+    "breaking_change",
+    "backward_compatible"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Unique identifier for this trigger event",
+      "pattern": "^trigger-[0-9]{3,}$",
+      "examples": ["trigger-001", "trigger-042"]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp when trigger was detected"
+    },
+    "trigger_category": {
+      "type": "string",
+      "enum": [
+        "GOVERNANCE_RULE_CHANGE",
+        "CONTRACT_TEMPLATE_UPDATE",
+        "POLICY_UPDATE",
+        "COMPLIANCE_CONTROL_CHANGE",
+        "ARCHITECTURE_STANDARD_CHANGE",
+        "QA_GOVERNANCE_CHANGE",
+        "MEMORY_MODEL_CHANGE",
+        "BUILD_PHILOSOPHY_UPDATE",
+        "GOVERNANCE_DRIFT_DETECTED",
+        "MANUAL_TRIGGER"
+      ],
+      "description": "Category of governance change that triggered this event"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"],
+      "description": "Priority level determining response time and approval requirements"
+    },
+    "canonical_commit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{7,40}$",
+      "description": "Git commit SHA from canonical governance repository"
+    },
+    "canonical_repository": {
+      "type": "string",
+      "description": "Canonical governance repository identifier",
+      "default": "MaturionISMS/maturion-foreman-governance"
+    },
+    "governance_area": {
+      "type": "string",
+      "description": "Specific governance artifact that changed",
+      "examples": [
+        "governance/policies/governance-supremacy-rule.md",
+        "governance/canon/AGENT_CONTRACT_TEMPLATE.md"
+      ]
+    },
+    "change_type": {
+      "type": "string",
+      "enum": ["ADDED", "MODIFIED", "REMOVED", "DEPRECATED"],
+      "description": "Type of change made to governance artifact"
+    },
+    "change_description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 500,
+      "description": "Human-readable description of what changed and why it matters"
+    },
+    "affected_files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "description": "Path to affected file in canonical repository"
+      },
+      "description": "List of all files affected by this change"
+    },
+    "breaking_change": {
+      "type": "boolean",
+      "description": "True if this change breaks backward compatibility"
+    },
+    "backward_compatible": {
+      "type": "boolean",
+      "description": "True if existing agent contexts remain valid after this change"
+    },
+    "estimated_impact": {
+      "type": "object",
+      "required": [
+        "affected_agents_count",
+        "update_complexity",
+        "approval_required",
+        "human_review_required"
+      ],
+      "properties": {
+        "affected_agents_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of agent context files expected to require updates"
+        },
+        "update_complexity": {
+          "type": "string",
+          "enum": ["LOW", "MEDIUM", "HIGH"],
+          "description": "Complexity of required agent context updates"
+        },
+        "approval_required": {
+          "type": "boolean",
+          "description": "True if updates require explicit approval"
+        },
+        "human_review_required": {
+          "type": "boolean",
+          "description": "True if human (Johan) approval required"
+        }
+      }
+    },
+    "trigger_source": {
+      "type": "string",
+      "enum": ["AUTOMATED_MONITOR", "MANUAL_ADMIN", "SCHEDULED_AUDIT"],
+      "default": "AUTOMATED_MONITOR",
+      "description": "Source of this trigger event"
+    },
+    "manual_trigger_reason": {
+      "type": "string",
+      "description": "Reason for manual trigger (required if trigger_source is MANUAL_ADMIN)"
+    },
+    "audit_trail_reference": {
+      "type": "string",
+      "description": "Reference to related audit trail or incident"
+    },
+    "suppression_eligible": {
+      "type": "boolean",
+      "default": false,
+      "description": "True if this trigger can be suppressed (documentation-only changes)"
+    },
+    "sync_deadline": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Deadline by which sync must be completed (based on priority)"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "trigger_source": {
+            "const": "MANUAL_ADMIN"
+          }
+        }
+      },
+      "then": {
+        "required": ["manual_trigger_reason"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "breaking_change": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "estimated_impact": {
+            "properties": {
+              "human_review_required": {
+                "const": true
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "event_id": "trigger-001",
+      "timestamp": "2025-12-24T10:00:00Z",
+      "trigger_category": "GOVERNANCE_RULE_CHANGE",
+      "priority": "HIGH",
+      "canonical_commit": "abc123def456",
+      "canonical_repository": "MaturionISMS/maturion-foreman-governance",
+      "governance_area": "governance/policies/governance-supremacy-rule.md",
+      "change_type": "MODIFIED",
+      "change_description": "Governance Supremacy Rule updated to add stricter QA pass requirements",
+      "affected_files": [
+        "governance/policies/governance-supremacy-rule.md"
+      ],
+      "breaking_change": false,
+      "backward_compatible": true,
+      "estimated_impact": {
+        "affected_agents_count": 2,
+        "update_complexity": "MEDIUM",
+        "approval_required": true,
+        "human_review_required": false
+      },
+      "trigger_source": "AUTOMATED_MONITOR",
+      "suppression_eligible": false,
+      "sync_deadline": "2025-12-25T10:00:00Z"
+    }
+  ]
+}
