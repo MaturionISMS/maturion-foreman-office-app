@@ -514,15 +514,17 @@ The following work is acknowledged but deferred to future phases:
 
 ---
 
-#### Implementation Phase (Pending ⏳)
+#### Implementation Phase (Active ⏳)
 | Issue ID | Title | Status | Dependencies | Workstream |
 |----------|-------|--------|--------------|------------|
-| FM-MEM-RT-01 (impl) | Implement Memory Lifecycle State Machine runtime | ⏳ Not Started | None | WS1 |
-| FM-OBS-RT-01 (impl) | Implement Memory Observability APIs and dashboards | ⏳ Not Started | FM-MEM-RT-01 (impl) | WS2 |
-| FM-CHP-INT-01 (impl) | Implement CHP Memory Integration and proposal workflow | ⏳ Not Started | FM-MEM-RT-01 (impl) | WS3 |
-| FM-BUILD-CONS-01 | Implement Build Console memory status features | ⏳ Not Started | FM-MEM-RT-01 (impl), FM-OBS-RT-01 (impl) | WS5 |
+| [#181](https://github.com/MaturionISMS/maturion-foreman-office-app/issues/181) | FM-MEM-RT-01 (impl) — Implement Memory Lifecycle State Machine runtime | ⏳ Ready to Start | None | WS1 |
+| [#182](https://github.com/MaturionISMS/maturion-foreman-office-app/issues/182) | FM-OBS-RT-01 (impl) — Implement Memory Observability APIs and dashboards | ⏳ Blocked by #181 | FM-MEM-RT-01 (impl) | WS2 |
+| [#183](https://github.com/MaturionISMS/maturion-foreman-office-app/issues/183) | FM-CHP-INT-01 (impl) — Implement CHP Memory Integration and proposal workflow | ⏳ Blocked by #181 | FM-MEM-RT-01 (impl) | WS3 |
+| FM-BUILD-CONS-01 | Implement Build Console memory status features | ⏳ Needs Creation | FM-MEM-RT-01 (impl), FM-OBS-RT-01 (impl) | WS5 |
 
-**Next Step:** Create implementation issues for WS1, WS2, WS3, WS5 in GitHub.
+**Status:** Implementation phase initiated via FM-IMPL-EXEC-01 (2025-12-24).
+
+**Detailed Tracking:** See `IMPLEMENTATION_STATUS_TRACKING.md` for progress updates.
 
 ---
 
@@ -598,6 +600,10 @@ The following work is acknowledged but deferred to future phases:
 
 ### Evidence and Proof Documents
 - `PREHANDOVER_PROOF_RUNTIME_MEMORY_ARCH.md` (Architecture completion proof)
+
+### Implementation Tracking
+- `IMPLEMENTATION_STATUS_TRACKING.md` (Live progress tracking for all workstreams)
+- `FM_IMPL_EXEC_01_COMPLETION_SUMMARY.md` (Phase initiation completion proof)
 
 ---
 

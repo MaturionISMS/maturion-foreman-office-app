@@ -253,3 +253,9 @@ jobs:
               - Agent type must be "builder"
               `
             })
+      
+      - name: Workflow Success
+        if: success()
+        run: |
+          echo "✅ Builder QA Gate completed successfully"
+          exit 0

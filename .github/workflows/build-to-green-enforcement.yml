@@ -194,3 +194,9 @@ jobs:
               Repeat occurrence of this failure is classified as **double-catastrophic**.
               `
             })
+      
+      - name: Workflow Success
+        if: success()
+        run: |
+          echo "✅ Build-to-Green Enforcement completed successfully"
+          exit 0

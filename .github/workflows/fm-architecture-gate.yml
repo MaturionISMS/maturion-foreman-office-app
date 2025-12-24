@@ -249,3 +249,9 @@ jobs:
           echo "✅ FM ARCHITECTURE GATE PASSED"
           echo "Architecture completeness is declared 100% and drift is NONE."
           echo "Only now may agents proceed toward completion/hand-over."
+      
+      - name: Workflow Success
+        if: success()
+        run: |
+          echo "✅ FM Architecture Gate completed successfully"
+          exit 0
