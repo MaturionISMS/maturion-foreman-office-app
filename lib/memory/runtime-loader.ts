@@ -123,29 +123,31 @@ export class GlobalMemoryRuntimeLoader {
     // Initialize lifecycle components
     this.lifecycleManager = new MemoryLifecycleManager({
       memoryRoot: this.config.memoryRoot,
-      failOnCritical: this.config.failOnInvalid,
+      failOnCritical: this.config.failOnInvalid, // Maps to fail on critical failures
       enablePrivacyChecks: true
     });
     
     this.healthMonitor = new HealthMonitor();
     
     // Wire up lifecycle events to health monitor
-    this.lifecycleManager.on('memory.lifecycle.loading', (event) => {
+    this.lifecycleManager.on('memory.lifecycle.loading.complete', (event) => {
       if (event.loadTimeSec) {
         this.healthMonitor.trackLoadTime(event.loadTimeSec);
       }
     });
     
-    this.lifecycleManager.on('memory.lifecycle.validating', (event) => {
+    this.lifecycleManager.on('memory.lifecycle.validating.complete', (event) => {
       if (event.validationTimeSec) {
         this.healthMonitor.trackValidationTime(event.validationTimeSec);
       }
-      if (event.validationErrors) {
+      if (event.validationErrors && event.validationErrors > 0) {
+        // Track each error individually
         for (let i = 0; i < event.validationErrors; i++) {
           this.healthMonitor.trackValidationError();
         }
       }
-      if (event.privacyViolations) {
+      if (event.privacyViolations && event.privacyViolations > 0) {
+        // Track each privacy violation individually
         for (let i = 0; i < event.privacyViolations; i++) {
           this.healthMonitor.trackPrivacyViolation();
         }
