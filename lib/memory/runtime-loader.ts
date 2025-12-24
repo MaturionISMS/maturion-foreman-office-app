@@ -22,9 +22,11 @@ import fs from 'fs/promises';
 import path from 'path';
 import crypto from 'crypto';
 import { MemoryEntry, MemoryClient } from './client';
+import { MemoryLifecycleManager, MemoryLifecycleState } from './lifecycle-manager';
+import { HealthMonitor } from './health-monitor';
 
 /**
- * Memory state enum
+ * Memory state enum (Legacy - use MemoryLifecycleState for new code)
  */
 export type MemoryState = 
   | 'UNINITIALIZED' 
@@ -91,7 +93,11 @@ export class GlobalMemoryRuntimeLoader {
   private schema: any = null;
   private initializationError: string | null = null;
   
-  // Governance sync state
+  // Lifecycle management
+  private lifecycleManager: MemoryLifecycleManager;
+  private healthMonitor: HealthMonitor;
+  
+  // Governance sync state (legacy)
   private memoryState: MemoryState = 'UNINITIALIZED';
   private loadedVersion: GovernanceVersion | null = null;
   private governanceVersionPath: string;
@@ -113,6 +119,38 @@ export class GlobalMemoryRuntimeLoader {
     this.client = new MemoryClient(this.config.memoryRoot);
     this.schemaPath = path.join(this.config.memoryRoot, 'schema', 'memory-entry.json');
     this.governanceVersionPath = path.join(this.config.memoryRoot, '.governance-version.json');
+    
+    // Initialize lifecycle components
+    this.lifecycleManager = new MemoryLifecycleManager({
+      memoryRoot: this.config.memoryRoot,
+      failOnCritical: this.config.failOnInvalid,
+      enablePrivacyChecks: true
+    });
+    
+    this.healthMonitor = new HealthMonitor();
+    
+    // Wire up lifecycle events to health monitor
+    this.lifecycleManager.on('memory.lifecycle.loading', (event) => {
+      if (event.loadTimeSec) {
+        this.healthMonitor.trackLoadTime(event.loadTimeSec);
+      }
+    });
+    
+    this.lifecycleManager.on('memory.lifecycle.validating', (event) => {
+      if (event.validationTimeSec) {
+        this.healthMonitor.trackValidationTime(event.validationTimeSec);
+      }
+      if (event.validationErrors) {
+        for (let i = 0; i < event.validationErrors; i++) {
+          this.healthMonitor.trackValidationError();
+        }
+      }
+      if (event.privacyViolations) {
+        for (let i = 0; i < event.privacyViolations; i++) {
+          this.healthMonitor.trackPrivacyViolation();
+        }
+      }
+    });
   }
 
   /**
@@ -126,84 +164,62 @@ export class GlobalMemoryRuntimeLoader {
    * 
    * FAIL-FAST: If initialization fails and failOnInvalid is true,
    * this will throw an error requiring immediate escalation.
+   * 
+   * Now uses MemoryLifecycleManager for full state machine.
    */
   async initialize(): Promise<void> {
-    this.memoryState = 'LOADING';
-    
     try {
-      // Check memory root exists
-      await fs.access(this.config.memoryRoot);
+      // Use lifecycle manager for initialization
+      await this.lifecycleManager.initialize();
+      
+      // Update legacy state for backward compatibility
+      const lifecycleState = this.lifecycleManager.getState();
+      this.memoryState = this.mapLifecycleStateToLegacy(lifecycleState);
+      
+      // Load governance version (legacy)
+      try {
+        const version = await this.loadGovernanceVersionFile();
+        this.loadedVersion = version;
+        this.recordInvalidation(null, version.version, 'initialization', true);
+        this.lastReloadTimestamp = new Date().toISOString();
+      } catch (error) {
+        console.warn('Warning: Could not load governance version:', error);
+      }
+      
+      // If lifecycle manager succeeded, clear any initialization error
+      if (this.lifecycleManager.isUsable() || this.lifecycleManager.isDegraded()) {
+        this.initializationError = null;
+      }
     } catch (error) {
-      const message = `Memory root directory does not exist: ${this.config.memoryRoot}`;
+      const message = `Memory lifecycle initialization failed: ${error instanceof Error ? error.message : error}`;
       this.initializationError = message;
       this.memoryState = 'INVALID';
       
       if (this.config.failOnInvalid) {
         throw new Error(`GOVERNANCE FAILURE: ${message}`);
       }
-      return;
     }
-
-    // Load and validate schema
-    try {
-      const schemaContent = await fs.readFile(this.schemaPath, 'utf-8');
-      this.schema = JSON.parse(schemaContent);
-    } catch (error) {
-      const message = `Failed to load memory schema: ${error}`;
-      this.initializationError = message;
-      this.memoryState = 'INVALID';
-      
-      if (this.config.failOnInvalid) {
-        throw new Error(`GOVERNANCE FAILURE: ${message}`);
-      }
-      return;
-    }
-
-    // Validate global memory exists
-    const globalDir = path.join(this.config.memoryRoot, 'global');
-    try {
-      const files = await fs.readdir(globalDir);
-      const jsonFiles = files.filter(f => f.endsWith('.json'));
-      
-      if (jsonFiles.length === 0) {
-        const message = 'No global memory files found';
-        this.initializationError = message;
-        this.memoryState = 'INVALID';
-        
-        if (this.config.failOnInvalid) {
-          throw new Error(`GOVERNANCE FAILURE: ${message}`);
-        }
-        return;
-      }
-    } catch (error) {
-      const message = `Failed to access global memory: ${error}`;
-      this.initializationError = message;
-      this.memoryState = 'INVALID';
-      
-      if (this.config.failOnInvalid) {
-        throw new Error(`GOVERNANCE FAILURE: ${message}`);
-      }
-      return;
-    }
-    
-    // Load governance version
-    try {
-      const version = await this.loadGovernanceVersionFile();
-      this.loadedVersion = version;
-      
-      // Record initial load as invalidation event
-      this.recordInvalidation(null, version.version, 'initialization', true);
-      
-      this.memoryState = 'LOADED';
-      this.lastReloadTimestamp = new Date().toISOString();
-    } catch (error) {
-      const message = `Failed to load governance version: ${error}`;
-      this.initializationError = message;
-      this.memoryState = 'INVALID';
-      
-      if (this.config.failOnInvalid) {
-        throw new Error(`GOVERNANCE FAILURE: ${message}`);
-      }
+  }
+  
+  /**
+   * Map lifecycle state to legacy state enum
+   */
+  private mapLifecycleStateToLegacy(lifecycleState: MemoryLifecycleState): MemoryState {
+    switch (lifecycleState) {
+      case MemoryLifecycleState.UNINITIALIZED:
+        return 'UNINITIALIZED';
+      case MemoryLifecycleState.LOADING:
+        return 'LOADING';
+      case MemoryLifecycleState.VALIDATING:
+        return 'LOADING';
+      case MemoryLifecycleState.USABLE:
+        return 'LOADED';
+      case MemoryLifecycleState.DEGRADED:
+        return 'LOADED'; // Still usable, just degraded
+      case MemoryLifecycleState.FAILED:
+        return 'INVALID';
+      default:
+        return 'INVALID';
     }
   }
 
@@ -573,19 +589,54 @@ export class GlobalMemoryRuntimeLoader {
   /**
    * Perform health check on memory fabric
    * 
-   * @returns Health check result with sync status
+   * @returns Health check result with sync status and lifecycle state
    */
   async healthCheck() {
     const baseHealth = await this.client.memoryHealthCheck();
+    const lifecycleHealth = await this.lifecycleManager.healthCheck();
+    const healthStatus = this.healthMonitor.getHealthStatus();
+    const performanceMetrics = this.healthMonitor.getPerformanceMetrics();
     
     return {
       ...baseHealth,
       governance_version: this.loadedVersion?.version || 'unknown',
       memory_state: this.memoryState,
+      lifecycle_state: this.lifecycleManager.getState(),
+      lifecycle_health: lifecycleHealth,
+      health_status: healthStatus,
+      performance_metrics: performanceMetrics,
       last_reload: this.lastReloadTimestamp,
       is_stale: await this.isMemoryStale(),
       invalidation_count: this.invalidationHistory.length,
     };
+  }
+  
+  /**
+   * Get lifecycle manager (for advanced usage)
+   */
+  getLifecycleManager(): MemoryLifecycleManager {
+    return this.lifecycleManager;
+  }
+  
+  /**
+   * Get health monitor (for advanced usage)
+   */
+  getHealthMonitor(): HealthMonitor {
+    return this.healthMonitor;
+  }
+  
+  /**
+   * Check if memory is in a usable state
+   */
+  isMemoryUsable(): boolean {
+    return this.lifecycleManager.isUsable() || this.lifecycleManager.isDegraded();
+  }
+  
+  /**
+   * Check if memory has failed critically
+   */
+  isMemoryFailed(): boolean {
+    return this.lifecycleManager.isFailed();
   }
 }
 
