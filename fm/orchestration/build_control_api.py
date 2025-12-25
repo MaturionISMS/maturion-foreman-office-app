@@ -11,7 +11,11 @@ from pathlib import Path
 import logging
 from typing import Dict, Any
 
-from build_authorization_gate import BuildAuthorizationGate, GateResult
+# Handle both relative and absolute imports
+try:
+    from .build_authorization_gate import BuildAuthorizationGate, GateResult
+except ImportError:
+    from build_authorization_gate import BuildAuthorizationGate, GateResult
 
 # Configure logging
 logging.basicConfig(

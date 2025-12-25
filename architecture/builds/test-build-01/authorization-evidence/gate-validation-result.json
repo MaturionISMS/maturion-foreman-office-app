@@ -1,0 +1,89 @@
+{
+  "build_id": "test-build-01",
+  "gate_result": "FAIL",
+  "timestamp": "2025-12-25T07:14:53.531805Z",
+  "precondition_results": [
+    {
+      "name": "App Description Exists and Is Authoritative",
+      "status": "FAILED",
+      "message": "App Description must exist, be authoritative, and be explicitly referenced by Requirements Specification",
+      "evidence_paths": [
+        "/home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/APP_DESCRIPTION.md"
+      ],
+      "blocking_conditions": [
+        "App Description validation evidence missing",
+        "App Description \u2192 FRS Alignment Checklist result missing"
+      ]
+    },
+    {
+      "name": "Architecture Compilation Contract = PASS",
+      "status": "FAILED",
+      "message": "Architecture must be complete, frozen, and validated",
+      "evidence_paths": [],
+      "blocking_conditions": [
+        "Architecture validation evidence missing",
+        "FL/CI prevention plan missing"
+      ]
+    },
+    {
+      "name": "QA Derivation & Coverage Rules = PASS",
+      "status": "FAILED",
+      "message": "QA must be fully derived, implemented, and GREEN",
+      "evidence_paths": [],
+      "blocking_conditions": [
+        "QA coverage report missing",
+        "Test execution report missing",
+        "FL/CI coverage report missing"
+      ]
+    },
+    {
+      "name": "FL/CI Learning Integration = COMPLETE",
+      "status": "FAILED",
+      "message": "All applicable historical failure classes must be addressed",
+      "evidence_paths": [],
+      "blocking_conditions": [
+        "FL/CI prevention plan missing",
+        "FL/CI coverage report missing"
+      ]
+    },
+    {
+      "name": "Deployment and Runtime Validation = COMPLETE",
+      "status": "FAILED",
+      "message": "Deployment and runtime behavior must be validated",
+      "evidence_paths": [],
+      "blocking_conditions": [
+        "No deployment validation evidence found",
+        "Environment compatibility matrix missing"
+      ]
+    },
+    {
+      "name": "Governance Checklist = PASS",
+      "status": "FAILED",
+      "message": "All governance checklist items must be satisfied",
+      "evidence_paths": [],
+      "blocking_conditions": [
+        "Architecture Validation Checklist missing"
+      ]
+    },
+    {
+      "name": "Scope Freeze = CONFIRMED",
+      "status": "FAILED",
+      "message": "Architecture and requirements must be frozen",
+      "evidence_paths": [],
+      "blocking_conditions": [
+        "Freeze timestamp missing",
+        "Architecture artifacts directory not found"
+      ]
+    },
+    {
+      "name": "Zero Test Debt = CONFIRMED",
+      "status": "FAILED",
+      "message": "No test debt permitted",
+      "evidence_paths": [],
+      "blocking_conditions": [
+        "Test debt scan report missing"
+      ]
+    }
+  ],
+  "summary": "Build Authorization Gate: FAIL\nPreconditions: 0/8 satisfied\nFailed preconditions: App Description Exists and Is Authoritative, Architecture Compilation Contract = PASS, QA Derivation & Coverage Rules = PASS, FL/CI Learning Integration = COMPLETE, Deployment and Runtime Validation = COMPLETE, Governance Checklist = PASS, Scope Freeze = CONFIRMED, Zero Test Debt = CONFIRMED"
+}
