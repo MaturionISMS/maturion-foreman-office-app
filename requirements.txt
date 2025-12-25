@@ -1,0 +1,3 @@
+# Runtime dependencies for Maturion Foreman Office App
+Flask>=3.0.0
+flask-cors>=4.0.0
