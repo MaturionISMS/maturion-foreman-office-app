@@ -163,18 +163,17 @@ This document provides a **quick reference** for the Commissioning Evidence Mode
 
 ## Evidence Data Model
 
-```typescript
-interface Evidence {
-  id: string;
-  category: 'ARCHITECTURE' | 'QA' | 'BUILD' | 'COMPLETION';
-  artifact_type: string;           // 'markdown', 'json', 'pr', 'report'
-  artifact_location: string;       // URL or path
-  validated: boolean;
-  validated_at?: string;           // ISO 8601
-  validated_by?: string;           // 'Foreman', typically
-  metadata?: Record<string, any>;  // Additional context
-}
-```
+**Canonical Definition**: See `BUILD_TREE_EXECUTION_MODEL.md` Section 10.4 for complete TypeScript interface.
+
+**Quick Reference**:
+- `id`: Unique identifier
+- `category`: ARCHITECTURE | QA | BUILD | COMPLETION
+- `artifact_type`: File type (markdown, json, pr, report)
+- `artifact_location`: URL or file path
+- `validated`: Boolean indicating validation status
+- `validated_at`: ISO 8601 timestamp (optional)
+- `validated_by`: Validator name, typically "Foreman" (optional)
+- `metadata`: Additional context (optional)
 
 ---
 
