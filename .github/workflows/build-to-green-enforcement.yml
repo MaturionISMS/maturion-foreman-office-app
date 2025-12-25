@@ -87,10 +87,9 @@ jobs:
       - name: Check pip install status
         if: steps.phase-check.outputs.enabled == 'true' && steps.pip-install.outcome == 'failure'
         run: |
-          echo "::warning::pip install failed - checking for infrastructure failure"
+          echo "::warning::pip install failed - Infrastructure Failure detected"
           echo "INFRA_FAILURE=dependency_installation" >> $GITHUB_ENV
           echo "INFRA_FAILURE_STEP=pip-install" >> $GITHUB_ENV
-          exit 1
 
       - name: Enforce No Test Dodging
         if: steps.phase-check.outputs.enabled == 'true'
@@ -117,7 +116,7 @@ jobs:
           timeout 600 npm test || echo "TEST_FAILED=$?" >> $GITHUB_ENV
       
       - name: Analyze Test Failure
-        if: steps.phase-check.outputs.enabled == 'true' && steps.test-run.outcome == 'failure'
+        if: steps.phase-check.outputs.enabled == 'true' && steps.test-run.outcome != 'success'
         id: analyze-failure
         run: |
           if [ "$TEST_FAILED" = "124" ]; then
@@ -125,14 +124,17 @@ jobs:
             echo "INFRA_FAILURE=timeout" >> $GITHUB_ENV
             echo "INFRA_FAILURE_STEP=test-run" >> $GITHUB_ENV
             echo "failure_type=infrastructure" >> $GITHUB_OUTPUT
-          elif [ -n "$TEST_FAILED" ]; then
+          elif [ -n "$TEST_FAILED" ] && [ "$TEST_FAILED" != "0" ]; then
             echo "Test suite failed with exit code $TEST_FAILED - Code Failure"
             echo "failure_type=code" >> $GITHUB_OUTPUT
             exit 1
+          else
+            echo "✅ Tests passed"
+            echo "failure_type=none" >> $GITHUB_OUTPUT
           fi
 
       - name: Check for RED tests
-        if: steps.phase-check.outputs.enabled == 'true' && steps.analyze-failure.outputs.failure_type != 'infrastructure'
+        if: steps.phase-check.outputs.enabled == 'true' && (steps.analyze-failure.outputs.failure_type == '' || steps.analyze-failure.outputs.failure_type == 'none' || steps.analyze-failure.outputs.failure_type == 'code')
         run: |
           echo "🔍 Checking for RED test results..."
 

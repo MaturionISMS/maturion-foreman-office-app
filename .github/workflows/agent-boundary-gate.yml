@@ -75,13 +75,13 @@ jobs:
       - name: Check Validation Result
         if: steps.find-reports.outputs.found == 'true' && steps.validate.outcome == 'failure'
         run: |
-          if [ -n "$INFRA_FAILURE" ]; then
-            echo "Infrastructure failure detected, marking as non-blocking"
-            exit 0
-          else
-            echo "Validation failed - code/governance issue"
+          # If INFRA_FAILURE is set, it's already handled by infrastructure failure steps
+          # Otherwise, this is a real validation failure
+          if [ -z "$INFRA_FAILURE" ]; then
+            echo "❌ Validation failed - code/governance issue"
             exit 1
           fi
+          echo "ℹ️ Infrastructure failure - will be handled separately"
       
       - name: Report Success
         if: success() && steps.find-reports.outputs.found == 'true' && github.event_name == 'pull_request'
