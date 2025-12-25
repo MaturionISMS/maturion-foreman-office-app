@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foreman Build Control Panel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔧 Foreman Build Control Panel</h1>
+            <p class="subtitle">Governed Build Execution & Authorization</p>
+        </header>
+
+        <main>
+            <!-- Build Selection Section -->
+            <section class="panel">
+                <h2>Build Selection</h2>
+                <div class="build-selector">
+                    <label for="build-id-input">Build ID:</label>
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="build-id-input" 
+                            placeholder="Enter build ID (e.g., fm-app-v1.0)"
+                            autocomplete="off"
+                        />
+                        <button id="load-builds-btn" class="secondary-btn">📋 List Available Builds</button>
+                    </div>
+                    
+                    <div id="builds-list" class="builds-list" style="display: none;">
+                        <h3>Available Builds</h3>
+                        <div id="builds-container"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Build Authorization Request Section -->
+            <section class="panel">
+                <h2>Build Authorization Request</h2>
+                <p class="info-text">
+                    <strong>⚠️ Governance Requirement:</strong> All builds must pass the Build Authorization Gate before execution.
+                    This gate validates 8 mandatory preconditions including architecture completeness, QA coverage, and compliance.
+                </p>
+                
+                <div class="action-buttons">
+                    <button id="validate-btn" class="primary-btn" disabled>
+                        🔍 Request Build Execution Readiness Validation
+                    </button>
+                    <button id="execute-btn" class="execute-btn" disabled>
+                        ▶️ Execute Build (Authorization Required)
+                    </button>
+                </div>
+            </section>
+
+            <!-- Gate Validation Results Section -->
+            <section class="panel" id="results-panel" style="display: none;">
+                <h2>Build Authorization Gate Result</h2>
+                <div id="gate-result-container"></div>
+            </section>
+
+            <!-- Build Status Section -->
+            <section class="panel" id="status-panel" style="display: none;">
+                <h2>Current Build Status</h2>
+                <div id="status-container"></div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Maturion Foreman Office • Build-to-Green • Zero Regression</p>
+        </footer>
+    </div>
+
+    <!-- Modal for Blocking Conditions -->
+    <div id="blocker-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>⛔ Build Authorization Blocked</h2>
+            <div id="blocker-details"></div>
+            <div class="modal-actions">
+                <button id="remediation-btn" class="primary-btn">📋 View Remediation Actions</button>
+                <button id="close-modal-btn" class="secondary-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
