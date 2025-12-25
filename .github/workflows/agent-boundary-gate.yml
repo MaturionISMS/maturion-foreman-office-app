@@ -72,7 +72,7 @@ jobs:
           else
             echo "::warning::Validation script not found - Infrastructure issue"
             echo "outcome=infra_failure" >> $GITHUB_OUTPUT
-            echo "INFRA_FAILURE_TYPE=missing_validation_script" >> $GITHUB_OUTPUT
+            echo "infra_failure_type=missing_validation_script" >> $GITHUB_OUTPUT
           fi
       
       - name: Check Validation Result
@@ -145,7 +145,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const failureType = "${{ steps.validate.outputs.INFRA_FAILURE_TYPE }}" || "unknown";
+            const failureType = "${{ steps.validate.outputs.infra_failure_type }}" || "unknown";
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
