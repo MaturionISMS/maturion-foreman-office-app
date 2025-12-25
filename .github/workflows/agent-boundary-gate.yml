@@ -57,23 +57,27 @@ jobs:
       
       - name: Validate Agent Boundaries
         if: steps.find-reports.outputs.found == 'true'
-        continue-on-error: true
         id: validate
         run: |
           echo "🔒 Validating agent-scoped QA boundaries..."
           
           if [ -f governance/scripts/validate_agent_boundaries.py ]; then
-            python governance/scripts/validate_agent_boundaries.py \
+            if python governance/scripts/validate_agent_boundaries.py \
               --reports "${{ steps.find-reports.outputs.reports }}" \
-              --current-repo "${{ github.repository }}"
+              --current-repo "${{ github.repository }}"; then
+              echo "outcome=success" >> $GITHUB_OUTPUT
+            else
+              echo "outcome=failure" >> $GITHUB_OUTPUT
+              exit 1
+            fi
           else
             echo "::warning::Validation script not found - Infrastructure issue"
             echo "INFRA_FAILURE=missing_validation_script" >> $GITHUB_ENV
-            exit 0
+            echo "outcome=failure" >> $GITHUB_OUTPUT
           fi
       
       - name: Check Validation Result
-        if: steps.find-reports.outputs.found == 'true' && steps.validate.outcome == 'failure'
+        if: steps.find-reports.outputs.found == 'true' && steps.validate.outputs.outcome == 'failure'
         run: |
           # If INFRA_FAILURE is set, it's already handled by infrastructure failure steps
           # Otherwise, this is a real validation failure
@@ -306,7 +310,11 @@ jobs:
           exit 0
       
       - name: Workflow Success
-        if: success()
+        if: always() && (success() || env.INFRA_FAILURE != '')
         run: |
-          echo "✅ Agent QA Boundary Enforcement completed successfully"
+          if [ -n "$INFRA_FAILURE" ]; then
+            echo "✅ Agent QA Boundary Enforcement completed successfully (infrastructure failure handled)"
+          else
+            echo "✅ Agent QA Boundary Enforcement completed successfully"
+          fi
           exit 0

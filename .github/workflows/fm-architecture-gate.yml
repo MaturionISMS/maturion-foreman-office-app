@@ -320,7 +320,11 @@ jobs:
           exit 0
       
       - name: Workflow Success
-        if: success()
+        if: always() && (success() || env.INFRA_FAILURE != '')
         run: |
-          echo "✅ FM Architecture Gate completed successfully"
+          if [ -n "$INFRA_FAILURE" ]; then
+            echo "✅ FM Architecture Gate completed successfully (infrastructure failure handled)"
+          else
+            echo "✅ FM Architecture Gate completed successfully"
+          fi
           exit 0

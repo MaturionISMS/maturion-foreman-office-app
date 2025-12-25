@@ -80,12 +80,17 @@ jobs:
 
       - name: Install Python dependencies
         if: steps.phase-check.outputs.enabled == 'true'
-        run: pip install -r requirements-test.txt
-        continue-on-error: true
         id: pip-install
+        run: |
+          pip install -r requirements-test.txt || {
+            echo "PIP_INSTALL_FAILED=true" >> $GITHUB_ENV
+            echo "outcome=failure" >> $GITHUB_OUTPUT
+            exit 0
+          }
+          echo "outcome=success" >> $GITHUB_OUTPUT
       
       - name: Check pip install status
-        if: steps.phase-check.outputs.enabled == 'true' && steps.pip-install.outcome == 'failure'
+        if: steps.phase-check.outputs.enabled == 'true' && steps.pip-install.outputs.outcome == 'failure'
         run: |
           echo "::warning::pip install failed - Infrastructure Failure detected"
           echo "INFRA_FAILURE=dependency_installation" >> $GITHUB_ENV
@@ -108,15 +113,22 @@ jobs:
           echo "✅ No test dodging patterns found."
 
       - name: Run Test Suite
-        if: steps.phase-check.outputs.enabled == 'true'
+        if: steps.phase-check.outputs.enabled == 'true' && steps.pip-install.outputs.outcome != 'failure'
         id: test-run
-        continue-on-error: true
         run: |
           echo "▶️ Running test suite..."
-          timeout 600 npm test || echo "TEST_FAILED=$?" >> $GITHUB_ENV
+          if timeout 600 npm test; then
+            echo "TEST_RESULT=success" >> $GITHUB_ENV
+            echo "outcome=success" >> $GITHUB_OUTPUT
+          else
+            EXIT_CODE=$?
+            echo "TEST_RESULT=failure" >> $GITHUB_ENV
+            echo "TEST_FAILED=$EXIT_CODE" >> $GITHUB_ENV
+            echo "outcome=failure" >> $GITHUB_OUTPUT
+          fi
       
       - name: Analyze Test Failure
-        if: steps.phase-check.outputs.enabled == 'true' && steps.test-run.outcome != 'success'
+        if: steps.phase-check.outputs.enabled == 'true' && steps.test-run.outputs.outcome == 'failure'
         id: analyze-failure
         run: |
           if [ "$TEST_FAILED" = "124" ]; then
@@ -186,6 +198,13 @@ jobs:
               Enforcement will be re-enabled in Wave 3.
               `
             })
+      
+      - name: Enforcement Paused - Success
+        if: steps.phase-check.outputs.enabled == 'false'
+        run: |
+          echo "✅ Build-to-Green Enforcement PAUSED - this is expected for current wave"
+          echo "Workflow completes successfully (enforcement is paused, not failed)"
+          exit 0
 
       - name: Governance Summary Comment
         if: steps.phase-check.outputs.enabled == 'true' && github.event_name == 'pull_request'
@@ -323,7 +342,11 @@ jobs:
           exit 0
       
       - name: Workflow Success
-        if: success()
+        if: always() && (success() || steps.phase-check.outputs.enabled == 'false')
         run: |
-          echo "✅ Build-to-Green Enforcement completed successfully"
+          if [ "${{ steps.phase-check.outputs.enabled }}" = "false" ]; then
+            echo "✅ Build-to-Green Enforcement completed successfully (PAUSED for current wave)"
+          else
+            echo "✅ Build-to-Green Enforcement completed successfully"
+          fi
           exit 0
