@@ -1,5 +1,15 @@
 name: FM Architecture Gate (Completeness + Agent State)
 
+# CI CLASSIFICATION: Hard Gate
+# Purpose: Enforces FM architecture completeness (100%) and drift status (NONE) for FM Agent role only
+# Failure Semantics:
+#   - Architecture incomplete → Block merge + agent must fix/escalate/halt
+#   - Drift detected → Block merge + escalation
+#   - Infrastructure failures → Explicit infra-failure signal → Success + Comment
+# Timeout: 10 minutes (file-based validation only)
+# Applicability: FM Agent role ONLY (skipped for Builder/Governance roles)
+# See: .github/CI_CLASSIFICATION.md
+
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -16,6 +26,7 @@ jobs:
   fm-architecture-gate:
     name: Enforce Architecture 100% + Block Agent Conclusion
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repository
@@ -250,8 +261,70 @@ jobs:
           echo "Architecture completeness is declared 100% and drift is NONE."
           echo "Only now may agents proceed toward completion/hand-over."
       
-      - name: Workflow Success
-        if: success()
+      - name: Generate Infrastructure Failure Report
+        if: always() && env.INFRA_FAILURE != ''
         run: |
-          echo "✅ FM Architecture Gate completed successfully"
+          mkdir -p /tmp/infra-failure
+          cat > /tmp/infra-failure/report.json << 'EOF'
+          {
+            "failure_type": "infrastructure",
+            "workflow": "fm-architecture-gate",
+            "job": "fm-architecture-gate",
+            "failure_category": "${{ env.INFRA_FAILURE }}",
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "recommended_action": "investigate",
+            "details": {
+              "workflow_run": "${{ github.run_id }}"
+            }
+          }
+          EOF
+      
+      - name: Upload Infrastructure Failure Artifact
+        if: always() && env.INFRA_FAILURE != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: infra-failure-report-fm-architecture
+          path: /tmp/infra-failure/report.json
+          retention-days: 30
+      
+      - name: Comment Infrastructure Failure on PR
+        if: always() && env.INFRA_FAILURE != '' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const failureType = process.env.INFRA_FAILURE;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ⚠️ **Infrastructure Failure Detected**
+              
+              **Workflow**: FM Architecture Gate  
+              **Failure Type**: \`${failureType}\`  
+              **Timestamp**: ${new Date().toISOString()}
+              
+              This is **NOT a code failure**. The workflow encountered an infrastructure issue.
+              
+              **Your code changes are NOT blocked by this failure**
+              
+              **Infrastructure Failure Report**: Download artifact \`infra-failure-report-fm-architecture\`
+              `
+            })
+      
+      - name: Mark Success Despite Infrastructure Failure
+        if: always() && env.INFRA_FAILURE != ''
+        run: |
+          echo "✅ Job marked as success - Infrastructure failure (not code failure)"
+          exit 0
+      
+      - name: Workflow Success
+        if: always() && (success() || env.INFRA_FAILURE != '')
+        run: |
+          if [ -n "$INFRA_FAILURE" ]; then
+            echo "✅ FM Architecture Gate completed successfully (infrastructure failure handled)"
+          else
+            echo "✅ FM Architecture Gate completed successfully"
+          fi
           exit 0

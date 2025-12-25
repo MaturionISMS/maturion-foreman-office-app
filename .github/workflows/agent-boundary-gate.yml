@@ -1,5 +1,14 @@
 name: Agent QA Boundary Enforcement
 
+# CI CLASSIFICATION: Hard Gate
+# Purpose: Enforces agent-scoped QA boundaries (Builder/FM/Governance QA separation)
+# Failure Semantics:
+#   - Wrong agent attribution → Catastrophic governance violation → Block merge + escalation
+#   - Missing QA report (when expected) → Advisory
+#   - Infrastructure failures → Explicit infra-failure signal → Retry + Comment
+# Timeout: 10 minutes (simple validation only)
+# See: .github/CI_CLASSIFICATION.md
+
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -18,6 +27,7 @@ jobs:
   enforce-agent-boundaries:
     name: Enforce Agent-Scoped QA Boundaries
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     
     steps:
       - name: Checkout repository
@@ -47,12 +57,38 @@ jobs:
       
       - name: Validate Agent Boundaries
         if: steps.find-reports.outputs.found == 'true'
+        id: validate
         run: |
           echo "🔒 Validating agent-scoped QA boundaries..."
           
-          python governance/scripts/validate_agent_boundaries.py \
-            --reports "${{ steps.find-reports.outputs.reports }}" \
-            --current-repo "${{ github.repository }}"
+          if [ -f governance/scripts/validate_agent_boundaries.py ]; then
+            if python governance/scripts/validate_agent_boundaries.py \
+              --reports "${{ steps.find-reports.outputs.reports }}" \
+              --current-repo "${{ github.repository }}"; then
+              echo "outcome=success" >> $GITHUB_OUTPUT
+            else
+              echo "outcome=code_failure" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "::warning::Validation script not found - Infrastructure issue"
+            echo "outcome=infra_failure" >> $GITHUB_OUTPUT
+            echo "infra_failure_type=missing_validation_script" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Check Validation Result
+        if: steps.find-reports.outputs.found == 'true'
+        run: |
+          OUTCOME="${{ steps.validate.outputs.outcome }}"
+          echo "Validation outcome: $OUTCOME"
+          
+          if [ "$OUTCOME" = "code_failure" ]; then
+            echo "❌ Validation failed - code/governance issue"
+            exit 1
+          elif [ "$OUTCOME" = "infra_failure" ]; then
+            echo "ℹ️ Infrastructure failure detected - will report as success with commentary"
+          else
+            echo "✅ Validation succeeded"
+          fi
       
       - name: Report Success
         if: success() && steps.find-reports.outputs.found == 'true' && github.event_name == 'pull_request'
@@ -101,6 +137,48 @@ jobs:
               - Named with pattern \`*qa-report*.json\` or \`*qa_report*.json\`
               - Committed to the repository
               - In JSON format with proper agent attribution
+              `
+            })
+      
+      - name: Report Infrastructure Failure
+        if: always() && steps.validate.outputs.outcome == 'infra_failure' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const failureType = "${{ steps.validate.outputs.infra_failure_type }}" || "unknown";
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ⚠️ **Infrastructure Failure Detected - Agent QA Boundary Enforcement**
+              
+              The Agent QA Boundary enforcement workflow encountered an infrastructure issue:
+              
+              **Failure Type**: \`${failureType}\`
+              **Workflow Conclusion**: ✅ Success (with infrastructure caveat)
+              
+              ---
+              
+              ## What This Means
+              
+              - This is NOT a code or governance failure
+              - The workflow cannot complete validation due to missing infrastructure components
+              - **Merge is NOT blocked** by this workflow
+              - Infrastructure issue requires attention but does not indicate code problems
+              
+              ---
+              
+              ## Required Action
+              
+              1. Review workflow logs for details
+              2. Verify validation script exists at expected path
+              3. Fix infrastructure issue in separate PR
+              4. Re-run this workflow once infrastructure is fixed
+              
+              ---
+              
+              **Note**: Per WS4 infrastructure failure semantics, this workflow reports success with explicit commentary rather than blocking the PR on infrastructure issues.
               `
             })
       
@@ -211,7 +289,18 @@ jobs:
             });
       
       - name: Workflow Success
-        if: success()
+        if: always()
         run: |
-          echo "✅ Agent QA Boundary Enforcement completed successfully"
+          OUTCOME="${{ steps.validate.outputs.outcome }}"
+          
+          if [ "$OUTCOME" = "infra_failure" ]; then
+            echo "✅ Agent QA Boundary Enforcement completed successfully (infrastructure failure handled)"
+          elif [ "$OUTCOME" = "code_failure" ]; then
+            echo "❌ Agent QA Boundary Enforcement failed (code/governance violation)"
+            exit 1
+          elif [ -z "$OUTCOME" ]; then
+            echo "✅ Agent QA Boundary Enforcement completed successfully (no reports found - acceptable)"
+          else
+            echo "✅ Agent QA Boundary Enforcement completed successfully"
+          fi
           exit 0

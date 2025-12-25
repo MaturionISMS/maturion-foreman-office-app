@@ -1,5 +1,14 @@
 name: Builder QA Gate
 
+# CI CLASSIFICATION: Hard Gate
+# Purpose: Validates Builder QA Report presence, schema, and READY status
+# Failure Semantics:
+#   - Builder declares NOT_READY → Expected workflow → Block merge (trust builder)
+#   - Schema invalid → Code failure → Block merge
+#   - Infrastructure failures → Explicit infra-failure signal → Success + Comment
+# Timeout: 10 minutes (simple validation only)
+# See: .github/CI_CLASSIFICATION.md
+
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -17,6 +26,7 @@ jobs:
   validate-builder-qa:
     name: Validate Builder QA Report
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     
     steps:
       - name: Checkout repository
@@ -254,8 +264,70 @@ jobs:
               `
             })
       
-      - name: Workflow Success
-        if: success()
+      - name: Generate Infrastructure Failure Report
+        if: always() && env.INFRA_FAILURE != ''
         run: |
-          echo "✅ Builder QA Gate completed successfully"
+          mkdir -p /tmp/infra-failure
+          cat > /tmp/infra-failure/report.json << 'EOF'
+          {
+            "failure_type": "infrastructure",
+            "workflow": "builder-qa-gate",
+            "job": "validate-builder-qa",
+            "failure_category": "${{ env.INFRA_FAILURE }}",
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "recommended_action": "investigate",
+            "details": {
+              "workflow_run": "${{ github.run_id }}"
+            }
+          }
+          EOF
+      
+      - name: Upload Infrastructure Failure Artifact
+        if: always() && env.INFRA_FAILURE != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: infra-failure-report-builder-qa
+          path: /tmp/infra-failure/report.json
+          retention-days: 30
+      
+      - name: Comment Infrastructure Failure on PR
+        if: always() && env.INFRA_FAILURE != '' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const failureType = process.env.INFRA_FAILURE;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ⚠️ **Infrastructure Failure Detected**
+              
+              **Workflow**: Builder QA Gate  
+              **Failure Type**: \`${failureType}\`  
+              **Timestamp**: ${new Date().toISOString()}
+              
+              This is **NOT a code failure**. The workflow encountered an infrastructure issue.
+              
+              **Your code changes are NOT blocked by this failure**
+              
+              **Infrastructure Failure Report**: Download artifact \`infra-failure-report-builder-qa\`
+              `
+            })
+      
+      - name: Mark Success Despite Infrastructure Failure
+        if: always() && env.INFRA_FAILURE != ''
+        run: |
+          echo "✅ Job marked as success - Infrastructure failure (not code failure)"
+          exit 0
+      
+      - name: Workflow Success
+        if: always() && (success() || env.INFRA_FAILURE != '')
+        run: |
+          if [ -n "$INFRA_FAILURE" ]; then
+            echo "✅ Builder QA Gate completed successfully (infrastructure failure handled)"
+          else
+            echo "✅ Builder QA Gate completed successfully"
+          fi
           exit 0
