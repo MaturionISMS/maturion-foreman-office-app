@@ -288,77 +288,18 @@ jobs:
               `
             });
       
-      - name: Generate Infrastructure Failure Report
-        if: always() && env.INFRA_FAILURE != ''
-        run: |
-          mkdir -p /tmp/infra-failure
-          cat > /tmp/infra-failure/report.json << 'EOF'
-          {
-            "failure_type": "infrastructure",
-            "workflow": "agent-boundary-gate",
-            "job": "enforce-agent-boundaries",
-            "failure_category": "${{ env.INFRA_FAILURE }}",
-            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
-            "recommended_action": "investigate",
-            "details": {
-              "workflow_run": "${{ github.run_id }}"
-            }
-          }
-          EOF
-      
-      - name: Upload Infrastructure Failure Artifact
-        if: always() && env.INFRA_FAILURE != ''
-        uses: actions/upload-artifact@v4
-        with:
-          name: infra-failure-report-agent-boundary
-          path: /tmp/infra-failure/report.json
-          retention-days: 30
-      
-      - name: Comment Infrastructure Failure on PR
-        if: always() && env.INFRA_FAILURE != '' && github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const failureType = process.env.INFRA_FAILURE;
-            
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `
-              ⚠️ **Infrastructure Failure Detected**
-              
-              **Workflow**: Agent QA Boundary Enforcement  
-              **Failure Type**: \`${failureType}\`  
-              **Timestamp**: ${new Date().toISOString()}
-              
-              This is **NOT a code/governance failure**. The workflow encountered an infrastructure issue.
-              
-              **Possible Causes**:
-              - Validation script missing or moved
-              - File system access issues
-              
-              **Actions Taken**:
-              - Job marked as success (no code defect)
-              - Infrastructure failure logged
-              
-              **Your code changes are NOT blocked by this failure**
-              
-              **Infrastructure Failure Report**: Download artifact \`infra-failure-report-agent-boundary\`
-              `
-            })
-      
-      - name: Mark Success Despite Infrastructure Failure
-        if: always() && env.INFRA_FAILURE != ''
-        run: |
-          echo "✅ Job marked as success - Infrastructure failure (not code failure)"
-          exit 0
-      
       - name: Workflow Success
-        if: always() && (success() || env.INFRA_FAILURE != '')
+        if: always()
         run: |
-          if [ -n "$INFRA_FAILURE" ]; then
+          OUTCOME="${{ steps.validate.outputs.outcome }}"
+          
+          if [ "$OUTCOME" = "infra_failure" ]; then
             echo "✅ Agent QA Boundary Enforcement completed successfully (infrastructure failure handled)"
+          elif [ "$OUTCOME" = "code_failure" ]; then
+            echo "❌ Agent QA Boundary Enforcement failed (code/governance violation)"
+            exit 1
+          elif [ -z "$OUTCOME" ]; then
+            echo "✅ Agent QA Boundary Enforcement completed successfully (no reports found - acceptable)"
           else
             echo "✅ Agent QA Boundary Enforcement completed successfully"
           fi
