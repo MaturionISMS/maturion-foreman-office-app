@@ -1,0 +1,3 @@
+# Runtime commissioning state
+# This file is managed by CommissioningController and should not be committed
+state.json
