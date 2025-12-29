@@ -159,6 +159,13 @@ Maturion ISMS Modules
 - Compliance engine (control mapping, validation)
 - QA engine (test execution, coverage tracking)
 
+**Platform-Level Actions Delegation**:
+- All platform-level actions (creating issues, opening PRs, merging, repository configuration, workflow management) are executed **only by Maturion**
+- Foreman and Builder agents operate under the Delegated Action Instruction (DAI) and Delegated Action Audit (DAR) governance model
+- FM and builders **cannot** directly create issues, open PRs, merge code, or modify repository/workflow configuration
+- All such actions are delegated to Maturion with explicit instruction and audit trail
+- This ensures proper authority boundaries and maintains governance oversight
+
 **Data Isolation**: 
 - No cross-tenant data sharing
 - Organisation-scoped execution contexts
