@@ -216,6 +216,10 @@ Johan Decides:
 Agent Executes Johan's Decision
     ↓
 Resolution Complete
+    ├─ Issue marked resolved
+    ├─ Incident logged to governance memory
+    ├─ Resolution documented in governance reports
+    └─ Lessons learned captured (if applicable)
 ```
 
 ### When to Escalate
