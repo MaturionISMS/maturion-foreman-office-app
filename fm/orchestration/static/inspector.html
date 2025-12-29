@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Node Inspector - Foreman Office</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="inspector-styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Build Node Inspector</h1>
+            <p class="subtitle">No Status Without Explanation • Full Drill-Down Inspection</p>
+            <nav class="breadcrumb" id="breadcrumb"></nav>
+        </header>
+
+        <main>
+            <!-- Node Selection Section -->
+            <section class="panel">
+                <h2>Node Selection</h2>
+                <div class="node-selector">
+                    <div class="input-group">
+                        <label for="node-type-select">Node Type:</label>
+                        <select id="node-type-select">
+                            <option value="task">Task</option>
+                            <option value="wave">Wave</option>
+                            <option value="sub-wave">Sub-Wave</option>
+                            <option value="program">Program</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="node-id-input">Node ID:</label>
+                        <input 
+                            type="text" 
+                            id="node-id-input" 
+                            placeholder="Enter node ID (e.g., task-ai-panel)"
+                            autocomplete="off"
+                        />
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="depth-select">Inspection Depth:</label>
+                        <select id="depth-select">
+                            <option value="1">Level 1 - Quick Status</option>
+                            <option value="2">Level 2 - State Explanation</option>
+                            <option value="3" selected>Level 3 - Evidence & Requirements</option>
+                            <option value="4">Level 4 - Decisions & Audit</option>
+                            <option value="5">Level 5 - Blockers & STOP Conditions</option>
+                        </select>
+                    </div>
+                    
+                    <button id="inspect-btn" class="primary-btn">
+                        🔍 Inspect Node
+                    </button>
+                </div>
+            </section>
+
+            <!-- Inspection Results Section -->
+            <section class="panel" id="inspection-panel" style="display: none;">
+                <h2>Inspection Results</h2>
+                
+                <!-- Quick Status (Level 1) -->
+                <div id="level-1-content" class="inspection-level">
+                    <h3>📊 Quick Status View</h3>
+                    <div id="quick-status" class="status-card"></div>
+                </div>
+                
+                <!-- State Explanation (Level 2) -->
+                <div id="level-2-content" class="inspection-level" style="display: none;">
+                    <h3>📝 State Explanation</h3>
+                    <div id="state-explanation" class="explanation-card"></div>
+                </div>
+                
+                <!-- Evidence & Requirements (Level 3) -->
+                <div id="level-3-content" class="inspection-level" style="display: none;">
+                    <h3>✅ Evidence & Requirements</h3>
+                    <div id="evidence-requirements">
+                        <div id="governing-checks" class="sub-section"></div>
+                        <div id="requirements" class="sub-section"></div>
+                        <div id="evidence" class="sub-section"></div>
+                    </div>
+                </div>
+                
+                <!-- Decisions & Audit (Level 4) -->
+                <div id="level-4-content" class="inspection-level" style="display: none;">
+                    <h3>📋 Decisions & Audit Trail</h3>
+                    <div id="decisions-audit">
+                        <div id="decisions" class="sub-section"></div>
+                        <div id="audit-reports" class="sub-section"></div>
+                        <div id="surveys" class="sub-section"></div>
+                    </div>
+                </div>
+                
+                <!-- Blockers & STOP Conditions (Level 5) -->
+                <div id="level-5-content" class="inspection-level" style="display: none;">
+                    <h3>⛔ Blockers & STOP Conditions</h3>
+                    <div id="blockers-stop">
+                        <div id="blockers" class="sub-section"></div>
+                        <div id="resolution-paths" class="sub-section"></div>
+                        <div id="stop-conditions" class="sub-section"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Error Display Section -->
+            <section class="panel error-panel" id="error-panel" style="display: none;">
+                <h2>⚠️ Error</h2>
+                <div id="error-message"></div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Maturion Foreman Office • Build-to-Green • Zero Regression</p>
+            <p class="governance-ref">Implements BUILD_NODE_INSPECTION_MODEL.md (G-C9)</p>
+        </footer>
+    </div>
+
+    <script src="inspector-app.js"></script>
+</body>
+</html>

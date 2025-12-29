@@ -14,8 +14,10 @@ from typing import Dict, Any
 # Handle both relative and absolute imports
 try:
     from .build_authorization_gate import BuildAuthorizationGate, GateResult
+    from .build_node_inspector import BuildNodeInspector
 except ImportError:
     from build_authorization_gate import BuildAuthorizationGate, GateResult
+    from build_node_inspector import BuildNodeInspector
 
 # Configure logging
 logging.basicConfig(
@@ -28,9 +30,10 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__, static_folder='static', static_url_path='')
 CORS(app)  # Enable CORS for local development
 
-# Initialize gate validator
+# Initialize gate validator and inspector
 repo_root = Path(__file__).parent.parent.parent
 gate_validator = BuildAuthorizationGate(repo_root=repo_root)
+node_inspector = BuildNodeInspector(repo_root=repo_root)
 
 
 @app.route('/')
@@ -282,6 +285,100 @@ def get_build_status(build_id: str):
             'error': 'Failed to get build status',
             'details': str(e),
             'build_id': build_id
+        }), 500
+
+
+@app.route('/api/build-tree/inspect/<node_type>/<node_id>', methods=['GET'])
+def inspect_node(node_type: str, node_id: str):
+    """
+    Inspect a build node and return comprehensive drill-down information.
+    
+    Implements BUILD_NODE_INSPECTION_MODEL.md (G-C9).
+    Enforces principle: "No status without explanation."
+    
+    Args:
+        node_type: Type of node ('program', 'wave', 'sub-wave', 'task')
+        node_id: Unique identifier for the node
+        
+    Query Parameters:
+        depth: Inspection depth level (1-5), default: 3
+        include_children: Include child nodes (true/false), default: false
+        
+    Returns:
+        JSON with comprehensive node inspection data
+    """
+    try:
+        # Parse query parameters
+        depth = int(request.args.get('depth', 3))
+        include_children = request.args.get('include_children', 'false').lower() == 'true'
+        
+        logger.info(f"Node inspection request: {node_type}/{node_id} (depth={depth})")
+        
+        # Perform inspection
+        inspection_data = node_inspector.inspect_node(
+            node_type=node_type,
+            node_id=node_id,
+            depth=depth,
+            include_children=include_children
+        )
+        
+        # Log inspection for audit trail
+        node_inspector.log_inspection(
+            node_id=node_id,
+            node_type=node_type,
+            inspected_by=request.remote_addr or "unknown",
+            inspection_depth=depth,
+            ip_address=request.remote_addr,
+            user_agent=request.headers.get('User-Agent')
+        )
+        
+        return jsonify({
+            'success': True,
+            'data': inspection_data
+        })
+    
+    except ValueError as e:
+        logger.warning(f"Invalid inspection request: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': 'Invalid request',
+            'details': str(e)
+        }), 400
+    
+    except Exception as e:
+        logger.error(f"Error inspecting node {node_type}/{node_id}: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': 'Node inspection failed',
+            'details': str(e)
+        }), 500
+
+
+@app.route('/api/evidence/<evidence_id>/artifact', methods=['GET'])
+def get_evidence_artifact(evidence_id: str):
+    """
+    Get evidence artifact (read-only).
+    
+    Args:
+        evidence_id: Unique identifier for the evidence artifact
+        
+    Returns:
+        Redirect to artifact location or artifact content
+    """
+    try:
+        # TODO: Implement evidence artifact retrieval
+        # For now, return a placeholder
+        return jsonify({
+            'evidence_id': evidence_id,
+            'message': 'Evidence artifact retrieval not yet implemented',
+            'note': 'This endpoint will return read-only access to evidence artifacts'
+        }), 501
+    
+    except Exception as e:
+        logger.error(f"Error retrieving evidence artifact {evidence_id}: {str(e)}")
+        return jsonify({
+            'error': 'Failed to retrieve evidence artifact',
+            'details': str(e)
         }), 500
 
 
