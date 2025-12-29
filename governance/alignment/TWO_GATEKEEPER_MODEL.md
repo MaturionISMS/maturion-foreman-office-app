@@ -1,10 +1,14 @@
 # Two-Gatekeeper Model (Canonical Mirror)
 
 **Status**: Authoritative  
-**Last Updated**: 2025-12-22  
+**Last Updated**: 2025-12-29  
 **Authority**: Corporate Governance Canon  
 **Source**: `maturion-foreman-governance` repository  
 **Role**: Dual gatekeeper enforcement model
+
+**Related Documents**:
+- [Governance Authority Matrix](../GOVERNANCE_AUTHORITY_MATRIX.md) - Master authority reference
+- [Red Gate Authority and Ownership](../policies/RED_GATE_AUTHORITY_AND_OWNERSHIP.md) - Gate ownership rules
 
 ---
 
@@ -15,6 +19,8 @@
 Neither gatekeeper may override the other.  
 Both defer to canonical governance.  
 Neither may weaken, bypass, or reinterpret canonical requirements.
+
+**Authority Clarification**: See [Governance Authority Matrix](../GOVERNANCE_AUTHORITY_MATRIX.md) for definitive stop/go authority.
 
 ---
 
@@ -610,17 +616,25 @@ Two-gatekeeper model is successful when:
 
 ## IX. Version and Authority
 
-**Version**: 1.0.0  
+**Version**: 1.1.0  
 **Status**: Authoritative (Canonical Mirror)  
 **Canonical Source**: `maturion-foreman-governance/enforcement/`  
 **Last Canonical Sync**: 2025-12-22  
+**Last FM Update**: 2025-12-29 (Batch 1 Governance Hardening)  
 **Owner**: Johan Ras (Authority)  
 **Maintainer**: Governance Liaison (FM-scoped)
+
+**Changelog**:
+- 1.1.0 (2025-12-29): Added cross-references to Governance Authority Matrix and Red Gate Authority
+- 1.0.0 (2025-12-22): Initial canonical mirror
 
 ---
 
 ## X. References
 
+- **Governance Authority Matrix**: `/governance/GOVERNANCE_AUTHORITY_MATRIX.md` ⭐ (Master authority reference)
+- **Red Gate Authority and Ownership**: `/governance/policies/RED_GATE_AUTHORITY_AND_OWNERSHIP.md` (Gate ownership rules)
+- **Governance Policy Sync Specification**: `/governance/workflows/GOVERNANCE_POLICY_SYNC_SPECIFICATION.md` (Policy sync mechanism)
 - **Canonical Governance Canon**: https://github.com/MaturionISMS/maturion-foreman-governance
 - **PR Gate Requirements**: `/governance/alignment/PR_GATE_REQUIREMENTS_CANON.md`
 - **Agent-Scoped QA Boundaries**: `/governance/alignment/AGENT_SCOPED_QA_BOUNDARIES.md`
