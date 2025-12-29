@@ -73,6 +73,33 @@ Implementation (Governed by requirements and architecture)
 7. Memory fabric is operational
 8. Human authority (Johan) has approved this specific build
 
+**End-to-End Testing Requirements (Issue #68 - C1):**
+- **E2E Governance Gate Dry Run:** Before Wave 0 build execution, an end-to-end dry run of the Build Authorization Gate must be performed to validate:
+  - All 8 preconditions can be checked programmatically
+  - Gate correctly returns PASS when all preconditions are satisfied
+  - Gate correctly returns FAIL when any precondition is not satisfied
+  - Evidence paths are valid and accessible for each precondition
+  - Gate behavior is deterministic and repeatable
+- **Integration Testing:** Gate must be tested in integration with:
+  - Build orchestration system (validates gate is consulted before build start)
+  - Evidence collection system (validates evidence paths are correct)
+  - Memory fabric (validates memory operational check works)
+  - Agent initialization system (validates agent readiness check works)
+- **Failure Mode Testing:** Gate must be tested with intentionally failing preconditions:
+  - Missing architecture document (precondition 1 fails)
+  - Invalid governance rules (precondition 4 fails)
+  - Agents not initialized (precondition 5 fails)
+  - Missing human approval (precondition 8 fails)
+  - Verify gate produces clear failure reasons for each case
+- **No Auto-Approve Testing:** Gate must be tested to ensure it never auto-approves:
+  - Test with partial precondition satisfaction
+  - Test with cached/stale approval state
+  - Verify gate always performs fresh validation
+- **Performance Requirements:** Gate validation must complete within reasonable time:
+  - Full gate check completes in < 30 seconds
+  - Individual precondition checks complete in < 5 seconds each
+  - Gate does not block on external dependencies (timeouts configured)
+
 ### FR-1.3: Build Node Inspector
 **Source:** TRUE_NORTH Section 3.1  
 **Requirement:** FM App MUST provide inspection capabilities for Program/Wave/Task nodes  
