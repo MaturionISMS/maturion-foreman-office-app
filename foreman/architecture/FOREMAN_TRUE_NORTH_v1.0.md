@@ -126,6 +126,8 @@ Maturion ISMS Modules
 - ❌ Billing or user management
 - ❌ External integrations
 - ❌ Production module code implementation
+- ❌ Post-deployment application performance monitoring (APM)
+- ❌ Runtime observability of deployed applications
 
 ---
 
@@ -165,6 +167,12 @@ Maturion ISMS Modules
 - FM and builders **cannot** directly create issues, open PRs, merge code, or modify repository/workflow configuration
 - All such actions are delegated to Maturion with explicit instruction and audit trail
 - This ensures proper authority boundaries and maintains governance oversight
+
+**Monitoring Scope Boundary**:
+- FM monitors **builder execution** (build-time), not deployed application runtime
+- Post-deployment application performance monitoring (APM) is out-of-scope for v1
+- Runtime monitoring is a future capability outside FM scope
+- FM is a build supervisor, not a runtime supervisor
 
 **Data Isolation**: 
 - No cross-tenant data sharing
