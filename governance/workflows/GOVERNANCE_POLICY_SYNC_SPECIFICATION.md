@@ -139,10 +139,12 @@ This repository contains:
 7. PR merged, enforcement updated
 
 **Triggers** (governance changes only):
-- Commit to `maturion-foreman-governance` main branch that modifies governance documents (`.md` files in `/foreman/governance/`, `/docs/governance/`, `/governance/` directories only)
-- New governance document added (any `.md` file in canonical governance directories: `/foreman/governance/`, `/docs/governance/`, `/governance/`)
-- Existing governance document modified (changes to `.md` files in canonical governance directories only)
+- Commit to `maturion-foreman-governance` main branch that modifies governance documents in canonical governance directories
+- New governance document added in canonical governance directories
+- Existing governance document modified in canonical governance directories
 - New governance version tagged (tags matching pattern `governance-v*` or `canon-v*`)
+
+**Note**: The canonical repository (`maturion-foreman-governance`) uses its own directory structure. When these triggers fire, the Governance Liaison analyzes which canonical governance documents changed and determines the corresponding FM repository paths that need updating (typically `/governance/`, `/foreman/governance/`, or `/docs/governance/` in the FM repository).
 
 **Benefits**:
 - Proactive sync

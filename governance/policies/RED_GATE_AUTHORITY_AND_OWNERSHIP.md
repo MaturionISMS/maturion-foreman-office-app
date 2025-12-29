@@ -30,7 +30,7 @@ This document establishes:
 |-----------|---------------------|-----------|
 | **Builder QA Gate** | Builder Agent ONLY | Builder agents execute QA and declare READY/NOT_READY. No other agent may override. |
 | **Architecture Gate** | Governance Liaison ONLY | Validates architecture completeness per canonical compilation contract. |
-| **Build Authorization Gate** | Governance Liaison ONLY | Validates all preconditions (architecture, QA, FL/CI learning) before build may proceed. |
+| **Build Authorization Gate** | Governance Liaison ONLY | Validates all preconditions (architecture, QA, lessons learned from Failures and Close Calls) before build may proceed. |
 | **Agent Boundary Gate** | PR Gate Workflow (Automated) | Detects cross-agent QA violations mechanically. No human/agent interpretation. |
 | **Governance Compliance Gate** | Governance Liaison ONLY | Validates governance artifact presence, schema, and immutability. |
 

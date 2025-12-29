@@ -19,7 +19,7 @@ This document is the **master authority reference** for FM governance.
 - Who can override governance?
 - What is the escalation chain?
 
-**This document resolves all governance authority ambiguity.**
+**This document provides definitive answers to all core governance authority questions and aims to eliminate governance authority ambiguity.**
 
 ---
 
