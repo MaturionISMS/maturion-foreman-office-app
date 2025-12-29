@@ -244,7 +244,7 @@ When FM encounters RED gates, FM MUST:
    - ✅ "ARTIFACT_MISSING: Builder QA Report not found in PR"
 
 5. **Always Block Progression**
-   - ❌ "This gate is red, but we can continue"
+   - ❌ "This gate is RED, but we can continue"
    - ✅ "This gate is RED. Build is BLOCKED. No progression until GREEN."
 
 ### Enforcement

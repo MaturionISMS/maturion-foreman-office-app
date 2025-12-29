@@ -138,11 +138,11 @@ This repository contains:
 6. Johan approves governance alignment
 7. PR merged, enforcement updated
 
-**Triggers**:
-- Commit to `maturion-foreman-governance` main branch
-- New governance document added
-- Existing governance document modified
-- New governance version tagged
+**Triggers** (governance changes only):
+- Commit to `maturion-foreman-governance` main branch that modifies governance documents (`.md` files in governance directories)
+- New governance document added (any `.md` file in canonical governance structure)
+- Existing governance document modified (changes to `.md` files in `/foreman/`, `/governance/`, `/docs/governance/` paths)
+- New governance version tagged (tags matching pattern `governance-v*` or `canon-v*`)
 
 **Benefits**:
 - Proactive sync
