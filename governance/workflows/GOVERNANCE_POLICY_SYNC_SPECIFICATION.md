@@ -22,6 +22,12 @@ This specification defines the mechanism by which FM repository governance remai
 
 **Corporate Governance Canon Repository**: `maturion-foreman-governance`
 
+**Canonical Governance Directories** (in the canonical repository):
+- `/foreman/` - Core Foreman governance specifications
+- `/governance/` - Constitutional governance documents
+- `/docs/governance/` - Governance documentation and reports
+- Any directory containing governance policy, constitutional rules, or enforcement specifications
+
 This repository contains:
 - Constitutional rules (Governance Supremacy Rule, Zero Test Debt, Design Freeze, etc.)
 - Architecture standards and validation checklists
