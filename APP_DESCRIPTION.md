@@ -283,4 +283,14 @@ Its success is measured not by speed, but by:
 
 ---
 
+## 12. Architecture Reference
+
+The canonical frozen architecture for this application is defined in:
+
+**docs/architecture/TRUE_NORTH_FM_ARCHITECTURE.md**
+
+All implementation MUST align with the True North Architecture.
+
+---
+
 **End of Document**
