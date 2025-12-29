@@ -1,0 +1,8 @@
+{
+  "state": "NOT_COMMISSIONED",
+  "last_updated": "2025-12-29T05:56:00Z",
+  "version": "1.0.0",
+  "metadata": {
+    "notes": "Sample state file for testing"
+  }
+}
