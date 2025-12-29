@@ -13,6 +13,8 @@ eggs/
 .eggs/
 lib/
 !lib/memory/  # Exception: TypeScript memory client
+!lib/commissioning/  # Exception: TypeScript commissioning controller
+!lib/github/  # Exception: TypeScript GitHub integrations
 lib64/
 parts/
 sdist/
