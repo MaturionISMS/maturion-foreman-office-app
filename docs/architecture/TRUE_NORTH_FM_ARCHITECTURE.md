@@ -72,6 +72,7 @@ FM provides the missing supervisory layer with:
 3. **Not a GitHub Replacement** - GitHub remains system of record for code
 4. **Not a Passive Dashboard** - Actively governs and controls execution
 5. **Not a Governance Author** - Consumes governance, does not create it
+6. **Not an APM System** - Does not monitor deployed application runtime performance
 
 ### 2.3 Authority Boundaries
 
@@ -80,6 +81,7 @@ FM provides the missing supervisory layer with:
 - Enforce governance rules
 - Manage execution state
 - Escalate to human authority
+- Monitor builder execution (build-time only)
 
 **FM App CANNOT:**
 - Modify governance rules
@@ -87,6 +89,7 @@ FM provides the missing supervisory layer with:
 - Override QA requirements
 - Approve its own work
 - Implement features directly (delegates to builders)
+- Monitor deployed application runtime (post-deployment APM is out-of-scope)
 
 ---
 
@@ -409,9 +412,14 @@ The following are **designed but not yet implemented**. They remain in the backl
 - Innovation System
 - Admin Features
 - Survey System
+- Post-Deployment Application Performance Monitoring (APM)
+- Runtime Observability of Deployed Applications
 
 **Governance Rule:**  
 These specifications exist as DESIGN INTENT but are NOT canonical until implemented and adopted. Implementation must follow this True North Architecture, not directly from those specifications.
+
+**APM Scope Clarification:**  
+Post-deployment application performance monitoring is **explicitly out-of-scope for FM v1**. FM monitors **builder execution** (build-time), not deployed application runtime. APM is a future capability that belongs to a different module (e.g., PIT or dedicated observability module). See `docs/architecture/ARCH_GAP_02_POST_DEPLOYMENT_MONITORING.md` for full rationale.
 
 ---
 
