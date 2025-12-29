@@ -1,7 +1,8 @@
 # FM Repository Governance
 
-**Status**: Initialized  
-**Last Updated**: 2025-12-22
+**Status**: Hardened  
+**Last Updated**: 2025-12-29  
+**Batch 1 Governance Hardening**: Complete (Issues #123, #78, #86)
 
 ---
 
@@ -17,29 +18,121 @@ This is **adoption and execution framing**, not governance creation.
 
 ---
 
+## Master Authority Reference
+
+**START HERE**: [GOVERNANCE_AUTHORITY_MATRIX.md](GOVERNANCE_AUTHORITY_MATRIX.md)
+
+**This is the definitive answer to**:
+- Who can stop a build, and why?
+- Who owns governance decisions?
+- Who enforces governance rules?
+- Who can override governance?
+- What is the escalation chain?
+
+**Use this document to resolve all governance authority questions.**
+
+---
+
 ## Directory Structure
 
 ```
 governance/
-├── README.md                              # This file
-├── alignment/                             # Governance alignment documentation
-│   └── GOVERNANCE_ALIGNMENT_OVERVIEW.md   # How FM adopts corporate governance
-├── policies/                              # FM-specific execution policies
-│   └── FM_GOVERNANCE_ADOPTION_POLICY.md   # How governance becomes execution
-├── events/                                # FM Office visibility placeholders
-│   └── README.md                          # Event structure for future dashboard
-├── scope/                                 # Scope discipline documentation
-│   └── README.md                          # Scope declaration requirements
-├── agents/                                # Agent specifications (existing)
-├── contracts/                             # Contracts and templates (existing)
-├── dashboards/                            # Dashboard specifications (existing)
-├── specs/                                 # Technical specifications (existing)
-└── CROSS_REPOSITORY_AUTHORITY_AND_ESCALATION_POLICY.md (existing)
+├── README.md                                        # This file
+├── GOVERNANCE_AUTHORITY_MATRIX.md                   # **Master authority reference**
+├── alignment/                                       # Governance alignment documentation
+│   ├── GOVERNANCE_ALIGNMENT_OVERVIEW.md             # How FM adopts corporate governance
+│   ├── TWO_GATEKEEPER_MODEL.md                      # Dual gatekeeper authority
+│   ├── PR_GATE_REQUIREMENTS_CANON.md                # Canonical PR gate requirements
+│   ├── PR_GATE_FAILURE_HANDLING_PROTOCOL.md         # Canonical failure handling
+│   └── ... (other alignment docs)
+├── policies/                                        # FM-specific execution policies
+│   ├── FM_GOVERNANCE_ADOPTION_POLICY.md             # How governance becomes execution
+│   ├── RED_GATE_AUTHORITY_AND_OWNERSHIP.md          # **Red gate ownership rules**
+│   ├── governance-supremacy-rule.md                 # Constitutional governance
+│   ├── zero-test-debt-constitutional-rule.md        # Test debt prohibition
+│   └── ... (other policies)
+├── workflows/                                       # Governance workflows
+│   ├── GOVERNANCE_POLICY_SYNC_SPECIFICATION.md      # **Policy sync mechanism**
+│   └── ... (other workflow specs)
+├── build/                                           # Build governance
+│   └── BUILD_AUTHORIZATION_GATE.md                  # Build preconditions
+├── events/                                          # FM Office visibility placeholders
+├── scope/                                           # Scope discipline documentation
+├── agents/                                          # Agent specifications
+├── contracts/                                       # Contracts and templates
+├── dashboards/                                      # Dashboard specifications
+├── specs/                                           # Technical specifications
+├── qa/                                              # QA governance
+├── architecture/                                    # Architecture governance
+├── reports/                                         # Governance reports
+└── CROSS_REPOSITORY_AUTHORITY_AND_ESCALATION_POLICY.md
 ```
 
 ---
 
+## Batch 1 Governance Hardening (Complete)
+
+**Issues Addressed**: #123 (FM Governance Hardening), #78 (Governance Policy Sync), #86 (Red Gate Ownership)
+
+**New Documents Created**:
+
+1. **[GOVERNANCE_AUTHORITY_MATRIX.md](GOVERNANCE_AUTHORITY_MATRIX.md)**
+   - Master authority reference
+   - Answers: "Who can stop a build, and why?"
+   - Defines all governance authority boundaries
+   - Establishes escalation chains
+   - Clarifies override authority
+
+2. **[policies/RED_GATE_AUTHORITY_AND_OWNERSHIP.md](policies/RED_GATE_AUTHORITY_AND_OWNERSHIP.md)**
+   - Explicit red gate ownership rules
+   - Gate declaration authority matrix
+   - Build stop authority clarification
+   - FM behavior requirements for red gates
+   - Addresses Issue #86
+
+3. **[workflows/GOVERNANCE_POLICY_SYNC_SPECIFICATION.md](workflows/GOVERNANCE_POLICY_SYNC_SPECIFICATION.md)**
+   - Governance policy synchronization mechanism
+   - Canon-to-FM translation workflow
+   - Drift detection and prevention
+   - Upward ripple (FM lessons to canon)
+   - Addresses Issue #78
+
+**Result**: Zero governance ambiguity. Clear stop/go authority. Explicit policy sync mechanism.
+
+---
+
 ## Key Documents
+
+### Master Authority Reference
+
+**[GOVERNANCE_AUTHORITY_MATRIX.md](GOVERNANCE_AUTHORITY_MATRIX.md)** ⭐
+- **Definitive answer**: Who can stop a build, and why?
+- Authority ownership for all governance decisions
+- Gate declaration authority matrix
+- Enforcement authority assignments
+- Escalation chains
+- Override authority (Johan only)
+- **Use this document first for any authority question**
+
+### Red Gate Ownership
+
+**[policies/RED_GATE_AUTHORITY_AND_OWNERSHIP.md](policies/RED_GATE_AUTHORITY_AND_OWNERSHIP.md)**
+- Red gate declarant authority by gate type
+- Red gate ownership responsibilities
+- Build stop authority clarification
+- Red gate resolution procedures
+- FM behavior requirements (FM-BEHAV-1)
+- Prohibition enforcement
+
+### Governance Policy Sync
+
+**[workflows/GOVERNANCE_POLICY_SYNC_SPECIFICATION.md](workflows/GOVERNANCE_POLICY_SYNC_SPECIFICATION.md)**
+- Canonical governance source of truth
+- Synchronization workflow (manual + future automated)
+- Sync artifact types (mirrors, adoption docs, enforcement, agent contracts)
+- Drift detection and prevention
+- Escalation for canon conflicts
+- Upward ripple (FM lessons to canon)
 
 ### Governance Alignment (Canonical References)
 
