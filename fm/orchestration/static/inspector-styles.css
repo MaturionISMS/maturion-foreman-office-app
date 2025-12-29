@@ -1,0 +1,430 @@
+/* Build Node Inspector Styles */
+
+.breadcrumb {
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.node-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.node-selector .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.node-selector label {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.node-selector select,
+.node-selector input {
+    padding: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.node-selector select:focus,
+.node-selector input:focus {
+    outline: none;
+    border-color: #4a9eff;
+    box-shadow: 0 0 0 2px rgba(74, 158, 255, 0.2);
+}
+
+.inspection-level {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 4px solid #4a9eff;
+    border-radius: 4px;
+}
+
+.inspection-level h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #4a9eff;
+}
+
+.status-card {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.status-card .node-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.status-card .node-description {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1rem;
+}
+
+.status-card .status-badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-badge.execution {
+    background: rgba(74, 158, 255, 0.2);
+    color: #4a9eff;
+}
+
+.status-badge.activation {
+    background: rgba(139, 92, 246, 0.2);
+    color: #8b5cf6;
+}
+
+.status-badge.green {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.status-badge.amber {
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+}
+
+.status-badge.red {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.explanation-card {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.explanation-section {
+    margin-bottom: 1.5rem;
+}
+
+.explanation-section:last-child {
+    margin-bottom: 0;
+}
+
+.explanation-section h4 {
+    margin: 0 0 0.5rem 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+}
+
+.explanation-section .reason {
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 3px solid #4a9eff;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.explanation-section .since {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.status-factors {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0 0;
+}
+
+.status-factors li {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-factors li.green {
+    border-left: 3px solid #22c55e;
+}
+
+.status-factors li.amber {
+    border-left: 3px solid #fbbf24;
+}
+
+.status-factors li.red {
+    border-left: 3px solid #ef4444;
+}
+
+.sub-section {
+    margin-bottom: 2rem;
+}
+
+.sub-section h4 {
+    margin: 0 0 1rem 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checks-list,
+.requirements-list,
+.evidence-list,
+.decisions-list,
+.audit-list,
+.blockers-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.check-item,
+.requirement-item,
+.evidence-item,
+.decision-item,
+.audit-item,
+.blocker-item {
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.item-title {
+    font-weight: 600;
+    color: white;
+}
+
+.item-status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.item-status.pass,
+.item-status.satisfied,
+.item-status.validated {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.item-status.fail,
+.item-status.unsatisfied,
+.item-status.pending {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.item-status.not-applicable {
+    background: rgba(156, 163, 175, 0.2);
+    color: #9ca3af;
+}
+
+.item-description {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.item-meta {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.evidence-summary {
+    padding: 1rem;
+    background: rgba(74, 158, 255, 0.1);
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.evidence-summary .stat {
+    text-align: center;
+}
+
+.evidence-summary .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #4a9eff;
+}
+
+.evidence-summary .stat-label {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.artifact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: #4a9eff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.artifact-link:hover {
+    text-decoration: underline;
+}
+
+.decision-item {
+    border-left: 3px solid #8b5cf6;
+}
+
+.decision-rationale {
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.blocker-item {
+    border-left: 3px solid #ef4444;
+}
+
+.blocker-severity {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+.blocker-severity.critical {
+    background: rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+}
+
+.blocker-severity.major {
+    background: rgba(251, 191, 36, 0.3);
+    color: #fbbf24;
+}
+
+.blocker-severity.minor {
+    background: rgba(156, 163, 175, 0.3);
+    color: #9ca3af;
+}
+
+.resolution-path {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 4px;
+}
+
+.resolution-path h5 {
+    margin: 0 0 0.5rem 0;
+    color: #4a9eff;
+    font-size: 0.9rem;
+}
+
+.unblocking-criteria {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0 0;
+}
+
+.unblocking-criteria li {
+    padding: 0.25rem 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+}
+
+.unblocking-criteria li:before {
+    content: "→ ";
+    color: #4a9eff;
+    font-weight: 700;
+}
+
+.stop-condition-item {
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 4px;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.recovery-actions {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 4px;
+}
+
+.recovery-actions h5 {
+    margin: 0 0 0.5rem 0;
+    color: #22c55e;
+    font-size: 0.9rem;
+}
+
+.error-panel {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.error-panel h2 {
+    color: #ef4444;
+}
+
+#error-message {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.governance-ref {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .evidence-summary {
+        grid-template-columns: 1fr;
+    }
+    
+    .status-badges {
+        flex-direction: column;
+    }
+}
