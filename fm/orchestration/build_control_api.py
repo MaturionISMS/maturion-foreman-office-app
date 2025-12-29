@@ -15,9 +15,11 @@ from typing import Dict, Any
 try:
     from .build_authorization_gate import BuildAuthorizationGate, GateResult
     from .build_node_inspector import BuildNodeInspector
+    from .build_intervention import BuildInterventionController
 except ImportError:
     from build_authorization_gate import BuildAuthorizationGate, GateResult
     from build_node_inspector import BuildNodeInspector
+    from build_intervention import BuildInterventionController
 
 # Configure logging
 logging.basicConfig(
@@ -30,10 +32,11 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__, static_folder='static', static_url_path='')
 CORS(app)  # Enable CORS for local development
 
-# Initialize gate validator and inspector
+# Initialize gate validator, inspector, and intervention controller
 repo_root = Path(__file__).parent.parent.parent
 gate_validator = BuildAuthorizationGate(repo_root=repo_root)
 node_inspector = BuildNodeInspector(repo_root=repo_root)
+intervention_controller = BuildInterventionController(repo_root=repo_root)
 
 
 @app.route('/')
@@ -378,6 +381,233 @@ def get_evidence_artifact(evidence_id: str):
         logger.error(f"Error retrieving evidence artifact {evidence_id}: {str(e)}")
         return jsonify({
             'error': 'Failed to retrieve evidence artifact',
+            'details': str(e)
+        }), 500
+
+
+# ===== INTERVENTION ENDPOINTS =====
+# Implements BUILD_INTERVENTION_AND_ALERT_MODEL.md (G-C10)
+
+@app.route('/api/build-tree/alert', methods=['POST'])
+def issue_alert():
+    """
+    Issue a non-blocking alert for a build node.
+    
+    Request Body:
+        {
+            "scope_level": "step" | "sub-wave" | "wave" | "application",
+            "target_node_id": "string",
+            "rationale": "string (min 20 chars)",
+            "triggered_by": "string"
+        }
+        
+    Returns:
+        JSON with alert ID and routing information
+    """
+    try:
+        data = request.get_json()
+        
+        # Validate required fields
+        required_fields = ['scope_level', 'target_node_id', 'rationale', 'triggered_by']
+        missing_fields = [f for f in required_fields if f not in data]
+        if missing_fields:
+            return jsonify({
+                'error': 'Missing required fields',
+                'missing_fields': missing_fields
+            }), 400
+        
+        logger.info(f"Alert request: {data['scope_level']}/{data['target_node_id']}")
+        
+        # Issue alert
+        result = intervention_controller.issue_alert(
+            scope_level=data['scope_level'],
+            target_node_id=data['target_node_id'],
+            rationale=data['rationale'],
+            triggered_by=data['triggered_by'],
+            triggered_by_type=data.get('triggered_by_type', 'human'),
+            ip_address=request.remote_addr
+        )
+        
+        return jsonify(result), 201
+    
+    except ValueError as e:
+        logger.warning(f"Invalid alert request: {str(e)}")
+        return jsonify({
+            'error': 'Invalid request',
+            'details': str(e)
+        }), 400
+    
+    except Exception as e:
+        logger.error(f"Error issuing alert: {str(e)}")
+        return jsonify({
+            'error': 'Failed to issue alert',
+            'details': str(e)
+        }), 500
+
+
+@app.route('/api/build-tree/emergency-stop', methods=['POST'])
+def issue_emergency_stop():
+    """
+    Issue an immediate emergency stop for a build scope.
+    
+    Request Body:
+        {
+            "scope_level": "step" | "sub-wave" | "wave" | "application",
+            "target_node_id": "string",
+            "critical_rationale": "string (min 50 chars)",
+            "confirmation": {
+                "acknowledged_impact": true,
+                "typed_confirmation": "STOP"
+            },
+            "triggered_by": "string"
+        }
+        
+    Returns:
+        JSON with stop ID and affected nodes
+    """
+    try:
+        data = request.get_json()
+        
+        # Validate required fields
+        required_fields = ['scope_level', 'target_node_id', 'critical_rationale', 'confirmation', 'triggered_by']
+        missing_fields = [f for f in required_fields if f not in data]
+        if missing_fields:
+            return jsonify({
+                'error': 'Missing required fields',
+                'missing_fields': missing_fields
+            }), 400
+        
+        logger.warning(f"⚠️ EMERGENCY STOP request: {data['scope_level']}/{data['target_node_id']}")
+        
+        # Issue emergency stop
+        result = intervention_controller.issue_emergency_stop(
+            scope_level=data['scope_level'],
+            target_node_id=data['target_node_id'],
+            critical_rationale=data['critical_rationale'],
+            triggered_by=data['triggered_by'],
+            confirmation=data['confirmation'],
+            triggered_by_type=data.get('triggered_by_type', 'human'),
+            ip_address=request.remote_addr
+        )
+        
+        return jsonify(result), 201
+    
+    except ValueError as e:
+        logger.warning(f"Invalid emergency stop request: {str(e)}")
+        return jsonify({
+            'error': 'Invalid request',
+            'details': str(e)
+        }), 400
+    
+    except Exception as e:
+        logger.error(f"Error issuing emergency stop: {str(e)}")
+        return jsonify({
+            'error': 'Failed to issue emergency stop',
+            'details': str(e)
+        }), 500
+
+
+@app.route('/api/build-tree/intervention/<intervention_id>/context', methods=['GET'])
+def get_intervention_context(intervention_id: str):
+    """
+    Get full context for an intervention (alert or stop).
+    
+    Args:
+        intervention_id: ID of the intervention
+        
+    Returns:
+        JSON with full context including node state, evidence, blockers, etc.
+    """
+    try:
+        logger.info(f"Context request for intervention {intervention_id}")
+        
+        # Get intervention context
+        result = intervention_controller.get_intervention_context(intervention_id)
+        
+        return jsonify(result)
+    
+    except FileNotFoundError as e:
+        logger.warning(f"Intervention not found: {intervention_id}")
+        return jsonify({
+            'error': 'Intervention not found',
+            'intervention_id': intervention_id
+        }), 404
+    
+    except Exception as e:
+        logger.error(f"Error retrieving intervention context: {str(e)}")
+        return jsonify({
+            'error': 'Failed to retrieve context',
+            'details': str(e)
+        }), 500
+
+
+@app.route('/api/build-tree/emergency-stop/<stop_id>/resume', methods=['POST'])
+def resume_after_stop(stop_id: str):
+    """
+    Resume execution after an emergency stop.
+    
+    Args:
+        stop_id: ID of the stop to resume
+        
+    Request Body:
+        {
+            "authorized_by": "string",
+            "resolution_summary": "string (min 50 chars)",
+            "resume_conditions": ["string"]
+        }
+        
+    Returns:
+        JSON with resumption status
+    """
+    try:
+        data = request.get_json()
+        
+        # Validate required fields
+        required_fields = ['authorized_by', 'resolution_summary', 'resume_conditions']
+        missing_fields = [f for f in required_fields if f not in data]
+        if missing_fields:
+            return jsonify({
+                'error': 'Missing required fields',
+                'missing_fields': missing_fields
+            }), 400
+        
+        logger.info(f"Resume request for stop {stop_id} by {data['authorized_by']}")
+        
+        # Resume execution
+        result = intervention_controller.resume_after_stop(
+            stop_id=stop_id,
+            authorized_by=data['authorized_by'],
+            resolution_summary=data['resolution_summary'],
+            resume_conditions=data['resume_conditions']
+        )
+        
+        return jsonify(result)
+    
+    except FileNotFoundError as e:
+        logger.warning(f"Stop not found: {stop_id}")
+        return jsonify({
+            'error': 'Stop not found',
+            'stop_id': stop_id
+        }), 404
+    
+    except ValueError as e:
+        logger.warning(f"Invalid resume request: {str(e)}")
+        return jsonify({
+            'error': 'Invalid request',
+            'details': str(e)
+        }), 400
+    
+    except PermissionError as e:
+        logger.warning(f"Unauthorized resume attempt: {str(e)}")
+        return jsonify({
+            'error': 'Unauthorized',
+            'details': str(e)
+        }), 403
+    
+    except Exception as e:
+        logger.error(f"Error resuming after stop: {str(e)}")
+        return jsonify({
+            'error': 'Failed to resume',
             'details': str(e)
         }), 500
 
