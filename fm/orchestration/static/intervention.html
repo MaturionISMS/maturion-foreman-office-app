@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Intervention Controls - Foreman Office</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="intervention-styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚠️ Build Intervention & Alert Routing</h1>
+            <p class="subtitle">Governed Intervention • Explicit Authorization • Full Audit Trail</p>
+            <nav class="breadcrumb">
+                <a href="/">Control Panel</a> &gt; 
+                <a href="/inspector.html">Inspector</a> &gt;
+                <span>Intervention Controls</span>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Node Selection Section -->
+            <section class="panel">
+                <h2>Select Build Node</h2>
+                <div class="node-selector">
+                    <div class="input-group">
+                        <label for="node-type-select">Node Type:</label>
+                        <select id="node-type-select">
+                            <option value="task">Task</option>
+                            <option value="sub-wave">Sub-Wave</option>
+                            <option value="wave">Wave</option>
+                            <option value="application">Application/Program</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="node-id-input">Node ID:</label>
+                        <input 
+                            type="text" 
+                            id="node-id-input" 
+                            placeholder="Enter node ID (e.g., task-ai-panel)"
+                            autocomplete="off"
+                        />
+                    </div>
+                    
+                    <button id="load-node-btn" class="primary-btn">
+                        📍 Load Node Context
+                    </button>
+                </div>
+            </section>
+
+            <!-- Node Context Display -->
+            <section class="panel" id="node-context-panel" style="display: none;">
+                <h2>Current Node Context</h2>
+                <div id="node-context" class="context-display"></div>
+            </section>
+
+            <!-- Intervention Controls -->
+            <section class="panel" id="intervention-controls" style="display: none;">
+                <h2>Intervention Controls</h2>
+                
+                <div class="intervention-actions">
+                    <!-- Alert Button -->
+                    <div class="action-card alert-card">
+                        <div class="action-header">
+                            <span class="action-icon">🔔</span>
+                            <h3>Issue Alert</h3>
+                            <span class="action-badge non-blocking">Non-Blocking</span>
+                        </div>
+                        <p class="action-description">
+                            Send a non-blocking notification to responsible parties. 
+                            Execution continues while alert is being reviewed.
+                        </p>
+                        <button id="alert-btn" class="action-button alert-button">
+                            🔔 Issue Alert
+                        </button>
+                    </div>
+
+                    <!-- Emergency Stop Button -->
+                    <div class="action-card stop-card">
+                        <div class="action-header">
+                            <span class="action-icon">🛑</span>
+                            <h3>Emergency Stop</h3>
+                            <span class="action-badge critical">Immediately Binding</span>
+                        </div>
+                        <p class="action-description">
+                            Immediately halt execution at selected scope. 
+                            Requires explicit authorization to resume.
+                        </p>
+                        <button id="emergency-stop-btn" class="action-button stop-button">
+                            🛑 Emergency Stop
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Intervention History -->
+            <section class="panel" id="intervention-history-panel" style="display: none;">
+                <h2>Recent Interventions</h2>
+                <div id="intervention-history" class="history-list"></div>
+            </section>
+
+            <!-- Success/Error Display -->
+            <section class="panel success-panel" id="success-panel" style="display: none;">
+                <h2>✅ Success</h2>
+                <div id="success-message"></div>
+            </section>
+
+            <section class="panel error-panel" id="error-panel" style="display: none;">
+                <h2>⚠️ Error</h2>
+                <div id="error-message"></div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Maturion Foreman Office • Governed Intervention • Explicit Authorization</p>
+            <p class="governance-ref">Implements BUILD_INTERVENTION_AND_ALERT_MODEL.md (G-C10)</p>
+        </footer>
+    </div>
+
+    <!-- Alert Modal -->
+    <div id="alert-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🔔 Issue Build Alert</h2>
+                <button class="modal-close" id="alert-modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <label>Scope Level:</label>
+                    <select id="alert-scope-select">
+                        <option value="step">Step (current task step)</option>
+                        <option value="sub-wave">Sub-Wave (group of tasks)</option>
+                        <option value="wave">Wave (entire wave)</option>
+                        <option value="application">Application/Program (all waves)</option>
+                    </select>
+                </div>
+
+                <div class="modal-section">
+                    <label>Target Node:</label>
+                    <div class="readonly-field" id="alert-target-node"></div>
+                </div>
+
+                <div class="modal-section impact-notice">
+                    <strong>Impact:</strong> Execution will continue. Alert will be routed to appropriate authority.
+                </div>
+
+                <div class="modal-section">
+                    <label>Rationale (required, min 20 characters):</label>
+                    <textarea 
+                        id="alert-rationale" 
+                        rows="4" 
+                        placeholder="Explain why this alert is needed..."
+                    ></textarea>
+                    <div class="char-counter">
+                        <span id="alert-char-count">0</span> / 20 minimum
+                    </div>
+                </div>
+
+                <div class="modal-section authority-context">
+                    <strong>Authority Context:</strong>
+                    <div id="alert-authority-text"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="alert-cancel-btn" class="secondary-btn">Cancel</button>
+                <button id="alert-send-btn" class="primary-btn" disabled>Send Alert</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Stop Modal -->
+    <div id="stop-modal" class="modal" style="display: none;">
+        <div class="modal-content stop-modal">
+            <div class="modal-header critical-header">
+                <h2>⚠️ EMERGENCY STOP</h2>
+                <button class="modal-close" id="stop-modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="critical-warning">
+                    <strong>⚠️ WARNING:</strong> This will IMMEDIATELY halt execution at the selected scope level.
+                </div>
+
+                <div class="modal-section">
+                    <label>Scope Level:</label>
+                    <select id="stop-scope-select">
+                        <option value="step">Step (current task step only)</option>
+                        <option value="sub-wave">Sub-Wave (all tasks in sub-wave)</option>
+                        <option value="wave">Wave (entire wave stops)</option>
+                        <option value="application">Application/Program (CATASTROPHIC - ALL execution stops)</option>
+                    </select>
+                </div>
+
+                <div class="modal-section">
+                    <label>Target Node:</label>
+                    <div class="readonly-field" id="stop-target-node"></div>
+                </div>
+
+                <div class="modal-section impact-notice critical">
+                    <strong>Impact:</strong> All execution at <span id="stop-scope-impact"></span> level will stop IMMEDIATELY. 
+                    Resumption requires explicit authorization from <span id="stop-auth-required"></span>.
+                </div>
+
+                <div class="modal-section">
+                    <label>Critical Rationale (required, min 50 characters):</label>
+                    <textarea 
+                        id="stop-rationale" 
+                        rows="5" 
+                        placeholder="Provide detailed explanation for emergency stop..."
+                    ></textarea>
+                    <div class="char-counter">
+                        <span id="stop-char-count">0</span> / 50 minimum
+                    </div>
+                </div>
+
+                <div class="modal-section authority-context">
+                    <strong>Authority Context:</strong>
+                    <div id="stop-authority-text"></div>
+                </div>
+
+                <div class="modal-section confirmation-section">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="stop-acknowledge-checkbox">
+                        I understand this stop takes immediate effect and cannot be automated.
+                    </label>
+                </div>
+
+                <div class="modal-section">
+                    <label>Type "STOP" to confirm:</label>
+                    <input 
+                        type="text" 
+                        id="stop-confirmation-input" 
+                        placeholder="STOP"
+                        autocomplete="off"
+                    />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="stop-cancel-btn" class="secondary-btn">Cancel</button>
+                <button id="stop-execute-btn" class="danger-btn" disabled>STOP EXECUTION</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contextual Chat Modal -->
+    <div id="chat-modal" class="modal" style="display: none;">
+        <div class="modal-content chat-modal">
+            <div class="modal-header">
+                <h2>💬 Contextual Chat</h2>
+                <div class="chat-scope" id="chat-scope-indicator"></div>
+                <button class="modal-close" id="chat-modal-close">&times;</button>
+            </div>
+            <div class="modal-body chat-body">
+                <div class="chat-context" id="chat-context"></div>
+                <div class="chat-messages" id="chat-messages"></div>
+                <div class="chat-input-area">
+                    <textarea 
+                        id="chat-input" 
+                        rows="3" 
+                        placeholder="Type your message..."
+                    ></textarea>
+                    <button id="chat-send-btn" class="primary-btn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="intervention-app.js"></script>
+</body>
+</html>
