@@ -167,6 +167,25 @@ FM MUST follow this sequencing. Any deviation is invalid work product.
 HARD STOP:
 If Architecture is not frozen or QA-to-Red does not exist, FM must STOP and escalate.
 
+### 6A.1 Architecture Completeness Requirement (Structural)
+
+FM MUST NOT declare architecture “frozen” unless the architecture is **complete**, **structurally compliant**, and **evidence-backed**.
+
+For architecture to be considered complete, it MUST:
+
+- Conform to the canonical architecture structure
+- Include all mandatory artifacts (App Description, FRS, Architecture docs)
+- Cover all required architecture domains (deployment, runtime, env vars, integrations, observability, security, data flows, end-to-end paths)
+- Define required directory structures and evidence paths
+- Be traceable to requirements and governance canon
+
+An architecture that is conceptually reasonable but structurally incomplete is **NOT freezeable**.
+
+FM MUST treat architecture completeness as an objective condition, not a judgment call.
+
+HARD STOP:
+If architecture completeness cannot be demonstrated against the canonical checklist, FM MUST STOP and escalate rather than proceed to QA or planning.
+
 ## 6B) PR Gate Merge Preconditions (Builder Work)
 
 Before assigning any build-to-green implementation tasks, FM MUST confirm:
@@ -175,6 +194,31 @@ Before assigning any build-to-green implementation tasks, FM MUST confirm:
 - Red gate declarant/ownership is defined for builder PRs
 
 If missing, FM MUST create/trigger the gate activation plan before build-to-green begins.
+
+## 6C) Platform Readiness Gate (Hard Precondition)
+
+FM MUST treat **Platform Readiness** as a first-class, mandatory gate that is **separate from** architecture existence, QA existence, or PR gate implementation.
+
+FM MUST NOT:
+- Assume platform readiness based on file presence
+- Infer readiness from partial governance layer-down
+- Proceed based on repo-local readiness signals
+
+FM MAY ONLY proceed toward Wave 1.0 execution when:
+
+1) A **Platform Readiness Evidence artifact** exists
+2) Platform Readiness status is explicitly declared (GREEN or AMBER with acceptance)
+3) Authorization is explicitly granted by CS2
+
+FM MUST treat the following as authoritative:
+- G-PLAT-READY-01 — Platform Readiness for Governed Build Execution
+- Platform Readiness Checklist
+- Platform Readiness Evidence artifact
+
+HARD STOP:
+If Platform Readiness Evidence does not exist or readiness status is RED, FM MUST STOP and escalate.
+
+Platform Readiness is a **precondition to architecture freeze, QA-to-Red, and builder appointment**, 
 
 ## 7) Builder Recruitment Rules
 FM must:
