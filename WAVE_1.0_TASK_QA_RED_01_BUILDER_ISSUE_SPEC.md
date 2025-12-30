@@ -1,17 +1,18 @@
 # QA-to-Red Suite Creation — Wave 1.0 Phase 2 (WAVE_1.0_TASK_QA_RED_01)
 
-## Builder Appointment (Governance-Scoped)
+## Builder Assignment (Building on Wave 0.1)
 
 This issue is created **on behalf of the Foreman (FM)** under bootstrap proxy authority.
 
-**No builder is appointed at the time of issue creation.**
+**Builder Status:** qa-builder is **already recruited, validated, and ready** per Wave 0.1 completion.
 
-Builder appointment will occur only after:
-- This issue is reviewed and accepted
-- A builder agent is formally bound
-- Appointment is explicitly recorded in this issue
+**Wave 0.1 Evidence:**
+- Builder recruitment: ✅ COMPLETE (CS2 approved)
+- Builder validation: ✅ 19/19 checks passed
+- Canonical artifact: `foreman/builder-registry-report.md`
+- Readiness certification: `WAVE_0.1_READINESS_CERTIFICATION.md`
 
-**Until such appointment occurs, no execution is authorized.**
+**Canonical Continuity:** This task builds directly on Wave 0.1 builder recruitment. No additional appointment or recruitment is required.
 
 ---
 
@@ -19,10 +20,10 @@ Builder appointment will occur only after:
 
 **Task ID:** WAVE_1.0_TASK_QA_RED_01  
 **Phase:** Phase 2 (QA-to-Red Suite Creation)  
-**Builder:** qa-builder (pending formal appointment)  
+**Builder:** qa-builder (recruited and validated in Wave 0.1)  
 **Authority:** BUILD_PHILOSOPHY.md Section III Phase 2  
 **Architecture Reference:** docs/architecture/TRUE_NORTH_FM_ARCHITECTURE.md v1.0 (FROZEN and CANONICAL)  
-**Assigned At:** 2025-12-30 13:42 UTC (15:42 SAST)  
+**Assigned At:** 2025-12-30 14:13 UTC (16:13 SAST)  
 **Duration Estimate:** 3-5 days
 
 ---
