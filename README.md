@@ -570,6 +570,19 @@ python3 foreman/scripts/run-self-test.py
 - `1` = WARN - Some warnings, but functional
 - `2` = FAIL - Critical systems missing/broken
 
+# Agent Definitions (Canonical)
+
+Canonical agent definitions live in this folder.
+
+## Active
+- `ForemanApp-agent.md` — the only valid FM definition for this repository
+
+## Deprecated (Removed)
+All legacy FM agent definitions are deprecated and must not be used.
+Commit message:
+
+docs: add canonical agent folder notice
+
 See `foreman/self-test/SELF_TEST_QUICK_REFERENCE.md` for detailed usage guide.
 
 ## 🧠 Conclusion
