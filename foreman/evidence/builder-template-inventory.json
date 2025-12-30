@@ -1,0 +1,42 @@
+{
+  "report_type": "BUILDER_TEMPLATE_INVENTORY",
+  "timestamp": "2025-12-30T16:35:00Z",
+  "templates": [
+    {
+      "name": "builder-qa-report-template.json",
+      "path": "foreman/builder/templates/builder-qa-report-template.json",
+      "type": "JSON_TEMPLATE",
+      "status": "VALID",
+      "schema_compliant": true,
+      "purpose": "Template for Builder QA Report generation"
+    },
+    {
+      "name": "builder-qa-report-schema.json",
+      "path": "foreman/builder/templates/builder-qa-report-schema.json",
+      "type": "JSON_SCHEMA",
+      "status": "VALID",
+      "schema_compliant": true,
+      "purpose": "JSON Schema for Builder QA Report validation"
+    },
+    {
+      "name": "agent-boundary-checklist.md",
+      "path": "foreman/builder/templates/agent-boundary-checklist.md",
+      "type": "CHECKLIST",
+      "status": "VALID",
+      "schema_compliant": true,
+      "purpose": "Pre-PR agent boundary compliance checklist"
+    },
+    {
+      "name": "build-to-green-checklist.md",
+      "path": "foreman/builder/templates/build-to-green-checklist.md",
+      "type": "CHECKLIST",
+      "status": "VALID",
+      "schema_compliant": true,
+      "purpose": "Pre-PR build-to-green compliance checklist"
+    }
+  ],
+  "total_templates": 4,
+  "all_valid": true,
+  "validation_method": "File existence and structure verification",
+  "validated_by": "Foreman (FM)"
+}
