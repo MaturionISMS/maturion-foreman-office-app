@@ -591,6 +591,7 @@ All mandatory platform readiness conditions are satisfied:
    - Architecture-First enforced
    - QA-to-Red enforced
    - Build-to-Green enforced
+   - Builder Recruitment Continuity enforced (Section 6E)
    - STOP and escalation mechanics defined
 
 5. **Architecture Preconditions**: ✅ Defined
@@ -598,7 +599,14 @@ All mandatory platform readiness conditions are satisfied:
    - Canonical structure expectations acknowledged
    - Mandatory artifacts and evidence paths defined
 
-6. **Bootstrap Exceptions**: ✅ Acceptable
+6. **Builder Recruitment Continuity**: ✅ Complete
+   - Builders canonically recruited in Wave 0.1
+   - All 5 builders (ui, api, schema, integration, qa) registered and CS2-approved
+   - Builder recruitment artifacts exist and validated
+   - Recruitment is one-time and continuous across waves
+   - FM required to verify recruitment continuity before wave re-entry
+
+7. **Bootstrap Exceptions**: ✅ Acceptable
    - One exception identified (delegated execution proxy)
    - Exception does NOT weaken governance
    - Exception acceptable for Wave 1.0 execution

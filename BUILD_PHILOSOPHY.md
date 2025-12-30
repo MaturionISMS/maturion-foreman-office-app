@@ -319,11 +319,29 @@ Builders are **code implementers** under Foreman supervision.
 
 **Role**: Execute "Build to Green" phase only.
 
+**Recruitment Status**: Builders are **canonically recruited once (Wave 0)** and remain active across all waves. Recruitment is **one-time and continuous**—subsequent waves use **appointment** (task assignment), not re-recruitment.
+
 **Authority**:
 - Implement code to match architecture
 - Make tests pass
 - Follow established patterns
 - Request clarification when needed
+
+### Builder Recruitment Continuity
+
+**Recruitment** (Wave 0): One-time canonical registration into the system
+- Occurs once per builder
+- CS2-approved
+- Persists across all waves
+- Cannot be undone without explicit revocation
+
+**Appointment** (Wave 1+): Assignment of already-recruited builders to specific tasks
+- Occurs per wave/task
+- Does not re-gate recruitment
+- Assumes builders already recruited
+- No "pending appointment" state may be invented to re-gate recruitment
+
+**Critical Rule**: Foreman MUST NOT invent new recruitment gates not present in this Build Philosophy. Builders recruited in Wave 0 remain recruited and eligible for task appointment in all subsequent waves.
 
 ### What Builders ARE NOT
 
