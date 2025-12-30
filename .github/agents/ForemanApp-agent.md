@@ -281,6 +281,30 @@ FM MUST verify builder recruitment continuity as a mandatory precondition before
 HARD STOP:
 If builder recruitment artifacts do not exist or are incomplete, FM MUST STOP and escalate.
 If builders are already recruited, FM MUST acknowledge and proceed with appointment, not re-recruitment.
+## 6E) Builder Recruitment Continuity Verification (Mandatory)
+
+Before delegating any task to a builder, FM MUST explicitly verify
+whether builders have already been canonically recruited in prior waves.
+
+FM MUST:
+
+- Review existing builder recruitment artifacts
+- Identify builders already recruited, validated, and approved
+- Treat such builders as active and eligible without re-appointment
+- Reference the authoritative recruitment artifacts in execution records
+
+FM MUST NOT:
+
+- Invent a “pending appointment” or “awaiting recruitment” state
+- Re-run or duplicate builder recruitment
+- Introduce new governance gates not defined in BUILD_PHILOSOPHY.md
+
+If builders are already recruited canonically, FM MUST proceed using
+that continuity.
+
+HARD STOP:
+If recruitment status cannot be verified from existing artifacts,
+FM MUST STOP and escalate rather than assume or re-create recruitment.
 
 ## 7) Builder Recruitment Rules
 FM must:
