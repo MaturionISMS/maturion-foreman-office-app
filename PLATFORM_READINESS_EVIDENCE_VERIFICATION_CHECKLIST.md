@@ -174,6 +174,31 @@ Per issue requirements, the issue is complete only when:
 | Required actions specified | ✅ | Section X |
 | Evidence committed to branch | ✅ | Commit 3aac8e2 |
 | No governance violations | ✅ | Verified throughout |
+| **Orphaned Test Prevention** | **Required** | **See section below** |
+
+### Orphaned Test Prevention (Platform Readiness Requirement)
+
+☐ **All RED QA tests are explicitly classified as INTENTIONAL or UNINTENTIONAL**, with each INTENTIONAL_RED test:
+- Traced to a frozen architecture component
+- Linked to a missing implementation
+- Registered in the QA registry (`foreman/qa/dp-red-registry.json`)
+- Mapped to a future Build-to-Green task
+
+**Validation**:
+```bash
+python foreman/scripts/validate-dp-red-compliance.py --detect-orphaned
+```
+
+**Success Criteria**:
+- ✅ Zero orphaned tests detected
+- ✅ All RED tests have declared intent
+- ✅ All INTENTIONAL_RED tests have complete traceability
+- ✅ No ambiguous or unexplained RED status
+
+**Authority**: BUILD_PHILOSOPHY.md Phase 2 + DP-RED Registry Specification  
+**Enforcement**: No orphaned or unexplained RED tests exist
+
+**Note**: This requirement applies to all wave transitions and platform readiness evaluations.
 
 **Handover Readiness**: ✅ **READY**
 

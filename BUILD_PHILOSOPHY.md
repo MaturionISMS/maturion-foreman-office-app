@@ -202,15 +202,25 @@ Any deviation from this process is a **Build Philosophy Violation** and must be 
 **DP-RED (Design-Phase RED) Mechanism**:
 - Tests that are intentionally RED because implementation doesn't exist yet
 - MUST be registered in `foreman/qa/dp-red-registry.json`
+- MUST be explicitly classified as INTENTIONAL_RED or UNINTENTIONAL_RED
+- INTENTIONAL_RED tests must be traceable to frozen architecture
+- INTENTIONAL_RED tests must be mapped to future Build-to-Green tasks
 - Allowed ONLY in QA_DESIGN phase
 - Unregistered RED tests → BLOCKED
+- Orphaned RED tests (no intent, no traceability) → GOVERNANCE VIOLATION
 - See: `foreman/qa/dp-red-registry-spec.md` and `foreman/governance/dp-red-policy.md`
+
+**Test Intent Declaration (Mandatory)**:
+- Every RED test MUST be classified as INTENTIONAL_RED or UNINTENTIONAL_RED
+- RED status alone does NOT indicate failure
+- Intent classification determines treatment and acceptance
+- Orphaned tests (no declared intent) constitute governance violations
 
 **Validation**: QA-of-QA validation (mandatory)
 
 **Critical Rule**: If QA is GREEN before build starts, there is NOTHING TO BUILD. Reject the task.
 
-**DP-RED Rule**: Intentional RED is acceptable during design phase ONLY when explicitly registered. Unregistered RED tests block merge.
+**DP-RED Rule**: Intentional RED is acceptable during design phase ONLY when explicitly registered and classified. Unregistered or orphaned RED tests block merge.
 
 ### Phase 3: Build to Green
 

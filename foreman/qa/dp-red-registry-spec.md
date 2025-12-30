@@ -82,6 +82,7 @@ foreman/qa/dp-red-registry.json
       "test_id": "string (required)",
       "test_path": "string (required)",
       "phase": "string (required, must be QA_DESIGN)",
+      "intent": "string (required, enum: INTENTIONAL_RED | UNINTENTIONAL_RED)",
       "reason": "string (required, min 20 chars)",
       "registered_by": "string (required)",
       "registered_date": "ISO-8601 timestamp (required)",
@@ -89,7 +90,8 @@ foreman/qa/dp-red-registry.json
       "module": "string (required)",
       "category": "string (required)",
       "architecture_ref": "string (required)",
-      "build_blocker": "boolean (required)"
+      "build_blocker": "boolean (required)",
+      "future_build_task": "string (required for INTENTIONAL_RED)"
     }
   ]
 }
@@ -112,6 +114,14 @@ foreman/qa/dp-red-registry.json
 - **Type**: string (enum)
 - **Values**: `QA_DESIGN` only
 - **Description**: Current QA phase - MUST be QA_DESIGN for entry to be valid
+
+#### intent (required)
+- **Type**: string (enum)
+- **Values**: `INTENTIONAL_RED` or `UNINTENTIONAL_RED`
+- **Description**: Explicit classification of RED test intent
+- **INTENTIONAL_RED**: RED because the underlying component, integration, or behavior is not yet implemented. Test validates frozen architecture before build.
+- **UNINTENTIONAL_RED**: RED due to defect, misconfiguration, missing artifact, or error in test construction. Must be fixed immediately.
+- **Orphaned Test Prevention**: Tests without declared intent constitute a governance violation and block progression.
 
 #### reason (required)
 - **Type**: string
@@ -154,6 +164,162 @@ foreman/qa/dp-red-registry.json
 - **Type**: boolean
 - **Description**: Whether this test blocks build progression
 - **Value**: true (all DP-RED tests block build until implemented)
+
+#### future_build_task (required for INTENTIONAL_RED)
+- **Type**: string
+- **Description**: Reference to future Build-to-Green task that will implement this functionality
+- **Required**: ONLY for tests with `intent: INTENTIONAL_RED`
+- **Example**: "Build-to-Green Task B2G-FM-001: Implement Foreman Liveness System"
+- **Validation**: Must be present and non-empty for INTENTIONAL_RED tests
+- **Purpose**: Ensures every INTENTIONAL RED test is mapped to a planned implementation task, preventing orphaned tests
+
+---
+
+## III.A. Intent Classification and Orphaned Test Prevention
+
+### Mandatory Intent Declaration
+
+**Constitutional Requirement**: Every RED test MUST be explicitly declared as either INTENTIONAL_RED or UNINTENTIONAL_RED.
+
+**RED status alone does NOT indicate failure.** The intent classification determines how the test is treated.
+
+### INTENTIONAL_RED Classification
+
+A test is classified as **INTENTIONAL_RED** when:
+
+1. ✅ The test is RED because the underlying component, integration, or behavior **is not yet implemented**
+2. ✅ The test validates a **frozen architecture component** before build
+3. ✅ The missing implementation is **explicitly stated** in the `reason` field
+4. ✅ The test is **mapped to a future Build-to-Green task** via `future_build_task` field
+5. ✅ The test has a valid `architecture_ref` tracing to frozen architecture
+
+**Valid INTENTIONAL_RED tests are non-blocking** in QA_DESIGN phase and serve as inputs to Phase 3 (Build-to-Green).
+
+**Example INTENTIONAL_RED Entry**:
+```json
+{
+  "test_id": "foreman.liveness.test_heartbeat_generation",
+  "test_path": "tests/wave0_minimum_red/test_liveness.py::test_heartbeat_generation",
+  "phase": "QA_DESIGN",
+  "intent": "INTENTIONAL_RED",
+  "reason": "Implementation module foreman.runtime.liveness does not exist yet. Test validates architecture contract before build.",
+  "architecture_ref": "foreman/architecture/FOREMAN_ARCHITECTURE_v1.0.md#liveness-system",
+  "future_build_task": "B2G-FM-001: Implement Foreman Liveness System",
+  "registered_by": "Foreman",
+  "registered_date": "2025-12-16T10:00:00Z",
+  "module": "foreman",
+  "category": "liveness",
+  "build_blocker": true
+}
+```
+
+### UNINTENTIONAL_RED Classification
+
+A test is classified as **UNINTENTIONAL_RED** when:
+
+1. ❌ The test is RED due to a **defect** in existing code
+2. ❌ The test is RED due to **misconfiguration** or environment issues
+3. ❌ The test is RED due to **missing artifact** or dependency problem
+4. ❌ The test is RED due to **error in test construction**
+5. ❌ The test failure is **unexpected** and not part of design-phase validation
+
+**UNINTENTIONAL_RED tests MUST be fixed immediately** and cannot be used to validate design-phase progression.
+
+**Example UNINTENTIONAL_RED Entry** (for tracking only):
+```json
+{
+  "test_id": "foreman.integration.test_api_connection",
+  "test_path": "tests/integration/test_api.py::test_api_connection",
+  "phase": "QA_DESIGN",
+  "intent": "UNINTENTIONAL_RED",
+  "reason": "Test failing due to missing environment variable API_BASE_URL. Defect in test configuration must be fixed.",
+  "architecture_ref": "N/A - configuration defect",
+  "registered_by": "QA Engineer",
+  "registered_date": "2025-12-30T14:00:00Z",
+  "module": "foreman",
+  "category": "integration",
+  "build_blocker": true
+}
+```
+
+**Note**: UNINTENTIONAL_RED entries do **not** require `future_build_task` as they represent defects that must be fixed, not features to be built.
+
+### Orphaned Test Criteria (PROHIBITED)
+
+A RED test is considered **ORPHANED** and constitutes a **governance violation** if:
+
+1. ❌ The test has no declared `intent` (neither INTENTIONAL_RED nor UNINTENTIONAL_RED)
+2. ❌ The test cannot be traced to a frozen architecture component (invalid `architecture_ref`)
+3. ❌ The missing implementation is not identified (vague `reason` field)
+4. ❌ For INTENTIONAL_RED: The test has no `future_build_task` mapping
+5. ❌ The test is RED due to ambiguity or oversight
+
+**Orphaned RED tests block all progression** and trigger immediate STOP + escalation.
+
+### Enforcement Rules
+
+1. **Mandatory Classification**: All RED tests MUST have explicit `intent` field
+2. **Traceability Requirement**: All INTENTIONAL_RED tests MUST have valid `architecture_ref`
+3. **Task Mapping Requirement**: All INTENTIONAL_RED tests MUST have `future_build_task`
+4. **Immediate Fix Requirement**: All UNINTENTIONAL_RED tests MUST be fixed before progression
+5. **Zero Orphans**: No RED test may exist without declared intent and complete traceability
+
+### Validation Logic
+
+The validation script (`validate-dp-red-compliance.py`) enforces:
+
+```python
+def validate_intent_classification(entry):
+    """Validate intent classification and prevent orphaned tests."""
+    
+    # Check intent is declared
+    if 'intent' not in entry or not entry['intent']:
+        return False, "Missing required field: intent"
+    
+    # Check intent is valid enum
+    if entry['intent'] not in ['INTENTIONAL_RED', 'UNINTENTIONAL_RED']:
+        return False, f"Invalid intent: {entry['intent']}"
+    
+    # For INTENTIONAL_RED, enforce additional requirements
+    if entry['intent'] == 'INTENTIONAL_RED':
+        # Must have architecture ref
+        if not entry.get('architecture_ref') or entry['architecture_ref'] == 'N/A':
+            return False, "INTENTIONAL_RED must have valid architecture_ref"
+        
+        # Must have future build task
+        if not entry.get('future_build_task'):
+            return False, "INTENTIONAL_RED must have future_build_task"
+        
+        # Reason must indicate missing implementation
+        if 'does not exist' not in entry.get('reason', '').lower() and \
+           'not yet implemented' not in entry.get('reason', '').lower():
+            return False, "INTENTIONAL_RED reason must indicate missing implementation"
+    
+    # For UNINTENTIONAL_RED, warn if in registry too long
+    if entry['intent'] == 'UNINTENTIONAL_RED':
+        registered = datetime.fromisoformat(entry['registered_date'].replace('Z', '+00:00'))
+        age_days = (datetime.now().astimezone() - registered).days
+        if age_days > 2:
+            return True, f"WARNING: UNINTENTIONAL_RED test has been RED for {age_days} days - must be fixed"
+    
+    return True, "Intent classification valid"
+```
+
+### CI/CD Integration
+
+The build-to-green enforcement workflow validates:
+
+1. ✅ All RED tests have declared intent
+2. ✅ All INTENTIONAL_RED tests have architecture traceability
+3. ✅ All INTENTIONAL_RED tests have future build task mapping
+4. ✅ No orphaned tests exist
+5. ✅ UNINTENTIONAL_RED tests are being actively fixed
+
+**Block Conditions**:
+- Any RED test without declared intent → HARD BLOCK
+- INTENTIONAL_RED without architecture_ref → HARD BLOCK
+- INTENTIONAL_RED without future_build_task → HARD BLOCK
+- UNINTENTIONAL_RED older than 7 days → HARD BLOCK
 
 ---
 
