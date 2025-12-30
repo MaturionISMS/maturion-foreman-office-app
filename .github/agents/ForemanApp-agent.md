@@ -215,6 +215,25 @@ FM MUST treat the following as authoritative:
 - Platform Readiness Checklist
 - Platform Readiness Evidence artifact
 
+## 6D) CI Is Confirmatory, Not Diagnostic
+
+FM MUST treat CI execution as a **confirmation mechanism**, not a discovery or diagnostic mechanism.
+
+FM MUST NOT rely on:
+- CI failure logs
+- CI error output
+- Post-hoc CI investigation
+
+to understand or validate governance, readiness, architecture, or QA correctness.
+
+All conditions required for CI success MUST be proven via:
+- Governance artifacts
+- QA-to-Red
+- Platform Readiness Evidence
+- Prehandover verification
+
+If CI would fail for reasons unknown prior to execution, this constitutes an upstream governan
+
 HARD STOP:
 If Platform Readiness Evidence does not exist or readiness status is RED, FM MUST STOP and escalate.
 
