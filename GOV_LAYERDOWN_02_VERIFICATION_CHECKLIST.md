@@ -11,8 +11,8 @@
 
 The FM Repository has **substantially complete** PR gate layer-down from canonical governance.
 
-**Status**: ✅ READY FOR BUILDER APPOINTMENT  
-**Remaining**: 2 verification tasks (requires admin access)
+**Status**: ⚠️ ELIGIBLE PENDING BRANCH PROTECTION VERIFICATION  
+**Blocking**: Gap 2 (branch protection verification) is a merge prerequisite
 
 ---
 
@@ -53,9 +53,11 @@ The FM Repository has **substantially complete** PR gate layer-down from canonic
 
 ## III. Verification Tasks (Requires Admin Access)
 
-### Task 1: Verify Branch Protection Settings
+### Task 1: Verify Branch Protection Settings (BLOCKING - Merge Prerequisite)
 
 **Action**: Check that all PR gate workflows are **required status checks**
+
+**Importance**: This is a **hard execution boundary**. Until verified, governance is theoretically bypassable. This is NOT a post-merge activity - it is a MERGE PREREQUISITE.
 
 **Steps**:
 
@@ -112,7 +114,7 @@ The FM Repository has **substantially complete** PR gate layer-down from canonic
 
 ## IV. Optional Enhancements (Can Defer)
 
-### Enhancement 1: Governance Artifact Gate (Gap 1)
+### Enhancement 1: Governance Artifact Gate (Gap 1 - Non-Blocking)
 
 **Status**: Validation logic exists (distributed), standalone workflow would improve clarity
 
@@ -177,9 +179,9 @@ Layer-down is **100% complete** when:
 Once you've completed Tasks 1-2:
 
 1. Update `GOV_LAYERDOWN_02_ASSESSMENT.md`:
-   - Change "Gap 2" status from "Not verified" to "VERIFIED"
+   - Change "Gap 2" status from "PENDING" to "VERIFIED"
    - Add evidence reference (screenshot link)
-   - Update determination to "100% COMPLETE"
+   - Update determination to "READY FOR BUILDER APPOINTMENT"
 
 2. Close issue GOV-LAYERDOWN-02 with comment:
    ```
@@ -189,11 +191,12 @@ Once you've completed Tasks 1-2:
    ✅ All gates role-aware
    ✅ All gates are required status checks
    ✅ Branch protection documented
+   ✅ Builder appointment authorized
    
    Evidence: .github/branch-protection-evidence-YYYY-MM-DD.png
    ```
 
-3. Builder agents can now rely on PR gate enforcement for Build-to-Green operations
+3. Builder agents can now be appointed and rely on PR gate enforcement
 
 ---
 

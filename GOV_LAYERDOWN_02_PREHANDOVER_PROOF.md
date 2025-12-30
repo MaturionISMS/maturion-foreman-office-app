@@ -16,6 +16,8 @@ Per FM Repo Builder Agent Contract:
 **Current PR Status**: DRAFT  
 **Handover Status**: **NOT YET HANDED OVER** (deliberate - awaiting verification)
 
+**Blocking Condition**: Gap 2 (branch protection verification) is a merge prerequisite and must be completed before builder appointment authorization
+
 ---
 
 ## II. PR Classification
@@ -72,9 +74,9 @@ Per issue GOV-LAYERDOWN-02:
 1. ✅ **GOV_LAYERDOWN_02_ASSESSMENT.md** (26,668 bytes)
    - Complete technical assessment
    - All 5 canonical gates analyzed
-   - Gap analysis (2 non-blocking gaps)
+   - Gap analysis (1 blocking, 1 non-blocking)
    - Success criteria verified (8/8)
-   - Determination: READY FOR BUILDER APPOINTMENT
+   - Determination: ELIGIBLE PENDING BRANCH PROTECTION VERIFICATION
 
 2. ✅ **GOV_LAYERDOWN_02_GAP_CLOSURE_SPEC.md** (26,483 bytes)
    - Implementation specifications for gaps
@@ -154,8 +156,8 @@ Per issue GOV-LAYERDOWN-02:
    - Result: Complete specifications provided
 
 5. ✅ **Provide clear "READY FOR BUILDER APPOINTMENT" or "NOT READY" decision**
-   - Evidence: Section II of `GOV_LAYERDOWN_02_ASSESSMENT.md`
-   - Result: ✅ **READY FOR BUILDER APPOINTMENT**
+   - Evidence: Section XII of `GOV_LAYERDOWN_02_ASSESSMENT.md`
+   - Result: ⚠️ **ELIGIBLE PENDING BRANCH PROTECTION VERIFICATION** (conditional readiness)
 
 ---
 
@@ -179,13 +181,13 @@ Per issue GOV-LAYERDOWN-02:
 ### Issue Definition of Done
 
 - ✅ **Gate layer-down status is unambiguous**
-  - Result: ✅ READY FOR BUILDER APPOINTMENT (clear determination)
+  - Result: ⚠️ ELIGIBLE PENDING BRANCH PROTECTION VERIFICATION (clear conditional determination)
 
 - ✅ **Gaps (if any) are explicitly listed**
-  - Result: 2 gaps identified with severity, impact, and remediation
+  - Result: 2 gaps identified (1 blocking, 1 non-blocking) with severity, impact, and remediation
 
-- ✅ **FM can rely on enforcement once builders are appointed**
-  - Result: 4 of 5 gates standalone, 5 of 5 with enforcement logic
+- ⚠️ **FM can rely on enforcement once builders are appointed**
+  - Result: Conditional - pending Gap 2 (branch protection verification) completion
 
 ---
 
@@ -195,17 +197,17 @@ Per issue GOV-LAYERDOWN-02:
 
 **This PR is intentionally kept in DRAFT status** pending:
 
-1. ✅ Repository owner verification of branch protection settings (Gap 2)
-2. ✅ Repository owner decision on Gap 1 closure (optional)
+1. ❌ Repository owner verification of branch protection settings (Gap 2 - **BLOCKING**)
+2. ✅ Repository owner decision on Gap 1 closure (optional, non-blocking)
 
-**Reason**: Per assessment, FM Repository is READY FOR BUILDER APPOINTMENT, but 2 verification tasks require repository admin access.
+**Reason**: Gap 2 (branch protection verification) is a **hard execution boundary** and **merge prerequisite**. Until verified, governance is theoretically bypassable. This is NOT a post-merge activity.
 
 ### When to Mark Ready for Review
 
 **The PR should be marked Ready for Review when:**
 
-1. Repository owner has completed verification tasks in `GOV_LAYERDOWN_02_VERIFICATION_CHECKLIST.md`, OR
-2. Repository owner approves handover with verification tasks deferred
+1. Repository owner has completed Gap 2 verification tasks in `GOV_LAYERDOWN_02_VERIFICATION_CHECKLIST.md` AND evidenced them, OR
+2. Repository owner explicitly authorizes merge with Gap 2 verification deferred (requires written authorization as this would be a governance timing exception)
 
 ---
 
@@ -252,16 +254,18 @@ Per `.github/workflows/build-to-green-enforcement.yml`:
 
 ## XIII. Determination
 
-✅ **ASSESSMENT WORK COMPLETE**
+⚠️ **ASSESSMENT WORK COMPLETE - PENDING BRANCH PROTECTION VERIFICATION**
 
-**Deliverables**: 4 comprehensive documentation files  
+**Deliverables**: 5 comprehensive documentation files  
 **Issue Requirements**: 5 of 5 satisfied  
 **Constraints**: 4 of 4 satisfied  
-**Definition of Done**: 3 of 3 satisfied
+**Definition of Done**: 2.5 of 3 satisfied (conditional on verification)
 
-**Handover Status**: Draft (pending owner verification)
+**Handover Status**: Draft (pending owner verification - BLOCKING)
 
-**Recommendation**: Repository owner should review assessment, complete verification tasks, then mark PR Ready for Review.
+**Blocking Condition**: Gap 2 (branch protection verification) is a hard execution boundary and merge prerequisite
+
+**Recommendation**: Repository owner must complete and evidence Gap 2 verification before this PR can be marked Ready for Review and merged. This is not a post-merge activity.
 
 ---
 
@@ -278,8 +282,8 @@ Per `.github/workflows/build-to-green-enforcement.yml`:
 
 **END OF PREHANDOVER PROOF**
 
-**Status**: Documentation assessment complete  
-**Handover**: Awaiting repository owner verification  
-**PR State**: Draft (appropriate)
+**Status**: Documentation assessment complete - branch protection verification blocking  
+**Handover**: Blocked until Gap 2 (branch protection verification) completed and evidenced  
+**PR State**: Draft (appropriate - merge prerequisite incomplete)
 
-*This proof documents completion of documentation-only assessment work per issue GOV-LAYERDOWN-02.*
+*This proof documents completion of documentation-only assessment work per issue GOV-LAYERDOWN-02. Builder appointment authorization is conditional on Gap 2 completion.*

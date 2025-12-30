@@ -9,11 +9,13 @@
 
 ## I. Executive Summary
 
-**Determination**: **READY FOR BUILDER APPOINTMENT** ✅
+**Determination**: **ELIGIBLE PENDING BRANCH PROTECTION VERIFICATION** ⚠️
 
 The FM Application Repository has **substantially complete** PR gate layer-down from canonical governance requirements. All five mandatory canonical PR gates exist, are role-aware, and mechanically enforce governance constraints.
 
-**Remaining Gaps**: 2 minor configuration items (non-blocking)
+**Critical Prerequisite**: Branch protection verification (Gap 2) must be completed before builder appointment authorization.
+
+**Remaining Gaps**: 2 configuration items (1 blocking, 1 non-blocking)
 
 ---
 
@@ -707,7 +709,7 @@ Per `governance/alignment/PR_GATE_REQUIREMENTS_CANON.md` Section VIII:
 
 ---
 
-## XII. Determination: READY FOR BUILDER APPOINTMENT
+## XII. Determination: ELIGIBLE PENDING BRANCH PROTECTION VERIFICATION
 
 ### Summary
 
@@ -722,39 +724,52 @@ The FM Application Repository has **substantially complete PR gate layer-down** 
 
 ---
 
-### Remaining Gaps (Non-Blocking)
+### Remaining Gaps
 
 **Gap 1**: Dedicated Governance Artifact Gate Workflow  
 **Severity**: LOW  
+**Blocking**: NO  
 **Impact**: Consolidation would improve clarity, not capability  
 **Recommendation**: Deferred (can be implemented post-layer-down)
 
 **Gap 2**: Branch Protection Configuration Verification  
-**Severity**: MEDIUM  
-**Impact**: Enforcement-only concern (workflows exist, GitHub settings not verified)  
-**Recommendation**: Verify before declaring layer-down 100% complete
+**Severity**: HIGH  
+**Blocking**: **YES** (merge prerequisite)  
+**Impact**: Without verification, governance is theoretically bypassable  
+**Recommendation**: MUST be completed and evidenced before builder appointment authorization
 
 ---
 
 ### Final Determination
 
-✅ **READY FOR BUILDER APPOINTMENT**
+⚠️ **ELIGIBLE PENDING BRANCH PROTECTION VERIFICATION**
 
-**Rationale**:
-1. All 5 canonical PR gates have enforcement logic present
-2. 4 of 5 gates have standalone workflows (80% complete)
-3. Role-aware enforcement operational
-4. Canonical failure classifications implemented
-5. Prohibited actions verified absent
-6. Success criteria satisfied (8/8)
-7. Remaining gaps are minor configuration items, not architectural deficits
+**Readiness Status**:
+- Architecture: ✅ Complete (all gates have enforcement logic)
+- Implementation: ✅ Complete (4 of 5 standalone workflows)
+- Configuration: ⚠️ **PENDING** (branch protection verification required)
 
-**Confidence Level**: HIGH
+**Blocking Condition**:
+- Gap 2 (branch protection verification) is a **hard execution boundary**
+- Until verified and evidenced, governance enforcement is **theoretically bypassable**
+- This is **not** a post-merge activity - it is a **merge prerequisite**
 
-**Builder Appointment Recommendation**:
-- FM Builder Agent can rely on PR gate enforcement
-- Gaps 1-2 should be addressed during Wave 3+ (post-initial-build)
-- Current layer-down sufficient for Build-to-Green enforcement
+**Authorization Prerequisites**:
+1. ✅ All 5 canonical PR gates have enforcement logic present
+2. ✅ 4 of 5 gates have standalone workflows (80% complete)
+3. ✅ Role-aware enforcement operational
+4. ✅ Canonical failure classifications implemented
+5. ✅ Prohibited actions verified absent
+6. ✅ Success criteria satisfied (8/8)
+7. ❌ **Branch protection verification incomplete** (Gap 2)
+
+**Confidence Level**: HIGH (contingent on verification completion)
+
+**Next Action Required**:
+- Complete branch protection verification per `GOV_LAYERDOWN_02_VERIFICATION_CHECKLIST.md`
+- Evidence verification with screenshot or API output
+- Update this assessment to close Gap 2
+- Only then can builder appointment be authorized
 
 ---
 
@@ -832,9 +847,10 @@ The FM Application Repository has **substantially complete PR gate layer-down** 
 
 **END OF ASSESSMENT**
 
-**Determination**: ✅ READY FOR BUILDER APPOINTMENT  
-**Confidence**: HIGH  
-**Gaps**: 2 (non-blocking)  
-**Canonical Alignment**: ✅ ALIGNED
+**Determination**: ⚠️ ELIGIBLE PENDING BRANCH PROTECTION VERIFICATION  
+**Confidence**: HIGH (contingent on verification)  
+**Gaps**: 2 (1 blocking, 1 non-blocking)  
+**Canonical Alignment**: ✅ ALIGNED  
+**Blocking Prerequisite**: Gap 2 (branch protection verification) must be completed
 
-*FM Repository can rely on PR gate enforcement for Build-to-Green operations.*
+*Builder appointment authorization can be granted only after branch protection verification is complete and evidenced.*

@@ -674,9 +674,9 @@ The following workflows MUST pass before merge:
 
 ### 3.6 Implementation Priority
 
-**Priority**: MEDIUM  
-**Timeline**: Should be completed before declaring layer-down 100% complete  
-**Reason**: Workflows exist but enforcement mechanism not verified
+**Priority**: HIGH (blocking)  
+**Timeline**: Must be completed before builder appointment authorization  
+**Reason**: Hard execution boundary - governance is theoretically bypassable without verification
 
 ---
 
@@ -744,7 +744,7 @@ The following workflows MUST pass before merge:
 4. ✅ Take evidence screenshot
 5. ✅ Update assessment with verification results
 
-**Timeline**: Same day as assessment completion
+**Timeline**: Must be completed before builder appointment authorization (merge prerequisite)
 
 ---
 
@@ -756,7 +756,7 @@ The following workflows MUST pass before merge:
 9. ✅ Add to branch protection required checks
 10. ✅ Document in assessment
 
-**Timeline**: 1-2 days after assessment
+**Timeline**: 1-2 days after Gap 2 completion
 
 ---
 
@@ -774,14 +774,14 @@ The following workflows MUST pass before merge:
 
 **Layer-down is 100% complete when**:
 
-1. ✅ All 5 canonical PR gates have standalone workflows
+1. ✅ All 5 canonical PR gates have standalone workflows (or enforcement logic)
 2. ✅ All gates are role-aware and skip appropriately
-3. ✅ All gates are required status checks in GitHub branch protection
-4. ✅ Branch protection configuration is documented and verified
-5. ✅ Evidence of configuration exists (screenshot/API output)
-6. ✅ Assessment documents READY FOR BUILDER APPOINTMENT
+3. ❌ **All gates are required status checks in GitHub branch protection** (Gap 2 - BLOCKING)
+4. ❌ **Branch protection configuration is documented and verified** (Gap 2 - BLOCKING)
+5. ❌ **Evidence of configuration exists** (screenshot/API output) (Gap 2 - BLOCKING)
+6. ⚠️ Assessment documents conditional readiness (pending verification)
 
-**Current Status**: 4/6 complete (Gap 1 + Gap 2 closure required)
+**Current Status**: 2/6 complete (4 blocked by Gap 2 verification)
 
 ---
 
