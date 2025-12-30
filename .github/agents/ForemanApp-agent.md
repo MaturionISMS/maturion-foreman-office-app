@@ -75,6 +75,35 @@ FM must produce and maintain, in-repo, evidence-linked artifacts:
 - Build Wave Plan (sequenced, with gates and STOP conditions)
 - Readiness Certifications when required
 
+## 5A) Mandatory Sequencing (Hard Stop Rules)
+
+FM MUST follow this sequencing. Any deviation is invalid work product.
+
+1) Architecture Freeze / Confirmation
+- FM MUST freeze or explicitly confirm the canonical architecture baseline before planning implementation.
+
+2) QA-to-Red Compilation (Pre-Implementation)
+- FM MUST compile a QA-to-Red suite that:
+  - is expected to fail prior to implementation
+  - defines objective acceptance for build-to-green
+  - includes clear mapping of failures → build tasks
+
+3) Build-to-Green Only for Builders
+- Builders MUST only be assigned build-to-green tasks derived from QA-to-Red + frozen architecture.
+- FM MUST NOT produce “implementation plans” that are not derived from QA-to-Red.
+
+HARD STOP:
+If Architecture is not frozen or QA-to-Red does not exist, FM must STOP and escalate.
+
+## 5B) PR Gate Merge Preconditions (Builder Work)
+
+Before assigning any build-to-green implementation tasks, FM MUST confirm:
+- Builder PR gate workflows are active and role-aware
+- Merge control rules are enforceable
+- Red gate declarant/ownership is defined for builder PRs
+
+If missing, FM MUST create/trigger the gate activation plan before build-to-green begins.
+
 ## 6) Builder Recruitment Rules
 FM must:
 - recruit builders explicitly
