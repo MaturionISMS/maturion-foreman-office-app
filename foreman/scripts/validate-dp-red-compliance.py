@@ -142,10 +142,12 @@ class DPREDValidator:
             return  # Already caught in schema validation
         
         required_fields = [
-            'test_id', 'test_path', 'phase', 'reason', 'registered_by',
+            'test_id', 'test_path', 'phase', 'intent', 'reason', 'registered_by',
             'registered_date', 'module', 'category', 'architecture_ref',
             'build_blocker'
         ]
+        
+        valid_intents = ['INTENTIONAL_RED', 'UNINTENTIONAL_RED']
         
         test_ids = set()
         
@@ -167,6 +169,75 @@ class DPREDValidator:
             # Check phase is QA_DESIGN
             if entry.get('phase') != 'QA_DESIGN':
                 entry_errors.append(f"Entry phase must be QA_DESIGN, got: {entry.get('phase')}")
+            
+            # CRITICAL: Validate intent classification (Orphaned Test Prevention)
+            intent = entry.get('intent')
+            if not intent:
+                entry_errors.append(
+                    "GOVERNANCE VIOLATION: Missing 'intent' field. "
+                    "All RED tests MUST be classified as INTENTIONAL_RED or UNINTENTIONAL_RED. "
+                    "Orphaned tests are prohibited."
+                )
+            elif intent not in valid_intents:
+                entry_errors.append(
+                    f"Invalid intent '{intent}'. Must be INTENTIONAL_RED or UNINTENTIONAL_RED"
+                )
+            else:
+                # Validate INTENTIONAL_RED requirements
+                if intent == 'INTENTIONAL_RED':
+                    # Must have valid architecture_ref
+                    arch_ref = entry.get('architecture_ref', '')
+                    if not arch_ref or arch_ref == 'N/A' or arch_ref.strip() == '':
+                        entry_errors.append(
+                            "INTENTIONAL_RED test missing valid architecture_ref. "
+                            "Must be traceable to frozen architecture component."
+                        )
+                    
+                    # Must have future_build_task
+                    if not entry.get('future_build_task'):
+                        entry_errors.append(
+                            "INTENTIONAL_RED test missing 'future_build_task'. "
+                            "Must be mapped to a Build-to-Green task to prevent orphaned tests."
+                        )
+                    
+                    # Reason must indicate missing implementation
+                    reason = entry.get('reason', '').lower()
+                    implementation_indicators = [
+                        'does not exist', 
+                        'not yet implemented',
+                        'not implemented',
+                        'before implementation',
+                        'implementation does not exist',
+                        'no implementation',
+                        'pending implementation'
+                    ]
+                    if not any(indicator in reason for indicator in implementation_indicators):
+                        entry_errors.append(
+                            "INTENTIONAL_RED reason must clearly indicate missing implementation. "
+                            f"Current reason: '{entry.get('reason', '')}'"
+                        )
+                
+                # Validate UNINTENTIONAL_RED requirements  
+                elif intent == 'UNINTENTIONAL_RED':
+                    # Check age and warn if too old
+                    reg_date_str = entry.get('registered_date')
+                    if reg_date_str:
+                        try:
+                            reg_date = datetime.fromisoformat(reg_date_str.replace('Z', '+00:00'))
+                            age_days = (datetime.now().astimezone() - reg_date).days
+                            
+                            if age_days > 7:
+                                entry_errors.append(
+                                    f"UNINTENTIONAL_RED test has been RED for {age_days} days. "
+                                    "Must be fixed immediately - exceeds 7-day limit."
+                                )
+                            elif age_days > 2:
+                                self.warnings.append(
+                                    f"Entry {test_id}: UNINTENTIONAL_RED for {age_days} days - "
+                                    "should be fixed soon"
+                                )
+                        except ValueError:
+                            pass  # Date validation handled elsewhere
             
             # Check reason length
             reason = entry.get('reason', '')
