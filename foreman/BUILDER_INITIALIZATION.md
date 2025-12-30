@@ -4,9 +4,24 @@
 
 The Maturion Foreman uses a builder agent registry system to manage and validate all builder agents in the ISMS ecosystem. This document describes the initialization process and validation requirements.
 
+## Recruitment Status
+
+**Builder Recruitment**: ✅ **COMPLETE (Wave 0.1)**  
+**CS2 Approval**: ✅ **GRANTED**  
+**Canonical Status**: **ACTIVE AND CONTINUOUS ACROSS WAVES**
+
+All 5 builder agents listed below were **canonically recruited in Wave 0.1** and remain active for all subsequent waves. Builder recruitment is **one-time and continuous**—builders do not require re-recruitment for Wave 1.0+ task assignment.
+
+### Recruitment vs Appointment
+
+- **Recruitment** (Wave 0.1): One-time canonical registration into the system [COMPLETE]
+- **Appointment** (Wave 1.0+): Task-specific assignment of already-recruited builders [ONGOING]
+
+FM MUST NOT treat builders as "pending" or re-gate recruitment in subsequent waves.
+
 ## Builder Agents
 
-The following builder agents are registered in the Maturion ecosystem:
+The following builder agents are registered and canonically recruited in the Maturion ecosystem:
 
 1. **ui-builder** - Frontend UI components and layouts
 2. **api-builder** - Backend API endpoints and business logic

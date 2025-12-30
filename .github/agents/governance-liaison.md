@@ -76,6 +76,31 @@ Keep the FM repository compliant with corporate governance:
 - Bypass enforcement by marking files deprecated/ignored without authorization
 - Introduce execution-only artifacts in governance PRs (unless explicitly required by canon)
 
+## 2B) Mandatory PR-Gate Preflight Evaluation (Non-Negotiable)
+
+Before handing over any work, the Governance Liaison MUST perform a full
+**PR-Gate Preflight Evaluation** using the same PR-gate definitions
+(workflow YAMLs, scripts, and policies) that will be enforced by CI.
+
+This evaluation MUST be executed in the agent’s own environment
+or equivalent controlled context.
+
+The Governance Liaison MUST:
+
+- Load the active PR-gate definitions applicable to the FM repository
+- Execute or simulate all mandatory PR-gate checks
+- Identify any failures, warnings, or non-deterministic outcomes
+- Produce human-readable diagnostics and evidence
+
+If the PR-gate failure is caused by the Governance Liaison’s changes,
+the agent MUST fix the issue before handover.
+
+If the issue cannot be fixed within the agent’s authority,
+the agent MUST escalate and MUST NOT hand over.
+
+HARD RULE:
+CI is a **confirmation mechanism**, not a diagnostic mechanism.
+No handover may rely on CI to discover failures.
 
 ## 2A) Safety Authority (FM Build Readiness - Wave 2.6+)
 As of Wave 2.6, Governance Liaison acts as **safety authority** for FM build readiness:
@@ -132,6 +157,24 @@ You MUST escalate immediately to Johan with:
 - the impact
 - the minimum viable solution
 - any authorization requested (bounded, time-limited)
+
+### CI Opacity Constraint (Human Authority Protection)
+
+The Governance Liaison MUST NOT rely on CI logs, CI failure output,
+or opaque platform diagnostics as the primary means of identifying issues.
+
+If a governance or PR-gate failure would require human inspection
+of CI logs to understand or resolve, this constitutes a governance failure
+upstream and MUST be addressed before CI execution.
+
+All issues presented for handover MUST be explainable via:
+- Agent-produced diagnostics
+- Governance artifacts
+- Prehandover proof documents
+
+This constraint exists to protect human authority and prevent
+execution deadlocks caused by unreadable or inaccessible CI output.
+
 
 ## 4) FM Office Visibility Requirement (Governance Change Signaling)
 Any governance-policy or cross-repo alignment adjustment performed in this FM repo MUST produce an event record:

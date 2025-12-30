@@ -1,0 +1,437 @@
+name: Governance Compliance Gate
+
+# CI CLASSIFICATION: Hard Gate
+# Purpose: Validates governance artifact schema compliance and immutability per canonical Gate 3
+# Failure Semantics:
+#   - Schema invalid → Code failure → Block merge
+#   - Immutability violated → CRITICAL governance violation → Block merge + escalation
+#   - Missing artifact → Expected workflow → Block merge (for Governance Admin role)
+#   - Infrastructure failures → Explicit infra-failure signal → Success + Comment
+# Timeout: 10 minutes (file-based validation only)
+# Applicability: Governance Admin role ONLY (skipped for Builder/FM roles)
+# See: .github/CI_CLASSIFICATION.md
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+
+# Explicit, least-privilege permissions
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  validate-governance-artifacts:
+    name: Validate Governance Artifact Compliance
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Detect Agent Role
+        id: agent-role
+        run: |
+          echo "🔍 Detecting agent role for gate applicability..."
+          
+          ROLE=""
+          
+          # Check for explicit PR label (highest precedence)
+          # Labels come as JSON array from GitHub API
+          LABELS='${{ toJSON(github.event.pull_request.labels.*.name) }}'
+          if echo "$LABELS" | jq -r '.[]' | grep -q "agent-role:"; then
+            ROLE=$(echo "$LABELS" | jq -r '.[]' | grep -oP 'agent-role:\K[a-z]+' | head -1)
+            echo "✅ Role from PR label: $ROLE"
+          # Check .agent file (second precedence)
+          elif [ -f ".agent" ] && grep -qE "^role:" ".agent"; then
+            ROLE=$(grep -E "^role:" .agent | head -1 | cut -d: -f2 | tr -d ' "' | tr '[:upper:]' '[:lower:]')
+            echo "✅ Role from .agent file: $ROLE"
+          # Check PR title prefix (third precedence)
+          elif [[ "${{ github.event.pull_request.title }}" =~ ^\[(Builder|Governance|FM|builder|governance|fm)\] ]]; then
+            ROLE=$(echo "${{ github.event.pull_request.title }}" | grep -oP '^\[\K[^\]]+' | tr '[:upper:]' '[:lower:]')
+            echo "✅ Role from PR title: $ROLE"
+          # Infer from PR content (governance keywords)
+          elif [[ "${{ github.event.pull_request.title }}" =~ [Gg]overnance ]] || [[ "${{ github.event.pull_request.title }}" =~ [Aa]lign ]]; then
+            ROLE="governance"
+            echo "✅ Role inferred from PR title keywords: $ROLE"
+          # Default to FM repository's primary role
+          else
+            ROLE="fm"
+            echo "ℹ️ Using default role for FM repository: $ROLE"
+          fi
+          
+          echo "role=$ROLE" >> $GITHUB_OUTPUT
+          echo ""
+          echo "**Detected Agent Role: $ROLE**"
+      
+      - name: Check Gate Applicability
+        id: applicability
+        run: |
+          ROLE="${{ steps.agent-role.outputs.role }}"
+          
+          echo "🔍 Checking Governance Compliance Gate applicability..."
+          echo "Agent Role: $ROLE"
+          echo ""
+          
+          # Governance Compliance Gate applies to ALL roles but with different enforcement levels
+          # - Governance role: STRICT enforcement (blocks on violations)
+          # - FM/Builder roles: ADVISORY (warnings only, informational)
+          
+          if [ "$ROLE" = "governance" ]; then
+            echo "✅ Governance Compliance Gate is STRICTLY APPLICABLE for Governance Admin role"
+            echo "enforcement=strict" >> $GITHUB_OUTPUT
+          else
+            echo "ℹ️ Governance Compliance Gate is ADVISORY for $ROLE role"
+            echo "enforcement=advisory" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Find Governance Artifacts
+        id: find-artifacts
+        run: |
+          echo "🔍 Searching for governance artifacts..."
+          
+          # Find governance evidence JSON files
+          ARTIFACTS=$(find governance -type f -name "*.json" 2>/dev/null | tr '\n' ' ' || echo "")
+          
+          if [ -z "$ARTIFACTS" ]; then
+            echo "ℹ️ No governance artifacts found in this PR"
+            echo "found=false" >> $GITHUB_OUTPUT
+          else
+            echo "✅ Found governance artifacts: $ARTIFACTS"
+            echo "artifacts=$ARTIFACTS" >> $GITHUB_OUTPUT
+            echo "found=true" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Validate Schema Compliance
+        if: steps.find-artifacts.outputs.found == 'true'
+        id: validate-schema
+        run: |
+          echo "🔒 Validating governance artifact schema compliance..."
+          
+          ARTIFACTS="${{ steps.find-artifacts.outputs.artifacts }}"
+          SCHEMA_VALID=true
+          WARNINGS=()
+          ERRORS=()
+          
+          for ARTIFACT in $ARTIFACTS; do
+            echo "Validating: $ARTIFACT"
+            
+            # Check artifact is valid JSON
+            if ! jq empty "$ARTIFACT" 2>/dev/null; then
+              echo "❌ $ARTIFACT is not valid JSON"
+              ERRORS+=("$ARTIFACT: Invalid JSON")
+              SCHEMA_VALID=false
+              continue
+            fi
+            
+            # Check for immutable flag (all governance artifacts should be immutable)
+            if ! jq -e '.immutable' "$ARTIFACT" >/dev/null 2>&1; then
+              echo "⚠️ $ARTIFACT missing immutability flag"
+              WARNINGS+=("$ARTIFACT: Missing immutability flag")
+            else
+              IMMUTABLE=$(jq -r '.immutable' "$ARTIFACT")
+              if [ "$IMMUTABLE" != "true" ]; then
+                echo "❌ $ARTIFACT immutability flag is not true"
+                ERRORS+=("$ARTIFACT: Immutability flag is not true")
+                SCHEMA_VALID=false
+              fi
+            fi
+            
+            # Check for timestamp (ISO 8601 format)
+            if jq -e '.timestamp' "$ARTIFACT" >/dev/null 2>&1; then
+              TIMESTAMP=$(jq -r '.timestamp' "$ARTIFACT")
+              # Basic ISO 8601 format check
+              if ! echo "$TIMESTAMP" | grep -qE '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}'; then
+                echo "❌ $ARTIFACT timestamp not in ISO 8601 format: $TIMESTAMP"
+                ERRORS+=("$ARTIFACT: Invalid timestamp format")
+                SCHEMA_VALID=false
+              fi
+            fi
+          done
+          
+          # Export results
+          if [ "$SCHEMA_VALID" = "true" ]; then
+            echo "✅ All governance artifacts schema-compliant"
+            echo "outcome=success" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Schema validation failed"
+            echo "outcome=failure" >> $GITHUB_OUTPUT
+          fi
+          
+          # Export warnings/errors for reporting
+          echo "warning_count=${#WARNINGS[@]}" >> $GITHUB_OUTPUT
+          echo "error_count=${#ERRORS[@]}" >> $GITHUB_OUTPUT
+      
+      - name: Check Validation Result
+        if: steps.find-artifacts.outputs.found == 'true'
+        run: |
+          OUTCOME="${{ steps.validate-schema.outputs.outcome }}"
+          ENFORCEMENT="${{ steps.applicability.outputs.enforcement }}"
+          
+          echo "Validation outcome: $OUTCOME"
+          echo "Enforcement level: $ENFORCEMENT"
+          
+          if [ "$OUTCOME" = "failure" ]; then
+            if [ "$ENFORCEMENT" = "strict" ]; then
+              echo "❌ STRICT ENFORCEMENT: Governance artifact schema violation - BLOCKING MERGE"
+              exit 1
+            else
+              echo "⚠️ ADVISORY: Governance artifact schema issues detected (not blocking)"
+            fi
+          else
+            echo "✅ Validation succeeded"
+          fi
+      
+      - name: Report Success (Strict Enforcement)
+        if: success() && steps.applicability.outputs.enforcement == 'strict' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const found = '${{ steps.find-artifacts.outputs.found }}' === 'true';
+            const body = found 
+              ? `✅ **Governance Compliance Gate PASSED** (Strict Enforcement)
+              
+              All governance artifacts are schema-compliant and immutable.
+              
+              **Gatekeeper 1 approves governance compliance.**
+              
+              ---
+              
+              **Enforcement Level**: STRICT (Governance Admin role)
+              **Artifacts Validated**: Found and validated
+              **Schema Compliance**: ✅ PASS
+              **Immutability**: ✅ PASS
+              
+              ---
+              
+              **Reference**: governance/alignment/PR_GATE_REQUIREMENTS_CANON.md Section II, Gate 3`
+              : `✅ **Governance Compliance Gate PASSED** (Strict Enforcement)
+              
+              No governance artifacts found (expected for non-governance changes).
+              
+              **Enforcement Level**: STRICT (Governance Admin role)
+              **Artifacts Validated**: None found (acceptable)`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+      
+      - name: Report Success (Advisory)
+        if: success() && steps.applicability.outputs.enforcement == 'advisory' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const found = '${{ steps.find-artifacts.outputs.found }}' === 'true';
+            const outcome = '${{ steps.validate-schema.outputs.outcome }}';
+            const warnings = '${{ steps.validate-schema.outputs.warning_count }}' || '0';
+            
+            let body = `ℹ️ **Governance Compliance Gate** (Advisory Mode)
+            
+            **Enforcement Level**: ADVISORY (${{ steps.agent-role.outputs.role }} role)
+            **Gate Status**: ✅ Pass (advisory mode - not blocking)
+            
+            ---`;
+            
+            if (found === 'true') {
+              if (outcome === 'success') {
+                body += `\n\n**Artifacts Found**: Yes\n**Validation**: ✅ All artifacts schema-compliant\n**Warnings**: ${warnings}`;
+              } else {
+                body += `\n\n**Artifacts Found**: Yes\n**Validation**: ⚠️ Issues detected (see logs)\n**Impact**: Advisory only - not blocking merge`;
+              }
+            } else {
+              body += `\n\n**Artifacts Found**: No\n**Validation**: N/A`;
+            }
+            
+            body += `\n\n---\n\n**Note**: Governance Compliance Gate enforces strictly for Governance Admin role only. For Builder/FM roles, this gate provides advisory feedback without blocking.`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+      
+      - name: Report Failure (Strict Enforcement)
+        if: failure() && steps.applicability.outputs.enforcement == 'strict' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const errors = '${{ steps.validate-schema.outputs.error_count }}' || 'unknown';
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `❌ **Governance Compliance Gate FAILED** (Strict Enforcement)
+              
+              **Classification**: SCHEMA_VIOLATION
+              **Enforcement Level**: STRICT (Governance Admin role)
+              **Errors Detected**: ${errors}
+              
+              Governance artifacts are not schema-compliant. Check workflow logs for details.
+              
+              ---
+              
+              ## Required Actions
+              
+              1. ✅ Fix schema violations in governance artifacts
+              2. ✅ Ensure all artifacts have immutability flag set to true
+              3. ✅ Validate timestamp format (ISO 8601)
+              4. ✅ Push commit and re-run gate
+              
+              ---
+              
+              ## Common Issues
+              
+              - Missing \`immutable: true\` flag in JSON artifacts
+              - Invalid JSON syntax
+              - Timestamp not in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ)
+              - Required fields missing per canonical schema
+              
+              ---
+              
+              **Reference**: governance/alignment/PR_GATE_REQUIREMENTS_CANON.md Section II, Gate 3
+              **Canonical Failure Classification**: SCHEMA_VIOLATION
+              
+              **Merge is BLOCKED until violations are resolved.**`
+            });
+      
+      - name: Create Governance Violation Issue
+        if: failure() && steps.applicability.outputs.enforcement == 'strict' && steps.validate-schema.outputs.outcome == 'failure' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Create governance violation issue for tracking
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Governance Schema Violation - PR #${context.issue.number}`,
+              labels: ['governance-violation', 'schema-violation', 'requires-fix'],
+              body: `# Governance Artifact Schema Violation
+              
+              **Type**: Governance Compliance Gate Failure  
+              **PR**: #${context.issue.number}  
+              **Commit**: ${context.sha}  
+              **Detected**: ${new Date().toISOString()}
+              
+              ---
+              
+              ## Violation
+              
+              Governance artifacts in PR #${context.issue.number} do not conform to canonical schema requirements.
+              
+              This is a **governance violation** requiring immediate correction.
+              
+              ---
+              
+              ## Required Actions
+              
+              1. ✅ Review workflow logs for specific violations
+              2. ✅ Fix schema compliance issues
+              3. ✅ Ensure immutability flags are set
+              4. ✅ Validate timestamp formats
+              5. ✅ Re-run gate validation
+              
+              ---
+              
+              ## Impact
+              
+              - Merge **BLOCKED** until violations resolved
+              - PR cannot proceed until all governance artifacts are schema-compliant
+              
+              ---
+              
+              ## References
+              
+              - [PR Gate Requirements](../governance/alignment/PR_GATE_REQUIREMENTS_CANON.md)
+              - [Governance Gate Spec](../governance/contracts/GOVERNANCE_GATE_SPEC.md)
+              - [Evidence Schema Canon](../foreman/evidence/EVIDENCE_SCHEMA_CANON.json)
+              
+              ---
+              
+              **Authority**: Corporate Governance Canon  
+              **Enforcement**: Automatic (Governance Admin role)  
+              **Resolution**: Required for merge`
+            });
+      
+      - name: Generate Infrastructure Failure Report
+        if: always() && env.INFRA_FAILURE != ''
+        run: |
+          mkdir -p /tmp/infra-failure
+          TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          FAILURE_CATEGORY="${{ env.INFRA_FAILURE }}"
+          WORKFLOW_RUN="${{ github.run_id }}"
+          cat > /tmp/infra-failure/report.json << EOF
+          {
+            "failure_type": "infrastructure",
+            "workflow": "governance-compliance-gate",
+            "job": "validate-governance-artifacts",
+            "failure_category": "${FAILURE_CATEGORY}",
+            "timestamp": "${TIMESTAMP}",
+            "recommended_action": "investigate",
+            "details": {
+              "workflow_run": "${WORKFLOW_RUN}"
+            }
+          }
+          EOF
+      
+      - name: Upload Infrastructure Failure Artifact
+        if: always() && env.INFRA_FAILURE != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: infra-failure-report-governance-compliance
+          path: /tmp/infra-failure/report.json
+          retention-days: 30
+      
+      - name: Comment Infrastructure Failure on PR
+        if: always() && env.INFRA_FAILURE != '' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const failureType = process.env.INFRA_FAILURE;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `⚠️ **Infrastructure Failure Detected**
+              
+              **Workflow**: Governance Compliance Gate  
+              **Failure Type**: \`${failureType}\`  
+              **Timestamp**: ${new Date().toISOString()}
+              
+              This is **NOT a code failure**. The workflow encountered an infrastructure issue.
+              
+              **Your code changes are NOT blocked by this failure**
+              
+              **Infrastructure Failure Report**: Download artifact \`infra-failure-report-governance-compliance\``
+            });
+      
+      - name: Mark Success Despite Infrastructure Failure
+        if: always() && env.INFRA_FAILURE != ''
+        run: |
+          echo "✅ Job marked as success - Infrastructure failure (not code failure)"
+          exit 0
+      
+      - name: Workflow Success
+        if: always() && (success() || env.INFRA_FAILURE != '')
+        run: |
+          if [ -n "${{ env.INFRA_FAILURE }}" ]; then
+            echo "✅ Governance Compliance Gate completed successfully (infrastructure failure handled)"
+          else
+            echo "✅ Governance Compliance Gate completed successfully"
+          fi
+          exit 0
