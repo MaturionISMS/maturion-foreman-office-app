@@ -1,0 +1,30 @@
+{
+  "report_type": "BUILDER_QA_REPORT",
+  "agent_id": "<BUILDER_AGENT_ID>",
+  "timestamp": "<ISO_8601_TIMESTAMP>",
+  "qa_status": "<READY|NOT_READY>",
+  "evidence_chain": [
+    "<path/to/evidence/artifact1>",
+    "<path/to/evidence/artifact2>"
+  ],
+  "test_summary": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0
+  },
+  "gate_compliance": {
+    "agent_boundary": "<COMPLIANT|NON_COMPLIANT>",
+    "architecture": "<COMPLIANT|NON_COMPLIANT>",
+    "governance": "<COMPLIANT|NON_COMPLIANT>",
+    "build_to_green": "<COMPLIANT|NON_COMPLIANT>"
+  },
+  "immutable": true,
+  "task_reference": "<optional_task_reference>",
+  "module_id": "<optional_module_id>",
+  "qa_details": {
+    "test_framework": "<test_framework_name>",
+    "coverage_percentage": 0.0,
+    "test_duration_seconds": 0.0
+  }
+}
