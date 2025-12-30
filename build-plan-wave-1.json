@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "generated": "2025-12-04T07:06:27.126495",
   "build_wave": 1,
   "purpose": "Multi-Module Architecture Skeleton Build",
@@ -1432,5 +1432,123 @@
     "Establishes structural backbone for all future functionality",
     "Respects module dependencies and build sequencing",
     "All governance and compliance checks enforced"
-  ]
+  ],
+  "last_updated": "2025-12-30",
+  "update_reason": "Prerequisite insertion per CS2 instruction (PR-Gate Release Checks + Branch Protection)",
+  "prerequisite_phases": {
+    "phase_0": {
+      "name": "Platform Readiness & Builder Recruitment",
+      "status": "COMPLETE",
+      "phases": [
+        {
+          "phase": 0.1,
+          "name": "Platform Readiness Verification",
+          "status": "COMPLETE",
+          "evidence": "PLATFORM_READINESS_EVIDENCE.md"
+        },
+        {
+          "phase": 0.2,
+          "name": "Builder Recruitment Verification",
+          "status": "COMPLETE",
+          "evidence": "WAVE_0.1_BUILDER_RECRUITMENT_REPORT.md"
+        }
+      ]
+    },
+    "phase_1": {
+      "name": "PR-Gate & Branch Protection Prerequisites",
+      "status": "NOT_STARTED",
+      "blocks": [
+        "architecture_freeze",
+        "qa_to_red",
+        "builder_appointment",
+        "build_to_green"
+      ],
+      "phases": [
+        {
+          "phase": 1.1,
+          "name": "PR-Gate Release Checks System",
+          "status": "NOT_STARTED",
+          "specification": "governance/build/PR_GATE_RELEASE_CHECKS_SYSTEM_SPEC.md",
+          "description": "Preflight evaluation, builder artifacts, error mapping, CI confirmatory role",
+          "deliverables": [
+            "Preflight evaluation framework",
+            "Builder artifact templates",
+            "PR-gate error/failure mapping",
+            "Builder onboarding materials",
+            "Evidence artifact: foreman/evidence/pr-gate-preflight-report.json"
+          ],
+          "acceptance_criteria": [
+            "All PR gate workflows pass preflight validation",
+            "Builder artifact templates created and validated",
+            "Error/failure mapping complete for all 5 gates",
+            "Evidence report GREEN"
+          ],
+          "constitutional_basis": [
+            "BUILD_PHILOSOPHY.md Section II.1 - One-Time Build Correctness",
+            "Agent Contract Section 6D - CI Confirmatory Role"
+          ]
+        },
+        {
+          "phase": 1.2,
+          "name": "Branch Protection Governance Consumption",
+          "status": "NOT_STARTED",
+          "specification": "governance/build/BRANCH_PROTECTION_GOVERNANCE_CONSUMPTION_SPEC.md",
+          "description": "Canonical governance consumption, programmatic verification, evidence production",
+          "deliverables": [
+            "Canonical governance reference (BRANCH_PROTECTION_ENFORCEMENT.md from PR #818)",
+            "Programmatic verification script",
+            "Evidence artifact: foreman/evidence/branch-protection-verification-report.json",
+            "Bootstrap exception handling (if needed)"
+          ],
+          "acceptance_criteria": [
+            "Canonical governance consumed without reinterpretation",
+            "Verification script operational and programmatic",
+            "Evidence produced in governance-compatible format",
+            "Status GREEN or AMBER with acceptance"
+          ],
+          "constitutional_basis": [
+            "Governance PR #818 - Branch protection constitutional requirement",
+            "BUILD_PHILOSOPHY.md Section IX - PR Gate Requirements"
+          ]
+        }
+      ]
+    }
+  },
+  "execution_sequence": {
+    "note": "Prerequisites MUST be completed before architecture freeze and QA-to-Red",
+    "sequence": [
+      {
+        "step": 0,
+        "phase": "Foundation (Complete)",
+        "actions": [
+          "Platform Readiness",
+          "Builder Recruitment"
+        ]
+      },
+      {
+        "step": 1,
+        "phase": "Prerequisites (NEW - Blocks All Downstream)",
+        "actions": [
+          "PR-Gate Release Checks System",
+          "Branch Protection Governance Consumption"
+        ]
+      },
+      {
+        "step": 2,
+        "phase": "Architecture & QA (Pending Prerequisites)",
+        "actions": [
+          "Architecture Freeze/Confirmation",
+          "QA-to-Red Compilation"
+        ]
+      },
+      {
+        "step": 3,
+        "phase": "Build Execution (Pending Prerequisites)",
+        "actions": [
+          "Builder Appointment",
+          "Build-to-Green Execution"
+        ]
+      }
+    ]
+  }
 }

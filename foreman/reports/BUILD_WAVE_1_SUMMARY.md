@@ -3,21 +3,45 @@
 **Build Wave**: 1  
 **Purpose**: Multi-Module Architecture Skeleton Build  
 **Generated**: 2025-12-04 07:06:13  
-**Status**: PLANNING_COMPLETE  
+**Last Updated**: 2025-12-30 (Prerequisite Insertion)  
+**Status**: PLANNING_UPDATED  
 
 ---
 
-## Executive Summary
+## Executive Summary (UPDATED 2025-12-30)
 
-Build Wave 1 planning has been completed successfully. This wave establishes the **full ISMS platform foundation skeleton** across all 11 modules.
+Build Wave 1 planning has been **updated** to include mandatory prerequisites before QA-to-Red and builder execution. This update maintains One-Time Build Correctness by ensuring PR gate enforcement is operational before builders begin work.
 
-### Key Achievements
+### Key Achievements (Original Plan)
 
 - ✅ **11 modules** included in Wave 1
 - ✅ **55 build phases** defined across all modules
 - ✅ **110 skeleton build tasks** generated
 - ✅ **Build sequencing** determined based on module dependencies
 - ✅ **All governance checks** enforced
+
+### NEW: Mandatory Prerequisites (2025-12-30)
+
+⭐ **Phase 1.1: PR-Gate Release Checks System** (NEW PREREQUISITE)
+- **Status**: NOT_STARTED (BLOCKS downstream execution)
+- **Specification**: `governance/build/PR_GATE_RELEASE_CHECKS_SYSTEM_SPEC.md`
+- **Purpose**: Preflight evaluation, builder artifacts, error mapping, CI confirmatory role
+- **Deliverables**:
+  - Preflight evaluation framework
+  - Builder artifact templates (QA report, boundary checklist, build-to-green checklist)
+  - PR-gate error/failure mapping for all 5 gates
+  - Builder onboarding materials
+  - Evidence: `foreman/evidence/pr-gate-preflight-report.json`
+
+⭐ **Phase 1.2: Branch Protection Governance Consumption** (NEW PREREQUISITE)
+- **Status**: NOT_STARTED (BLOCKS downstream execution)
+- **Specification**: `governance/build/BRANCH_PROTECTION_GOVERNANCE_CONSUMPTION_SPEC.md`
+- **Purpose**: Canonical governance consumption, programmatic verification
+- **Deliverables**:
+  - Canonical governance reference (BRANCH_PROTECTION_ENFORCEMENT.md from PR #818)
+  - Programmatic verification script
+  - Evidence: `foreman/evidence/branch-protection-verification-report.json`
+  - Bootstrap exception handling (if needed)
 
 ### Critical Findings
 
@@ -31,7 +55,45 @@ Build Wave 1 planning has been completed successfully. This wave establishes the
 ⚠️ **Architectural Gaps**: 11 modules have missing components
 ⚠️ **Average Completeness**: 0.0% across all modules
 
-**Recommendation**: Complete missing architecture components before proceeding to build execution.
+**Recommendation**: Complete prerequisites (Phase 1.1 & 1.2) before proceeding to architecture freeze and build execution.
+
+---
+
+## Wave 1.0 Execution Sequence (UPDATED 2025-12-30)
+
+The following execution sequence reflects mandatory prerequisite insertion:
+
+### Phase 0: Foundation ✅ COMPLETE
+1. ✅ Platform Readiness Verification
+   - Evidence: `PLATFORM_READINESS_EVIDENCE.md`
+   - Status: GREEN
+2. ✅ Builder Recruitment Verification
+   - Evidence: `WAVE_0.1_BUILDER_RECRUITMENT_REPORT.md`
+   - Status: COMPLETE
+
+### Phase 1: Prerequisites ⭐ NEW - NOT STARTED (BLOCKS ALL DOWNSTREAM)
+3. ⭐ PR-Gate Release Checks System
+   - Specification: `governance/build/PR_GATE_RELEASE_CHECKS_SYSTEM_SPEC.md`
+   - Status: NOT_STARTED
+   - **BLOCKS**: Architecture Freeze, QA-to-Red, Builder Appointment, Build-to-Green
+4. ⭐ Branch Protection Governance Consumption
+   - Specification: `governance/build/BRANCH_PROTECTION_GOVERNANCE_CONSUMPTION_SPEC.md`
+   - Status: NOT_STARTED
+   - **BLOCKS**: Architecture Freeze, QA-to-Red, Builder Appointment, Build-to-Green
+
+### Phase 2: Architecture & QA ⏸️ PENDING (Blocked by Phase 1)
+5. ⏸️ Architecture Freeze/Confirmation
+   - Cannot proceed until Phase 1 complete
+6. ⏸️ QA-to-Red Compilation
+   - Cannot proceed until Phase 1 complete
+
+### Phase 3: Build Execution ⏸️ PENDING (Blocked by Phase 1)
+7. ⏸️ Builder Appointment (88 tasks across 11 modules)
+   - Cannot proceed until Phase 1 complete
+8. ⏸️ Build-to-Green Execution
+   - Cannot proceed until Phase 1 complete
+
+**Critical Sequencing Rule**: Phase 1 prerequisites MUST be completed before ANY Phase 2 or Phase 3 activities.
 
 ---
 
