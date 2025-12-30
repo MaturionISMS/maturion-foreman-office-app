@@ -128,11 +128,32 @@
 
 ---
 
+## Execution Heartbeat / Visibility Protocol
+
+**Requirement:** Bootstrap Visibility (effective 2025-12-30, per CS2 comment 3698391383)
+
+**On each task state change, FM MUST:**
+1. Update this status tracker document
+2. Post short status update in PR comments
+
+**State changes requiring heartbeat:**
+- Task ASSIGNED
+- Task IN_PROGRESS (builder working)
+- Task COMPLETED (builder notifies FM)
+- Task VALIDATED (FM approves)
+- Task BLOCKED (if issues arise)
+
+**This is temporary until Maturion Runtime Execution Monitor exists.**
+
+---
+
 ## Communication Log
 
 **2025-12-30 05:27 UTC** — CS2 approved Wave 0.2 plan (comment 3698347152)  
 **2025-12-30 05:27 UTC** — CS2 instructed FM to begin Wave 0.2 (comment 3698347710)  
 **2025-12-30 05:28 UTC** — FM assigned WAVE_0.2_TASK_UI_01 to ui-builder  
+**2025-12-30 06:01 UTC** — CS2 required execution heartbeats for visibility (comment 3698391383)  
+**2025-12-30 06:02 UTC** — FM acknowledged visibility requirement, updated tracker  
 
 ---
 
@@ -152,7 +173,7 @@ All CS2 proxy actions will be annotated:
 
 **Status:** Wave 0.2 execution in progress — Task 1 assigned, awaiting builder completion
 
-**Last Updated:** 2025-12-30
+**Last Updated:** 2025-12-30 06:02 UTC
 
 ---
 
