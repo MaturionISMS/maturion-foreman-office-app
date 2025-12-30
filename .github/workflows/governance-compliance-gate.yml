@@ -372,16 +372,18 @@ jobs:
         run: |
           mkdir -p /tmp/infra-failure
           TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          FAILURE_CATEGORY="${{ env.INFRA_FAILURE }}"
+          WORKFLOW_RUN="${{ github.run_id }}"
           cat > /tmp/infra-failure/report.json << EOF
           {
             "failure_type": "infrastructure",
             "workflow": "governance-compliance-gate",
             "job": "validate-governance-artifacts",
-            "failure_category": "${{ env.INFRA_FAILURE }}",
+            "failure_category": "${FAILURE_CATEGORY}",
             "timestamp": "${TIMESTAMP}",
             "recommended_action": "investigate",
             "details": {
-              "workflow_run": "${{ github.run_id }}"
+              "workflow_run": "${WORKFLOW_RUN}"
             }
           }
           EOF
