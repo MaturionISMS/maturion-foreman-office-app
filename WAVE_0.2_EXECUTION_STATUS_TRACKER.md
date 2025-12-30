@@ -19,13 +19,13 @@
 
 ## Task Status Summary
 
-| Task ID | Builder | Deliverable | Status | Assigned | Completed |
-|---------|---------|-------------|--------|----------|-----------|
-| WAVE_0.2_TASK_UI_01 | ui-builder | UI component inventory | ASSIGNED | 2025-12-30 | - |
-| WAVE_0.2_TASK_API_01 | api-builder | API endpoint inventory | PENDING | - | - |
-| WAVE_0.2_TASK_SCHEMA_01 | schema-builder | Schema additions inventory | PENDING | - | - |
-| WAVE_0.2_TASK_INT_01 | integration-builder | Integration points inventory | PENDING | - | - |
-| WAVE_0.2_TASK_QA_01 | qa-builder | QA test plan | PENDING | - | - |
+| Task ID | Builder | Deliverable | Status | Assigned At (UTC) | Last Heartbeat (UTC) | Completed At (UTC) |
+|---------|---------|-------------|--------|-------------------|----------------------|--------------------|
+| WAVE_0.2_TASK_UI_01 | ui-builder | UI component inventory | ASSIGNED | 2025-12-30 05:28 | 2025-12-30 06:11 | - |
+| WAVE_0.2_TASK_API_01 | api-builder | API endpoint inventory | PENDING | - | - | - |
+| WAVE_0.2_TASK_SCHEMA_01 | schema-builder | Schema additions inventory | PENDING | - | - | - |
+| WAVE_0.2_TASK_INT_01 | integration-builder | Integration points inventory | PENDING | - | - | - |
+| WAVE_0.2_TASK_QA_01 | qa-builder | QA test plan | PENDING | - | - | - |
 
 ---
 
@@ -33,6 +33,9 @@
 
 **Builder:** ui-builder  
 **Status:** ASSIGNED  
+**Assigned At:** 2025-12-30 05:28 UTC (2025-12-30 07:28 SAST)  
+**Last Heartbeat:** 2025-12-30 06:11 UTC (2025-12-30 08:11 SAST)  
+**Completed At:** -  
 **Assignment Document:** `WAVE_0.2_TASK_UI_01_ASSIGNMENT.md`
 
 **Next Steps:**
@@ -130,7 +133,7 @@
 
 ## Execution Heartbeat / Visibility Protocol
 
-**Requirement:** Bootstrap Visibility (effective 2025-12-30, per CS2 comment 3698391383)
+**Requirement:** Bootstrap Visibility (effective 2025-12-30, per CS2 comments 3698391383, 3698404108)
 
 **On each task state change, FM MUST:**
 1. Update this status tracker document
@@ -143,6 +146,13 @@
 - Task VALIDATED (FM approves)
 - Task BLOCKED (if issues arise)
 
+**Time Granularity Requirements (added 2025-12-30 06:11 UTC):**
+- **Assigned At (UTC):** Timestamp when task assigned to builder
+- **Last Heartbeat (UTC):** Updated at least every 5 minutes during active task
+- **Completed At (UTC):** Timestamp when task completed
+- **Stall Detection:** Silence >5 minutes = stall, must be escalated to CS2
+- **Time Zone Note:** UTC timestamps provided; South African Time (SAST) = UTC+2
+
 **This is temporary until Maturion Runtime Execution Monitor exists.**
 
 ---
@@ -154,6 +164,8 @@
 **2025-12-30 05:28 UTC** — FM assigned WAVE_0.2_TASK_UI_01 to ui-builder  
 **2025-12-30 06:01 UTC** — CS2 required execution heartbeats for visibility (comment 3698391383)  
 **2025-12-30 06:02 UTC** — FM acknowledged visibility requirement, updated tracker  
+**2025-12-30 06:11 UTC** — CS2 required time granularity in tracker (comment 3698404108)  
+**2025-12-30 06:11 UTC** — FM added time granularity: Assigned At, Last Heartbeat, Completed At  
 
 ---
 
@@ -173,7 +185,9 @@ All CS2 proxy actions will be annotated:
 
 **Status:** Wave 0.2 execution in progress — Task 1 assigned, awaiting builder completion
 
-**Last Updated:** 2025-12-30 06:02 UTC
+**Last Updated:** 2025-12-30 06:11 UTC (2025-12-30 08:11 SAST)
+
+**Next Heartbeat Due:** 2025-12-30 06:16 UTC (2025-12-30 08:16 SAST) — 5 minutes from last heartbeat
 
 ---
 
