@@ -42,9 +42,10 @@ jobs:
           ROLE=""
           
           # Check for explicit PR label (highest precedence)
-          LABELS="${{ github.event.pull_request.labels }}"
-          if echo "$LABELS" | grep -q "agent-role:"; then
-            ROLE=$(echo "$LABELS" | grep -oP 'agent-role:\K[a-z]+' | head -1)
+          # Labels come as JSON array from GitHub API
+          LABELS='${{ toJSON(github.event.pull_request.labels.*.name) }}'
+          if echo "$LABELS" | jq -r '.[]' | grep -q "agent-role:"; then
+            ROLE=$(echo "$LABELS" | jq -r '.[]' | grep -oP 'agent-role:\K[a-z]+' | head -1)
             echo "✅ Role from PR label: $ROLE"
           # Check .agent file (second precedence)
           elif [ -f ".agent" ] && grep -qE "^role:" ".agent"; then
@@ -370,13 +371,14 @@ jobs:
         if: always() && env.INFRA_FAILURE != ''
         run: |
           mkdir -p /tmp/infra-failure
-          cat > /tmp/infra-failure/report.json << 'EOF'
+          TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          cat > /tmp/infra-failure/report.json << EOF
           {
             "failure_type": "infrastructure",
             "workflow": "governance-compliance-gate",
             "job": "validate-governance-artifacts",
             "failure_category": "${{ env.INFRA_FAILURE }}",
-            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "timestamp": "${TIMESTAMP}",
             "recommended_action": "investigate",
             "details": {
               "workflow_run": "${{ github.run_id }}"
@@ -425,7 +427,7 @@ jobs:
       - name: Workflow Success
         if: always() && (success() || env.INFRA_FAILURE != '')
         run: |
-          if [ -n "$INFRA_FAILURE" ]; then
+          if [ -n "${{ env.INFRA_FAILURE }}" ]; then
             echo "✅ Governance Compliance Gate completed successfully (infrastructure failure handled)"
           else
             echo "✅ Governance Compliance Gate completed successfully"
