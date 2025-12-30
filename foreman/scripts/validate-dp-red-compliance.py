@@ -22,6 +22,15 @@ class DPREDValidator:
     VALID_PHASES = ['QA_DESIGN', 'QA_BUILD', 'QA_GREEN', 'QA_VALIDATE']
     SCHEMA_VERSION = '1.0.0'
     
+    # Implementation indicators for INTENTIONAL_RED validation
+    IMPLEMENTATION_INDICATORS = [
+        'does not exist',
+        'not yet implemented',
+        'before implementation',
+        'pending implementation',
+        'no implementation'
+    ]
+    
     def __init__(self, registry_path: str, phase_file: str, test_dir: str):
         self.registry_path = Path(registry_path)
         self.phase_file = Path(phase_file)
@@ -30,6 +39,34 @@ class DPREDValidator:
         self.warnings = []
         self.registry = None
         self.current_phase = None
+    
+    def _parse_iso_date(self, date_str: str) -> Optional[datetime]:
+        """Parse ISO-8601 date string to datetime object.
+        
+        Args:
+            date_str: ISO-8601 formatted date string
+            
+        Returns:
+            datetime object if valid, None otherwise
+        """
+        try:
+            return datetime.fromisoformat(date_str.replace('Z', '+00:00'))
+        except (ValueError, AttributeError):
+            return None
+    
+    def _calculate_age_days(self, date_str: str) -> Optional[int]:
+        """Calculate age in days from ISO-8601 date string to now.
+        
+        Args:
+            date_str: ISO-8601 formatted date string
+            
+        Returns:
+            Age in days if valid, None otherwise
+        """
+        dt = self._parse_iso_date(date_str)
+        if dt is None:
+            return None
+        return (datetime.now().astimezone() - dt).days
         
     def validate(self) -> Tuple[bool, Dict]:
         """Run all validations and return results."""
@@ -142,10 +179,12 @@ class DPREDValidator:
             return  # Already caught in schema validation
         
         required_fields = [
-            'test_id', 'test_path', 'phase', 'reason', 'registered_by',
+            'test_id', 'test_path', 'phase', 'intent', 'reason', 'registered_by',
             'registered_date', 'module', 'category', 'architecture_ref',
             'build_blocker'
         ]
+        
+        valid_intents = ['INTENTIONAL_RED', 'UNINTENTIONAL_RED']
         
         test_ids = set()
         
@@ -168,36 +207,90 @@ class DPREDValidator:
             if entry.get('phase') != 'QA_DESIGN':
                 entry_errors.append(f"Entry phase must be QA_DESIGN, got: {entry.get('phase')}")
             
+            # CRITICAL: Validate intent classification (Orphaned Test Prevention)
+            intent = entry.get('intent')
+            if not intent:
+                entry_errors.append(
+                    "GOVERNANCE VIOLATION: Missing 'intent' field. "
+                    "All RED tests MUST be classified as INTENTIONAL_RED or UNINTENTIONAL_RED. "
+                    "Orphaned tests are prohibited."
+                )
+            elif intent not in valid_intents:
+                entry_errors.append(
+                    f"Invalid intent '{intent}'. Must be INTENTIONAL_RED or UNINTENTIONAL_RED"
+                )
+            else:
+                # Validate INTENTIONAL_RED requirements
+                if intent == 'INTENTIONAL_RED':
+                    # Must have valid architecture_ref
+                    arch_ref = entry.get('architecture_ref', '')
+                    if not arch_ref or arch_ref == 'N/A' or arch_ref.strip() == '':
+                        entry_errors.append(
+                            "INTENTIONAL_RED test missing valid architecture_ref. "
+                            "Must be traceable to frozen architecture component."
+                        )
+                    
+                    # Must have future_build_task
+                    if not entry.get('future_build_task'):
+                        entry_errors.append(
+                            "INTENTIONAL_RED test missing 'future_build_task'. "
+                            "Must be mapped to a Build-to-Green task to prevent orphaned tests."
+                        )
+                    
+                    # Reason must indicate missing implementation
+                    reason = entry.get('reason', '').lower()
+                    if not any(indicator in reason for indicator in self.IMPLEMENTATION_INDICATORS):
+                        entry_errors.append(
+                            "INTENTIONAL_RED reason must clearly indicate missing implementation. "
+                            f"Current reason: '{entry.get('reason', '')}'"
+                        )
+                
+                # Validate UNINTENTIONAL_RED requirements  
+                elif intent == 'UNINTENTIONAL_RED':
+                    # Check age and warn if too old
+                    reg_date_str = entry.get('registered_date')
+                    if reg_date_str:
+                        age_days = self._calculate_age_days(reg_date_str)
+                        if age_days is not None:
+                            if age_days > 7:
+                                entry_errors.append(
+                                    f"UNINTENTIONAL_RED test has been RED for {age_days} days. "
+                                    "Must be fixed immediately - exceeds 7-day limit."
+                                )
+                            elif age_days > 2:
+                                self.warnings.append(
+                                    f"Entry {test_id}: UNINTENTIONAL_RED for {age_days} days - "
+                                    "should be fixed soon"
+                                )
+            
             # Check reason length
             reason = entry.get('reason', '')
             if len(reason) < 20:
                 entry_errors.append(f"Reason too short (min 20 chars): {len(reason)} chars")
             
             # Check registered_date is valid ISO-8601
-            reg_date = entry.get('registered_date')
-            if reg_date:
-                try:
-                    dt = datetime.fromisoformat(reg_date.replace('Z', '+00:00'))
-                    if dt > datetime.now().astimezone():
-                        entry_errors.append("registered_date is in the future")
-                except ValueError:
-                    entry_errors.append(f"Invalid ISO-8601 date: {reg_date}")
+            reg_date_str = entry.get('registered_date')
+            if reg_date_str:
+                dt = self._parse_iso_date(reg_date_str)
+                if dt is None:
+                    entry_errors.append(f"Invalid ISO-8601 date: {reg_date_str}")
+                elif dt > datetime.now().astimezone():
+                    entry_errors.append("registered_date is in the future")
             
             # Check expiry_date if present
-            exp_date = entry.get('expiry_date')
-            if exp_date:
-                try:
-                    dt = datetime.fromisoformat(exp_date.replace('Z', '+00:00'))
-                    if dt < datetime.now().astimezone():
-                        self.warnings.append(
-                            f"Entry {test_id} has expired: {exp_date}"
-                        )
-                    elif (dt - datetime.now().astimezone()).days <= 7:
-                        self.warnings.append(
-                            f"Entry {test_id} expires soon: {exp_date}"
-                        )
-                except ValueError:
-                    entry_errors.append(f"Invalid ISO-8601 expiry date: {exp_date}")
+            exp_date_str = entry.get('expiry_date')
+            if exp_date_str:
+                dt = self._parse_iso_date(exp_date_str)
+                if dt is None:
+                    entry_errors.append(f"Invalid ISO-8601 expiry date: {exp_date_str}")
+                elif dt < datetime.now().astimezone():
+                    self.warnings.append(
+                        f"Entry {test_id} has expired: {exp_date_str}"
+                    )
+                elif (dt - datetime.now().astimezone()).days <= 7:
+                    self.warnings.append(
+                        f"Entry {test_id} expires soon: {exp_date_str}"
+                    )
             
             # Check build_blocker is boolean
             if 'build_blocker' in entry and not isinstance(entry['build_blocker'], bool):

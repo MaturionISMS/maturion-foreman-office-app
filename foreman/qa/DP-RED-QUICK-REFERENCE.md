@@ -47,13 +47,15 @@ cat foreman/qa/dp-red-registry.json
       "test_id": "foreman.liveness.test_heartbeat_generation",
       "test_path": "tests/wave0_minimum_red/test_liveness.py::test_heartbeat_generation",
       "phase": "QA_DESIGN",
+      "intent": "INTENTIONAL_RED",
       "reason": "Implementation module foreman.runtime.liveness does not exist yet. Test validates architecture contract before build.",
       "registered_by": "Foreman",
       "registered_date": "2025-12-16T08:00:00Z",
       "module": "foreman",
       "category": "liveness",
       "architecture_ref": "foreman/architecture/FOREMAN_ARCHITECTURE_v1.0.md#liveness-system",
-      "build_blocker": true
+      "build_blocker": true,
+      "future_build_task": "B2G-FM-001: Implement Foreman Liveness System"
     }
   ]
 }
@@ -125,6 +127,35 @@ git push
 ## What is DP-RED?
 
 **Design-Phase RED (DP-RED)**: Tests that are intentionally failing because the implementation doesn't exist yet, written during the design phase as architectural validation.
+
+### Test Intent Classification (Mandatory)
+
+**Every RED test MUST be classified as either:**
+
+1. **INTENTIONAL_RED**
+   - RED because implementation does not yet exist
+   - Validates frozen architecture before build
+   - Must be traceable to architecture component
+   - Must be mapped to future Build-to-Green task
+   - Valid input to Phase 3 (Build-to-Green)
+
+2. **UNINTENTIONAL_RED**
+   - RED due to defect, misconfiguration, or error
+   - Must be fixed immediately
+   - Cannot be used for design validation
+   - Maximum age: 7 days before blocking
+
+**RED status alone does NOT indicate failure.** The intent classification determines treatment.
+
+### Orphaned Tests (PROHIBITED)
+
+A test is **ORPHANED** (governance violation) if:
+- ❌ No declared intent
+- ❌ Cannot trace to architecture
+- ❌ Missing implementation not identified
+- ❌ RED due to ambiguity
+
+**Orphaned tests block all progression.**
 
 ### Example: Wave 0 Minimum RED
 
