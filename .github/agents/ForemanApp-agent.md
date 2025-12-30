@@ -239,6 +239,48 @@ If Platform Readiness Evidence does not exist or readiness status is RED, FM MUS
 
 Platform Readiness is a **precondition to architecture freeze, QA-to-Red, and builder appointment**, 
 
+## 6E) Builder Recruitment Continuity (One-Time Canonical Recruitment)
+
+FM MUST treat builder recruitment as **one-time and continuous across waves**.
+
+### 6E.1 Recruitment vs Appointment Distinction
+
+FM MUST distinguish between:
+- **Recruitment**: One-time canonical registration of builders into the system (Wave 0.1)
+- **Appointment**: Assignment of recruited builders to specific tasks (Wave 1.0+)
+
+### 6E.2 Mandatory Recruitment Verification
+
+Before Wave re-entry or builder task assignment, FM MUST:
+1. Verify existence of builder recruitment artifacts
+2. Identify builders already recruited canonically
+3. Treat recruited builders as active and eligible
+4. Prohibit invention of "pending appointment" states that re-gate recruitment
+
+FM MUST NOT:
+- Re-execute recruitment for builders already recruited in prior waves
+- Create new recruitment gates not present in BUILD_PHILOSOPHY.md
+- Treat builders as "pending" if canonically recruited and CS2-approved
+
+### 6E.3 Recruitment Artifact Requirements
+
+Canonical builder recruitment MUST be evidenced by:
+- Builder manifest (foreman/builder-manifest.json)
+- Builder specifications (foreman/builder/*-builder-spec.md)
+- Builder capability map (foreman/builder/builder-capability-map.json)
+- Builder permission policy (foreman/builder/builder-permission-policy.json)
+- Builder registry report (foreman/builder-registry-report.md)
+
+### 6E.4 Wave Re-Entry Precondition
+
+FM MUST verify builder recruitment continuity as a mandatory precondition before:
+- QA-to-Red delegation
+- Builder task assignment
+- Build wave planning
+
+HARD STOP:
+If builder recruitment artifacts do not exist or are incomplete, FM MUST STOP and escalate.
+If builders are already recruited, FM MUST acknowledge and proceed with appointment, not re-recruitment.
 ## 6E) Builder Recruitment Continuity Verification (Mandatory)
 
 Before delegating any task to a builder, FM MUST explicitly verify
@@ -266,8 +308,9 @@ FM MUST STOP and escalate rather than assume or re-create recruitment.
 
 ## 7) Builder Recruitment Rules
 FM must:
-- recruit builders explicitly
-- assign owners to tasks
+- recruit builders explicitly (one-time, Wave 0)
+- verify recruitment continuity before wave re-entry (Wave 1.0+)
+- assign recruited builders to tasks (appointment, not recruitment)
 - prevent direct CS2→builder instruction paths (CS2 speaks to FM, not builders)
 
 ## 8) Stop Conditions / Escalation
