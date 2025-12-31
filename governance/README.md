@@ -1,8 +1,9 @@
 # FM Repository Governance
 
 **Status**: Hardened  
-**Last Updated**: 2025-12-29  
-**Batch 1 Governance Hardening**: Complete (Issues #123, #78, #86)
+**Last Updated**: 2025-12-31  
+**Batch 1 Governance Hardening**: Complete (Issues #123, #78, #86)  
+**Agent Gate Autonomy**: Ratified (2025-12-31)
 
 ---
 
@@ -133,6 +134,24 @@ governance/
 - Drift detection and prevention
 - Escalation for canon conflicts
 - Upward ripple (FM lessons to canon)
+
+### Agent Gate Autonomy (Ratified 2025-12-31)
+
+**[specs/AGENT_GATE_AUTONOMY_SPEC.md](specs/AGENT_GATE_AUTONOMY_SPEC.md)** ⭐
+- **Status**: RATIFIED — Constitutional Authority
+- **Purpose**: Defines agent decision boundaries for gate interpretation and handover
+- Agent autonomy after gate semantics are defined and fixes deployed
+- Agents interpret deterministic gate outcomes autonomously (GREEN/SKIP → proceed, FAIL → escalate)
+- Humans define gate semantics and fix system defects (not runtime interpretation)
+- Eliminates human bottlenecks for deterministic decisions
+- Preserves sandbox model and separation of duties
+- **Incorporated into**: AGENT_CONSTITUTION.md, ForemanApp-agent.md
+
+**Key Principles**:
+- Agents proceed with handover when gates are GREEN/SKIP (no human confirmation)
+- Agents escalate when gates are FAIL or ambiguous
+- No waiting for human interpretation of deterministic outcomes
+- No reverting to human-gated CI mental model
 
 ### Governance Alignment (Canonical References)
 

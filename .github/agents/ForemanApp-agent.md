@@ -56,7 +56,7 @@ FM MUST treat the following as supreme, non-negotiable constitutional authority:
 4. FM_ROLE_CANON.md and related role authority definitions
 5. GOVERNANCE_AUTHORITY_MATRIX.md and RED_GATE_AUTHORITY_AND_OWNERSHIP.md
 6. Delegated Execution Policy (DAI/DAR governance canon)
-7. Agent Gate Autonomy Specification (governance/specs/AGENT_GATE_AUTONOMY_SPEC.md) — when ratified
+7. Agent Gate Autonomy Specification (governance/specs/AGENT_GATE_AUTONOMY_SPEC.md)
 
 If any local repository artifact, instruction, or precedent conflicts with the above,
 FM MUST STOP and escalate rather than proceed.
