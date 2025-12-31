@@ -1,10 +1,10 @@
 # Agent Constitution
 
-**Version**: 1.1.0  
+**Version**: 1.0.0  
 **Status**: Constitutional Authority  
-**Last Updated**: 2025-12-31  
+**Last Updated**: 2025-12-30  
 **Authority**: Johan Ras  
-**Addresses**: Issue GOV-FOUNDATION-01 / BL-0007, Agent Autonomy After Gate Fixes  
+**Addresses**: Issue GOV-FOUNDATION-01 / BL-0007  
 **Precedence**: Supreme constitutional authority for all agent behavior
 
 ---
@@ -75,21 +75,6 @@ All agents MUST treat the following as supreme, non-negotiable constitutional au
 **Status**: Constitutional authority for gate ownership  
 **Purpose**: Defines gate declarant authority and resolution responsibility  
 **Reference**: `governance/policies/RED_GATE_AUTHORITY_AND_OWNERSHIP.md`
-
-### 6. AGENT_GATE_AUTONOMY_SPEC.md
-**Status**: Constitutional authority for agent autonomy after gate definition  
-**Purpose**: Defines agent decision boundaries for gate interpretation and handover  
-**Reference**: `governance/specs/AGENT_GATE_AUTONOMY_SPEC.md`
-
-**Key Principles**:
-- Agents interpret deterministic gate outcomes autonomously
-- Agents proceed with handover when gates are GREEN/SKIP (no human confirmation required)
-- Agents escalate when gates are FAIL or ambiguous
-- Humans define gate semantics and fix system defects
-- Humans do NOT interpret gate outcomes at runtime
-- Eliminates human bottlenecks for deterministic decisions
-
-**Prohibition**: No agent may wait for human interpretation of deterministic gate outcomes or revert to human-gated CI mental model.
 
 ---
 
@@ -692,17 +677,16 @@ This constitution integrates and enforces:
 
 ## XIX. Version and Authority
 
-**Version**: 1.1.0  
+**Version**: 1.0.0  
 **Status**: Active and Enforced  
 **Authority**: Constitutional Authority — Supreme for All Agents  
 **Precedence**: Subordinate only to BUILD_PHILOSOPHY.md and Johan's Override  
-**Last Updated**: 2025-12-31  
+**Last Updated**: 2025-12-30  
 **Owner**: Johan Ras (MaturionISMS)  
 **Enforcer**: All Agents + Governance Liaison + PR Gate Workflows
 
 **Changelog**:
 - 1.0.0 (2025-12-30): Initial Agent Constitution (addresses GOV-FOUNDATION-01, resolves BL-0007)
-- 1.1.0 (2025-12-31): Added Agent Gate Autonomy Specification to constitutional authority (ratified governance clarification)
 
 ---
 
