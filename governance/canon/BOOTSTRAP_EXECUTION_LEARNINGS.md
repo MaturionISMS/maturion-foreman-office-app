@@ -694,4 +694,207 @@ This learning mandates updates to Platform Readiness Canon (G-PLAT-READY-01) to:
 **Applies To:** All future operational readiness validations  
 **Effective:** 2025-12-31
 
+---
 
+## BL-015 — Architecture Wiring Completeness Is Mandatory for One-Time Build
+
+### Classification
+- **Type:** Governance Learning
+- **Phase:** Platform Readiness Reset & Build Initiation Plan (Phase 4.3)
+- **Severity:** CATASTROPHIC
+- **Status:** Recorded
+- **Impacts:** All future architecture definitions
+
+---
+
+### Context
+
+Phase 4.3 Architecture Definition produced a structurally complete architecture with:
+- 36 components defined
+- 14 data entities modeled
+- 8 state categories specified
+- 4 primary user flows documented
+- 100% requirement coverage
+- Complete traceability matrix
+
+Architecture passed all structural validation checks and was declared complete.
+
+---
+
+### Observed Issue
+
+Despite structural completeness, the architecture **does not guarantee a fully functional, one-time build application**.
+
+The architecture permits:
+- Summary-level component definitions without executable wiring
+- Implicit contracts between components
+- Reliance on builder interpretation to "fill gaps"
+- QA derivation without guaranteeing runtime completeness
+
+This violates the core objective: **A deterministic, one-time build app that is fully functional without interpretation.**
+
+---
+
+### Root Cause
+
+**The governance canon defined "architecture complete" structurally, not functionally.**
+
+BUILD_PHILOSOPHY.md specifies:
+- Architecture must be 100% complete before build ✅
+- All components must be defined ✅
+- All integration points must be defined ✅
+
+But it does **not** specify:
+- All component contracts must be explicit (inputs, outputs, dependencies, failure modes)
+- All runtime paths must be wired end-to-end
+- Every architectural element must map to numbered QA components
+- Architecture must demonstrate one-time build guarantee
+
+**Missing governance requirement: "Wiring completeness"**
+
+---
+
+### Why This Is Catastrophic
+
+If uncorrected, this failure would:
+- Allow "hollow builds" (structure without behavior)
+- Undermine one-time build guarantees
+- Force post-build interpretation and rework
+- Invalidate QA-to-Red as a deterministic control
+- Reintroduce coder-centric failure modes (iterate until it works)
+
+Under the Maturion Build Philosophy, permitting this failure mode is **catastrophic**.
+
+---
+
+### Learning
+
+Architecture is only complete when it is **wiring-complete**, not just structurally complete.
+
+**Wiring-Complete Requirements:**
+
+1. **No summary-only architecture sections**
+   - Every component must define: responsibility, inputs, outputs, dependencies, data touched, failure modes, escalation behavior, evidence produced
+
+2. **Granularity is unlimited**
+   - Multi-layer architecture allowed (high-level → detailed → atomic)
+   - Every layer must be fully wired at its own level
+
+3. **Every architectural unit maps to numbered QA**
+   - No architectural element may exist without QA coverage
+   - QA numbering must support sequencing and build orchestration
+
+4. **Architecture must independently guarantee**
+   - A fully functional app
+   - No assumptions about builders "filling in gaps"
+   - One-time build success is demonstrable, not asserted
+
+---
+
+### Governance Impact
+
+This learning mandates:
+
+1. **BUILD_PHILOSOPHY.md Update** to define:
+   - "Wiring-complete" architecture standards
+   - Component contract requirements (explicit inputs, outputs, dependencies, failure modes, escalation)
+   - Runtime path wiring requirements (end-to-end, no gaps)
+   - QA mapping requirements (every element → numbered QA)
+   - One-time build validation requirements (demonstrate, not declare)
+
+2. **Architecture Validation Checklist Update** to include:
+   - Wiring completeness verification
+   - Contract explicitness verification
+   - Runtime path traceability verification
+   - QA mapping verification
+   - One-time build proof verification
+
+3. **Architecture Template Creation** demonstrating:
+   - Wiring-complete component definitions
+   - Explicit contract documentation format
+   - Runtime path documentation format
+   - QA mapping format
+
+---
+
+### Corrective Action
+
+Phase 4.3 architecture was **not merged** and is being corrected to meet wiring-complete standards.
+
+Corrective architecture must ensure:
+- All 36 components have explicit contracts
+- All runtime paths wired end-to-end
+- All background behaviors (watchdog, governance, analytics) wired explicitly
+- Every architectural element maps to numbered QA components
+- One-time build guarantee is demonstrated
+
+---
+
+### Why This Gap Allowed Failure
+
+**Traditional software architecture** focuses on:
+- Component responsibilities (what they do)
+- High-level interactions (conceptual diagrams)
+- Coverage (all requirements addressed)
+
+This is acceptable when **experienced developers** fill interpretation gaps during coding.
+
+**Maturion is non-coder operable.** There are no developers to fill gaps. Architecture must be **completely explicit** and **deterministically executable**.
+
+The governance canon inherited traditional architecture assumptions without adapting them for:
+- Non-coder operability
+- One-time build correctness
+- Deterministic QA derivation
+
+---
+
+### Prevention for Future Builds
+
+Before any architecture is declared complete, FM must:
+
+1. **Trace at least 3 end-to-end paths** without gaps or assumptions
+2. **Demonstrate explicit contracts** for all critical components
+3. **Show numbered QA mapping** for at least one complete subsystem
+4. **Prove one architectural element → QA coverage** (no element without QA)
+5. **State one-time build guarantee** with supporting evidence
+
+A second validator (if available) should:
+- Attempt to mentally execute the system
+- Identify "and then something happens" gaps
+- Verify all critical paths are wired
+- Confirm one-time build guarantee is demonstrable
+
+---
+
+### Ratchet Statement
+
+This failure is accepted **once**.
+
+Future architectures **must not** be declared complete without:
+- Explicit component contracts
+- Complete runtime wiring
+- Numbered QA mapping
+- Demonstrated one-time build guarantee
+
+"Complete coverage" ≠ "Complete architecture"  
+"Wiring completeness" is now a constitutional requirement.
+
+---
+
+### Related RCA
+
+**Root Cause Analysis:** `ROOT_CAUSE_ANALYSIS_CATASTROPHIC_ARCH_FAILURE.md`
+
+**Related Learnings:**
+- BL-009: Platform Readiness Was Declared Without a Canonical Definition
+- BL-010: Platform Readiness Requires Deterministic Validation
+
+---
+
+### Status
+
+**Recorded** — Non-Retroactive  
+**Applies To:** All future architecture definitions  
+**Effective:** 2025-12-31
+
+---
