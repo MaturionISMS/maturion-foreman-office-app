@@ -33,6 +33,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
+      - name: Detect Documentation-Only PR
+        id: detect-doc-only
+        run: |
+          echo "🔍 Detecting PR type..."
+          
+          # Get changed files (fetch main for comparison)
+          git fetch origin main --depth=50 2>/dev/null || echo "Note: Could not fetch main branch"
+          
+          # Get list of changed files
+          if git rev-parse origin/main >/dev/null 2>&1; then
+            CHANGED_FILES=$(git diff --name-only origin/main...HEAD || echo "")
+          else
+            # Fallback: check current commit changes only
+            CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r HEAD || echo "")
+          fi
+          
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+          
+          # Check for code/workflow changes
+          if echo "$CHANGED_FILES" | grep -qE '\.(js|ts|jsx|tsx|py)$|\.github/workflows/.*\.ya?ml$|package\.json$|tsconfig\.json$|tests/|__tests__/|\.test\.|\.spec\.'; then
+            echo "doc_only=false" >> $GITHUB_OUTPUT
+            echo "📝 PR Type: Code/Workflow Changes"
+          else
+            echo "doc_only=true" >> $GITHUB_OUTPUT
+            echo "📝 PR Type: Documentation-Only"
+          fi
+      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -114,8 +142,36 @@ jobs:
               `
             })
       
-      - name: No Reports Found
-        if: steps.find-reports.outputs.found == 'false' && github.event_name == 'pull_request'
+      - name: No Reports Found (Documentation-Only)
+        if: steps.find-reports.outputs.found == 'false' && steps.detect-doc-only.outputs.doc_only == 'true' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ✅ **Agent QA Boundary Enforcement - SKIP** (Documentation-Only PR)
+              
+              **Outcome**: Non-blocking SKIP  
+              **Reason**: No QA reports present in documentation-only PR  
+              **Status**: This gate does not block merge
+              
+              ---
+              
+              **Documentation-Only PR**: No code changes detected  
+              **QA Reports**: None (expected for documentation-only changes)  
+              **Boundary Violations**: None possible (no QA reports to validate)
+              
+              ---
+              
+              **Gate Status**: ✅ PASS (via informational skip)
+              `
+            })
+      
+      - name: No Reports Found (Code/Workflow PR)
+        if: steps.find-reports.outputs.found == 'false' && steps.detect-doc-only.outputs.doc_only == 'false' && github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           script: |
@@ -129,9 +185,9 @@ jobs:
               No QA reports found in this PR.
               
               This is acceptable if:
-              - This is a documentation-only change
-              - This is a governance-only change
+              - This is FM repository (uses FM QA, not Builder QA)
               - QA reports will be added in subsequent commits
+              - This is a minor change not requiring QA
               
               If QA reports are expected, ensure they are:
               - Named with pattern \`*qa-report*.json\` or \`*qa_report*.json\`
@@ -292,8 +348,13 @@ jobs:
         if: always()
         run: |
           OUTCOME="${{ steps.validate.outputs.outcome }}"
+          DOC_ONLY="${{ steps.detect-doc-only.outputs.doc_only }}"
+          FOUND="${{ steps.find-reports.outputs.found }}"
           
-          if [ "$OUTCOME" = "infra_failure" ]; then
+          if [ "$DOC_ONLY" = "true" ] && [ "$FOUND" = "false" ]; then
+            echo "✅ Agent QA Boundary Enforcement - SKIP (Documentation-Only PR)"
+            echo "Status: Non-blocking, no QA reports to validate"
+          elif [ "$OUTCOME" = "infra_failure" ]; then
             echo "✅ Agent QA Boundary Enforcement completed successfully (infrastructure failure handled)"
           elif [ "$OUTCOME" = "code_failure" ]; then
             echo "❌ Agent QA Boundary Enforcement failed (code/governance violation)"
