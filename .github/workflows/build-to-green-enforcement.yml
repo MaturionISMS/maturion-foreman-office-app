@@ -34,6 +34,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Detect Documentation-Only PR
+        id: detect-doc-only
+        run: |
+          echo "🔍 Detecting PR type..."
+          
+          # Get changed files (fetch main for comparison)
+          git fetch origin main --depth=50 2>/dev/null || echo "Note: Could not fetch main branch"
+          
+          # Get list of changed files
+          if git rev-parse origin/main >/dev/null 2>&1; then
+            CHANGED_FILES=$(git diff --name-only origin/main...HEAD || echo "")
+          else
+            # Fallback: check current commit changes only
+            CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r HEAD || echo "")
+          fi
+          
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+          
+          # Check for code/workflow changes
+          if echo "$CHANGED_FILES" | grep -qE '\.(js|ts|jsx|tsx|py)$|\.github/workflows/.*\.ya?ml$|package\.json$|tsconfig\.json$|tests/|__tests__/|\.test\.|\.spec\.'; then
+            echo "doc_only=false" >> $GITHUB_OUTPUT
+            echo "📝 PR Type: Code/Workflow Changes"
+          else
+            echo "doc_only=true" >> $GITHUB_OUTPUT
+            echo "📝 PR Type: Documentation-Only"
+          fi
+
       - name: Check Build Wave Phase
         id: phase-check
         run: |
@@ -63,23 +91,23 @@ jobs:
           fi
 
       - name: Set up Node.js
-        if: steps.phase-check.outputs.enabled == 'true'
+        if: steps.phase-check.outputs.enabled == 'true' && steps.detect-doc-only.outputs.doc_only == 'false'
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
       - name: Set up Python
-        if: steps.phase-check.outputs.enabled == 'true'
+        if: steps.phase-check.outputs.enabled == 'true' && steps.detect-doc-only.outputs.doc_only == 'false'
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
       - name: Install Node dependencies
-        if: steps.phase-check.outputs.enabled == 'true'
+        if: steps.phase-check.outputs.enabled == 'true' && steps.detect-doc-only.outputs.doc_only == 'false'
         run: npm ci
 
       - name: Install Python dependencies
-        if: steps.phase-check.outputs.enabled == 'true'
+        if: steps.phase-check.outputs.enabled == 'true' && steps.detect-doc-only.outputs.doc_only == 'false'
         id: pip-install
         run: |
           pip install -r requirements-test.txt || {
@@ -97,7 +125,7 @@ jobs:
           echo "INFRA_FAILURE_STEP=pip-install" >> $GITHUB_ENV
 
       - name: Enforce No Test Dodging
-        if: steps.phase-check.outputs.enabled == 'true'
+        if: steps.phase-check.outputs.enabled == 'true' && steps.detect-doc-only.outputs.doc_only == 'false'
         run: |
           echo "🔍 Scanning for forbidden test-dodging patterns..."
 
@@ -113,7 +141,7 @@ jobs:
           echo "✅ No test dodging patterns found."
 
       - name: Run Test Suite
-        if: steps.phase-check.outputs.enabled == 'true' && steps.pip-install.outputs.outcome != 'failure'
+        if: steps.phase-check.outputs.enabled == 'true' && steps.pip-install.outputs.outcome != 'failure' && steps.detect-doc-only.outputs.doc_only == 'false'
         id: test-run
         run: |
           echo "▶️ Running test suite..."
@@ -128,7 +156,7 @@ jobs:
           fi
       
       - name: Analyze Test Failure
-        if: steps.phase-check.outputs.enabled == 'true' && steps.test-run.outputs.outcome == 'failure'
+        if: steps.phase-check.outputs.enabled == 'true' && steps.test-run.outputs.outcome == 'failure' && steps.detect-doc-only.outputs.doc_only == 'false'
         id: analyze-failure
         run: |
           if [ "$TEST_FAILED" = "124" ]; then
@@ -146,7 +174,7 @@ jobs:
           fi
 
       - name: Check for RED tests
-        if: steps.phase-check.outputs.enabled == 'true' && (steps.analyze-failure.outputs.failure_type == '' || steps.analyze-failure.outputs.failure_type == 'none' || steps.analyze-failure.outputs.failure_type == 'code')
+        if: steps.phase-check.outputs.enabled == 'true' && (steps.analyze-failure.outputs.failure_type == '' || steps.analyze-failure.outputs.failure_type == 'none' || steps.analyze-failure.outputs.failure_type == 'code') && steps.detect-doc-only.outputs.doc_only == 'false'
         run: |
           echo "🔍 Checking for RED test results..."
 
@@ -199,15 +227,50 @@ jobs:
               `
             })
       
+      - name: Documentation-Only PR Handling
+        if: steps.phase-check.outputs.enabled == 'true' && steps.detect-doc-only.outputs.doc_only == 'true' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ✅ **Build-to-Green Enforcement - SKIP** (Documentation-Only PR)
+              
+              **Outcome**: Non-blocking SKIP  
+              **Reason**: No code changes to test  
+              **Status**: This gate does not block merge
+              
+              ---
+              
+              **Documentation-Only PR**: No code changes detected  
+              **Test Execution**: Not required (no code to test)  
+              **Test Dodging Check**: Not applicable (no test files modified)
+              
+              ---
+              
+              **Gate Status**: ✅ PASS (via informational skip)
+              `
+            })
+      
       - name: Enforcement Paused - Success
         if: steps.phase-check.outputs.enabled == 'false'
         run: |
           echo "✅ Build-to-Green Enforcement PAUSED - this is expected for current wave"
           echo "Workflow completes successfully (enforcement is paused, not failed)"
           exit 0
+      
+      - name: Documentation-Only PR Success
+        if: steps.phase-check.outputs.enabled == 'true' && steps.detect-doc-only.outputs.doc_only == 'true'
+        run: |
+          echo "✅ Build-to-Green Enforcement - SKIP (Documentation-Only PR)"
+          echo "Status: Non-blocking, no code changes to test"
+          exit 0
 
       - name: Governance Summary Comment
-        if: steps.phase-check.outputs.enabled == 'true' && github.event_name == 'pull_request'
+        if: steps.phase-check.outputs.enabled == 'true' && steps.detect-doc-only.outputs.doc_only == 'false' && github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           script: |
@@ -342,9 +405,13 @@ jobs:
           exit 0
       
       - name: Workflow Success
-        if: always() && (success() || steps.phase-check.outputs.enabled == 'false')
+        if: always() && (success() || steps.phase-check.outputs.enabled == 'false' || steps.detect-doc-only.outputs.doc_only == 'true')
         run: |
-          if [ "${{ steps.phase-check.outputs.enabled }}" = "false" ]; then
+          DOC_ONLY="${{ steps.detect-doc-only.outputs.doc_only }}"
+          
+          if [ "$DOC_ONLY" = "true" ]; then
+            echo "✅ Build-to-Green Enforcement - SKIP (Documentation-Only PR)"
+          elif [ "${{ steps.phase-check.outputs.enabled }}" = "false" ]; then
             echo "✅ Build-to-Green Enforcement completed successfully (PAUSED for current wave)"
           else
             echo "✅ Build-to-Green Enforcement completed successfully"
