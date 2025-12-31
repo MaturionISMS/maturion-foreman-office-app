@@ -1,0 +1,93 @@
+{
+  "report_type": "FAILURE_MAPPING_COMPLETENESS",
+  "timestamp": "2025-12-30T16:35:00Z",
+  "canonical_reference": "governance/alignment/PR_GATE_FAILURE_HANDLING_PROTOCOL.md",
+  "canonical_categories": 10,
+  "documented_categories": 10,
+  "coverage": "100%",
+  "categories": [
+    {
+      "name": "ARTIFACT_MISSING",
+      "local_detection": "defined",
+      "local_verification_command": "defined",
+      "resolution_steps": "defined",
+      "ci_confirmation": "defined",
+      "status": "COMPLETE"
+    },
+    {
+      "name": "SCHEMA_VIOLATION",
+      "local_detection": "defined",
+      "local_verification_command": "defined",
+      "resolution_steps": "defined",
+      "ci_confirmation": "defined",
+      "status": "COMPLETE"
+    },
+    {
+      "name": "IMMUTABILITY_VIOLATION",
+      "local_detection": "defined",
+      "local_verification_command": "defined",
+      "resolution_steps": "defined",
+      "ci_confirmation": "defined",
+      "status": "COMPLETE"
+    },
+    {
+      "name": "AGENT_BOUNDARY_VIOLATION",
+      "local_detection": "defined",
+      "local_verification_command": "defined",
+      "resolution_steps": "defined",
+      "ci_confirmation": "defined",
+      "status": "COMPLETE"
+    },
+    {
+      "name": "NOT_READY_DECLARATION",
+      "local_detection": "defined",
+      "local_verification_command": "defined",
+      "resolution_steps": "defined",
+      "ci_confirmation": "defined",
+      "status": "COMPLETE"
+    },
+    {
+      "name": "ARCHITECTURE_INCOMPLETE",
+      "local_detection": "defined",
+      "local_verification_command": "defined",
+      "resolution_steps": "defined",
+      "ci_confirmation": "defined",
+      "status": "COMPLETE"
+    },
+    {
+      "name": "TEST_DEBT_DETECTED",
+      "local_detection": "defined",
+      "local_verification_command": "defined",
+      "resolution_steps": "defined",
+      "ci_confirmation": "defined",
+      "status": "COMPLETE"
+    },
+    {
+      "name": "GOVERNANCE_INVARIANT_VIOLATED",
+      "local_detection": "defined",
+      "local_verification_command": "defined",
+      "resolution_steps": "defined",
+      "ci_confirmation": "defined",
+      "status": "COMPLETE"
+    },
+    {
+      "name": "TRACEABILITY_BROKEN",
+      "local_detection": "defined",
+      "local_verification_command": "defined",
+      "resolution_steps": "defined",
+      "ci_confirmation": "defined",
+      "status": "COMPLETE"
+    },
+    {
+      "name": "CATASTROPHIC_FAILURE",
+      "local_detection": "N/A",
+      "local_verification_command": "N/A",
+      "resolution_steps": "escalate",
+      "ci_confirmation": "N/A",
+      "status": "COMPLETE"
+    }
+  ],
+  "verification_method": "Cross-reference with canonical failure protocol",
+  "verified_by": "Foreman (FM)",
+  "guide_location": "foreman/builder/pr-gate-failure-response-guide.md"
+}
