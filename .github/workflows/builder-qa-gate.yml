@@ -32,6 +32,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
+      - name: Detect Documentation-Only PR
+        id: detect-doc-only
+        run: |
+          echo "🔍 Detecting PR type..."
+          
+          # Get changed files (fetch main for comparison)
+          git fetch origin main --depth=50 2>/dev/null || echo "Note: Could not fetch main branch"
+          
+          # Get list of changed files
+          if git rev-parse origin/main >/dev/null 2>&1; then
+            CHANGED_FILES=$(git diff --name-only origin/main...HEAD || echo "")
+          else
+            # Fallback: check current commit changes only
+            CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r HEAD || echo "")
+          fi
+          
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+          
+          # Check for code/workflow changes
+          if echo "$CHANGED_FILES" | grep -qE '\.(js|ts|jsx|tsx|py)$|\.github/workflows/.*\.ya?ml$|package\.json$|tsconfig\.json$|tests/|__tests__/|\.test\.|\.spec\.'; then
+            echo "doc_only=false" >> $GITHUB_OUTPUT
+            echo "📝 PR Type: Code/Workflow Changes"
+          else
+            echo "doc_only=true" >> $GITHUB_OUTPUT
+            echo "📝 PR Type: Documentation-Only"
+          fi
+      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -183,8 +211,36 @@ jobs:
               `
             })
       
-      - name: Report Not Applicable (FM Repository)
-        if: steps.find-report.outputs.found == 'false' && github.event_name == 'pull_request'
+      - name: Report Not Applicable (FM Repository - Documentation-Only)
+        if: steps.find-report.outputs.found == 'false' && steps.detect-doc-only.outputs.doc_only == 'true' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ✅ **Builder QA Gate - SKIP** (Documentation-Only PR)
+              
+              **Outcome**: Non-blocking SKIP  
+              **Reason**: No code changes to test  
+              **Status**: This gate does not block merge
+              
+              ---
+              
+              **Documentation-Only PR**: No code changes detected  
+              **Builder QA Report**: Not required (no code to test)  
+              **FM Repository**: Uses FM QA, not Builder QA
+              
+              ---
+              
+              **Gate Status**: ✅ PASS (via informational skip)
+              `
+            })
+      
+      - name: Report Not Applicable (FM Repository - Code Changes)
+        if: steps.find-report.outputs.found == 'false' && steps.detect-doc-only.outputs.doc_only == 'false' && github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           script: |
@@ -325,7 +381,12 @@ jobs:
       - name: Workflow Success
         if: always() && (success() || env.INFRA_FAILURE != '')
         run: |
-          if [ -n "$INFRA_FAILURE" ]; then
+          DOC_ONLY="${{ steps.detect-doc-only.outputs.doc_only }}"
+          FOUND="${{ steps.find-report.outputs.found }}"
+          
+          if [ "$DOC_ONLY" = "true" ] && [ "$FOUND" = "false" ]; then
+            echo "✅ Builder QA Gate - SKIP (Documentation-Only PR)"
+          elif [ -n "$INFRA_FAILURE" ]; then
             echo "✅ Builder QA Gate completed successfully (infrastructure failure handled)"
           else
             echo "✅ Builder QA Gate completed successfully"
