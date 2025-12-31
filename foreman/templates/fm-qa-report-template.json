@@ -1,14 +1,14 @@
 {
   "qa_report_metadata": {
-    "agent_type": "builder",
-    "agent_id": "<ui-builder|api-builder|schema-builder|integration-builder|qa-builder>",
+    "agent_type": "fm",
+    "agent_id": "<fm-builder|fm-agent>",
     "agent_version": "1.0.0",
-    "scope": "builder-qa",
-    "repository": "<repository-name>",
+    "scope": "fm-qa",
+    "repository": "maturion-foreman-office-app",
     "timestamp": "<ISO_8601_TIMESTAMP>"
   },
-  "report_type": "BUILDER_QA_REPORT",
-  "agent_id": "<BUILDER_AGENT_ID>",
+  "report_type": "FM_QA_REPORT",
+  "agent_id": "<FM_AGENT_ID>",
   "timestamp": "<ISO_8601_TIMESTAMP>",
   "qa_status": "<READY|NOT_READY>",
   "evidence_chain": [
@@ -25,11 +25,15 @@
     "agent_boundary": "<COMPLIANT|NON_COMPLIANT>",
     "architecture": "<COMPLIANT|NON_COMPLIANT>",
     "governance": "<COMPLIANT|NON_COMPLIANT>",
-    "build_to_green": "<COMPLIANT|NON_COMPLIANT>"
+    "orchestration": "<COMPLIANT|NON_COMPLIANT>"
   },
   "immutable": true,
-  "task_reference": "<optional_task_reference>",
-  "module_id": "<optional_module_id>",
+  "fm_specific": {
+    "orchestration_tests": 0,
+    "dashboard_tests": 0,
+    "enforcement_tests": 0,
+    "integration_tests": 0
+  },
   "qa_details": {
     "test_framework": "<test_framework_name>",
     "coverage_percentage": 0.0,

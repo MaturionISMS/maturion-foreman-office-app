@@ -288,12 +288,19 @@ def find_qa_reports(search_paths: List[str]) -> List[Path]:
         
         if path.is_file():
             # Check if file name suggests it's a QA report
-            if 'qa' in path.name.lower() and 'report' in path.name.lower() and path.suffix == '.json':
+            # Exclude schema files and templates (not actual reports)
+            if ('qa' in path.name.lower() and 'report' in path.name.lower() and 
+                path.suffix == '.json' and
+                'schema' not in path.name.lower() and
+                'template' not in path.name.lower()):
                 reports.append(path)
         elif path.is_dir():
             # Search recursively for QA report files
-            reports.extend(path.rglob('*qa*report*.json'))
-            reports.extend(path.rglob('*qa_report*.json'))
+            # Exclude schema files and templates
+            for pattern in ['*qa*report*.json', '*qa_report*.json']:
+                for report_path in path.rglob(pattern):
+                    if 'schema' not in report_path.name.lower() and 'template' not in report_path.name.lower():
+                        reports.append(report_path)
     
     return list(set(reports))  # Deduplicate
 

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Builder QA Report Schema",
-  "description": "JSON Schema for Builder QA Report validation. Conforms to EVIDENCE_SCHEMA_CANON.json.",
+  "title": "FM QA Report Schema",
+  "description": "JSON Schema for FM QA Report validation. Enforces agent-scoped QA boundaries.",
   "type": "object",
   "required": [
     "qa_report_metadata",
@@ -22,26 +22,27 @@
       "properties": {
         "agent_type": {
           "type": "string",
-          "const": "builder",
-          "description": "Agent type - must be 'builder' for builder QA reports"
+          "const": "fm",
+          "description": "Agent type - must be 'fm' for FM QA reports"
         },
         "agent_id": {
           "type": "string",
-          "enum": ["ui-builder", "api-builder", "schema-builder", "integration-builder", "qa-builder"],
-          "description": "Specific builder agent identifier"
+          "enum": ["fm-builder", "fm-agent"],
+          "description": "Specific FM agent identifier"
         },
         "agent_version": {
           "type": "string",
-          "description": "Version of the builder agent"
+          "description": "Version of the FM agent"
         },
         "scope": {
           "type": "string",
-          "const": "builder-qa",
-          "description": "QA scope - must be 'builder-qa' for builder agents"
+          "const": "fm-qa",
+          "description": "QA scope - must be 'fm-qa' for FM agents"
         },
         "repository": {
           "type": "string",
-          "description": "Repository where QA was executed"
+          "const": "maturion-foreman-office-app",
+          "description": "Repository - must be 'maturion-foreman-office-app' for FM QA"
         },
         "timestamp": {
           "type": "string",
@@ -53,13 +54,13 @@
     },
     "report_type": {
       "type": "string",
-      "const": "BUILDER_QA_REPORT",
-      "description": "Type of report - must be BUILDER_QA_REPORT"
+      "const": "FM_QA_REPORT",
+      "description": "Type of report - must be FM_QA_REPORT"
     },
     "agent_id": {
       "type": "string",
-      "enum": ["ui-builder", "api-builder", "schema-builder", "integration-builder", "qa-builder"],
-      "description": "Builder agent identifier"
+      "enum": ["fm-builder", "fm-agent"],
+      "description": "FM agent identifier"
     },
     "timestamp": {
       "type": "string",
@@ -126,10 +127,10 @@
           "enum": ["COMPLIANT", "NON_COMPLIANT"],
           "description": "Governance compliance status"
         },
-        "build_to_green": {
+        "orchestration": {
           "type": "string",
           "enum": ["COMPLIANT", "NON_COMPLIANT"],
-          "description": "Build-to-green compliance status (optional)"
+          "description": "FM orchestration compliance status (optional)"
         }
       },
       "description": "Gate compliance verification"
@@ -139,13 +140,31 @@
       "const": true,
       "description": "Immutability flag - must be true"
     },
-    "task_reference": {
-      "type": "string",
-      "description": "Reference to the build task (optional)"
-    },
-    "module_id": {
-      "type": "string",
-      "description": "Module identifier if applicable (optional)"
+    "fm_specific": {
+      "type": "object",
+      "description": "FM-specific QA metrics (optional)",
+      "properties": {
+        "orchestration_tests": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of orchestration tests"
+        },
+        "dashboard_tests": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of dashboard tests"
+        },
+        "enforcement_tests": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of enforcement tests"
+        },
+        "integration_tests": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of integration tests"
+        }
+      }
     },
     "qa_details": {
       "type": "object",

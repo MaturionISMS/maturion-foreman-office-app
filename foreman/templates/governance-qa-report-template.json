@@ -1,0 +1,41 @@
+{
+  "qa_report_metadata": {
+    "agent_type": "governance",
+    "agent_id": "<governance-administrator|governance-liaison>",
+    "agent_version": "1.0.0",
+    "scope": "governance-qa",
+    "repository": "maturion-foreman-governance",
+    "timestamp": "<ISO_8601_TIMESTAMP>"
+  },
+  "report_type": "GOVERNANCE_QA_REPORT",
+  "agent_id": "<GOVERNANCE_AGENT_ID>",
+  "timestamp": "<ISO_8601_TIMESTAMP>",
+  "qa_status": "<READY|NOT_READY>",
+  "evidence_chain": [
+    "<path/to/evidence/artifact1>",
+    "<path/to/evidence/artifact2>"
+  ],
+  "compliance_summary": {
+    "total_checks": 0,
+    "passed": 0,
+    "failed": 0,
+    "warnings": 0
+  },
+  "gate_compliance": {
+    "agent_boundary": "<COMPLIANT|NON_COMPLIANT>",
+    "canonical_alignment": "<COMPLIANT|NON_COMPLIANT>",
+    "governance_rules": "<COMPLIANT|NON_COMPLIANT>",
+    "constitutional_compliance": "<COMPLIANT|NON_COMPLIANT>"
+  },
+  "immutable": true,
+  "governance_specific": {
+    "policy_violations": [],
+    "constitutional_violations": [],
+    "canonical_drift_detected": false,
+    "governance_artifacts_validated": 0
+  },
+  "qa_details": {
+    "validation_framework": "<validation_framework_name>",
+    "validation_duration_seconds": 0.0
+  }
+}

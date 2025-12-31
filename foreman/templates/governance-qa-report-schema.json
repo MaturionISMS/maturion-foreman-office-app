@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Builder QA Report Schema",
-  "description": "JSON Schema for Builder QA Report validation. Conforms to EVIDENCE_SCHEMA_CANON.json.",
+  "title": "Governance QA Report Schema",
+  "description": "JSON Schema for Governance QA Report validation. Enforces agent-scoped QA boundaries.",
   "type": "object",
   "required": [
     "qa_report_metadata",
@@ -10,7 +10,7 @@
     "timestamp",
     "qa_status",
     "evidence_chain",
-    "test_summary",
+    "compliance_summary",
     "gate_compliance",
     "immutable"
   ],
@@ -22,26 +22,27 @@
       "properties": {
         "agent_type": {
           "type": "string",
-          "const": "builder",
-          "description": "Agent type - must be 'builder' for builder QA reports"
+          "const": "governance",
+          "description": "Agent type - must be 'governance' for Governance QA reports"
         },
         "agent_id": {
           "type": "string",
-          "enum": ["ui-builder", "api-builder", "schema-builder", "integration-builder", "qa-builder"],
-          "description": "Specific builder agent identifier"
+          "enum": ["governance-administrator", "governance-liaison"],
+          "description": "Specific Governance agent identifier"
         },
         "agent_version": {
           "type": "string",
-          "description": "Version of the builder agent"
+          "description": "Version of the Governance agent"
         },
         "scope": {
           "type": "string",
-          "const": "builder-qa",
-          "description": "QA scope - must be 'builder-qa' for builder agents"
+          "const": "governance-qa",
+          "description": "QA scope - must be 'governance-qa' for Governance agents"
         },
         "repository": {
           "type": "string",
-          "description": "Repository where QA was executed"
+          "const": "maturion-foreman-governance",
+          "description": "Repository - must be 'maturion-foreman-governance' for Governance QA"
         },
         "timestamp": {
           "type": "string",
@@ -53,13 +54,13 @@
     },
     "report_type": {
       "type": "string",
-      "const": "BUILDER_QA_REPORT",
-      "description": "Type of report - must be BUILDER_QA_REPORT"
+      "const": "GOVERNANCE_QA_REPORT",
+      "description": "Type of report - must be GOVERNANCE_QA_REPORT"
     },
     "agent_id": {
       "type": "string",
-      "enum": ["ui-builder", "api-builder", "schema-builder", "integration-builder", "qa-builder"],
-      "description": "Builder agent identifier"
+      "enum": ["governance-administrator", "governance-liaison"],
+      "description": "Governance agent identifier"
     },
     "timestamp": {
       "type": "string",
@@ -80,56 +81,56 @@
       },
       "description": "Array of evidence artifact paths supporting this report"
     },
-    "test_summary": {
+    "compliance_summary": {
       "type": "object",
-      "required": ["total", "passed", "failed", "skipped"],
+      "required": ["total_checks", "passed", "failed", "warnings"],
       "properties": {
-        "total": {
+        "total_checks": {
           "type": "integer",
           "minimum": 0,
-          "description": "Total number of tests"
+          "description": "Total number of compliance checks"
         },
         "passed": {
           "type": "integer",
           "minimum": 0,
-          "description": "Number of tests passed"
+          "description": "Number of checks passed"
         },
         "failed": {
           "type": "integer",
           "minimum": 0,
-          "description": "Number of tests failed"
+          "description": "Number of checks failed"
         },
-        "skipped": {
+        "warnings": {
           "type": "integer",
           "minimum": 0,
-          "description": "Number of tests skipped"
+          "description": "Number of warnings"
         }
       },
-      "description": "Summary of test execution results"
+      "description": "Summary of compliance check results"
     },
     "gate_compliance": {
       "type": "object",
-      "required": ["agent_boundary", "architecture", "governance"],
+      "required": ["agent_boundary", "canonical_alignment", "governance_rules"],
       "properties": {
         "agent_boundary": {
           "type": "string",
           "enum": ["COMPLIANT", "NON_COMPLIANT"],
           "description": "Agent boundary compliance status"
         },
-        "architecture": {
+        "canonical_alignment": {
           "type": "string",
           "enum": ["COMPLIANT", "NON_COMPLIANT"],
-          "description": "Architecture alignment compliance status"
+          "description": "Canonical alignment compliance status"
         },
-        "governance": {
+        "governance_rules": {
           "type": "string",
           "enum": ["COMPLIANT", "NON_COMPLIANT"],
-          "description": "Governance compliance status"
+          "description": "Governance rules compliance status"
         },
-        "build_to_green": {
+        "constitutional_compliance": {
           "type": "string",
           "enum": ["COMPLIANT", "NON_COMPLIANT"],
-          "description": "Build-to-green compliance status (optional)"
+          "description": "Constitutional compliance status (optional)"
         }
       },
       "description": "Gate compliance verification"
@@ -139,32 +140,47 @@
       "const": true,
       "description": "Immutability flag - must be true"
     },
-    "task_reference": {
-      "type": "string",
-      "description": "Reference to the build task (optional)"
-    },
-    "module_id": {
-      "type": "string",
-      "description": "Module identifier if applicable (optional)"
+    "governance_specific": {
+      "type": "object",
+      "description": "Governance-specific QA details (optional)",
+      "properties": {
+        "policy_violations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of policy violations detected"
+        },
+        "constitutional_violations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of constitutional violations detected"
+        },
+        "canonical_drift_detected": {
+          "type": "boolean",
+          "description": "Whether canonical drift was detected"
+        },
+        "governance_artifacts_validated": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of governance artifacts validated"
+        }
+      }
     },
     "qa_details": {
       "type": "object",
       "description": "Additional QA details (optional)",
       "properties": {
-        "test_framework": {
+        "validation_framework": {
           "type": "string",
-          "description": "Testing framework used"
+          "description": "Validation framework used"
         },
-        "coverage_percentage": {
+        "validation_duration_seconds": {
           "type": "number",
           "minimum": 0,
-          "maximum": 100,
-          "description": "Test coverage percentage"
-        },
-        "test_duration_seconds": {
-          "type": "number",
-          "minimum": 0,
-          "description": "Total test execution time in seconds"
+          "description": "Total validation time in seconds"
         }
       }
     }
