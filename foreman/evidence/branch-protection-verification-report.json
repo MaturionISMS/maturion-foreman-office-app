@@ -1,0 +1,24 @@
+{
+  "verification_timestamp": "2025-12-30T16:33:13.243964Z",
+  "verification_method": "INSPECTION",
+  "repository": "MaturionISMS/maturion-foreman-office-app",
+  "branches_verified": [
+    {
+      "branch_name": "main",
+      "protection_enabled": false,
+      "compliance_status": "NON_COMPLIANT",
+      "deviations": [
+        {
+          "requirement": "authoritative_verification",
+          "expected": "API or CLI",
+          "actual": "inspection_fallback",
+          "severity": "CRITICAL"
+        }
+      ]
+    }
+  ],
+  "overall_status": "RED",
+  "canonical_governance_reference": "maturion-foreman-governance#PR-818",
+  "bootstrap_exception": false,
+  "bootstrap_exception_details": null
+}
