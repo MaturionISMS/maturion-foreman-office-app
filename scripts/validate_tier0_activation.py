@@ -3,7 +3,7 @@
 Tier-0 Governance Runtime Activation Validator
 
 This script validates that Tier-0 canonical governance documents are:
-1. Properly referenced in the FM agent contract (all 12 documents)
+1. Properly referenced in the FM agent contract (all 13 documents)
 2. Present and accessible in the repository
 3. Schema-valid (where applicable)
 4. Not out of sync with the governance repository
@@ -30,7 +30,7 @@ class Tier0ActivationValidator:
     """Validates Tier-0 governance runtime activation"""
     
     MANIFEST_PATH = "governance/TIER_0_CANON_MANIFEST.json"
-    EXPECTED_TIER0_COUNT = 12
+    EXPECTED_TIER0_COUNT = 13
     
     def __init__(self, repo_root: str):
         self.repo_root = Path(repo_root)

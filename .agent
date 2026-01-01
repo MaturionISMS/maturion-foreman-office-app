@@ -34,7 +34,7 @@ governance:
   # Source: governance/TIER_0_CANON_MANIFEST.json
   tier_0_canon:
     manifest_file: governance/TIER_0_CANON_MANIFEST.json
-    manifest_version: "1.0.0"
+    manifest_version: "1.1.0"
     
     constitutional_documents:
       # T0-001: Supreme Authority
@@ -132,6 +132,15 @@ governance:
         purpose: Defines quality standards and integrity requirements
         authority: Constitutional
         validation_required: true
+      
+      # T0-013: FM Execution Mandate (Bootstrap Mode)
+      - id: T0-013
+        path: governance/contracts/FM_EXECUTION_MANDATE.md
+        title: FM Execution Mandate (Bootstrap Mode)
+        purpose: FM's constitutional execution authority declaration
+        authority: Constitutional
+        validation_required: true
+        gate_type: PRE_BUILD_GATE
     
     # Pre-execution requirements
     activation_requirements:
