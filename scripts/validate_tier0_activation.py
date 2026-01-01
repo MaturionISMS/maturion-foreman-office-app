@@ -125,6 +125,10 @@ class Tier0ActivationValidator:
         # Check 9: Code review closure ratchet is declared
         if not self.validate_code_review_closure():
             success = False
+        
+        # Check 10: Branch protection enforcement is declared
+        if not self.validate_branch_protection_enforcement():
+            success = False
             
         # Print summary
         print()
@@ -642,6 +646,126 @@ class Tier0ActivationValidator:
             print(f"❌ FAIL: Error checking code review closure: {str(e)}")
             return False
     
+    def validate_branch_protection_enforcement(self) -> bool:
+        """Validate that branch protection enforcement is declared"""
+        
+        try:
+            # Check manifest for branch protection enforcement section
+            if not self.manifest:
+                self.errors.append({
+                    "check": "branch_protection_enforcement_declared",
+                    "status": "FAIL",
+                    "message": "Manifest not loaded, cannot check branch protection enforcement"
+                })
+                print("❌ FAIL: Manifest not loaded")
+                return False
+            
+            bp_enforcement = self.manifest.get('branch_protection_enforcement', {})
+            
+            if not bp_enforcement:
+                self.errors.append({
+                    "check": "branch_protection_enforcement_declared",
+                    "status": "FAIL",
+                    "message": "Branch protection enforcement section not found in manifest"
+                })
+                print("❌ FAIL: Branch protection enforcement section not found in manifest")
+                return False
+            
+            # Check required fields
+            if bp_enforcement.get('required') != True:
+                self.errors.append({
+                    "check": "branch_protection_enforcement_declared",
+                    "status": "FAIL",
+                    "message": "Branch protection enforcement not marked as required"
+                })
+                print("❌ FAIL: Branch protection enforcement not marked as required")
+                return False
+            
+            if bp_enforcement.get('enforcement') != 'TIER_0_INVARIANT':
+                self.errors.append({
+                    "check": "branch_protection_enforcement_declared",
+                    "status": "FAIL",
+                    "message": "Branch protection enforcement not marked as TIER_0_INVARIANT"
+                })
+                print("❌ FAIL: Branch protection enforcement not marked as TIER_0_INVARIANT")
+                return False
+            
+            # Check required_ci_checks
+            required_checks = bp_enforcement.get('required_ci_checks', [])
+            if not required_checks:
+                self.errors.append({
+                    "check": "branch_protection_enforcement_declared",
+                    "status": "FAIL",
+                    "message": "No required CI checks defined"
+                })
+                print("❌ FAIL: No required CI checks defined")
+                return False
+            
+            # Validate each required check has necessary fields
+            for check in required_checks:
+                if 'id' not in check or 'check_name' not in check:
+                    self.errors.append({
+                        "check": "branch_protection_enforcement_declared",
+                        "status": "FAIL",
+                        "message": f"Required check missing id or check_name: {check}"
+                    })
+                    print(f"❌ FAIL: Required check missing id or check_name")
+                    return False
+            
+            # Check failure handling
+            failure_handling = bp_enforcement.get('failure_handling', {})
+            required_handlers = [
+                'on_missing_required_checks',
+                'on_verification_failure',
+                'on_enforcement_bypass_detected'
+            ]
+            
+            for handler in required_handlers:
+                if handler not in failure_handling:
+                    self.errors.append({
+                        "check": "branch_protection_enforcement_declared",
+                        "status": "FAIL",
+                        "message": f"Missing failure handler: {handler}"
+                    })
+                    print(f"❌ FAIL: Missing failure handler: {handler}")
+                    return False
+                
+                handler_config = failure_handling[handler]
+                if handler_config.get('action') != 'STOP':
+                    self.errors.append({
+                        "check": "branch_protection_enforcement_declared",
+                        "status": "FAIL",
+                        "message": f"Handler {handler} missing or incorrect 'action: STOP'"
+                    })
+                    print(f"❌ FAIL: Handler {handler} missing or incorrect 'action: STOP'")
+                    return False
+                
+                if handler_config.get('escalation') != 'MANDATORY':
+                    self.errors.append({
+                        "check": "branch_protection_enforcement_declared",
+                        "status": "FAIL",
+                        "message": f"Handler {handler} missing or incorrect 'escalation: MANDATORY'"
+                    })
+                    print(f"❌ FAIL: Handler {handler} missing or incorrect 'escalation: MANDATORY'")
+                    return False
+            
+            self.validations.append({
+                "check": "branch_protection_enforcement_declared",
+                "status": "PASS",
+                "message": f"Branch protection enforcement properly declared ({len(required_checks)} required checks)"
+            })
+            print(f"✅ PASS: Branch protection enforcement properly declared ({len(required_checks)} required checks)")
+            return True
+            
+        except Exception as e:
+            self.errors.append({
+                "check": "branch_protection_enforcement_declared",
+                "status": "FAIL",
+                "message": f"Error checking branch protection enforcement: {str(e)}"
+            })
+            print(f"❌ FAIL: Error checking branch protection enforcement: {str(e)}")
+            return False
+    
     def print_summary(self):
         """Print validation summary"""
         print("VALIDATION SUMMARY")
@@ -665,16 +789,17 @@ class Tier0ActivationValidator:
             print()
         
         if not self.errors:
-            print("✅ ALL TIER-0 ACTIVATION CHECKS PASSED (12/12)")
+            print("✅ ALL TIER-0 ACTIVATION CHECKS PASSED")
             print()
             print("Tier-0 governance runtime activation is VALID.")
-            print("All 12 constitutional documents are properly activated.")
+            print("All 13 constitutional documents are properly activated.")
+            print("Branch protection enforcement is declared.")
             print("This PR may proceed to merge (subject to other gates).")
         else:
             print("❌ TIER-0 ACTIVATION FAILED")
             print()
             print("CATASTROPHIC: Tier-0 governance is not properly activated.")
-            print(f"Target: 12/12 Tier-0 documents activated")
+            print(f"Target: 13/13 Tier-0 documents + branch protection enforcement")
             print(f"Status: INCOMPLETE or INVALID")
             print()
             print("This PR is BLOCKED from merge until all errors are resolved.")

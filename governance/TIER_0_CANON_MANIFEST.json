@@ -291,6 +291,76 @@
     }
   },
   
+  "branch_protection_enforcement": {
+    "required": true,
+    "enforcement": "TIER_0_INVARIANT",
+    "description": "Branch protection MUST be verified before FM runtime execution. Missing required checks is a system failure.",
+    "required_ci_checks": [
+      {
+        "id": "BP-001",
+        "check_name": "Tier-0 Governance Activation Gate",
+        "workflow_file": ".github/workflows/tier0-activation-gate.yml",
+        "job_name": "validate-tier0-activation",
+        "purpose": "Validates Tier-0 canonical governance runtime activation",
+        "blocking": true,
+        "failure_classification": "CATASTROPHIC"
+      },
+      {
+        "id": "BP-002",
+        "check_name": "Governance Coupling Gate",
+        "workflow_file": ".github/workflows/governance-coupling-gate.yml",
+        "job_name": "validate-governance-coupling",
+        "purpose": "Enforces coupling rule - Tier-0 governance changes MUST be coupled with enforcement updates",
+        "blocking": true,
+        "failure_classification": "CATASTROPHIC"
+      },
+      {
+        "id": "BP-003",
+        "check_name": "Code Review Closure Gate",
+        "workflow_file": ".agent",
+        "purpose": "Ensures code review closure ratchet is enforced at end of session",
+        "blocking": true,
+        "failure_classification": "CATASTROPHIC",
+        "note": "Enforcement is contractual via .agent file, not a separate CI workflow"
+      }
+    ],
+    "verification_requirements": {
+      "verify_on_runtime_start": true,
+      "verify_method": "GitHub API or CLI",
+      "fallback_allowed": false
+    },
+    "failure_handling": {
+      "on_missing_required_checks": {
+        "action": "STOP",
+        "escalation": "MANDATORY",
+        "escalation_target": "Johan Ras",
+        "message": "CATASTROPHIC: Required CI checks not configured in branch protection",
+        "blocking": true,
+        "diagnostic_required": true
+      },
+      "on_verification_failure": {
+        "action": "STOP",
+        "escalation": "MANDATORY",
+        "escalation_target": "Johan Ras",
+        "message": "CATASTROPHIC: Cannot verify branch protection status",
+        "blocking": true,
+        "diagnostic_required": true
+      },
+      "on_enforcement_bypass_detected": {
+        "action": "STOP",
+        "escalation": "MANDATORY",
+        "escalation_target": "Johan Ras",
+        "message": "CATASTROPHIC: Branch protection enforcement bypass detected",
+        "blocking": true,
+        "diagnostic_required": true
+      }
+    },
+    "ratchet_semantics": {
+      "description": "Required checks are non-negotiable. Absence is a system failure.",
+      "regression_impossible": "Without governance violation - all checks MUST remain configured"
+    }
+  },
+  
   "immutability": true,
   "schema_version": "1.0.0"
 }
