@@ -4,8 +4,8 @@
 **Type**: Canonical Governance Standard  
 **Authority**: Supreme - Constitutional  
 **Canon ID**: G-PLAT-READY-01  
-**Version**: 2.0.0  
-**Effective Date**: 2025-12-31  
+**Version**: 2.1.0  
+**Effective Date**: 2026-01-01  
 **Owner**: Maturion Engineering Leadership (Johan Ras)  
 **Precedence**: Subordinate to GOVERNANCE_PURPOSE_AND_SCOPE.md, CONSTITUTION.md
 
@@ -1197,14 +1197,213 @@ This canon succeeds when:
 
 ---
 
+## 15. FM AUTONOMOUS EXECUTION AND BOOTSTRAP PROXY CLARIFICATION
+
+### 15.1 Purpose of This Section
+
+**Added**: 2026-01-01 (Version 2.1.0)  
+**Authority**: TSP_03_FM_AUTONOMY_AND_ONE_TIME_BUILD_INTENT_SURVEY.md  
+**Trigger**: Governance Correction — FM Autonomy Alignment
+
+This section **explicitly clarifies** that Platform Readiness assumes **fully autonomous FM execution** and that bootstrap proxy mechanics do **NOT** redefine FM authority.
+
+**Problem**: Historical governance drift interpreted GitHub constraints as FM authority constraints, leading to incorrect coder-centric execution models.
+
+**Resolution**: This section binds existing intent into explicit, non-interpretable readiness criteria.
+
+### 15.2 Canonical Statement: Platform Readiness Assumes Autonomous Execution
+
+**Constitutional Principle**: Platform readiness means the platform is ready for **autonomous FM execution without stepwise human approval**.
+
+**Explicit Requirements**:
+- FM executes build orchestration end-to-end autonomously
+- FM assigns tasks to builders autonomously
+- FM validates builder deliverables autonomously
+- FM merges PRs autonomously (post-bootstrap) or via execution proxy (during bootstrap)
+- Human involvement is **limited to final UI evaluation at delivery**
+
+**Explicitly Forbidden Execution Models**:
+- ❌ Stepwise human approval at each build stage
+- ❌ Human validation of FM decisions before FM proceeds
+- ❌ Coder-style "review and approve" workflows during build execution
+- ❌ Iterative human correction loops during build waves
+
+**Rationale**: One-Time Build law (constitutional) requires builds to be correct on first execution. Stepwise approval implies iterative correction, which **violates One-Time Build**.
+
+### 15.3 GitHub Constraints Are Tooling Limits, Not Authority Limits
+
+**Canonical Clarification**: GitHub API/platform limitations are **execution constraints**, not **authority constraints**.
+
+**GitHub Constraint Example**: FM cannot directly merge PRs via GitHub API without elevated permissions.
+
+**Governance Authority**: FM is the **sovereign orchestrator** of all build execution.
+
+**Resolution**: GitHub constraint is a **tooling limitation**. FM retains full authority. Execution mechanics are adapted (via FM App automation or bootstrap proxy), but authority is **NOT reduced**.
+
+| Aspect | Authority | Execution Mechanism |
+|--------|-----------|---------------------|
+| **Who decides?** | FM (always) | FM App (post-bootstrap) or Bootstrap Proxy (during bootstrap) |
+| **Who validates?** | FM (always) | FM (always) |
+| **Who approves?** | FM (always) | N/A (no approval loop) |
+| **Who merges?** | FM (authority) | FM App or Bootstrap Proxy (mechanics) |
+
+**Key Principle**: GitHub limitations affect **how** FM executes, not **whether** FM has authority.
+
+### 15.4 Bootstrap Proxy Does NOT Redefine Authority
+
+**Bootstrap Context**: During bootstrap, FM cannot directly execute GitHub platform actions (create issues, merge PRs) due to GitHub API limitations.
+
+**Bootstrap Proxy Definition**: A human **execution proxy** may perform mechanical platform actions on FM's behalf during bootstrap.
+
+**Critical Constraint**: The bootstrap proxy is **execution infrastructure**, NOT a decision maker.
+
+**Bootstrap Proxy Semantics (BINDING)**:
+
+✅ **FM retains full authority**:
+- FM makes all decisions
+- FM issues all instructions
+- FM validates all outcomes
+- FM owns the build plan
+
+✅ **Human proxy executes mechanically**:
+- Human receives explicit instructions from FM
+- Human performs GitHub actions exactly as instructed
+- Human confirms action completion to FM
+- Human does **NOT** approve, review, or validate
+
+❌ **Human proxy does NOT**:
+- Approve FM decisions
+- Review builder work
+- Validate architecture
+- Modify FM instructions
+- Make build decisions
+- Provide feedback during execution
+
+**Critical Distinction**: Bootstrap proxy is **mechanical execution**, not **approval authority**.
+
+### 15.5 Bootstrap Proxy vs. Coder Ethics
+
+**Coder Ethics** (FORBIDDEN during governed builds):
+- Human reviews code
+- Human validates correctness
+- Human approves merge
+- Human provides iterative feedback
+- Human corrects builder work
+
+**Bootstrap Proxy** (ALLOWED during bootstrap only):
+- Human executes FM commands
+- Human clicks buttons on FM's behalf
+- Human reports action completion
+- Human does **NOT** review, approve, or validate
+
+**Governance Violation**: Treating bootstrap proxy as coder-style review authority violates One-Time Build law and FM sovereignty.
+
+### 15.6 Bootstrap Proxy Termination
+
+Bootstrap proxy is a **temporary constraint** only.
+
+**Post-Bootstrap State**:
+- FM App will perform GitHub actions directly via automation
+- Human proxy role terminates
+- Human involvement reduces to **final UI evaluation only**
+
+**Governance Commitment**: Bootstrap proxy does **NOT** establish a permanent execution model. It is a **readiness gap mitigation** only.
+
+### 15.7 Platform Readiness Implication
+
+**Readiness Criterion Update**: Platform readiness requires that GitHub limitations are **mitigated** (via FM App or bootstrap proxy), not that FM authority is **reduced**.
+
+**Operational Definition**:
+- **"Ready for Autonomous Execution"** = FM can execute end-to-end without stepwise human approval
+- **"Execution Mechanics Operational"** = FM App automation exists OR bootstrap proxy protocol is established and understood
+- **"Authority Intact"** = FM sovereign authority is documented, explicit, and binding
+
+**Validation Method**:
+1. Verify FM autonomy is documented in agent contract (explicit sovereignty)
+2. Verify execution mechanics are operational (FM App OR bootstrap proxy protocol documented)
+3. Verify no coder-style approval loops exist in build plan
+4. Verify bootstrap proxy (if active) is understood as execution infrastructure only
+5. Verify human role is limited to final UI evaluation
+
+**Evidence Requirements**:
+- FM agent contract includes explicit sovereign authority (TRUE/FALSE)
+- Execution mechanics operational: FM App automation OR bootstrap proxy protocol documented (TRUE/FALSE)
+- Build plan contains no stepwise approval loops (TRUE/FALSE)
+- Bootstrap proxy semantics documented and binding (if bootstrap active) (TRUE/FALSE)
+- Human role limited to final UI evaluation (TRUE/FALSE)
+
+**Readiness Test**:
+```
+IF fm_autonomous_authority_explicit()           # Agent contract documents sovereignty
+AND execution_mechanics_operational()            # FM App OR bootstrap proxy ready
+AND no_stepwise_approval_loops()                 # Build plan is autonomous
+AND bootstrap_proxy_semantics_binding()          # If bootstrap, proxy understood as execution only
+AND human_role_limited_to_final_evaluation()     # No iterative approval loops
+THEN autonomous_execution_ready = TRUE
+```
+
+### 15.8 Integration with Existing Readiness Conditions
+
+This section **extends** Section 4.3 (Agent Contracts Are Canonically Bound) with explicit autonomous execution requirements.
+
+**Updated Validation for Condition 4.3**:
+- FM contract must explicitly document sovereign authority
+- FM contract must explicitly forbid coder-style approval loops
+- FM contract must explicitly limit human role to final UI evaluation
+- FM contract must explicitly clarify that GitHub constraints are tooling limits, not authority limits
+- If bootstrap proxy is active, FM contract must include bootstrap proxy semantics binding clause
+
+**References**:
+- `governance/build/FM_AUTONOMY_BINDING_CHECKLIST.md` — Binding FM authorities and execution semantics
+- `governance/tech-surveys/TSP_03_FM_AUTONOMY_AND_ONE_TIME_BUILD_INTENT_SURVEY.md` — Reconciliation evidence
+- `governance/canon/BOOTSTRAP_EXECUTION_LEARNINGS.md` (BL-0004) — Bootstrap proxy definition
+
+---
+
+## 16. BOOTSTRAP EXECUTION LEARNINGS INTEGRATION
+
+### 16.1 Historical Drift Record
+
+**Learning**: TSP_03 survey identified governance drift during bootstrap execution.
+
+**Cause**: Distributed canon + implicit semantics allowed reinterpretation of FM authority.
+
+**Symptom**: Reversion to coder-centric execution models during live execution.
+
+**Impact**: Execution halted due to governance misinterpretation.
+
+**Resolution**: Binding governance artifacts (this update) that make FM autonomy and One-Time Build execution explicit and non-interpretable.
+
+### 16.2 Prevention Measures
+
+This platform readiness update includes the following preventions:
+- Section 15 explicitly clarifies autonomous execution assumptions
+- FM agent contract update (in parallel) makes sovereignty explicit
+- FM Autonomy Binding Checklist provides enforceable reference
+- Bootstrap proxy semantics are binding, not interpretable
+- GitHub constraints are explicitly separated from authority constraints
+
+### 16.3 Future Readiness Declarations
+
+All future platform readiness declarations **MUST**:
+- Assume autonomous FM execution
+- Explicitly state whether bootstrap proxy is active
+- Clarify that bootstrap proxy is execution infrastructure, not authority transfer
+- Document that human role is limited to final UI evaluation
+- Reference FM_AUTONOMY_BINDING_CHECKLIST.md for validation
+
+**No readiness declaration may reinterpret FM authority or introduce stepwise approval loops.**
+
+---
+
 ## 17. Versioning and Evolution
 
 ### 17.1 Current Version
 
-**Version**: 2.0.0  
-**Status**: Major Update — Gap Closure  
+**Version**: 2.1.0  
+**Status**: Minor Update — FM Autonomy Alignment  
 **Authority**: Johan Ras  
-**Trigger**: Phase 2.1 — Governance Canon Update (BL-009 Closure)
+**Trigger**: TSP_03 Governance Correction — FM Autonomy and One-Time Build Intent Alignment
 
 ### 17.2 Planned Evolution
 
@@ -1234,6 +1433,47 @@ Changes to this canon follow `VERSIONING_AND_EVOLUTION_GOVERNANCE.md`:
 ---
 
 ## 18. Changelog
+
+### Version 2.1.0 (2026-01-01)
+
+**Status**: Minor Update — FM Autonomy Alignment  
+**Authority**: Johan Ras  
+**Trigger**: TSP_03 Governance Correction — FM Autonomy and One-Time Build Intent Alignment  
+**Grounded In**: `governance/tech-surveys/TSP_03_FM_AUTONOMY_AND_ONE_TIME_BUILD_INTENT_SURVEY.md`
+
+**Summary**: Updated Platform Readiness Canon to **explicitly clarify** that platform readiness assumes fully autonomous FM execution and that bootstrap proxy mechanics do NOT redefine FM authority.
+
+**Critical Clarifications Added**:
+- **Section 15**: FM Autonomous Execution and Bootstrap Proxy Clarification
+  - Platform readiness assumes autonomous FM execution without stepwise human approval
+  - GitHub constraints are tooling limits, not authority limits
+  - Bootstrap proxy is execution infrastructure, not approval authority
+  - Bootstrap proxy vs. coder ethics distinction made explicit
+  - Human role limited to final UI evaluation
+- **Section 16**: Bootstrap Execution Learnings Integration
+  - Records historical drift and prevention measures
+  - Establishes requirements for future readiness declarations
+
+**Integration Updates**:
+- Section 4.3 (Agent Contracts) extended with autonomous execution requirements
+- FM contract validation now includes sovereign authority verification
+- Bootstrap proxy semantics made binding, not interpretable
+
+**Governance Basis**:
+- Reconciles existing intent from foreman/identity.md, roles-and-duties.md, agent contracts
+- Binds distributed governance intent into explicit readiness criteria
+- NO new philosophical canon created; layering down existing intent only
+
+**References**:
+- `governance/build/FM_AUTONOMY_BINDING_CHECKLIST.md` — Binding FM authorities (created in parallel)
+- `governance/tech-surveys/TSP_03_FM_AUTONOMY_AND_ONE_TIME_BUILD_INTENT_SURVEY.md` — Reconciliation index
+- `governance/canon/BOOTSTRAP_EXECUTION_LEARNINGS.md` (BL-0004, BL-00XX) — Bootstrap proxy definition and drift learning
+
+**Effect**: Platform readiness now **explicitly requires** autonomous FM execution. No readiness declaration may reinterpret FM authority or introduce stepwise approval loops.
+
+**Breaking Changes**: None (clarification only; existing intent made explicit)
+
+---
 
 ### Version 2.0.0 (2025-12-31)
 
