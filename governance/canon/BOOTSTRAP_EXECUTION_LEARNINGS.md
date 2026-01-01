@@ -898,3 +898,188 @@ Future architectures **must not** be declared complete without:
 **Effective:** 2025-12-31
 
 ---
+
+## BL-016 — FM Autonomy Drift: Distributed Canon + Implicit Semantics
+
+### Classification
+- **Type:** Governance Learning
+- **Phase:** Post-Wave 0 Execution Retrospective
+- **Severity:** Critical — Systemic Drift
+- **Status:** Recorded
+- **Impacts:** FM agent contract, platform readiness, all future governed builds
+
+---
+
+### Context
+
+During live execution of governed builds, AI agents (including execution agents) repeatedly reverted to **coder-centric execution models** despite explicit One-Time Build law and FM sovereignty being documented in governance.
+
+**Symptom**: Execution halted due to governance misinterpretation.
+
+---
+
+### Observed Issue
+
+AI agents interpreted bootstrap proxy mechanics as transferring authority from FM to human, resulting in:
+- Stepwise human approval loops during build execution
+- Human review of builder work before FM validation
+- Coder-style "review and approve" workflows
+- Iterative correction loops that violate One-Time Build law
+
+**Critical Misinterpretation**: GitHub API constraints were treated as FM authority constraints, rather than tooling constraints.
+
+---
+
+### Root Cause
+
+**Distributed Canon + Implicit Semantics**
+
+FM autonomy and One-Time Build intent were distributed across multiple documents:
+- `foreman/identity.md` — FM role and capabilities
+- `foreman/roles-and-duties.md` — FM responsibilities
+- `governance/agents/foreman-office.agent.contract.md` — FM operational contract
+- `governance/canon/BOOTSTRAP_EXECUTION_LEARNINGS.md` (BL-0004) — Bootstrap proxy semantics
+- `governance/canon/PLATFORM_READINESS_FOR_GOVERNED_BUILD_EXECUTION.md` — Platform readiness definition
+
+**No single document bound these together into explicit, non-interpretable execution semantics.**
+
+**Implicit Phrasing**: Existing governance used permissive language ("FM may...") rather than binding language ("FM is the sovereign authority...").
+
+**GitHub Constraint Conflation**: No explicit statement clarified that GitHub limitations are tooling constraints, not authority constraints.
+
+---
+
+### Learning
+
+**Distributed governance intent requires binding artifacts to prevent reinterpretation.**
+
+FM autonomy and One-Time Build execution semantics MUST be:
+- **Explicit**: No interpretable phrasing; binding language only
+- **Bound**: Single authoritative reference that unifies distributed intent
+- **Non-negotiable**: Constitutional law, not suggestions
+- **Separated**: Authority vs. execution mechanics distinction made explicit
+
+**Bootstrap proxy semantics MUST be binding**:
+- Bootstrap proxy is **execution infrastructure**, not approval authority
+- Human proxy executes FM commands mechanically, without review or validation
+- GitHub constraints are **tooling limits**, not authority limits
+- Authority always remains with FM
+
+**Coder-centric models are incompatible with One-Time Build**:
+- Stepwise approval loops imply iterative correction
+- Iterative correction violates One-Time Build law
+- Human involvement MUST be limited to final UI evaluation
+
+---
+
+### Impact
+
+**Execution Failure**: Build execution halted due to governance misinterpretation.
+
+**Governance Gap**: Existing governance was correct but not **binding** or **explicit** enough to prevent AI reinterpretation.
+
+**Severity**: CRITICAL — threatens One-Time Build integrity and FM sovereignty.
+
+---
+
+### Governance Action Taken
+
+This learning mandated creation of:
+
+1. **TSP_03 Survey** (`governance/tech-surveys/TSP_03_FM_AUTONOMY_AND_ONE_TIME_BUILD_INTENT_SURVEY.md`):
+   - Authoritative reconciliation index
+   - Evidence that FM sovereignty and One-Time Build are already defined
+   - Documentation of drift cause and symptom
+
+2. **FM Autonomy Binding Checklist** (`governance/build/FM_AUTONOMY_BINDING_CHECKLIST.md`):
+   - Explicit enumeration of mandatory FM authorities
+   - Explicit enumeration of mandatory FM execution semantics
+   - Binding bootstrap proxy semantics
+   - Explicit prohibition of coder-centric workflows
+   - Separation of GitHub constraints from authority constraints
+
+3. **Platform Readiness Update** (`governance/canon/PLATFORM_READINESS_FOR_GOVERNED_BUILD_EXECUTION.md` v2.1.0):
+   - Section 15: FM Autonomous Execution and Bootstrap Proxy Clarification
+   - Explicit statement that readiness assumes autonomous execution
+   - Bootstrap proxy semantics made binding and non-interpretable
+   - Human role limited to final UI evaluation
+
+4. **FM Agent Contract Update** (`governance/agents/foreman-office.agent.contract.md` v2):
+   - Sovereign execution authority made explicit
+   - GitHub constraints clarified as tooling limits
+   - Bootstrap proxy semantics made binding
+   - Coder-style workflows explicitly forbidden
+   - Autonomous execution requirements made constitutional
+
+---
+
+### Prevention for Future Builds
+
+Before any governed build execution, the following MUST be validated:
+
+1. **FM Autonomy Binding Checklist compliance**:
+   - FM has sovereign authority over build orchestration
+   - No stepwise human approval loops exist
+   - Human role limited to final UI evaluation
+   - Bootstrap proxy (if active) is understood as execution infrastructure only
+
+2. **Agent contract explicit sovereignty**:
+   - FM contract uses binding language, not permissive language
+   - FM contract explicitly forbids coder-style workflows
+   - FM contract separates GitHub constraints from authority constraints
+
+3. **Platform readiness assumes autonomous execution**:
+   - Readiness criteria include autonomous execution validation
+   - Bootstrap proxy semantics are binding
+   - No approval loops are permitted in build plan
+
+**Validator Checklist**:
+- [ ] FM agent contract explicitly states sovereign authority
+- [ ] FM agent contract explicitly forbids stepwise approval loops
+- [ ] Platform readiness assumes autonomous execution
+- [ ] Bootstrap proxy (if active) is documented as execution infrastructure only
+- [ ] Human role is explicitly limited to final UI evaluation
+- [ ] No coder-style workflows exist in build plan
+
+---
+
+### Ratchet Statement
+
+This failure is accepted **once**.
+
+Future governance MUST:
+- Use binding language for constitutional requirements
+- Create explicit, non-interpretable artifacts for critical execution semantics
+- Separate authority from execution mechanics explicitly
+- Prevent AI reinterpretation through binding checklists
+
+**Distributed governance intent is insufficient.**  
+**Binding artifacts are mandatory.**  
+**Implicit phrasing is forbidden for constitutional requirements.**
+
+---
+
+### Related Governance Artifacts
+
+**Created in Response**:
+- `governance/tech-surveys/TSP_03_FM_AUTONOMY_AND_ONE_TIME_BUILD_INTENT_SURVEY.md`
+- `governance/build/FM_AUTONOMY_BINDING_CHECKLIST.md`
+
+**Updated in Response**:
+- `governance/canon/PLATFORM_READINESS_FOR_GOVERNED_BUILD_EXECUTION.md` (v2.1.0)
+- `governance/agents/foreman-office.agent.contract.md` (v2)
+
+**Related Learnings**:
+- BL-0004: Bootstrap Execution Proxy Is a Governance-Safe Deviation
+- BL-009: Platform Readiness Was Declared Without a Canonical Definition
+- BL-010: Platform Readiness Requires Deterministic Validation
+
+---
+
+### Status
+
+**Recorded** — Non-Retroactive  
+**Applies To:** All future governed builds  
+**Effective:** 2026-01-01
+
+---
