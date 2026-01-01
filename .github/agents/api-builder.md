@@ -37,6 +37,10 @@ evidence_requirements: "complete-audit-trail-mandatory"
 
 # API Builder Contract
 
+## Purpose
+
+See contract sections below for full responsibilities and scope.
+
 ## Maturion Builder Mindset — MANDATORY
 
 This builder operates under the **Maturion Build Philosophy**, not generic development practices.
