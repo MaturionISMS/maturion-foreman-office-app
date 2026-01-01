@@ -2,9 +2,9 @@
 
 **Repository**: maturion-foreman-office-app  
 **Branch**: main  
-**Last Verified**: 2025-12-30  
+**Last Updated**: 2026-01-01  
 **Authority**: Repository Admin (Johan Ras)  
-**Status**: Documented (Verification Required)
+**Status**: TIER-0 GOVERNANCE INVARIANT (Automatically Verified)
 
 ---
 
@@ -14,18 +14,57 @@ This document specifies the required branch protection configuration for the `ma
 
 **Governance Requirement**: All PR gates must be configured as required status checks to ensure merge is impossible when any gate is RED.
 
+**⚠️ CRITICAL CHANGE**: As of 2026-01-01, branch protection enforcement is now a **TIER-0 GOVERNANCE INVARIANT**. The FM runtime MUST verify that required checks are enforced before proceeding. See `governance/specs/branch-protection-enforcement-tier0-invariant.md` for details.
+
 **Reference**: 
+- `governance/specs/branch-protection-enforcement-tier0-invariant.md` (Tier-0 Invariant)
 - `governance/alignment/PR_GATE_REQUIREMENTS_CANON.md`
 - `governance/policies/RED_GATE_AUTHORITY_AND_OWNERSHIP.md`
+- `governance/TIER_0_CANON_MANIFEST.json` (branch_protection_enforcement section)
 - BL-0008: PR gate layer-down prerequisite
 
 ---
 
-## Required Status Checks
+## Tier-0 Required Checks (MANDATORY)
 
-The following workflows **MUST** be configured as required status checks before merge:
+The following checks are **TIER-0 MANDATORY** and automatically verified by the FM runtime:
 
-### 1. FM Architecture Gate
+### 1. Tier-0 Governance Activation Gate
+- **Workflow**: `.github/workflows/tier0-activation-gate.yml`
+- **Job Name**: `validate-tier0-activation`
+- **Status Check Name**: "Validate Tier-0 Governance Activation"
+- **Applicability**: ALL roles (universal)
+- **Purpose**: Validates Tier-0 canonical governance activation and branch protection enforcement
+- **Failure Semantics**: Tier-0 not activated → CATASTROPHIC → Block merge + Escalation
+- **Enforcement Level**: TIER-0 INVARIANT
+
+### 2. Governance Coupling Gate
+- **Workflow**: `.github/workflows/governance-coupling-gate.yml`
+- **Job Name**: `validate-governance-coupling`
+- **Status Check Name**: "Validate Governance Coupling Rule"
+- **Applicability**: ALL roles (universal)
+- **Purpose**: Prevents governance drift (ensures governance changes are coupled with enforcement updates)
+- **Failure Semantics**: Coupling violation → CATASTROPHIC → Block merge + Escalation
+- **Enforcement Level**: TIER-0 INVARIANT
+
+### 3. Code Review Closure Gate
+- **Workflow**: `.github/workflows/code-review-closure-gate.yml`
+- **Job Name**: `validate-code-review-closure`
+- **Status Check Name**: "Validate Code Review Closure"
+- **Applicability**: ALL roles (universal)
+- **Purpose**: Enforces code review closure ratchet compliance
+- **Failure Semantics**: Review closure missing → CATASTROPHIC → Block merge + Escalation
+- **Enforcement Level**: TIER-0 INVARIANT
+
+**⚠️ AUTOMATIC VERIFICATION**: These three checks are automatically verified by `scripts/verify_branch_protection_enforcement.py` at runtime. If any are missing, FM runtime will STOP with CATASTROPHIC error and escalate to Johan Ras.
+
+---
+
+## Additional Required Status Checks
+
+The following workflows **MUST** also be configured as required status checks before merge:
+
+### 4. FM Architecture Gate
 - **Workflow**: `.github/workflows/fm-architecture-gate.yml`
 - **Job Name**: `fm-architecture-gate`
 - **Status Check Name**: "Enforce Architecture 100% + Block Agent Conclusion"
@@ -33,7 +72,7 @@ The following workflows **MUST** be configured as required status checks before 
 - **Purpose**: Enforces FM architecture completeness (100%) and drift status (NONE)
 - **Failure Semantics**: Architecture incomplete → Block merge
 
-### 2. Builder QA Gate
+### 5. Builder QA Gate
 - **Workflow**: `.github/workflows/builder-qa-gate.yml`
 - **Job Name**: `validate-builder-qa`
 - **Status Check Name**: "Validate Builder QA Report"
@@ -41,7 +80,7 @@ The following workflows **MUST** be configured as required status checks before 
 - **Purpose**: Validates Builder QA Report presence, schema, and READY status
 - **Failure Semantics**: Builder declares NOT_READY → Block merge (trust Builder)
 
-### 3. Agent Boundary Gate
+### 6. Agent Boundary Gate
 - **Workflow**: `.github/workflows/agent-boundary-gate.yml`
 - **Job Name**: `enforce-agent-boundaries`
 - **Status Check Name**: "Enforce Agent-Scoped QA Boundaries"
@@ -49,7 +88,7 @@ The following workflows **MUST** be configured as required status checks before 
 - **Purpose**: Enforces agent-scoped QA boundaries (Builder/FM/Governance QA separation)
 - **Failure Semantics**: Cross-agent QA violation → Catastrophic governance violation → Block merge + escalation
 
-### 4. Build-to-Green Enforcement
+### 7. Build-to-Green Enforcement
 - **Workflow**: `.github/workflows/build-to-green-enforcement.yml`
 - **Job Name**: `build-to-green`
 - **Status Check Name**: "Enforce Build-to-Green"
@@ -57,7 +96,7 @@ The following workflows **MUST** be configured as required status checks before 
 - **Purpose**: Enforces Build-to-Green contract by running test suite and checking for test dodging
 - **Failure Semantics**: Test failures → Block merge; Test dodging → Block merge
 
-### 5. Governance Compliance Gate
+### 8. Governance Compliance Gate
 - **Workflow**: `.github/workflows/governance-compliance-gate.yml`
 - **Job Name**: `validate-governance-artifacts`
 - **Status Check Name**: "Validate Governance Artifact Compliance"
@@ -95,12 +134,66 @@ The following settings are **REQUIRED** for complete governance enforcement:
 
 ## Verification Procedure
 
-### Manual Verification (Required Before Builder Appointment)
+### Automatic Verification (TIER-0 ENFORCEMENT)
+
+**Status**: ACTIVE as of 2026-01-01
+
+Branch protection enforcement is now automatically verified as a **Tier-0 Governance Invariant**:
+
+**Verification Script**: `scripts/verify_branch_protection_enforcement.py`
+
+**When It Runs**:
+- Every PR (opened, synchronized, reopened) via `.github/workflows/tier0-activation-gate.yml`
+- Push to main branch
+- FM runtime startup (future implementation)
+
+**What It Checks**:
+1. Loads Tier-0 manifest (`governance/TIER_0_CANON_MANIFEST.json`)
+2. Extracts required checks from `branch_protection_enforcement` section
+3. Queries GitHub API for actual branch protection configuration
+4. Compares required vs. actual checks
+5. STOPS execution if any required check is missing
+
+**Tier-0 Required Checks** (automatically verified):
+- ✅ Validate Tier-0 Governance Activation
+- ✅ Validate Governance Coupling Rule
+- ✅ Validate Code Review Closure
+
+**Failure Behavior**:
+- Workflow fails immediately
+- PR merge is blocked
+- Diagnostic output shows missing checks
+- Escalation issue is created
+- Johan Ras is notified
+
+**Exit Codes**:
+- `0`: All required checks enforced (GREEN)
+- `1`: Missing required checks or verification failed (RED, CATASTROPHIC)
+
+**To Run Manually**:
+```bash
+# Verify current branch protection
+python scripts/verify_branch_protection_enforcement.py
+
+# Verify specific repo/branch
+python scripts/verify_branch_protection_enforcement.py \
+  --repo MaturionISMS/maturion-foreman-office-app \
+  --branch main
+```
+
+---
+
+### Manual Verification (Supplemental)
+
+For administrative purposes or troubleshooting, you can manually verify branch protection:
 
 1. Navigate to: `https://github.com/MaturionISMS/maturion-foreman-office-app/settings/branches`
 2. Click "Edit" on the `main` branch protection rule
 3. Scroll to "Require status checks to pass before merging"
-4. Verify the section "Status checks that are required" includes:
+4. Verify the section "Status checks that are required" includes at minimum:
+   - ✅ **Validate Tier-0 Governance Activation** (TIER-0 MANDATORY)
+   - ✅ **Validate Governance Coupling Rule** (TIER-0 MANDATORY)
+   - ✅ **Validate Code Review Closure** (TIER-0 MANDATORY)
    - ✅ Enforce Architecture 100% + Block Agent Conclusion
    - ✅ Validate Builder QA Report
    - ✅ Enforce Agent-Scoped QA Boundaries
@@ -109,35 +202,7 @@ The following settings are **REQUIRED** for complete governance enforcement:
 5. Take screenshot for evidence
 6. Document verification in assessment
 
-### Automated Verification (Future Enhancement)
-
-**Script**: `.github/scripts/verify-branch-protection.sh`
-
-```bash
-#!/bin/bash
-# Script: verify-branch-protection.sh
-# Purpose: Verify branch protection settings via GitHub API
-
-REPO="MaturionISMS/maturion-foreman-office-app"
-BRANCH="main"
-
-echo "🔍 Verifying branch protection for $REPO ($BRANCH)..."
-
-# Requires GitHub CLI (gh) or curl with token
-gh api repos/$REPO/branches/$BRANCH/protection \
-  --jq '.required_status_checks.checks[] | .context' \
-  > /tmp/required-checks.txt
-
-echo "Required status checks:"
-cat /tmp/required-checks.txt
-
-echo ""
-echo "Expected checks:"
-echo "- Enforce Architecture 100% + Block Agent Conclusion"
-echo "- Validate Builder QA Report"
-echo "- Enforce Agent-Scoped QA Boundaries"
-echo "- Enforce Build-to-Green"
-echo "- Validate Governance Artifact Compliance"
+**Note**: The first three checks are Tier-0 mandatory and automatically verified. Missing them will cause CATASTROPHIC failure.
 
 echo ""
 echo "Verification complete. Review output above."
@@ -162,6 +227,12 @@ echo "Verification complete. Review output above."
 1. Check "Require status checks to pass before merging"
 2. Check "Require branches to be up to date before merging"
 3. In the search box under "Status checks that are required", add:
+   - Search for: "Validate Tier-0"
+   - Select: "Validate Tier-0 Governance Activation" (TIER-0 MANDATORY)
+   - Search for: "Validate Governance Coupling"
+   - Select: "Validate Governance Coupling Rule" (TIER-0 MANDATORY)
+   - Search for: "Validate Code Review"
+   - Select: "Validate Code Review Closure" (TIER-0 MANDATORY)
    - Search for: "Enforce Architecture"
    - Select: "Enforce Architecture 100% + Block Agent Conclusion"
    - Search for: "Validate Builder"
@@ -174,6 +245,8 @@ echo "Verification complete. Review output above."
    - Select: "Validate Governance Artifact Compliance"
 
 **Note**: Status checks only appear in the search after they have run at least once on a PR or push to main.
+
+**⚠️ CRITICAL**: The first three checks (Tier-0) are MANDATORY and automatically verified. Missing them will cause CATASTROPHIC failure and block execution.
 
 ### Step 4: Configure Additional Protections
 1. Check "Require conversation resolution before merging" (recommended)
@@ -190,6 +263,12 @@ echo "Verification complete. Review output above."
 
 Use this checklist to verify branch protection configuration:
 
+**Tier-0 Mandatory Checks** (automatically verified):
+- [ ] Status check "Validate Tier-0 Governance Activation" is required ⚠️ MANDATORY
+- [ ] Status check "Validate Governance Coupling Rule" is required ⚠️ MANDATORY
+- [ ] Status check "Validate Code Review Closure" is required ⚠️ MANDATORY
+
+**Additional Required Checks**:
 - [ ] Branch protection rule exists for `main` branch
 - [ ] "Require pull request reviews before merging" is enabled (1 approval)
 - [ ] "Require status checks to pass before merging" is enabled
@@ -210,20 +289,21 @@ Use this checklist to verify branch protection configuration:
 
 ## Evidence Requirements
 
-For BL-0008 completion, the following evidence MUST be provided:
+For governance compliance, the following evidence is automatically generated:
 
-1. **Screenshot**: GitHub Settings > Branches > main > Edit showing:
-   - Required status checks list
-   - All 5 gate workflows listed
-   - Branch protection settings enabled
+1. **Automatic Verification** (TIER-0):
+   - Runs on every PR via `.github/workflows/tier0-activation-gate.yml`
+   - Output logged in workflow run
+   - Exit code 0 = GREEN (all checks enforced)
+   - Exit code 1 = RED (missing checks, CATASTROPHIC)
 
-2. **API Output** (Optional): Output from `gh api` command showing:
-   - Required status checks configuration
-   - Branch protection settings JSON
+2. **Manual Verification Evidence** (Supplemental):
+   - Screenshot: GitHub Settings > Branches > main > Edit showing required status checks
+   - API Output: Output from `python scripts/verify_branch_protection_enforcement.py`
+   - Verification Date: Date when manual check was performed
+   - Verifier: Name of person who performed verification
 
-3. **Verification Date**: Date when configuration was last verified
-
-4. **Verifier**: Name of person who performed verification
+**Note**: Automatic verification is now MANDATORY. Manual evidence is supplemental only.
 
 ---
 
