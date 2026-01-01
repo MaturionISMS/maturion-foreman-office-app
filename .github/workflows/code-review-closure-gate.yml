@@ -1,0 +1,254 @@
+name: Code Review Closure Gate
+
+# CI CLASSIFICATION: Hard Gate
+# Purpose: Validates Code Review Closure Artifact presence and validity
+# Failure Semantics:
+#   - Artifact missing → Governance violation → Block merge
+#   - Schema invalid → Code failure → Block merge
+#   - Infrastructure failures → Explicit infra-failure signal → Success + Comment
+# Timeout: 10 minutes (simple validation only)
+# See: .github/CI_CLASSIFICATION.md
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches:
+      - main
+      - develop
+
+# Explicit, least-privilege permissions
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate-code-review-closure:
+    name: Validate Code Review Closure
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Detect PR Type
+        id: detect-pr-type
+        run: |
+          echo "🔍 Detecting PR type..."
+          
+          # Check if PR is draft
+          if [ "${{ github.event.pull_request.draft }}" = "true" ]; then
+            echo "draft=true" >> $GITHUB_OUTPUT
+            echo "📝 PR Type: Draft (code review not yet required)"
+          else
+            echo "draft=false" >> $GITHUB_OUTPUT
+            echo "📝 PR Type: Ready for Review (code review required)"
+          fi
+      
+      - name: Set up Python
+        if: steps.detect-pr-type.outputs.draft == 'false'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install Python dependencies
+        if: steps.detect-pr-type.outputs.draft == 'false'
+        run: |
+          pip install jsonschema
+      
+      - name: Run Code Review Closure Validation
+        if: steps.detect-pr-type.outputs.draft == 'false'
+        id: validation
+        run: |
+          echo "🔒 Validating code review closure artifact..."
+          
+          if python scripts/validate_code_review_closure.py; then
+            echo "result=success" >> $GITHUB_OUTPUT
+            echo "✅ Code review closure validation passed"
+          else
+            echo "result=failure" >> $GITHUB_OUTPUT
+            echo "❌ Code review closure validation failed"
+            exit 1
+          fi
+      
+      - name: Report Success
+        if: success() && steps.detect-pr-type.outputs.draft == 'false' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ✅ **Code Review Closure Gate PASSED**
+              
+              Code review closure validation complete:
+              - Code review closure artifact present ✅
+              - Artifact schema valid ✅
+              - Artifact type correct (code_review_closure) ✅
+              - Artifact is immutable ✅
+              - Files reviewed list present ✅
+              - Final verdict present and complete ✅
+              
+              **Gatekeeper 3 approves merge eligibility.**
+              
+              ---
+              
+              **Note**: This gate validates Code Review Closure Artifact only.
+              It ensures that all work sessions end with a machine-verifiable
+              code review closure, preventing completion without review.
+              
+              **Artifact Location**: \`code-review-closure.json\`
+              `
+            })
+      
+      - name: Report Draft PR Skip
+        if: steps.detect-pr-type.outputs.draft == 'true' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ⏸️ **Code Review Closure Gate - SKIP** (Draft PR)
+              
+              **Outcome**: Non-blocking SKIP  
+              **Reason**: PR is in draft state  
+              **Status**: This gate does not block merge
+              
+              ---
+              
+              **Draft PR**: Code review not yet required  
+              **Action**: Mark PR as "Ready for review" to activate this gate  
+              **Required**: code-review-closure.json must be present before marking ready
+              
+              ---
+              
+              **Gate Status**: ✅ PASS (via informational skip)
+              `
+            })
+      
+      - name: Report Failure
+        if: failure() && steps.detect-pr-type.outputs.draft == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ❌ **Code Review Closure Gate BLOCKED**
+              
+              **Gatekeeper 3 blocks merge.**
+              
+              Code review closure artifact is missing or invalid.
+              
+              **Required Actions**:
+              1. Create \`code-review-closure.json\` in repository root
+              2. Follow schema: \`governance/schemas/code-review-closure-schema.json\`
+              3. Use template: \`governance/templates/code-review-closure-template.json\`
+              4. Ensure all required fields are present:
+                 - artifact_metadata (with type, version, timestamp, session_id)
+                 - what_was_reviewed (files, components, summary)
+                 - what_changed_after_review (changes_made, unaddressed_findings)
+                 - final_verdict (status, reasoning)
+                 - immutable: true
+              5. Push updated artifact
+              
+              **Review workflow logs for detailed validation errors.**
+              
+              ---
+              
+              **Governance Authority**: .agent governance.compliance.code_review_closure
+              **Enforcement**: UNBREAKABLE
+              **Rationale**: No completion without code review closure
+              
+              ---
+              
+              **Schema Location**: governance/schemas/code-review-closure-schema.json  
+              **Template**: governance/templates/code-review-closure-template.json  
+              **Validator**: scripts/validate_code_review_closure.py
+              
+              **Test Locally**:
+              \`\`\`bash
+              python scripts/validate_code_review_closure.py
+              \`\`\`
+              `
+            })
+      
+      - name: Generate Infrastructure Failure Report
+        if: always() && env.INFRA_FAILURE != ''
+        run: |
+          mkdir -p /tmp/infra-failure
+          cat > /tmp/infra-failure/report.json << 'EOF'
+          {
+            "failure_type": "infrastructure",
+            "workflow": "code-review-closure-gate",
+            "job": "validate-code-review-closure",
+            "failure_category": "${{ env.INFRA_FAILURE }}",
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "recommended_action": "investigate",
+            "details": {
+              "workflow_run": "${{ github.run_id }}"
+            }
+          }
+          EOF
+      
+      - name: Upload Infrastructure Failure Artifact
+        if: always() && env.INFRA_FAILURE != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: infra-failure-report-code-review-closure
+          path: /tmp/infra-failure/report.json
+          retention-days: 30
+      
+      - name: Comment Infrastructure Failure on PR
+        if: always() && env.INFRA_FAILURE != '' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const failureType = process.env.INFRA_FAILURE;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ⚠️ **Infrastructure Failure Detected**
+              
+              **Workflow**: Code Review Closure Gate  
+              **Failure Type**: \`${failureType}\`  
+              **Timestamp**: ${new Date().toISOString()}
+              
+              This is **NOT a code failure**. The workflow encountered an infrastructure issue.
+              
+              **Your code changes are NOT blocked by this failure**
+              
+              **Infrastructure Failure Report**: Download artifact \`infra-failure-report-code-review-closure\`
+              `
+            })
+      
+      - name: Mark Success Despite Infrastructure Failure
+        if: always() && env.INFRA_FAILURE != ''
+        run: |
+          echo "✅ Job marked as success - Infrastructure failure (not code failure)"
+          exit 0
+      
+      - name: Workflow Success
+        if: always() && (success() || env.INFRA_FAILURE != '' || steps.detect-pr-type.outputs.draft == 'true')
+        run: |
+          DRAFT="${{ steps.detect-pr-type.outputs.draft }}"
+          
+          if [ "$DRAFT" = "true" ]; then
+            echo "✅ Code Review Closure Gate - SKIP (Draft PR)"
+          elif [ -n "$INFRA_FAILURE" ]; then
+            echo "✅ Code Review Closure Gate completed successfully (infrastructure failure handled)"
+          else
+            echo "✅ Code Review Closure Gate completed successfully"
+          fi
+          exit 0
