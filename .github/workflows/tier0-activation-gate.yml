@@ -1,0 +1,256 @@
+name: Tier-0 Governance Activation Gate
+
+# CI CLASSIFICATION: Hard Gate (Merge-Blocking)
+# Purpose: Validates Tier-0 canonical governance runtime activation
+# Failure Semantics:
+#   - Tier-0 not activated → CATASTROPHIC → Block merge + Escalation
+#   - Missing Tier-0 references → CATASTROPHIC → Block merge
+#   - Invalid activation config → CATASTROPHIC → Block merge
+# Timeout: 5 minutes (file-based validation only)
+# Applicability: ALL roles (governance activation is universal)
+# See: Phase X - Trans-Repo Governance Runtime Activation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - '.agent'
+      - 'governance/**'
+      - 'BUILD_PHILOSOPHY.md'
+      - 'scripts/validate_tier0_activation.py'
+      - '.github/workflows/tier0-activation-gate.yml'
+  push:
+    branches:
+      - main
+
+# Explicit, least-privilege permissions
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  validate-tier0-activation:
+    name: Validate Tier-0 Governance Activation
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install dependencies
+        run: |
+          pip install pyyaml
+      
+      - name: Run Tier-0 Activation Validation
+        id: validate
+        run: |
+          echo "🔒 Running Tier-0 Governance Activation Validation..."
+          echo ""
+          
+          # Run validation script
+          if python scripts/validate_tier0_activation.py; then
+            echo "validation_result=success" >> $GITHUB_OUTPUT
+            echo ""
+            echo "✅ Tier-0 activation validation PASSED"
+          else
+            echo "validation_result=failure" >> $GITHUB_OUTPUT
+            echo ""
+            echo "❌ Tier-0 activation validation FAILED"
+            exit 1
+          fi
+      
+      - name: Report Success
+        if: success() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `✅ **Tier-0 Governance Activation Gate PASSED**
+              
+              All Tier-0 canonical governance requirements are met:
+              
+              **Validation Results:**
+              - ✅ FM agent contract exists with Tier-0 section
+              - ✅ Constitutional documents properly referenced
+              - ✅ All Tier-0 documents exist and accessible
+              - ✅ Activation requirements declared
+              - ✅ STOP + ESCALATE semantics declared
+              - ✅ Code review closure ratchet declared
+              
+              **Tier-0 Canon Status**: ACTIVATED
+              **Runtime Governance**: ENABLED
+              **Merge Eligibility**: ✅ APPROVED (subject to other gates)
+              
+              ---
+              
+              **Authority**: Phase X - Trans-Repo Governance Runtime Activation
+              **Classification**: HARD GATE (merge-blocking)
+              **Enforcement**: Constitutional`
+            });
+      
+      - name: Report Failure
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `❌ **Tier-0 Governance Activation Gate FAILED**
+              
+              **CATASTROPHIC GOVERNANCE FAILURE**
+              
+              Tier-0 canonical governance is not properly activated in this PR.
+              This is a **constitutional violation** that blocks all execution.
+              
+              **What This Means:**
+              - Agent contract missing Tier-0 canonical references
+              - OR: Tier-0 constitutional documents not accessible
+              - OR: Activation requirements not declared
+              - OR: STOP + ESCALATE semantics missing
+              - OR: Code review closure ratchet not declared
+              
+              **Required Actions:**
+              
+              1. ✅ Review workflow logs for specific failures
+              2. ✅ Update .agent contract with Tier-0 canonical references
+              3. ✅ Ensure all constitutional documents exist
+              4. ✅ Declare activation requirements
+              5. ✅ Declare failure handling semantics (STOP + ESCALATE)
+              6. ✅ Declare code review closure ratchet
+              7. ✅ Push changes and re-run gate
+              
+              **Tier-0 Constitutional Documents Required:**
+              - BUILD_PHILOSOPHY.md (Supreme Authority)
+              - governance/policies/governance-supremacy-rule.md
+              - governance/policies/zero-test-debt-constitutional-rule.md
+              - governance/policies/design-freeze-rule.md
+              - governance/policies/RED_GATE_AUTHORITY_AND_OWNERSHIP.md
+              - governance/GOVERNANCE_AUTHORITY_MATRIX.md
+              
+              ---
+              
+              **MERGE IS BLOCKED** until Tier-0 activation is complete.
+              
+              **ESCALATION**: This failure requires notification to Johan Ras.
+              
+              ---
+              
+              **Authority**: Phase X - Trans-Repo Governance Runtime Activation
+              **Classification**: CATASTROPHIC
+              **Enforcement**: Constitutional (Unbreakable)
+              **Reference**: BUILD_PHILOSOPHY.md Section II`
+            });
+      
+      - name: Create Escalation Issue
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚨 CATASTROPHIC: Tier-0 Governance Activation Failure - PR #${context.issue.number}`,
+              labels: ['catastrophic', 'governance-violation', 'tier-0-failure', 'escalation-required'],
+              body: `# Tier-0 Governance Activation Failure
+              
+              **Severity**: CATASTROPHIC  
+              **Type**: Constitutional Governance Violation  
+              **PR**: #${context.issue.number}  
+              **Commit**: ${context.sha}  
+              **Detected**: ${new Date().toISOString()}
+              
+              ---
+              
+              ## Failure Description
+              
+              Tier-0 canonical governance is not properly activated in PR #${context.issue.number}.
+              
+              This is a **constitutional violation** that prevents all agent execution.
+              
+              **Constitutional Authority**: BUILD_PHILOSOPHY.md (Supreme Authority)
+              
+              ---
+              
+              ## Impact
+              
+              - 🔒 **Agent execution BLOCKED** (cannot proceed without Tier-0)
+              - 🔒 **PR merge BLOCKED** (constitutional violation)
+              - 🚨 **ESCALATION REQUIRED** (Johan Ras must review)
+              
+              ---
+              
+              ## Required Resolution
+              
+              1. ✅ Review PR #${context.issue.number} workflow logs
+              2. ✅ Identify missing Tier-0 activation components
+              3. ✅ Update .agent contract with proper Tier-0 references
+              4. ✅ Ensure all constitutional documents exist
+              5. ✅ Declare all required activation semantics
+              6. ✅ Re-run gate validation
+              7. ✅ Verify gate passes before merge
+              
+              ---
+              
+              ## Tier-0 Requirements Checklist
+              
+              - [ ] FM agent contract (.agent) has tier_0_canon section
+              - [ ] Constitutional documents properly referenced (6 required)
+              - [ ] All Tier-0 documents exist and accessible
+              - [ ] Activation requirements declared
+              - [ ] STOP + ESCALATE failure semantics declared
+              - [ ] Code review closure ratchet declared
+              
+              ---
+              
+              ## Authority & Enforcement
+              
+              **Authority**: Phase X - Trans-Repo Governance Runtime Activation  
+              **Classification**: CATASTROPHIC (Constitutional)  
+              **Enforcement**: Automatic (Merge-Blocking)  
+              **Escalation**: Johan Ras  
+              **Resolution**: Mandatory for merge
+              
+              ---
+              
+              **@JohanRas**: This issue requires your immediate attention.`
+            });
+      
+      - name: Gate Summary
+        if: always()
+        run: |
+          RESULT="${{ steps.validate.outputs.validation_result }}"
+          
+          echo ""
+          echo "=========================================="
+          echo "Tier-0 Governance Activation Gate Summary"
+          echo "=========================================="
+          echo ""
+          
+          if [ "$RESULT" = "success" ]; then
+            echo "✅ Status: PASSED"
+            echo "✅ Tier-0 activation: VALID"
+            echo "✅ Constitutional governance: ENABLED"
+            echo "✅ Merge eligibility: APPROVED (subject to other gates)"
+          else
+            echo "❌ Status: FAILED"
+            echo "❌ Tier-0 activation: INVALID or MISSING"
+            echo "❌ Constitutional governance: NOT ACTIVATED"
+            echo "❌ Merge eligibility: BLOCKED"
+            echo ""
+            echo "🚨 ESCALATION REQUIRED: Johan Ras must review"
+          fi
+          
+          echo ""
+          echo "=========================================="

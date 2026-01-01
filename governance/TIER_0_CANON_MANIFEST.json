@@ -1,0 +1,276 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-01-01T14:00:00Z",
+  "authority": "Phase X - Trans-Repo Governance Runtime Activation",
+  "status": "MANDATORY",
+  "description": "Tier-0 Canonical Governance Manifest - Defines the 12 constitutional documents that MUST be activated in FM agent contracts",
+  
+  "tier_0_canonical_documents": [
+    {
+      "id": "T0-001",
+      "path": "BUILD_PHILOSOPHY.md",
+      "title": "Maturion Build Philosophy",
+      "authority": "Supreme Constitutional Authority",
+      "purpose": "Supreme constitutional authority for all building activities",
+      "required_sections": [
+        "One-Time Build Correctness",
+        "Zero Regression Guarantee",
+        "Full Architectural Alignment",
+        "Zero Loss of Context",
+        "Zero Ambiguity"
+      ],
+      "validation_required": true,
+      "immutable": true
+    },
+    {
+      "id": "T0-002",
+      "path": "governance/policies/governance-supremacy-rule.md",
+      "title": "Governance Supremacy Rule (GSR)",
+      "authority": "Constitutional Authority",
+      "purpose": "Establishes governance as absolute - no compromises, no exceptions",
+      "required_sections": [
+        "100% QA Passing is ABSOLUTE",
+        "Zero Test Debt is ABSOLUTE",
+        "Architecture Compliance is ABSOLUTE",
+        "Design Freeze is ABSOLUTE"
+      ],
+      "validation_required": true,
+      "immutable": true
+    },
+    {
+      "id": "T0-003",
+      "path": "governance/policies/zero-test-debt-constitutional-rule.md",
+      "title": "Zero Test Debt Constitutional Rule",
+      "authority": "Constitutional Authority",
+      "purpose": "Prohibits all forms of test debt - skipped, commented, incomplete tests",
+      "required_sections": [
+        "Definition of Test Debt",
+        "All Forms of Test Debt (FORBIDDEN)",
+        "Enforcement Mechanism"
+      ],
+      "validation_required": true,
+      "immutable": true
+    },
+    {
+      "id": "T0-004",
+      "path": "governance/policies/design-freeze-rule.md",
+      "title": "Design Freeze Rule",
+      "authority": "Constitutional Authority",
+      "purpose": "Prevents architecture modification during build execution",
+      "required_sections": [
+        "Design Freeze Definition",
+        "What is Frozen",
+        "Emergency Change Procedure"
+      ],
+      "validation_required": true,
+      "immutable": true
+    },
+    {
+      "id": "T0-005",
+      "path": "governance/policies/RED_GATE_AUTHORITY_AND_OWNERSHIP.md",
+      "title": "Red Gate Authority and Ownership",
+      "authority": "Constitutional Authority",
+      "purpose": "Defines gate ownership, stop authority, and red gate declaration rules",
+      "required_sections": [
+        "Red Gate Declarant Authority",
+        "Build Stop Authority",
+        "Red Gate Resolution Procedures"
+      ],
+      "validation_required": true,
+      "immutable": true
+    },
+    {
+      "id": "T0-006",
+      "path": "governance/GOVERNANCE_AUTHORITY_MATRIX.md",
+      "title": "Governance Authority Matrix",
+      "authority": "Constitutional Authority",
+      "purpose": "Master authority reference - who can stop builds, who owns governance decisions",
+      "required_sections": [
+        "Ultimate Authority",
+        "Constitutional Governance Documents",
+        "Gatekeeper Authority Model"
+      ],
+      "validation_required": true,
+      "immutable": true
+    },
+    {
+      "id": "T0-007",
+      "path": "governance/alignment/PR_GATE_REQUIREMENTS_CANON.md",
+      "title": "PR Gate Requirements (Canonical Mirror)",
+      "authority": "Constitutional Authority",
+      "purpose": "Canonical PR gate semantics - enforcement-only, no CI-discovery",
+      "required_sections": [
+        "Gate 1: Builder QA Report",
+        "Gate 2: Agent-Scoped QA Boundary Compliance",
+        "Gate 3: Governance Compliance"
+      ],
+      "validation_required": true,
+      "immutable": true
+    },
+    {
+      "id": "T0-008",
+      "path": "governance/alignment/TWO_GATEKEEPER_MODEL.md",
+      "title": "Two-Gatekeeper Model",
+      "authority": "Constitutional Authority",
+      "purpose": "Defines dual gatekeeper authority - Governance Administrator and FM Builder",
+      "required_sections": [
+        "Gatekeeper 1: Governance Administrator",
+        "Gatekeeper 2: FM Builder",
+        "Authority Boundaries and Prohibitions"
+      ],
+      "validation_required": true,
+      "immutable": true
+    },
+    {
+      "id": "T0-009",
+      "path": "governance/alignment/AGENT_SCOPED_QA_BOUNDARIES.md",
+      "title": "Agent-Scoped QA Boundaries",
+      "authority": "Constitutional Authority",
+      "purpose": "Enforces strict agent QA separation - prevents cross-agent QA violations",
+      "required_sections": [
+        "QA Scope by Agent Type",
+        "Cross-Agent QA Prohibition",
+        "Violation Classification"
+      ],
+      "validation_required": true,
+      "immutable": true
+    },
+    {
+      "id": "T0-010",
+      "path": "governance/alignment/PR_GATE_FAILURE_HANDLING_PROTOCOL.md",
+      "title": "PR Gate Failure Handling Protocol",
+      "authority": "Constitutional Authority",
+      "purpose": "Canonical failure classifications and escalation semantics",
+      "required_sections": [
+        "Failure Classifications",
+        "Escalation Semantics",
+        "Emergency Authorization Constraints"
+      ],
+      "validation_required": true,
+      "immutable": true
+    },
+    {
+      "id": "T0-011",
+      "path": "governance/specs/build-to-green-enforcement-spec.md",
+      "title": "Build-to-Green Enforcement Specification",
+      "authority": "Constitutional Authority",
+      "purpose": "Defines build-to-green requirement and enforcement mechanisms",
+      "required_sections": [
+        "Build-to-Green Definition",
+        "Green Status Requirements",
+        "Enforcement Mechanisms"
+      ],
+      "validation_required": true,
+      "immutable": true
+    },
+    {
+      "id": "T0-012",
+      "path": "governance/contracts/quality-integrity-contract.md",
+      "title": "Quality Integrity Contract",
+      "authority": "Constitutional Authority",
+      "purpose": "Defines quality standards and integrity requirements for all builds",
+      "required_sections": [
+        "Quality Standards",
+        "Test Coverage Requirements",
+        "Evidence Requirements"
+      ],
+      "validation_required": true,
+      "immutable": true
+    }
+  ],
+  
+  "activation_requirements": {
+    "contract_binding": {
+      "required": true,
+      "description": "FM agent contract MUST explicitly reference all 12 Tier-0 documents",
+      "validation_method": "CI gate checks .agent contract for tier_0_canon section"
+    },
+    "document_existence": {
+      "required": true,
+      "description": "All 12 Tier-0 documents MUST exist and be accessible",
+      "validation_method": "CI gate validates file existence and readability"
+    },
+    "schema_validation": {
+      "required": true,
+      "description": "Tier-0 documents MUST conform to expected structure (where applicable)",
+      "validation_method": "CI gate validates required sections are present"
+    },
+    "staleness_check": {
+      "required": true,
+      "description": "Tier-0 references MUST not be stale or out of sync",
+      "validation_method": "Governance coupling validator ensures synchronization"
+    }
+  },
+  
+  "failure_handling": {
+    "on_tier_0_load_failure": {
+      "action": "STOP",
+      "escalation": "MANDATORY",
+      "escalation_target": "Johan Ras",
+      "blocking": true,
+      "message": "CATASTROPHIC: Tier-0 governance cannot be loaded"
+    },
+    "on_tier_0_validation_failure": {
+      "action": "STOP",
+      "escalation": "MANDATORY",
+      "escalation_target": "Johan Ras",
+      "blocking": true,
+      "message": "CATASTROPHIC: Tier-0 governance validation failed"
+    },
+    "on_tier_0_reference_drift": {
+      "action": "STOP",
+      "escalation": "MANDATORY",
+      "escalation_target": "Johan Ras",
+      "blocking": true,
+      "message": "CATASTROPHIC: Tier-0 governance references out of sync"
+    },
+    "on_coupling_violation": {
+      "action": "STOP",
+      "escalation": "MANDATORY",
+      "escalation_target": "Johan Ras",
+      "blocking": true,
+      "message": "CATASTROPHIC: Governance changed without enforcement coupling"
+    }
+  },
+  
+  "enforcement_gates": {
+    "tier0_activation_gate": {
+      "workflow_file": ".github/workflows/tier0-activation-gate.yml",
+      "validation_script": "scripts/validate_tier0_activation.py",
+      "blocking": true,
+      "purpose": "Validates Tier-0 activation in FM agent contract"
+    },
+    "governance_coupling_gate": {
+      "workflow_file": ".github/workflows/governance-coupling-gate.yml",
+      "validation_script": "scripts/validate_governance_coupling.py",
+      "blocking": true,
+      "purpose": "Validates governance changes are coupled with enforcement updates"
+    }
+  },
+  
+  "code_review_closure_ratchet": {
+    "required": true,
+    "timing": "end_of_session",
+    "enforcement": "UNBREAKABLE",
+    "output_requirements": {
+      "what_was_reviewed": "List of files, components, or changes reviewed",
+      "what_changed_after_review": "Changes made in response to review feedback",
+      "final_verdict": "APPROVED or REQUIRES_CHANGES with explicit reasoning"
+    },
+    "failure_semantics": {
+      "on_review_skipped": {
+        "action": "STOP",
+        "message": "INVALID: Work unit completed without code review",
+        "blocking": true
+      },
+      "on_incomplete_review_output": {
+        "action": "STOP",
+        "message": "INVALID: Code review output missing required elements",
+        "blocking": true
+      }
+    }
+  },
+  
+  "immutability": true,
+  "schema_version": "1.0.0"
+}

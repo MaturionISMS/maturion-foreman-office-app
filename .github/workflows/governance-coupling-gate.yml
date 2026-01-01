@@ -1,0 +1,268 @@
+name: Governance Coupling Gate
+
+# CI CLASSIFICATION: Hard Gate (Merge-Blocking)
+# Purpose: Enforces coupling rule - Tier-0 governance changes MUST be coupled with enforcement updates
+# Failure Semantics:
+#   - Tier-0 changed without enforcement update → CATASTROPHIC → Block merge + Escalation
+#   - Prevents governance drift over time
+# Timeout: 5 minutes (git diff analysis only)
+# Applicability: ALL roles (governance coupling is universal)
+# See: Phase X - Trans-Repo Governance Runtime Activation (D3)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'BUILD_PHILOSOPHY.md'
+      - 'governance/**'
+      - '.agent'
+      - 'scripts/validate_tier0_activation.py'
+      - 'scripts/validate_governance_coupling.py'
+      - '.github/workflows/tier0-activation-gate.yml'
+      - '.github/workflows/governance-coupling-gate.yml'
+  push:
+    branches:
+      - main
+
+# Explicit, least-privilege permissions
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  validate-governance-coupling:
+    name: Validate Governance Coupling Rule
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Need full history for diff analysis
+      
+      - name: Fetch base branch
+        run: |
+          git fetch origin main:main || echo "Note: Could not fetch main branch"
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Run Governance Coupling Validation
+        id: validate
+        run: |
+          echo "🔗 Running Governance Coupling Rule Validation..."
+          echo ""
+          
+          # Run validation script
+          if python scripts/validate_governance_coupling.py origin/main; then
+            echo "validation_result=success" >> $GITHUB_OUTPUT
+            echo ""
+            echo "✅ Governance coupling validation PASSED"
+          else
+            echo "validation_result=failure" >> $GITHUB_OUTPUT
+            echo ""
+            echo "❌ Governance coupling validation FAILED"
+            exit 1
+          fi
+      
+      - name: Report Success
+        if: success() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `✅ **Governance Coupling Gate PASSED**
+              
+              Governance change coupling rule is satisfied:
+              
+              **Validation Results:**
+              - ✅ Tier-0 governance changes properly coupled
+              - ✅ Enforcement updates present (when required)
+              - ✅ No governance drift detected
+              
+              **Coupling Status**: VALID
+              **Governance Synchronization**: MAINTAINED
+              **Merge Eligibility**: ✅ APPROVED (subject to other gates)
+              
+              ---
+              
+              **Authority**: Phase X - Trans-Repo Governance Runtime Activation (D3)
+              **Classification**: HARD GATE (merge-blocking)
+              **Purpose**: Prevent governance drift`
+            });
+      
+      - name: Report Failure
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `❌ **Governance Coupling Gate FAILED**
+              
+              **CATASTROPHIC GOVERNANCE COUPLING VIOLATION**
+              
+              Tier-0 governance has changed WITHOUT required enforcement updates.
+              This creates governance drift and is a **constitutional violation**.
+              
+              **What This Means:**
+              - Tier-0 canonical documents were modified
+              - BUT: FM agent contract was NOT updated
+              - OR: Validation scripts were NOT updated
+              - OR: CI gates were NOT updated
+              
+              **Why This Matters:**
+              - Governance evolves but enforcement stays stale
+              - Agents operate on outdated governance
+              - Creates silent governance violations
+              - Breaks Canon → Contracts → Runtime flow
+              
+              **Required Actions:**
+              
+              1. ✅ Review workflow logs to identify which Tier-0 files changed
+              2. ✅ Update .agent contract with new/changed Tier-0 references
+              3. ✅ Update scripts/validate_tier0_activation.py (if validation changes)
+              4. ✅ Update .github/workflows/tier0-activation-gate.yml (if gate changes)
+              5. ✅ Commit ALL changes in the SAME PR
+              6. ✅ Push changes and re-run gate
+              
+              **Coupling Rule:**
+              When Tier-0 governance changes → Enforcement MUST be updated in same PR.
+              
+              **Tier-0 Files Requiring Coupling:**
+              - BUILD_PHILOSOPHY.md
+              - governance/policies/*.md (constitutional policies)
+              - governance/alignment/*.md (canonical alignment docs)
+              - governance/specs/build-to-green-enforcement-spec.md
+              - governance/contracts/quality-integrity-contract.md
+              - governance/TIER_0_CANON_MANIFEST.json
+              
+              **Enforcement Files That Must Be Updated:**
+              - .agent (FM agent contract)
+              - scripts/validate_tier0_activation.py (when validation logic changes)
+              - .github/workflows/tier0-activation-gate.yml (when gate logic changes)
+              
+              ---
+              
+              **MERGE IS BLOCKED** until coupling is complete.
+              
+              **ESCALATION**: This failure requires notification to Johan Ras.
+              
+              ---
+              
+              **Authority**: Phase X - Trans-Repo Governance Runtime Activation (D3)
+              **Classification**: CATASTROPHIC (Coupling Violation)
+              **Enforcement**: Constitutional (Unbreakable)
+              **Reference**: FM_RUNTIME_ENFORCEMENT_AND_AWARENESS_MODEL.md`
+            });
+      
+      - name: Create Escalation Issue
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚨 CATASTROPHIC: Governance Coupling Violation - PR #${context.issue.number}`,
+              labels: ['catastrophic', 'governance-violation', 'coupling-failure', 'escalation-required'],
+              body: `# Governance Coupling Violation
+              
+              **Severity**: CATASTROPHIC  
+              **Type**: Governance Change Coupling Failure  
+              **PR**: #${context.issue.number}  
+              **Commit**: ${context.sha}  
+              **Detected**: ${new Date().toISOString()}
+              
+              ---
+              
+              ## Failure Description
+              
+              Tier-0 governance changed in PR #${context.issue.number} WITHOUT required enforcement updates.
+              
+              This violates the coupling rule and creates governance drift.
+              
+              **Constitutional Authority**: FM_RUNTIME_ENFORCEMENT_AND_AWARENESS_MODEL.md
+              
+              ---
+              
+              ## Impact
+              
+              - 🔒 **Governance drift IMMINENT** (canon evolves, enforcement stays stale)
+              - 🔒 **PR merge BLOCKED** (constitutional violation)
+              - 🚨 **ESCALATION REQUIRED** (Johan Ras must review)
+              
+              ---
+              
+              ## Required Resolution
+              
+              1. ✅ Review PR #${context.issue.number} to identify Tier-0 changes
+              2. ✅ Update .agent contract to reflect governance changes
+              3. ✅ Update validation scripts (if validation logic changed)
+              4. ✅ Update CI workflows (if gate logic changed)
+              5. ✅ Commit ALL updates in SAME PR
+              6. ✅ Re-run coupling validation
+              7. ✅ Verify gate passes before merge
+              
+              ---
+              
+              ## Coupling Rule Checklist
+              
+              - [ ] Identified which Tier-0 documents changed
+              - [ ] Updated .agent contract with changes
+              - [ ] Updated validation scripts (if needed)
+              - [ ] Updated CI workflows (if needed)
+              - [ ] All updates in same PR as governance changes
+              - [ ] Coupling gate passes
+              
+              ---
+              
+              ## Authority & Enforcement
+              
+              **Authority**: Phase X - Trans-Repo Governance Runtime Activation (D3)  
+              **Classification**: CATASTROPHIC (Coupling Violation)  
+              **Enforcement**: Automatic (Merge-Blocking)  
+              **Escalation**: Johan Ras  
+              **Resolution**: Mandatory for merge
+              
+              ---
+              
+              **@JohanRas**: This issue requires your immediate attention.`
+            });
+      
+      - name: Gate Summary
+        if: always()
+        run: |
+          RESULT="${{ steps.validate.outputs.validation_result }}"
+          
+          echo ""
+          echo "=========================================="
+          echo "Governance Coupling Gate Summary"
+          echo "=========================================="
+          echo ""
+          
+          if [ "$RESULT" = "success" ]; then
+            echo "✅ Status: PASSED"
+            echo "✅ Coupling rule: SATISFIED"
+            echo "✅ Governance sync: MAINTAINED"
+            echo "✅ Merge eligibility: APPROVED (subject to other gates)"
+          else
+            echo "❌ Status: FAILED"
+            echo "❌ Coupling rule: VIOLATED"
+            echo "❌ Governance sync: BROKEN"
+            echo "❌ Merge eligibility: BLOCKED"
+            echo ""
+            echo "🚨 ESCALATION REQUIRED: Johan Ras must review"
+          fi
+          
+          echo ""
+          echo "=========================================="
