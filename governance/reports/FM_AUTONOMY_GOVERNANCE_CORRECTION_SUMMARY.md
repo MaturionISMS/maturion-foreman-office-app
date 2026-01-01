@@ -4,7 +4,7 @@
 **Type**: Governance Correction Report  
 **Date**: 2026-01-01  
 **Authority**: Governance Correction Initiative  
-**Issue Reference**: #[ISSUE_NUMBER] — FM Autonomy & One-Time Build Alignment  
+**Issue Reference**: FM Autonomy & One-Time Build Alignment Governance Correction  
 **Severity**: 🔴 CRITICAL — SYSTEMIC DRIFT CORRECTION
 
 ---
