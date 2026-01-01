@@ -245,6 +245,58 @@
       "validation_script": "scripts/validate_governance_coupling.py",
       "blocking": true,
       "purpose": "Validates governance changes are coupled with enforcement updates"
+    },
+    "code_review_closure_gate": {
+      "workflow_file": ".github/workflows/code-review-closure-gate.yml",
+      "validation_script": "scripts/validate_code_review_closure.py",
+      "blocking": true,
+      "purpose": "Validates code review closure ratchet compliance"
+    }
+  },
+  
+  "branch_protection_enforcement": {
+    "required": true,
+    "enforcement_level": "TIER_0_INVARIANT",
+    "purpose": "Ensures required CI checks are enforced via GitHub branch protection",
+    "required_checks": [
+      {
+        "id": "tier0-activation",
+        "check_name": "Validate Tier-0 Governance Activation",
+        "workflow_file": ".github/workflows/tier0-activation-gate.yml",
+        "blocking": true,
+        "purpose": "Validates Tier-0 activation in FM agent contract"
+      },
+      {
+        "id": "governance-coupling",
+        "check_name": "Validate Governance Coupling Rule",
+        "workflow_file": ".github/workflows/governance-coupling-gate.yml",
+        "blocking": true,
+        "purpose": "Validates governance changes are coupled with enforcement updates"
+      },
+      {
+        "id": "code-review-closure",
+        "check_name": "Validate Code Review Closure",
+        "workflow_file": ".github/workflows/code-review-closure-gate.yml",
+        "blocking": true,
+        "purpose": "Validates code review closure ratchet compliance"
+      }
+    ],
+    "verification_script": "scripts/verify_branch_protection_enforcement.py",
+    "failure_handling": {
+      "on_missing_required_check": {
+        "action": "STOP",
+        "escalation": "MANDATORY",
+        "escalation_target": "Johan Ras",
+        "blocking": true,
+        "message": "CATASTROPHIC: Required CI check not enforced via branch protection"
+      },
+      "on_verification_failure": {
+        "action": "STOP",
+        "escalation": "MANDATORY",
+        "escalation_target": "Johan Ras",
+        "blocking": true,
+        "message": "CATASTROPHIC: Cannot verify branch protection configuration"
+      }
     }
   },
   

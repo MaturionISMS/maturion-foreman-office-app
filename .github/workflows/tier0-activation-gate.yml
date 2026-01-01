@@ -66,6 +66,27 @@ jobs:
             exit 1
           fi
       
+      - name: Verify Branch Protection Enforcement
+        id: verify_branch_protection
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🔒 Verifying Branch Protection Enforcement (Tier-0 Invariant)..."
+          echo ""
+          
+          # Run branch protection verification script
+          if python scripts/verify_branch_protection_enforcement.py; then
+            echo "branch_protection_result=success" >> $GITHUB_OUTPUT
+            echo ""
+            echo "✅ Branch protection enforcement VERIFIED"
+          else
+            echo "branch_protection_result=failure" >> $GITHUB_OUTPUT
+            echo ""
+            echo "❌ Branch protection enforcement FAILED"
+            exit 1
+          fi
+      
       - name: Report Success
         if: success() && github.event_name == 'pull_request'
         uses: actions/github-script@v7
@@ -86,9 +107,12 @@ jobs:
               - ✅ Activation requirements declared
               - ✅ STOP + ESCALATE semantics declared
               - ✅ Code review closure ratchet declared
+              - ✅ **Branch protection enforcement verified (Tier-0 Invariant)**
+              - ✅ **Required CI checks enforced via GitHub branch protection**
               
               **Tier-0 Canon Status**: ACTIVATED
               **Runtime Governance**: ENABLED
+              **Branch Protection**: ENFORCED
               **Merge Eligibility**: ✅ APPROVED (subject to other gates)
               
               ---
@@ -120,6 +144,8 @@ jobs:
               - OR: Activation requirements not declared
               - OR: STOP + ESCALATE semantics missing
               - OR: Code review closure ratchet not declared
+              - OR: **Branch protection enforcement NOT verified (Tier-0 Invariant violation)**
+              - OR: **Required CI checks NOT enforced via GitHub branch protection**
               
               **Required Actions:**
               
@@ -129,7 +155,9 @@ jobs:
               4. ✅ Declare activation requirements
               5. ✅ Declare failure handling semantics (STOP + ESCALATE)
               6. ✅ Declare code review closure ratchet
-              7. ✅ Push changes and re-run gate
+              7. ✅ **Configure branch protection with required CI checks**
+              8. ✅ **Verify required checks are enforced (Tier-0, Governance Coupling, Code Review Closure)**
+              9. ✅ Push changes and re-run gate
               
               **Tier-0 Constitutional Documents Required:**
               - BUILD_PHILOSOPHY.md (Supreme Authority)
@@ -146,6 +174,14 @@ jobs:
               - governance/contracts/quality-integrity-contract.md
               
               **Total Required: 12 Tier-0 documents**
+              
+              **Branch Protection Requirements:**
+              - Required CI checks MUST be enforced via GitHub branch protection
+              - Minimum required checks:
+                - Validate Tier-0 Governance Activation
+                - Validate Governance Coupling Rule
+                - Validate Code Review Closure
+              - See: .github/BRANCH_PROTECTION.md for configuration guide
               
               ---
               
@@ -206,8 +242,10 @@ jobs:
               3. ✅ Update .agent contract with proper Tier-0 references
               4. ✅ Ensure all constitutional documents exist
               5. ✅ Declare all required activation semantics
-              6. ✅ Re-run gate validation
-              7. ✅ Verify gate passes before merge
+              6. ✅ **Configure branch protection with required CI checks**
+              7. ✅ **Verify branch protection enforcement passes**
+              8. ✅ Re-run gate validation
+              9. ✅ Verify gate passes before merge
               
               ---
               
@@ -219,6 +257,8 @@ jobs:
               - [ ] Activation requirements declared
               - [ ] STOP + ESCALATE failure semantics declared
               - [ ] Code review closure ratchet declared
+              - [ ] **Branch protection configured with required CI checks**
+              - [ ] **Branch protection enforcement verified**
               
               ---
               
@@ -239,6 +279,7 @@ jobs:
         if: always()
         run: |
           RESULT="${{ steps.validate.outputs.validation_result }}"
+          BP_RESULT="${{ steps.verify_branch_protection.outputs.branch_protection_result }}"
           
           echo ""
           echo "=========================================="
@@ -246,14 +287,20 @@ jobs:
           echo "=========================================="
           echo ""
           
-          if [ "$RESULT" = "success" ]; then
+          if [ "$RESULT" = "success" ] && [ "$BP_RESULT" = "success" ]; then
             echo "✅ Status: PASSED"
             echo "✅ Tier-0 activation: VALID"
             echo "✅ Constitutional governance: ENABLED"
+            echo "✅ Branch protection: ENFORCED"
             echo "✅ Merge eligibility: APPROVED (subject to other gates)"
           else
             echo "❌ Status: FAILED"
-            echo "❌ Tier-0 activation: INVALID or MISSING"
+            if [ "$RESULT" != "success" ]; then
+              echo "❌ Tier-0 activation: INVALID or MISSING"
+            fi
+            if [ "$BP_RESULT" != "success" ]; then
+              echo "❌ Branch protection: NOT ENFORCED or UNVERIFIED"
+            fi
             echo "❌ Constitutional governance: NOT ACTIVATED"
             echo "❌ Merge eligibility: BLOCKED"
             echo ""
