@@ -19,6 +19,8 @@ import os
 import sys
 import json
 import subprocess
+import urllib.request
+import urllib.error
 from pathlib import Path
 from typing import Dict, List, Any, Tuple
 from datetime import datetime
@@ -30,7 +32,9 @@ class BranchProtectionEnforcementVerifier:
     
     def __init__(self, repo_root: str, repo: str = None, branch: str = "main"):
         self.repo_root = Path(repo_root)
-        self.repo = repo or os.environ.get("GITHUB_REPOSITORY", "MaturionISMS/maturion-foreman-office-app")
+        self.repo = repo or os.environ.get("GITHUB_REPOSITORY")
+        if not self.repo:
+            raise ValueError("Repository must be specified via --repo argument or GITHUB_REPOSITORY environment variable")
         self.branch = branch
         self.errors = []
         self.warnings = []
@@ -221,9 +225,6 @@ class BranchProtectionEnforcementVerifier:
             return False
         
         try:
-            import urllib.request
-            import urllib.error
-            
             url = f"https://api.github.com/repos/{self.repo}/branches/{self.branch}/protection"
             
             req = urllib.request.Request(url)
@@ -274,12 +275,13 @@ class BranchProtectionEnforcementVerifier:
         # Extract check contexts/names
         checks_data = protection_data["required_status_checks"]
         
-        # GitHub API v3 uses 'contexts' field
+        # GitHub API v3 uses 'contexts' field for status checks
+        # GitHub API when using GitHub Apps uses 'checks' field with check runs
         if "contexts" in checks_data:
             self.actual_checks = checks_data["contexts"]
-        # GitHub API with check suites uses 'checks' field
         elif "checks" in checks_data:
-            self.actual_checks = [check["context"] for check in checks_data["checks"]]
+            # When using GitHub Apps check runs, extract context name
+            self.actual_checks = [check.get("context", check.get("name", "")) for check in checks_data["checks"]]
         else:
             self.actual_checks = []
         
@@ -414,8 +416,8 @@ class BranchProtectionEnforcementVerifier:
             print()
             print("REQUIRED ACTIONS:")
             print()
-            print("1. Navigate to: https://github.com/{}/settings/branches".format(self.repo))
-            print("2. Edit branch protection rule for '{}'".format(self.branch))
+            print(f"1. Navigate to: https://github.com/{self.repo}/settings/branches")
+            print(f"2. Edit branch protection rule for '{self.branch}'")
             print("3. Enable 'Require status checks to pass before merging'")
             print("4. Add the following required status checks:")
             for check in self.required_checks:
