@@ -68,7 +68,76 @@ Content...
 
 ## Required YAML Frontmatter Fields
 
-### 1. builder_id (REQUIRED)
+### 🔴 GitHub Copilot Agent Fields (REQUIRED FOR SELECTABILITY)
+
+**These fields are MANDATORY for GitHub Copilot agent loader integration.**  
+**Without these fields, builders will appear in agent selector but will NOT be selectable.**
+
+These fields must be placed **at the top** of the YAML frontmatter, before Maturion-specific fields.
+
+#### 1. name (REQUIRED)
+
+**Type**: `string`  
+**Description**: Display name shown in GitHub Copilot agent selector  
+**Example**: `name: API Builder`
+
+**Validation**:
+- Must be human-readable (title case recommended)
+- Should clearly identify the builder's role
+- Typically matches `<builder-id>` but formatted for display
+
+**Critical**: Missing this field prevents agent selection.
+
+---
+
+#### 2. role (REQUIRED)
+
+**Type**: `string`  
+**Description**: Agent role designation for GitHub Copilot platform  
+**Allowed Values**: `builder` (for all Maturion builders)  
+**Example**: `role: builder`
+
+**Validation**:
+- Must be exactly `builder` for all Maturion builder agents
+- Other roles (e.g., `fm`, `liaison`) are used for non-builder agents
+
+**Critical**: Missing this field prevents agent selection.
+
+---
+
+#### 3. description (REQUIRED)
+
+**Type**: `string` (multi-line with `>` YAML syntax)  
+**Description**: Multi-line description of builder purpose, constraints, and doctrine  
+**Example**:
+```yaml
+description: >
+  API Builder for Maturion ISMS modules. Implements backend API endpoints, request handlers,
+  and business logic according to frozen architecture specifications. Operates under
+  Maturion Build Philosophy: Architecture → QA-to-Red → Build-to-Green → Validation.
+  MUST NOT modify UI, schema, or governance artifacts.
+```
+
+**Content Requirements**:
+- Must describe builder's primary purpose
+- Must mention key constraints (what builder MUST NOT do)
+- Should reference Maturion Build Philosophy
+- Should be 2-4 sentences for clarity
+
+**Validation**:
+- Must be present (empty string not allowed)
+- Should be descriptive (50+ characters recommended)
+- Must use `>` for multi-line folding
+
+**Critical**: Missing this field is the most common cause of "Invalid config" errors.
+
+---
+
+### 🔵 Maturion Builder Identity Fields (REQUIRED)
+
+These fields define the builder's Maturion-specific identity and must follow the GitHub Copilot fields.
+
+#### 4. builder_id (REQUIRED)
 
 **Type**: `string`  
 **Description**: Unique identifier for this builder  
@@ -80,7 +149,19 @@ Content...
 - Must be unique across all builders
 - Must contain only lowercase letters, numbers, and hyphens
 
-### 2. builder_type (REQUIRED)
+#### 4. builder_id (REQUIRED)
+
+**Type**: `string`  
+**Description**: Unique identifier for this builder  
+**Format**: `lowercase-with-hyphens`  
+**Example**: `ui-builder`
+
+**Validation**:
+- Must match filename (e.g., `ui-builder.md` → `builder_id: ui-builder`)
+- Must be unique across all builders
+- Must contain only lowercase letters, numbers, and hyphens
+
+#### 5. builder_type (REQUIRED)
 
 **Type**: `string`  
 **Description**: Classification of builder role  
@@ -91,14 +172,14 @@ Content...
 
 **Example**: `builder_type: specialized`
 
-### 3. version (REQUIRED)
+#### 6. version (REQUIRED)
 
 **Type**: `string`  
 **Description**: Contract version (semantic versioning)  
 **Format**: `major.minor.patch`  
 **Example**: `version: 1.0.0`
 
-### 4. status (REQUIRED)
+#### 7. status (REQUIRED)
 
 **Type**: `string`  
 **Description**: Current recruitment status  
@@ -110,7 +191,7 @@ Content...
 
 **Example**: `status: recruited`
 
-### 5. capabilities (REQUIRED)
+#### 8. capabilities (REQUIRED)
 
 **Type**: `array of strings`  
 **Description**: List of technical capabilities this builder possesses  
@@ -128,7 +209,7 @@ capabilities:
 - Capabilities must be lowercase, single-word or hyphenated
 - Must align with `foreman/builder/builder-capability-map.json`
 
-### 6. responsibilities (REQUIRED)
+#### 9. responsibilities (REQUIRED)
 
 **Type**: `array of strings`  
 **Description**: High-level responsibilities assigned to this builder  
@@ -144,7 +225,7 @@ responsibilities:
 - Must contain at least 1 responsibility
 - Must align with `foreman/builder-manifest.json`
 
-### 7. forbidden (REQUIRED)
+#### 10. forbidden (REQUIRED)
 
 **Type**: `array of strings`  
 **Description**: Actions or areas this builder MUST NOT perform or access  
@@ -160,7 +241,7 @@ forbidden:
 - Must contain at least 1 forbidden action
 - Must align with `foreman/builder-manifest.json`
 
-### 8. permissions (REQUIRED)
+#### 11. permissions (REQUIRED)
 
 **Type**: `object`  
 **Description**: File system access permissions  
@@ -190,7 +271,9 @@ permissions:
 - Must contain at least one `write` pattern
 - Must align with `foreman/builder/builder-permission-policy.json`
 
-### 9. recruitment_date (REQUIRED)
+#### 12. recruitment_date (REQUIRED)
+
+#### 12. recruitment_date (REQUIRED)
 
 **Type**: `string`  
 **Description**: ISO 8601 date when builder was recruited  
@@ -204,7 +287,9 @@ permissions:
 **These fields are MANDATORY as of Schema Version 2.0.**  
 **Without these fields, builder contracts CANNOT validate.**
 
-### 10. canonical_authorities (REQUIRED)
+#### 13. canonical_authorities (REQUIRED)
+
+#### 13. canonical_authorities (REQUIRED)
 
 **Type**: `array of strings`  
 **Description**: List of canonical governance sources this builder is bound to  
@@ -236,7 +321,7 @@ canonical_authorities:
 
 ---
 
-### 11. maturion_doctrine_version (REQUIRED)
+#### 14. maturion_doctrine_version (REQUIRED)
 
 **Type**: `string`  
 **Description**: Version of Maturion Build Philosophy this contract conforms to  
@@ -252,7 +337,7 @@ canonical_authorities:
 
 ---
 
-### 12. handover_protocol (REQUIRED)
+#### 15. handover_protocol (REQUIRED)
 
 **Type**: `string`  
 **Description**: Handover semantics this builder uses  
@@ -270,7 +355,7 @@ canonical_authorities:
 
 ---
 
-### 13. no_debt_rules (REQUIRED)
+#### 16. no_debt_rules (REQUIRED)
 
 **Type**: `string`  
 **Description**: Test debt policy this builder follows  
@@ -289,7 +374,7 @@ canonical_authorities:
 
 ---
 
-### 14. evidence_requirements (REQUIRED)
+#### 17. evidence_requirements (REQUIRED)
 
 **Type**: `string`  
 **Description**: Evidence trail policy this builder follows  
@@ -309,7 +394,7 @@ canonical_authorities:
 
 ---
 
-### 15. qa_range (OPTIONAL)
+#### 18. qa_range (OPTIONAL)
 
 **Type**: `object`  
 **Description**: QA range assignment for builders in build waves  
@@ -655,6 +740,14 @@ layouts, and interactive wizards in the Foreman Office App.
 
 ```markdown
 ---
+name: UI Builder
+role: builder
+description: >
+  UI Builder for Maturion ISMS modules. Implements React UI components, layouts,
+  and interactive wizards according to frozen architecture specifications. Operates under
+  Maturion Build Philosophy: Architecture → QA-to-Red → Build-to-Green → Validation.
+  MUST NOT modify backend logic, schema, or governance artifacts.
+
 builder_id: ui-builder
 builder_type: specialized
 version: 2.0.0
@@ -878,48 +971,57 @@ architecture specifications and UX requirements.
 
 A valid builder contract MUST:
 
+**GitHub Copilot Agent Fields** (REQUIRED FOR SELECTABILITY):
+1. ✅ Have `name` field (display name)
+2. ✅ Have `role` field (set to "builder")
+3. ✅ Have `description` field (multi-line, 50+ characters)
+
 **YAML Frontmatter** (All Required):
-1. ✅ Be located in `.github/agents/<builder-id>.md`
-2. ✅ Have valid YAML frontmatter with all required fields
-3. ✅ Have `builder_id` matching filename
-4. ✅ Have `canonical_authorities` array with at least 3 mandatory sources
-5. ✅ Have `maturion_doctrine_version` matching BUILD_PHILOSOPHY.md version
-6. ✅ Have `handover_protocol: "gate-first-deterministic"`
-7. ✅ Have `no_debt_rules: "zero-test-debt-mandatory"`
-8. ✅ Have `evidence_requirements: "complete-audit-trail-mandatory"`
-9. ✅ Have valid ISO 8601 recruitment date
-10. ✅ Have valid semantic version number (2.0.0+)
+4. ✅ Be located in `.github/agents/<builder-id>.md`
+5. ✅ Have valid YAML frontmatter with all required fields
+6. ✅ Have `builder_id` matching filename
+7. ✅ Have `canonical_authorities` array with at least 3 mandatory sources
+8. ✅ Have `maturion_doctrine_version` matching BUILD_PHILOSOPHY.md version
+9. ✅ Have `handover_protocol: "gate-first-deterministic"`
+10. ✅ Have `no_debt_rules: "zero-test-debt-mandatory"`
+11. ✅ Have `evidence_requirements: "complete-audit-trail-mandatory"`
+12. ✅ Have valid ISO 8601 recruitment date
+13. ✅ Have valid semantic version number (2.0.0+)
 
 **Markdown Sections** (All Required):
-11. ✅ Have section: `## Maturion Builder Mindset — MANDATORY`
-12. ✅ Have section: `## One-Time Build Discipline — MANDATORY`
-13. ✅ Have section: `## Zero Test & Test Debt Rules — MANDATORY`
-14. ✅ Have section: `## Gate-First Handover Protocol — MANDATORY`
-15. ✅ Have section: `## Mandatory Enhancement Capture — MANDATORY`
-16. ✅ Have section: `## Purpose`
-17. ✅ Have section: `## Responsibilities`
-18. ✅ Have section: `## Capabilities`
-19. ✅ Have section: `## Forbidden Actions`
-20. ✅ Have section: `## Permissions`
-21. ✅ Have section: `## Recruitment Information`
+14. ✅ Have section: `## Maturion Builder Mindset — MANDATORY`
+15. ✅ Have section: `## One-Time Build Discipline — MANDATORY`
+16. ✅ Have section: `## Zero Test & Test Debt Rules — MANDATORY`
+17. ✅ Have section: `## Gate-First Handover Protocol — MANDATORY`
+18. ✅ Have section: `## Mandatory Enhancement Capture — MANDATORY`
+19. ✅ Have section: `## Purpose`
+20. ✅ Have section: `## Responsibilities`
+21. ✅ Have section: `## Capabilities`
+22. ✅ Have section: `## Forbidden Actions`
+23. ✅ Have section: `## Permissions`
+24. ✅ Have section: `## Recruitment Information`
 
 **Content Quality**:
-22. ✅ Align with `foreman/builder-manifest.json` responsibilities/forbidden
-23. ✅ Align with `foreman/builder/builder-capability-map.json` capabilities
-24. ✅ Align with `foreman/builder/builder-permission-policy.json` permissions
-25. ✅ Have no placeholder text ("TBD", "TODO", etc.)
-26. ✅ Maturion doctrine sections contain required elements (see schema above)
+25. ✅ Align with `foreman/builder-manifest.json` responsibilities/forbidden
+26. ✅ Align with `foreman/builder/builder-capability-map.json` capabilities
+27. ✅ Align with `foreman/builder/builder-permission-policy.json` permissions
+28. ✅ Have no placeholder text ("TBD", "TODO", etc.)
+29. ✅ Maturion doctrine sections contain required elements (see schema above)
 
 ### 🔴 Validation Failure = Non-Compliant Builder
 
 **If ANY validation fails:**
 - ❌ Builder contract is INVALID
 - ❌ Builder CANNOT be recruited
+- ❌ Builder WILL NOT be selectable in GitHub Copilot agent UI
 - ❌ Platform readiness CANNOT be approved
 - ❌ Wave execution CANNOT proceed
 - 🔴 Escalation required
 
-**This is INTENTIONAL** to prevent "generic developer mindset" execution.
+**This is INTENTIONAL** to prevent:
+- "Generic developer mindset" execution
+- Non-selectable agents (visibility without validity)
+- Schema non-compliance surfacing at runtime
 
 ### Automated Validation
 
