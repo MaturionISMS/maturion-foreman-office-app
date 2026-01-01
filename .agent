@@ -161,6 +161,26 @@ governance:
         message: "CATASTROPHIC: Tier-0 governance references are out of sync"
         blocking: true
     
+    # Branch Protection Enforcement (Tier-0 Invariant)
+    branch_protection_enforcement:
+      required: true
+      enforcement_level: TIER_0_INVARIANT
+      purpose: "Ensures required CI checks are enforced via GitHub branch protection"
+      verification_script: scripts/verify_branch_protection_enforcement.py
+      failure_handling:
+        on_missing_required_check:
+          action: STOP
+          escalation: MANDATORY
+          escalation_target: Johan Ras
+          blocking: true
+          message: "CATASTROPHIC: Required CI check not enforced via branch protection"
+        on_verification_failure:
+          action: STOP
+          escalation: MANDATORY
+          escalation_target: Johan Ras
+          blocking: true
+          message: "CATASTROPHIC: Cannot verify branch protection configuration"
+    
   compliance:
     build_to_green_only: true
     no_partial_delivery: true
