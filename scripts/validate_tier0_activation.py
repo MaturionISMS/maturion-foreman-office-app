@@ -576,14 +576,45 @@ class Tier0ActivationValidator:
                 print("❌ FAIL: Code review closure enforcement not set to UNBREAKABLE")
                 return False
             
-            # Check output requirements
+            # Check output requirements - more robust checking
             output_reqs = code_review.get('output_requirements', [])
+            if not output_reqs:
+                self.errors.append({
+                    "check": "code_review_closure_declared",
+                    "status": "FAIL",
+                    "message": "Code review closure missing output_requirements"
+                })
+                print("❌ FAIL: Code review closure missing output_requirements")
+                return False
+            
             required_outputs = ['what_was_reviewed', 'what_changed_after_review', 'final_verdict']
             
-            missing_outputs = []
-            for req_output in required_outputs:
-                if not any(req_output in str(output) for output in output_reqs):
-                    missing_outputs.append(req_output)
+            # Check if output_requirements is a list or dict
+            if isinstance(output_reqs, list):
+                # List format - check for key presence
+                missing_outputs = []
+                for req_output in required_outputs:
+                    found = False
+                    for output in output_reqs:
+                        if isinstance(output, dict) and req_output in output:
+                            found = True
+                            break
+                        elif isinstance(output, str) and req_output in output:
+                            found = True
+                            break
+                    if not found:
+                        missing_outputs.append(req_output)
+            elif isinstance(output_reqs, dict):
+                # Dict format - check for key presence
+                missing_outputs = [req for req in required_outputs if req not in output_reqs]
+            else:
+                self.errors.append({
+                    "check": "code_review_closure_declared",
+                    "status": "FAIL",
+                    "message": "Code review output_requirements has unexpected format"
+                })
+                print("❌ FAIL: Code review output_requirements has unexpected format")
+                return False
             
             if missing_outputs:
                 self.errors.append({

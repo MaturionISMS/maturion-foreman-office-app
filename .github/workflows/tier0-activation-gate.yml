@@ -138,6 +138,14 @@ jobs:
               - governance/policies/design-freeze-rule.md
               - governance/policies/RED_GATE_AUTHORITY_AND_OWNERSHIP.md
               - governance/GOVERNANCE_AUTHORITY_MATRIX.md
+              - governance/alignment/PR_GATE_REQUIREMENTS_CANON.md
+              - governance/alignment/TWO_GATEKEEPER_MODEL.md
+              - governance/alignment/AGENT_SCOPED_QA_BOUNDARIES.md
+              - governance/alignment/PR_GATE_FAILURE_HANDLING_PROTOCOL.md
+              - governance/specs/build-to-green-enforcement-spec.md
+              - governance/contracts/quality-integrity-contract.md
+              
+              **Total Required: 12 Tier-0 documents**
               
               ---
               
@@ -206,7 +214,7 @@ jobs:
               ## Tier-0 Requirements Checklist
               
               - [ ] FM agent contract (.agent) has tier_0_canon section
-              - [ ] Constitutional documents properly referenced (6 required)
+              - [ ] Constitutional documents properly referenced (12 required)
               - [ ] All Tier-0 documents exist and accessible
               - [ ] Activation requirements declared
               - [ ] STOP + ESCALATE failure semantics declared

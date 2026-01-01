@@ -86,12 +86,12 @@ class GovernanceCouplingValidator:
             print(f"⚠️  Warning: Could not get changed files: {e}")
             return set()
     
-    def check_tier0_changes(self, changed_files: Set[str]) -> bool:
+    def check_tier0_changes(self, changed_files: Set[str]) -> Tuple[bool, Set[str]]:
         """Check if any Tier-0 governance files were changed"""
         tier0_changes = changed_files & self.TIER_0_GOVERNANCE_FILES
         return len(tier0_changes) > 0, tier0_changes
     
-    def check_coupling_files_updated(self, changed_files: Set[str]) -> tuple[bool, Set[str]]:
+    def check_coupling_files_updated(self, changed_files: Set[str]) -> Tuple[bool, Set[str]]:
         """Check if required coupling files were updated"""
         coupling_files_changed = changed_files & self.REQUIRED_COUPLING_FILES
         missing_files = self.REQUIRED_COUPLING_FILES - coupling_files_changed
