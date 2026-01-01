@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Code Review Closure Artifact Schema",
+  "description": "Machine-verifiable code review closure artifact - required for all FM work sessions",
+  "type": "object",
+  "required": [
+    "artifact_metadata",
+    "what_was_reviewed",
+    "what_changed_after_review",
+    "final_verdict",
+    "immutable"
+  ],
+  "properties": {
+    "artifact_metadata": {
+      "type": "object",
+      "required": ["artifact_type", "version", "timestamp", "session_id"],
+      "properties": {
+        "artifact_type": {
+          "type": "string",
+          "const": "code_review_closure"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+          "description": "Semantic version of artifact schema"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of artifact creation"
+        },
+        "session_id": {
+          "type": "string",
+          "description": "Unique identifier for the work session"
+        },
+        "pr_number": {
+          "type": ["integer", "null"],
+          "description": "Pull request number if applicable"
+        }
+      }
+    },
+    "what_was_reviewed": {
+      "type": "object",
+      "required": ["files", "components", "summary"],
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "List of files reviewed"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of components or subsystems reviewed"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Brief summary of what was reviewed"
+        }
+      }
+    },
+    "review_findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "description", "severity"],
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": [
+              "architecture",
+              "security",
+              "quality",
+              "performance",
+              "maintainability",
+              "governance",
+              "none"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "minLength": 5
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["critical", "high", "medium", "low", "informational"]
+          },
+          "location": {
+            "type": "string",
+            "description": "File path or component where finding was identified"
+          }
+        }
+      },
+      "description": "List of review findings (can be empty if no issues found)"
+    },
+    "what_changed_after_review": {
+      "type": "object",
+      "required": ["changes_made", "unaddressed_findings"],
+      "properties": {
+        "changes_made": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["finding_reference", "action_taken"],
+            "properties": {
+              "finding_reference": {
+                "type": "string",
+                "description": "Reference to review finding that prompted this change"
+              },
+              "action_taken": {
+                "type": "string",
+                "minLength": 5,
+                "description": "What was changed in response"
+              },
+              "files_modified": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "description": "List of changes made in response to review (empty if no changes needed)"
+        },
+        "unaddressed_findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["finding_reference", "reason"],
+            "properties": {
+              "finding_reference": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 10,
+                "description": "Explicit reasoning why finding was not addressed"
+              }
+            }
+          },
+          "description": "Findings not addressed (must include explicit reasoning)"
+        }
+      }
+    },
+    "final_verdict": {
+      "type": "object",
+      "required": ["status", "reasoning"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["APPROVED", "REQUIRES_CHANGES"],
+          "description": "Final review verdict"
+        },
+        "reasoning": {
+          "type": "string",
+          "minLength": 20,
+          "description": "Explicit reasoning for the verdict"
+        },
+        "reviewer": {
+          "type": "string",
+          "description": "Reviewer identifier (agent name or human)"
+        }
+      }
+    },
+    "immutable": {
+      "type": "boolean",
+      "const": true,
+      "description": "Artifact must be marked immutable for audit trail"
+    }
+  },
+  "additionalProperties": false
+}
