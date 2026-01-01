@@ -21,7 +21,7 @@ import os
 import sys
 import subprocess
 from pathlib import Path
-from typing import Set, List
+from typing import Set, List, Tuple
 
 class GovernanceCouplingValidator:
     """Validates governance change coupling rules"""
