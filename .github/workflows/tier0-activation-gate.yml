@@ -81,11 +81,12 @@ jobs:
               
               **Validation Results:**
               - ✅ FM agent contract exists with Tier-0 section
-              - ✅ Constitutional documents properly referenced
+              - ✅ Constitutional documents properly referenced (13 documents)
               - ✅ All Tier-0 documents exist and accessible
               - ✅ Activation requirements declared
               - ✅ STOP + ESCALATE semantics declared
               - ✅ Code review closure ratchet declared
+              - ✅ Branch protection enforcement declared
               
               **Tier-0 Canon Status**: ACTIVATED
               **Runtime Governance**: ENABLED
@@ -120,6 +121,7 @@ jobs:
               - OR: Activation requirements not declared
               - OR: STOP + ESCALATE semantics missing
               - OR: Code review closure ratchet not declared
+              - OR: Branch protection enforcement not declared
               
               **Required Actions:**
               
@@ -129,7 +131,8 @@ jobs:
               4. ✅ Declare activation requirements
               5. ✅ Declare failure handling semantics (STOP + ESCALATE)
               6. ✅ Declare code review closure ratchet
-              7. ✅ Push changes and re-run gate
+              7. ✅ Declare branch protection enforcement
+              8. ✅ Push changes and re-run gate
               
               **Tier-0 Constitutional Documents Required:**
               - BUILD_PHILOSOPHY.md (Supreme Authority)
@@ -144,8 +147,13 @@ jobs:
               - governance/alignment/PR_GATE_FAILURE_HANDLING_PROTOCOL.md
               - governance/specs/build-to-green-enforcement-spec.md
               - governance/contracts/quality-integrity-contract.md
+              - governance/contracts/FM_EXECUTION_MANDATE.md
               
               **Total Required: 13 Tier-0 documents**
+              
+              **Additional Requirements:**
+              - Branch protection enforcement (3 required CI checks)
+              - Code review closure ratchet
               
               ---
               
@@ -219,6 +227,7 @@ jobs:
               - [ ] Activation requirements declared
               - [ ] STOP + ESCALATE failure semantics declared
               - [ ] Code review closure ratchet declared
+              - [ ] Branch protection enforcement declared (3 required CI checks)
               
               ---
               
