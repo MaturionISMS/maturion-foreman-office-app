@@ -1,4 +1,12 @@
 ---
+name: UI Builder
+role: builder
+description: >
+  UI Builder for Maturion ISMS modules. Implements React UI components, layouts,
+  and interactive wizards according to frozen architecture specifications. Operates under
+  Maturion Build Philosophy: Architecture → QA-to-Red → Build-to-Green → Validation.
+  MUST NOT modify backend logic, schema, or governance artifacts.
+
 builder_id: ui-builder
 builder_type: specialized
 version: 2.0.0
