@@ -143,6 +143,45 @@ Each workflow is classified as:
 
 ---
 
+### 6. Code Review Closure Gate (`code-review-closure-gate.yml`)
+
+**Classification**: Hard Gate
+
+**Purpose**: Validates code review closure artifact presence and completeness
+
+**Gate Characteristics**:
+- Checks for `code-review-closure.json` in repository root
+- Validates artifact against schema
+- Verifies artifact type is `code_review_closure`
+- Ensures artifact is marked immutable
+- Validates at least one file was reviewed
+- Checks final verdict is present and complete
+- Skips validation for draft PRs (enforced when marked "ready for review")
+
+**Failure Semantics**:
+- Artifact missing → Governance violation → Block merge
+- Schema invalid → Code failure → Block merge
+- Artifact type incorrect → Code failure → Block merge
+- Not immutable → Code failure → Block merge
+- No files reviewed → Code failure → Block merge
+- Final verdict missing or incomplete → Code failure → Block merge
+
+**Infrastructure Failure Handling**:
+- File system access issues → Infrastructure failure
+- JSON parsing errors → Code failure
+- Schema loading failure → Infrastructure failure
+- Python/dependency issues → Infrastructure failure
+
+**Timeout Configuration**:
+- Job-level timeout: 10 minutes (simple validation only)
+
+**Authority**:
+- `.agent` governance.compliance.code_review_closure
+- Enforcement: UNBREAKABLE
+- Timing: End of session (before marking PR ready for review)
+
+---
+
 ## Gate Applicability Matrix
 
 | Workflow                          | Gate Type       | FM Agent | Builder Agent | Governance Agent |
@@ -151,6 +190,7 @@ Each workflow is classified as:
 | Agent QA Boundary Enforcement     | Hard Gate       | ✅ Apply | ✅ Apply      | ✅ Apply         |
 | Builder QA Gate                   | Hard Gate       | ⏭️ Skip  | ✅ Apply      | ⏭️ Skip          |
 | FM Architecture Gate              | Hard Gate       | ✅ Apply | ⏭️ Skip       | ⏭️ Skip          |
+| Code Review Closure Gate          | Hard Gate       | ✅ Apply | ✅ Apply      | ✅ Apply         |
 | Model Scaling Check               | Advisory Gate   | ℹ️ Info  | ℹ️ Info       | ℹ️ Info          |
 
 ---

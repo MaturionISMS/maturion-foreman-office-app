@@ -65,6 +65,15 @@ The following workflows **MUST** be configured as required status checks before 
 - **Purpose**: Validates governance artifact schema compliance and immutability
 - **Failure Semantics**: Schema invalid → Block merge (Governance role only)
 
+### 6. Code Review Closure Gate
+- **Workflow**: `.github/workflows/code-review-closure-gate.yml`
+- **Job Name**: `validate-code-review-closure`
+- **Status Check Name**: "Validate Code Review Closure"
+- **Applicability**: ALL roles (FM, Builder, Governance)
+- **Purpose**: Validates code review closure artifact presence and completeness
+- **Failure Semantics**: Artifact missing or invalid → Block merge
+- **Authority**: `.agent` governance.compliance.code_review_closure (UNBREAKABLE)
+
 ---
 
 ## Additional Branch Protection Settings
@@ -106,6 +115,7 @@ The following settings are **REQUIRED** for complete governance enforcement:
    - ✅ Enforce Agent-Scoped QA Boundaries
    - ✅ Enforce Build-to-Green
    - ✅ Validate Governance Artifact Compliance
+   - ✅ Validate Code Review Closure
 5. Take screenshot for evidence
 6. Document verification in assessment
 
@@ -138,6 +148,7 @@ echo "- Validate Builder QA Report"
 echo "- Enforce Agent-Scoped QA Boundaries"
 echo "- Enforce Build-to-Green"
 echo "- Validate Governance Artifact Compliance"
+echo "- Validate Code Review Closure"
 
 echo ""
 echo "Verification complete. Review output above."
@@ -172,6 +183,8 @@ echo "Verification complete. Review output above."
    - Select: "Enforce Build-to-Green"
    - Search for: "Validate Governance"
    - Select: "Validate Governance Artifact Compliance"
+   - Search for: "Validate Code"
+   - Select: "Validate Code Review Closure"
 
 **Note**: Status checks only appear in the search after they have run at least once on a PR or push to main.
 
@@ -198,6 +211,7 @@ Use this checklist to verify branch protection configuration:
 - [ ] Status check "Validate Builder QA Report" is required
 - [ ] Status check "Enforce Agent-Scoped QA Boundaries" is required
 - [ ] Status check "Enforce Build-to-Green" is required
+- [ ] Status check "Validate Code Review Closure" is required
 - [ ] Status check "Validate Governance Artifact Compliance" is required
 - [ ] "Dismiss stale pull request approvals when new commits are pushed" is enabled
 - [ ] "Require approval of the most recent reviewable push" is enabled
