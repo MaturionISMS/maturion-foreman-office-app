@@ -202,7 +202,6 @@ governance:
     
     # Code Review Closure Ratchet (MANDATORY)
     code_review_closure:
-    code_review_closure:
       required: true
       timing: end_of_session
       enforcement: UNBREAKABLE
