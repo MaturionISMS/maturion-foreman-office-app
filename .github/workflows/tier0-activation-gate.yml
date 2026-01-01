@@ -173,7 +173,7 @@ jobs:
               - governance/specs/build-to-green-enforcement-spec.md
               - governance/contracts/quality-integrity-contract.md
               
-              **Total Required: 12 Tier-0 documents**
+              **Total Required: 13 Tier-0 documents**
               
               **Branch Protection Requirements:**
               - Required CI checks MUST be enforced via GitHub branch protection
@@ -252,7 +252,7 @@ jobs:
               ## Tier-0 Requirements Checklist
               
               - [ ] FM agent contract (.agent) has tier_0_canon section
-              - [ ] Constitutional documents properly referenced (12 required)
+              - [ ] Constitutional documents properly referenced (13 required)
               - [ ] All Tier-0 documents exist and accessible
               - [ ] Activation requirements declared
               - [ ] STOP + ESCALATE failure semantics declared

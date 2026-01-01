@@ -114,6 +114,18 @@ governance/
 - Override authority (Johan only)
 - **Use this document first for any authority question**
 
+### FM Execution Mandate
+
+**[contracts/FM_EXECUTION_MANDATE.md](contracts/FM_EXECUTION_MANDATE.md)** ⭐
+- **FM's constitutional execution authority declaration**
+- Autonomous role declaration (Build Manager, Orchestrator, Enforcement Authority)
+- POLC execution model (Planning, Organizing, Leading, Controlling)
+- Autonomous capabilities vs. bootstrap constraints
+- Bootstrap proxy model (CS2 as mechanical proxy, authority remains with FM)
+- STOP and escalation semantics
+- Completion and handover definition
+- **Pre-Build Gate — Required before any build execution**
+
 ### Red Gate Ownership
 
 **[policies/RED_GATE_AUTHORITY_AND_OWNERSHIP.md](policies/RED_GATE_AUTHORITY_AND_OWNERSHIP.md)**

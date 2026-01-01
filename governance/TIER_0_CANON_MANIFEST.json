@@ -1,9 +1,9 @@
 {
-  "version": "1.0.0",
-  "last_updated": "2026-01-01T14:00:00Z",
+  "version": "1.1.0",
+  "last_updated": "2026-01-01T14:54:00Z",
   "authority": "Phase X - Trans-Repo Governance Runtime Activation",
   "status": "MANDATORY",
-  "description": "Tier-0 Canonical Governance Manifest - Defines the 12 constitutional documents that MUST be activated in FM agent contracts",
+  "description": "Tier-0 Canonical Governance Manifest - Defines the 13 constitutional documents that MUST be activated in FM agent contracts",
   
   "tier_0_canonical_documents": [
     {
@@ -176,18 +176,38 @@
       ],
       "validation_required": true,
       "immutable": true
+    },
+    {
+      "id": "T0-013",
+      "path": "governance/contracts/FM_EXECUTION_MANDATE.md",
+      "title": "FM Execution Mandate (Bootstrap Mode)",
+      "authority": "Constitutional Authority",
+      "purpose": "FM's constitutional execution authority declaration - defines autonomous role, POLC model, and bootstrap constraints",
+      "required_sections": [
+        "Autonomous Role Declaration",
+        "POLC Execution Model",
+        "Autonomous Capabilities",
+        "Bootstrap Constraints",
+        "Bootstrap Proxy Model",
+        "STOP and Escalation Semantics",
+        "Completion and Handover Definition"
+      ],
+      "validation_required": true,
+      "immutable": true,
+      "gate_type": "PRE_BUILD_GATE",
+      "note": "Required before any build execution begins. No build work may proceed without declared and accepted mandate."
     }
   ],
   
   "activation_requirements": {
     "contract_binding": {
       "required": true,
-      "description": "FM agent contract MUST explicitly reference all 12 Tier-0 documents",
+      "description": "FM agent contract MUST explicitly reference all 13 Tier-0 documents",
       "validation_method": "CI gate checks .agent contract for tier_0_canon section"
     },
     "document_existence": {
       "required": true,
-      "description": "All 12 Tier-0 documents MUST exist and be accessible",
+      "description": "All 13 Tier-0 documents MUST exist and be accessible",
       "validation_method": "CI gate validates file existence and readability"
     },
     "schema_validation": {
