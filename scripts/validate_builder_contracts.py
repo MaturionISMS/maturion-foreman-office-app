@@ -64,6 +64,42 @@ def check_yaml_field(yaml_content, field_name, required=True):
             print(f"  ⚠️  Optional field '{field_name}' missing")
         return not required
 
+def check_github_copilot_fields(yaml_content):
+    """Check GitHub Copilot agent loader fields (Required for selectability)"""
+    print("  Checking GitHub Copilot agent fields (required for selectability)...")
+    
+    required_fields = [
+        'name',
+        'role',
+        'description'
+    ]
+    
+    all_present = True
+    for field in required_fields:
+        if not check_yaml_field(yaml_content, field, required=True):
+            all_present = False
+    
+    # Validate role value
+    if 'role: builder' not in yaml_content:
+        print(f"  ❌ role must be 'builder' for Maturion builder agents")
+        all_present = False
+    else:
+        print(f"  ✅ role value correct")
+    
+    # Check description is not empty (basic check)
+    desc_match = re.search(r'description:\s*>?\s*(.+)', yaml_content, re.MULTILINE | re.DOTALL)
+    if desc_match:
+        desc_content = desc_match.group(1).strip()
+        if len(desc_content) > 50:
+            print(f"  ✅ description is descriptive (>{len(desc_content)} characters)")
+        else:
+            print(f"  ⚠️  description is short (<50 characters): may not be descriptive enough")
+    else:
+        print(f"  ❌ description is empty or malformed")
+        all_present = False
+    
+    return all_present
+
 def check_mandatory_doctrine_fields(yaml_content):
     """Check Maturion doctrine YAML fields (Schema v2.0)"""
     print("  Checking Maturion doctrine fields (Schema v2.0)...")
@@ -225,6 +261,9 @@ def validate_builder_contract(filepath):
         if not check_yaml_field(yaml_content, field, required=True):
             all_standard_ok = False
     
+    # Check GitHub Copilot agent fields (REQUIRED FOR SELECTABILITY)
+    github_fields_ok = check_github_copilot_fields(yaml_content)
+    
     # Check Maturion doctrine YAML fields (Schema v2.0)
     doctrine_fields_ok = check_mandatory_doctrine_fields(yaml_content)
     
@@ -235,14 +274,17 @@ def validate_builder_contract(filepath):
     standard_sections_ok = check_standard_sections(markdown_content)
     
     # Overall result
-    if all_standard_ok and doctrine_fields_ok and doctrine_sections_ok and standard_sections_ok:
+    if all_standard_ok and github_fields_ok and doctrine_fields_ok and doctrine_sections_ok and standard_sections_ok:
         print(f"\n✅ {filepath.name}: ALL VALIDATIONS PASSED")
         print(f"   Contract is constitutionally bound to Maturion Build Philosophy")
+        print(f"   Contract is selectable in GitHub Copilot agent UI")
         return True
     else:
         print(f"\n❌ {filepath.name}: VALIDATION FAILED")
         if not all_standard_ok:
             print(f"   - Standard YAML fields incomplete")
+        if not github_fields_ok:
+            print(f"   - GitHub Copilot agent fields incomplete (BLOCKS SELECTABILITY)")
         if not doctrine_fields_ok:
             print(f"   - Maturion doctrine YAML fields incomplete")
         if not doctrine_sections_ok:
