@@ -148,6 +148,7 @@ governance:
       - Tier-0 documents MUST be schema-valid (where applicable)
       - Tier-0 references MUST be current (not stale)
       - Agent contract MUST declare Tier-0 loading
+      - Branch protection enforcement MUST be verified (Tier-0 invariant)
     
     # STOP + ESCALATE semantics
     failure_handling:
@@ -169,6 +170,12 @@ governance:
         escalation_target: Johan Ras
         message: "CATASTROPHIC: Tier-0 governance references are out of sync"
         blocking: true
+      on_branch_protection_enforcement_failure:
+        action: STOP
+        escalation: MANDATORY
+        escalation_target: Johan Ras
+        message: "CATASTROPHIC: Required CI checks not configured in branch protection"
+        blocking: true
     
   compliance:
     build_to_green_only: true
@@ -176,7 +183,25 @@ governance:
     qa_is_proof: true
     handover_requires_green_ci: true
     
+    # Branch Protection Enforcement (TIER-0 INVARIANT)
+    branch_protection_enforcement:
+      required: true
+      enforcement: TIER_0_INVARIANT
+      verify_on_runtime_start: true
+      description: "Required CI checks MUST be configured in branch protection"
+      required_checks:
+        - Tier-0 Governance Activation Gate (validate-tier0-activation)
+        - Governance Coupling Gate (validate-governance-coupling)
+        - Code Review Closure Gate (contractual via .agent)
+      failure_semantics:
+        on_missing_required_checks:
+          action: STOP
+          escalation: MANDATORY
+          message: "CATASTROPHIC: Required CI checks not configured"
+          blocking: true
+    
     # Code Review Closure Ratchet (MANDATORY)
+    code_review_closure:
     code_review_closure:
       required: true
       timing: end_of_session
