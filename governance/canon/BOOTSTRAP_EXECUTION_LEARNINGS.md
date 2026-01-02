@@ -1083,3 +1083,173 @@ Future governance MUST:
 **Effective:** 2026-01-01
 
 ---
+
+## BL-017 — Warning Acceptance Criteria Must Be Defined Pre-Execution
+
+**Context:**  
+Wave 1.0.1 — Schema Foundation (schema-builder, QA-001 to QA-018)
+
+**Observed Issue:**  
+Wave 1.0.1 execution completed successfully with all 18 QA components GREEN (100% pass rate). However, test execution produced 194 warnings. No pre-defined acceptance criteria existed for warnings during build-to-green execution, forcing ad-hoc FM classification and gate decision post-execution.
+
+**Root Cause:**  
+Build initiation artifacts (QA-to-Red Suite Spec, QA Catalog, Builder Assignment Plan, Gate Topology) defined success criteria exclusively in terms of test pass/fail status. Warning acceptance criteria, classification taxonomy, and escalation thresholds were not specified.
+
+**Specific Gaps:**
+
+1. **No Warning Policy in QA-to-Red Spec:**
+   - QA-to-Red Suite Spec defined RED/GREEN semantics for test failures only
+   - No guidance on warning classification (deprecation, tooling noise, config advice)
+   - No distinction between warnings that block gate vs. acceptable execution debt
+
+2. **No Warning Thresholds in Gate Topology:**
+   - Gate definitions specified "100% QA GREEN" as success criteria
+   - No warning count thresholds or acceptable warning categories defined
+   - No escalation criteria for warning proliferation
+
+3. **No Warning Handling in Builder Contracts:**
+   - Builder contracts specified build-to-green execution but not warning management
+   - No instruction on whether builders should suppress, fix, or escalate warnings
+   - No clarity on whether warnings constitute "not green" status
+
+**Impact:**
+
+1. **Execution Ambiguity:**
+   - schema-builder had no guidance on whether warnings required fixing
+   - FM had no pre-defined classification framework
+   - CS2 had to issue ad-hoc instruction for warning classification
+
+2. **Gate Decision Delay:**
+   - Gate readiness could not be determined automatically
+   - Required manual FM analysis and classification
+   - Introduced human decision point in automated execution path
+
+3. **Inconsistent Treatment Risk:**
+   - Warning handling may differ across builders without canonical policy
+   - Future waves may accumulate warnings without detection
+   - No mechanism to prevent warning proliferation
+
+**Learning:**
+
+**Warning acceptance criteria MUST be defined pre-execution as part of QA-to-Red compilation.**
+
+Specifically, the following MUST be specified before any builder execution:
+
+1. **Warning Classification Taxonomy:**
+   - Enumerated warning categories (deprecation, tooling, config, isolation, type)
+   - Risk level per category (LOW, MEDIUM, HIGH)
+   - Acceptability per category (acceptable debt, requires fix, blocks gate)
+
+2. **Warning Acceptance Thresholds:**
+   - Maximum acceptable warning count per builder execution
+   - Per-category warning limits
+   - Escalation thresholds (e.g., >200 warnings = STOP)
+
+3. **Gate Impact Criteria:**
+   - Which warning categories block gate preparation
+   - Which warning categories are acceptable execution debt
+   - Which warning categories require follow-up execution
+
+4. **Builder Warning Obligations:**
+   - Whether builders should suppress warnings via configuration
+   - Whether builders should fix warnings during build-to-green
+   - Whether builders should escalate warnings to FM
+
+5. **Warning Proliferation Detection:**
+   - Baseline warning count per wave
+   - Acceptable warning growth rate
+   - Alert threshold for warning proliferation
+
+**Governance Position:**
+
+Warnings are NOT test failures, but they are execution observations that require governance.
+
+- **Warnings ≠ Test Debt:** Warnings do not violate Zero Test Debt rule if tests pass
+- **Warnings = Execution Debt:** Warnings represent technical debt requiring visibility and management
+- **Ad-Hoc Classification = Governance Gap:** Requiring post-execution FM classification indicates missing pre-execution criteria
+
+**Resolution for Future Waves:**
+
+Before Wave 1.0 subsequent builder executions (ui-builder, api-builder, integration-builder, qa-builder):
+
+1. **Create Warning Acceptance Policy:**
+   - Document: `governance/specs/WARNING_ACCEPTANCE_POLICY.md`
+   - Define classification taxonomy
+   - Define acceptance criteria per category
+   - Define escalation thresholds
+   - Define gate impact rules
+
+2. **Update QA-to-Red Suite Spec:**
+   - Add warning handling section
+   - Reference Warning Acceptance Policy
+   - Clarify that GREEN = tests pass AND warnings within acceptable limits
+
+3. **Update Builder Contracts:**
+   - Add warning management obligations
+   - Specify whether warnings should be suppressed/fixed/escalated
+   - Clarify gate readiness criteria include warning compliance
+
+4. **Update Gate Topology:**
+   - Add warning acceptance criteria to gate definitions
+   - Specify per-gate warning thresholds
+   - Define warning-based STOP conditions
+
+**Mitigation for Wave 1.0.1 (Retroactive):**
+
+FM has performed ad-hoc warning classification for Wave 1.0.1 (documented in `WAVE_1.0.1_WARNING_CLASSIFICATION_AND_GATE_DECISION.md`). 
+
+Decision: **Gate may proceed** with documented execution debt.
+
+Rationale:
+- All QA components GREEN (constitutional requirement met)
+- Warnings classified as acceptable execution debt (documented)
+- No correctness defects identified
+- Future-breakage risks are manageable
+
+**Prevention for Future Builds:**
+
+Before any Wave 1.x or Wave 2.x execution:
+
+**Validator Checklist:**
+- [ ] Warning Acceptance Policy exists and is canonical
+- [ ] QA-to-Red Suite Spec includes warning handling guidance
+- [ ] Builder contracts specify warning management obligations
+- [ ] Gate topology includes warning acceptance criteria
+- [ ] Warning classification taxonomy is enumerated
+- [ ] Warning thresholds are explicit per builder/gate
+- [ ] Warning proliferation detection is active
+
+**Ratchet Statement:**
+
+This governance gap is accepted **once** for Wave 1.0.1.
+
+Future builder executions in Wave 1.0 (ui-builder, api-builder, integration-builder, qa-builder) MUST NOT proceed until Warning Acceptance Policy is defined and activated.
+
+**Ad-hoc warning classification is not acceptable after Wave 1.0.1.**
+
+---
+
+### Related Governance Artifacts
+
+**To Be Created:**
+- `governance/specs/WARNING_ACCEPTANCE_POLICY.md` (mandatory before next builder execution)
+
+**To Be Updated:**
+- `QA_TO_RED_SUITE_SPEC.md` (add warning handling section)
+- `foreman/builder/*.md` (add warning management obligations)
+- `PHASE_4.5_WAVE_1_DEFINITION_AND_GATE_TOPOLOGY.md` (add warning criteria to gates)
+
+**Related Learnings:**
+- BL-003: Zero Test Debt Constitutional Rule (warnings are not test debt but require governance)
+- BL-015: Architecture Wiring Completeness (completeness includes warning management)
+
+---
+
+### Status
+
+**Recorded** — Non-Retroactive  
+**Applies To:** All future builder executions (Wave 1.0 onwards)  
+**Effective:** 2026-01-02  
+**Retroactive Exception:** Wave 1.0.1 (schema-builder) accepted with ad-hoc classification
+
+---
