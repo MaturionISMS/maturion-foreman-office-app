@@ -1,9 +1,9 @@
 {
-  "version": "1.1.0",
-  "last_updated": "2026-01-01T14:54:00Z",
-  "authority": "Phase X - Trans-Repo Governance Runtime Activation",
+  "version": "1.2.0",
+  "last_updated": "2026-01-02T10:30:00Z",
+  "authority": "Phase X - Trans-Repo Governance Runtime Activation + FM Execution Mandate Reaffirmation",
   "status": "MANDATORY",
-  "description": "Tier-0 Canonical Governance Manifest - Defines the 13 constitutional documents that MUST be activated in FM agent contracts",
+  "description": "Tier-0 Canonical Governance Manifest - Defines the 14 constitutional documents that MUST be activated in FM agent contracts",
   
   "tier_0_canonical_documents": [
     {
@@ -196,18 +196,36 @@
       "immutable": true,
       "gate_type": "PRE_BUILD_GATE",
       "note": "Required before any build execution begins. No build work may proceed without declared and accepted mandate."
+    },
+    {
+      "id": "T0-014",
+      "path": "governance/contracts/FM_EXECUTION_MANDATE_ADDENDUM_001.md",
+      "title": "FM Execution Mandate - Addendum 001 (Bootstrap Authorship Clarification)",
+      "authority": "Constitutional Authority (Addendum)",
+      "purpose": "Bootstrap-accurate clarification of authorship vs. mechanical execution boundary - reaffirms base mandate and makes explicit FM's authorship authority",
+      "required_sections": [
+        "Reaffirmation of Mandate",
+        "Bootstrap Authorship vs. Mechanical Execution Boundary",
+        "Ripple Intelligence Alignment",
+        "Contradiction Analysis"
+      ],
+      "validation_required": true,
+      "immutable": true,
+      "gate_type": "PRE_BUILD_GATE",
+      "binding_with": "T0-013",
+      "note": "As binding as base mandate. Clarifies FM authors all content, proxy executes mechanically only. Confirms Ripple Intelligence responsibilities."
     }
   ],
   
   "activation_requirements": {
     "contract_binding": {
       "required": true,
-      "description": "FM agent contract MUST explicitly reference all 13 Tier-0 documents",
+      "description": "FM agent contract MUST explicitly reference all 14 Tier-0 documents",
       "validation_method": "CI gate checks .agent contract for tier_0_canon section"
     },
     "document_existence": {
       "required": true,
-      "description": "All 13 Tier-0 documents MUST exist and be accessible",
+      "description": "All 14 Tier-0 documents MUST exist and be accessible",
       "validation_method": "CI gate validates file existence and readability"
     },
     "schema_validation": {

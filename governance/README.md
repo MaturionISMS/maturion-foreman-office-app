@@ -126,6 +126,14 @@ governance/
 - Completion and handover definition
 - **Pre-Build Gate — Required before any build execution**
 
+**[contracts/FM_EXECUTION_MANDATE_ADDENDUM_001.md](contracts/FM_EXECUTION_MANDATE_ADDENDUM_001.md)** ⭐
+- **Bootstrap authorship vs. mechanical execution clarification**
+- Reaffirms base mandate remains active and binding
+- Explicit: FM authors all content, proxy executes mechanically only
+- Ripple Intelligence responsibilities confirmed for FM execution planning
+- Zero contradictions verified between mandate, agent contract, and bootstrap loop
+- **Addendum is as binding as base mandate**
+
 ### Red Gate Ownership
 
 **[policies/RED_GATE_AUTHORITY_AND_OWNERSHIP.md](policies/RED_GATE_AUTHORITY_AND_OWNERSHIP.md)**
