@@ -1,0 +1,97 @@
+#!/bin/bash
+#
+# Pre-commit hook: Tier-0 Consistency Check
+#
+# PREVENTS: Committing Tier-0 changes without updating all dependent files
+# PURPOSE: Catch Tier-0 count mismatches BEFORE they reach CI
+#
+# This hook runs automatically before every commit.
+# It checks if any Tier-0 related files are being committed.
+# If so, it validates consistency across all Tier-0 configuration files.
+#
+# Created: 2026-01-02 (Response to PR #338 failures)
+#
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+echo ""
+echo "🔒 Pre-Commit: Checking Tier-0 Consistency..."
+
+# Check if any Tier-0 related files are being committed
+TIER0_FILES_CHANGED=false
+
+# Files that affect Tier-0 configuration
+TIER0_RELATED_FILES=(
+    "governance/TIER_0_CANON_MANIFEST.json"
+    ".agent"
+    ".github/agents/ForemanApp-agent.md"
+    "scripts/validate_tier0_activation.py"
+    ".github/workflows/tier0-activation-gate.yml"
+    "governance/alignment/"
+    "governance/policies/"
+    "governance/contracts/"
+    "governance/specs/"
+    "BUILD_PHILOSOPHY.md"
+)
+
+# Check if any Tier-0 related files are staged
+for file_pattern in "${TIER0_RELATED_FILES[@]}"; do
+    if git diff --cached --name-only | grep -q "^$file_pattern"; then
+        TIER0_FILES_CHANGED=true
+        break
+    fi
+done
+
+# If no Tier-0 files changed, skip check
+if [ "$TIER0_FILES_CHANGED" = false ]; then
+    echo -e "${GREEN}✅ No Tier-0 files changed, skipping consistency check${NC}"
+    echo ""
+    exit 0
+fi
+
+echo ""
+echo "⚠️  Tier-0 related files detected in commit"
+echo "   Running Tier-0 consistency validation..."
+echo ""
+
+# Run Tier-0 consistency validator
+if python3 scripts/validate_tier0_consistency.py; then
+    echo ""
+    echo -e "${GREEN}✅ TIER-0 CONSISTENCY CHECK PASSED${NC}"
+    echo ""
+    echo "All Tier-0 files are synchronized."
+    echo "Safe to commit."
+    echo ""
+    exit 0
+else
+    echo ""
+    echo -e "${RED}❌ TIER-0 CONSISTENCY CHECK FAILED${NC}"
+    echo ""
+    echo "⛔ COMMIT BLOCKED"
+    echo ""
+    echo "Tier-0 files are out of sync."
+    echo ""
+    echo "REQUIRED ACTIONS:"
+    echo "  1. Review errors above"
+    echo "  2. Update all files to match manifest"
+    echo "  3. Run: python3 scripts/validate_tier0_consistency.py"
+    echo "  4. Commit when all checks pass"
+    echo ""
+    echo "COMMON ISSUES:"
+    echo "  - Added/removed Tier-0 document but didn't update .agent file"
+    echo "  - Updated manifest count but didn't update validation script"
+    echo "  - Updated one file but forgot to update workflow comments"
+    echo ""
+    echo "TIP: When adding a new Tier-0 document, you must update:"
+    echo "  1. governance/TIER_0_CANON_MANIFEST.json (add entry, bump version)"
+    echo "  2. .agent file (add document, update manifest_version)"
+    echo "  3. scripts/validate_tier0_activation.py (update EXPECTED_TIER0_COUNT)"
+    echo "  4. .github/agents/ForemanApp-agent.md (update references)"
+    echo "  5. .github/workflows/tier0-activation-gate.yml (update comments)"
+    echo ""
+    exit 1
+fi

@@ -30,11 +30,11 @@ governance:
     reference: main
   
   # Tier-0 Canonical Governance (Constitutional Authority)
-  # These 12 documents MUST be loaded and validated before ANY execution
+  # These 14 documents MUST be loaded and validated before ANY execution
   # Source: governance/TIER_0_CANON_MANIFEST.json
   tier_0_canon:
     manifest_file: governance/TIER_0_CANON_MANIFEST.json
-    manifest_version: "1.1.0"
+    manifest_version: "1.2.0"
     
     constitutional_documents:
       # T0-001: Supreme Authority
@@ -141,6 +141,15 @@ governance:
         authority: Constitutional
         validation_required: true
         gate_type: PRE_BUILD_GATE
+      
+      # T0-014: FM Merge Gate Management
+      - id: T0-014
+        path: governance/alignment/FM_MERGE_GATE_MANAGEMENT_CANON.md
+        title: FM Merge Gate Management (Canonical Clarification)
+        purpose: Explicit FM authority for merge gate preparation, validation, and management
+        authority: Constitutional
+        validation_required: true
+        gate_type: MERGE_GATE
     
     # Pre-execution requirements
     activation_requirements:
@@ -218,6 +227,96 @@ governance:
           action: STOP
           message: "INVALID: Code review output missing required elements"
           blocking: true
+  
+  # Ripple Intelligence Awareness (MANDATORY)
+  # Source: governance/specs/FM_RIPPLE_INTELLIGENCE_SPEC.md
+  ripple_intelligence:
+    required: true
+    enforcement: MANDATORY
+    description: >
+      Agent MUST identify and handle ripple effects when making governance or structural changes.
+      Ripple effects occur when a change to one governance artifact affects dependent artifacts.
+    
+    responsibilities:
+      - responsibility: "Identify all files affected by governance changes"
+        scope: "When modifying Tier-0 documents, manifest, or validation scripts"
+        required_actions:
+          - "Identify all dependent files (manifest, .agent, validation scripts, workflows, documentation)"
+          - "Update ALL dependent files to maintain consistency"
+          - "Run consistency validation before commit"
+      
+      - responsibility: "Validate ripple completeness"
+        scope: "Before marking work complete"
+        required_actions:
+          - "Run tier0 consistency validator (scripts/validate_tier0_consistency.py)"
+          - "Run actual CI validation scripts (scripts/validate_tier0_activation.py)"
+          - "Verify all count references updated across all files"
+          - "Verify version numbers synchronized"
+      
+      - responsibility: "Escalate when ripple exceeds authority"
+        scope: "When ripple affects governance canon or agent contracts beyond scope"
+        required_actions:
+          - "STOP immediately"
+          - "Document ripple scope and affected files"
+          - "Escalate to Johan with complete ripple analysis"
+          - "Do NOT proceed until authorization"
+    
+    failure_handling:
+      on_incomplete_ripple:
+        action: STOP
+        severity: CATASTROPHIC
+        message: "Ripple effect incomplete - dependent files not updated"
+        escalation: MANDATORY
+        blocking: true
+        example: "Added T0-014 to manifest but did not update .agent file"
+      
+      on_missing_validation:
+        action: STOP
+        severity: CATASTROPHIC
+        message: "Ripple validation not performed"
+        escalation: MANDATORY
+        blocking: true
+        example: "Updated files but did not run consistency validator"
+      
+      on_ripple_beyond_authority:
+        action: STOP
+        severity: HIGH
+        message: "Ripple effect exceeds agent authority"
+        escalation: MANDATORY
+        blocking: true
+        example: "Change requires governance canon modification"
+    
+    validation_requirements:
+      pre_commit:
+        - "Run: python3 scripts/validate_tier0_consistency.py"
+        - "Result MUST be: ALL CHECKS PASSED"
+      
+      pre_handover:
+        - "Run: python3 scripts/validate_tier0_activation.py"
+        - "Result MUST be: ALL TIER-0 ACTIVATION CHECKS PASSED"
+        - "Issue merge gate guarantee with validation evidence"
+    
+    prevention_tools:
+      consistency_validator: "scripts/validate_tier0_consistency.py"
+      pre_commit_hook: ".githooks/pre-commit-tier0-consistency"
+      checklist: "governance/checklists/TIER_0_DOCUMENT_ADDITION_CHECKLIST.md"
+    
+    lessons_learned:
+      - incident: "PR #338 - First Failure"
+        root_cause: "Skipped pre-handover validation"
+        prevention: "Always run actual CI scripts before handover"
+      
+      - incident: "PR #338 - Second Failure"  
+        root_cause: "Added T0-014 but only updated 3 of 5 dependent files"
+        affected_files:
+          updated:
+            - "governance/TIER_0_CANON_MANIFEST.json"
+            - ".github/agents/ForemanApp-agent.md"
+          not_updated:
+            - ".agent (YAML configuration)"
+            - "scripts/validate_tier0_activation.py"
+            - ".github/workflows/tier0-activation-gate.yml"
+        prevention: "Use consistency validator + follow checklist"
     
 version: 2.0
 ---
