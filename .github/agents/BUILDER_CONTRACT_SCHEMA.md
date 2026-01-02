@@ -293,7 +293,7 @@ permissions:
 
 **Type**: `array of strings`  
 **Description**: List of canonical governance sources this builder is bound to  
-**Purpose**: Establish constitutional supremacy and prevent "generic developer" execution
+**Purpose**: Establish constitutional supremacy, prevent "generic developer" execution, and ensure ripple intelligence alignment
 
 **MUST Include**:
 ```yaml
@@ -301,14 +301,21 @@ canonical_authorities:
   - BUILD_PHILOSOPHY.md
   - foreman/builder-specs/build-to-green-rule.md
   - .github/agents/ForemanApp-agent.md
+  - governance/alignment/GOVERNANCE_RIPPLE_COMPATIBILITY.md
 ```
 
 **Additional authorities may be added** (e.g., domain-specific specs).
 
+**Ripple Intelligence Requirement**:
+- The `governance/alignment/GOVERNANCE_RIPPLE_COMPATIBILITY.md` authority ensures builders are aware of ripple intelligence obligations
+- Builders MUST NOT be appointed if this authority is missing from their canonical_authorities list
+- This prevents builders from being appointed with stale governance assumptions
+
 **Validation**:
-- Must contain at least the 3 mandatory authorities listed above
+- Must contain at least the 4 mandatory authorities listed above (including GOVERNANCE_RIPPLE_COMPATIBILITY.md)
 - All paths must exist in repository
 - Authorities must be immutable (constitutional files)
+- Ripple intelligence authority ensures governance-current context at appointment time
 
 **Example**:
 ```yaml
@@ -316,6 +323,7 @@ canonical_authorities:
   - BUILD_PHILOSOPHY.md
   - foreman/builder-specs/build-to-green-rule.md
   - .github/agents/ForemanApp-agent.md
+  - governance/alignment/GOVERNANCE_RIPPLE_COMPATIBILITY.md
   - foreman/builder/ui-builder-spec.md
 ```
 
@@ -778,6 +786,7 @@ canonical_authorities:
   - BUILD_PHILOSOPHY.md
   - foreman/builder-specs/build-to-green-rule.md
   - .github/agents/ForemanApp-agent.md
+  - governance/alignment/GOVERNANCE_RIPPLE_COMPATIBILITY.md
   - foreman/builder/ui-builder-spec.md
 maturion_doctrine_version: "1.0.0"
 handover_protocol: "gate-first-deterministic"
@@ -980,7 +989,7 @@ A valid builder contract MUST:
 4. ✅ Be located in `.github/agents/<builder-id>.md`
 5. ✅ Have valid YAML frontmatter with all required fields
 6. ✅ Have `builder_id` matching filename
-7. ✅ Have `canonical_authorities` array with at least 3 mandatory sources
+7. ✅ Have `canonical_authorities` array with at least 4 mandatory sources (including GOVERNANCE_RIPPLE_COMPATIBILITY.md)
 8. ✅ Have `maturion_doctrine_version` matching BUILD_PHILOSOPHY.md version
 9. ✅ Have `handover_protocol: "gate-first-deterministic"`
 10. ✅ Have `no_debt_rules: "zero-test-debt-mandatory"`

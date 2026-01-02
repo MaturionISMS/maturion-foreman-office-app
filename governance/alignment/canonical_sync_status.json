@@ -1,0 +1,60 @@
+{
+  "governance_version": {
+    "canonical_repo": "maturion-foreman-governance",
+    "last_sync_commit": "initial-fm-governance-sync",
+    "last_sync_timestamp": "2026-01-02T10:40:00Z",
+    "fm_governance_version": "1.0.0",
+    "canonical_governance_version": "1.0.0",
+    "sync_status": "ALIGNED"
+  },
+  "ripple_status": {
+    "current_status": "STABLE",
+    "active_ripple": false,
+    "last_ripple_event": null,
+    "pending_changes": []
+  },
+  "builder_contract_alignment": {
+    "ui-builder": {
+      "contract_version": "2.0.0",
+      "doctrine_version": "1.0.0",
+      "ripple_aware": true,
+      "last_verified": "2026-01-02T10:40:00Z",
+      "alignment_status": "CURRENT"
+    },
+    "api-builder": {
+      "contract_version": "2.0.0",
+      "doctrine_version": "1.0.0",
+      "ripple_aware": true,
+      "last_verified": "2026-01-02T10:40:00Z",
+      "alignment_status": "CURRENT"
+    },
+    "schema-builder": {
+      "contract_version": "2.0.0",
+      "doctrine_version": "1.0.0",
+      "ripple_aware": true,
+      "last_verified": "2026-01-02T10:40:00Z",
+      "alignment_status": "CURRENT"
+    },
+    "integration-builder": {
+      "contract_version": "2.0.0",
+      "doctrine_version": "1.0.0",
+      "ripple_aware": true,
+      "last_verified": "2026-01-02T10:40:00Z",
+      "alignment_status": "CURRENT"
+    },
+    "qa-builder": {
+      "contract_version": "2.0.0",
+      "doctrine_version": "1.0.0",
+      "ripple_aware": true,
+      "last_verified": "2026-01-02T10:40:00Z",
+      "alignment_status": "CURRENT"
+    }
+  },
+  "notes": [
+    "This file tracks the synchronization status between canonical governance and FM governance.",
+    "It is updated whenever governance ripple (downward) occurs.",
+    "FM MUST verify this file before builder appointment to ensure ripple alignment.",
+    "sync_status values: ALIGNED (current), DRIFT_DETECTED (needs sync), SYNC_REQUIRED (mandatory sync)",
+    "ripple_status values: STABLE (no ripple), IN_PROGRESS (ripple active), CONFLICT (ambiguity)"
+  ]
+}
