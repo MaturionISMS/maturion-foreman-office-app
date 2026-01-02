@@ -135,8 +135,17 @@ FM manages merge gate readiness by ensuring all of the following BEFORE builder 
 - ✅ Making tests pass (Build-to-Green)
 - ✅ Following architecture exactly
 - ✅ Generating required evidence artifacts
-- ✅ Running local validation before PR submission
-- ✅ Declaring READY when complete
+- ✅ **Executing pre-handover validation (see canonical requirements below)**
+- ✅ Declaring READY when complete and validations pass
+
+**Pre-Handover Validation** (Canonical Requirements):
+- Builders MUST execute complete merge gate validation locally BEFORE handover
+- All validation commands specified by FM must pass
+- See: `foreman/builder/pr-gate-failure-response-guide.md` (Section: "Local Verification Workflow")
+- See: `governance/specs/build-to-green-enforcement-spec.md` (Enforcement Mechanisms)
+- Builder issues merge gate guarantee only after all local validations pass
+
+**Critical**: Builder pre-handover validation is NORMAL workflow, not a stop condition.
 
 ### Builders ARE NOT Responsible For:
 
@@ -147,14 +156,22 @@ FM manages merge gate readiness by ensuring all of the following BEFORE builder 
 - ❌ Managing merge gate readiness
 - ❌ Resolving merge gate failures independently
 
+**Distinction**: Builders execute merge gate validations (per FM instructions), but FM defines what to validate (requirements specification).
+
 ### FM IS Responsible For:
 
-- ✅ Defining what "gate ready" means for each task
-- ✅ Providing complete gate readiness instructions
-- ✅ Validating gate criteria met before builder starts
-- ✅ Coordinating cross-cutting gate requirements
-- ✅ Resolving any gate failures that occur
-- ✅ Updating builder instructions if gates change
+- ✅ Defining what "merge gate ready" means for each task
+- ✅ Providing complete merge gate validation instructions to builders
+- ✅ Listing all applicable merge gates explicitly in task instructions
+- ✅ Providing validation commands/scripts for pre-handover checks
+- ✅ Validating merge gate criteria met before builder starts
+- ✅ Coordinating cross-cutting merge gate requirements
+- ✅ Resolving any merge gate failures that occur post-handover (CATASTROPHIC)
+- ✅ Updating builder instructions if merge gates change
+
+**FM specifies merge gate requirements. Builders execute pre-handover validation against those requirements.**
+
+**Post-Handover Failures**: If merge gates fail after builder handover, this indicates FM coordination gap (incomplete instructions), not builder defect.
 
 ---
 
@@ -584,9 +601,17 @@ This canonical clarification references and integrates with:
 - **[PR_GATE_REQUIREMENTS_CANON.md](./PR_GATE_REQUIREMENTS_CANON.md)** - Canonical gate requirements
 - **[PR_GATE_FAILURE_HANDLING_PROTOCOL.md](./PR_GATE_FAILURE_HANDLING_PROTOCOL.md)** - Failure classification and handling
 - **[TWO_GATEKEEPER_MODEL.md](./TWO_GATEKEEPER_MODEL.md)** - Dual enforcement model
+- **[build-to-green-enforcement-spec.md](../specs/build-to-green-enforcement-spec.md)** - Pre-commit hooks, CI enforcement, local validation
+- **[pr-gate-failure-response-guide.md](../../foreman/builder/pr-gate-failure-response-guide.md)** - Builder pre-handover local verification workflow
 - **[Foreman Roles and Duties](../../foreman/roles-and-duties.md)** - FM responsibilities
 - **[Foreman Identity](../../foreman/identity.md)** - FM purpose and authority
 - **[Builder Contracts](../../foreman/builder/)** - Builder scope and boundaries
+
+**Pre-Handover Validation (Canonical Requirements)**:
+- Builder pre-handover validation is defined in `build-to-green-enforcement-spec.md` and `pr-gate-failure-response-guide.md`
+- This clarification does NOT duplicate those requirements
+- This clarification states: FM provides validation requirements, Builders execute validations
+- Post-handover failures indicate FM coordination gaps (incomplete instructions)
 
 ---
 
