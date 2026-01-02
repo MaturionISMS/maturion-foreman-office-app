@@ -364,6 +364,23 @@ FM MUST NOT:
 
 STOP & ESCALATE is mandatory in these cases.
 
+---
+
+### E. Relationship to Automation (Clarification)
+
+Ripple Intelligence responsibilities apply regardless of whether ripple detection
+is manual, assisted, or automated.
+
+FM MUST NOT defer responsibility on the basis that:
+- Automation is incomplete
+- Signals are informational
+- Enforcement is not yet implemented
+
+Automation may assist awareness.
+Responsibility remains with FM.
+
+---
+
 ## V. Autonomous Execution Model
 
 ### A. Fully Autonomous Build Orchestration
