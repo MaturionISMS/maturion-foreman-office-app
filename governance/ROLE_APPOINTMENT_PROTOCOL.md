@@ -450,24 +450,34 @@ FM SHALL verify ripple alignment using the following procedure:
 
 **Step 1: Check Governance Canon Status**
 ```bash
-# Verify last governance sync timestamp
-cat governance/alignment/canonical_sync_status.json
+# Verify last governance sync timestamp and status
+cat governance/alignment/canonical_sync_status.json | grep -E '"sync_status"|"current_status"'
 
-# Expected fields:
-# - last_sync_commit: <sha>
-# - last_sync_timestamp: <ISO-8601>
-# - sync_status: "ALIGNED" | "DRIFT_DETECTED" | "SYNC_REQUIRED"
+# Expected output should show:
+# "sync_status": "ALIGNED"
+# "current_status": "STABLE"
+
+# Or use jq for more precise validation:
+jq '.governance_version.sync_status, .ripple_status.current_status' governance/alignment/canonical_sync_status.json
+
+# Must return: "ALIGNED" and "STABLE"
 ```
 
 **Step 2: Verify Builder Contract Currency**
 ```bash
-# Check builder .agent file version and canonical_authorities
-cat .github/agents/<builder-id>.md
+# Check builder .agent file canonical_authorities includes ripple intelligence
+for builder in ui api schema integration qa; do
+  echo "Checking ${builder}-builder..."
+  grep -A 5 "canonical_authorities:" .github/agents/${builder}-builder.md | \
+    grep "GOVERNANCE_RIPPLE_COMPATIBILITY.md" || echo "❌ MISSING ripple authority"
+done
 
-# Verify:
-# - maturion_doctrine_version matches BUILD_PHILOSOPHY.md version
-# - canonical_authorities list includes all mandatory governance sources
-# - recruitment_date or last_update is after last major governance change
+# All builders must show GOVERNANCE_RIPPLE_COMPATIBILITY.md in output
+# Any "❌ MISSING" indicates builder not ripple-aware
+
+# Verify maturion_doctrine_version matches BUILD_PHILOSOPHY.md
+grep "maturion_doctrine_version" .github/agents/*-builder.md
+# Should all show: maturion_doctrine_version: "1.0.0"
 ```
 
 **Step 3: Evaluate Ripple Status**

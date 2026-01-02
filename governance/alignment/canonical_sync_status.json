@@ -50,11 +50,20 @@
       "alignment_status": "CURRENT"
     }
   },
-  "notes": [
-    "This file tracks the synchronization status between canonical governance and FM governance.",
-    "It is updated whenever governance ripple (downward) occurs.",
-    "FM MUST verify this file before builder appointment to ensure ripple alignment.",
-    "sync_status values: ALIGNED (current), DRIFT_DETECTED (needs sync), SYNC_REQUIRED (mandatory sync)",
-    "ripple_status values: STABLE (no ripple), IN_PROGRESS (ripple active), CONFLICT (ambiguity)"
-  ]
+  "schema_version": "1.0.0",
+  "documentation": {
+    "purpose": "This file tracks the synchronization status between canonical governance and FM governance.",
+    "update_trigger": "Updated whenever governance ripple (downward) occurs.",
+    "usage": "FM MUST verify this file before builder appointment to ensure ripple alignment.",
+    "sync_status_values": {
+      "ALIGNED": "Governance is current and synchronized",
+      "DRIFT_DETECTED": "Synchronization needed - governance has changed",
+      "SYNC_REQUIRED": "Mandatory synchronization required before proceeding"
+    },
+    "ripple_status_values": {
+      "STABLE": "No active ripple - governance is stable",
+      "IN_PROGRESS": "Governance ripple currently propagating",
+      "CONFLICT": "Governance ambiguity or conflict detected"
+    }
+  }
 }
