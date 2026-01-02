@@ -121,9 +121,12 @@ Builders MUST NOT attempt to resolve ripple concerns independently.
 This boundary is enforced through:
 
 1. **Builder Contract Requirements**
-   - All builder contracts MUST reference this specification
-   - Canonical authorities list includes GOVERNANCE_RIPPLE_COMPATIBILITY.md
-   - Ripple boundary acknowledged in contract
+   - All builder contracts MUST reference GOVERNANCE_RIPPLE_COMPATIBILITY.md (ripple model)
+   - All builder contracts MUST acknowledge this specification (ripple boundaries)
+   - Both documents serve complementary roles:
+     - GOVERNANCE_RIPPLE_COMPATIBILITY.md: Defines overall ripple intelligence model
+     - BUILDER_RIPPLE_BOUNDARY_SPEC.md: Defines specific builder authority limits
+   - Ripple boundary acknowledgment mandatory in contract body (Section 6)
 
 2. **FM Supervision**
    - FM monitors builder actions for ripple authority violations
