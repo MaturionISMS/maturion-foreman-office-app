@@ -409,7 +409,7 @@ All conditions required for CI success MUST be proven via:
 - Platform Readiness Evidence
 - Prehandover verification
 
-If CI would fail for reasons unknown prior to execution, this constitutes an upstream governan
+If CI would fail for reasons unknown prior to execution, this constitutes an upstream governance gap.
 
 HARD STOP:
 If Platform Readiness Evidence does not exist or readiness status is RED, FM MUST STOP and escalate.
