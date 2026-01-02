@@ -19,7 +19,7 @@ The FM agent contract refactoring has been **successfully completed** in accorda
 ✅ **Restore the FM agent contract to an executable, loadable, and authoritative form**
 
 ### Requirements Met
-✅ Contract reduced from 54,779 to 15,191 characters (72.3% reduction)  
+✅ Contract reduced from 54,779 to 15,191 characters (71.5% reduction)  
 ✅ Contract now fits within 30,000 character platform limit  
 ✅ No authority, obligation, or prohibition was lost  
 ✅ Builder appointment model remains unambiguous  
@@ -125,9 +125,9 @@ Comprehensive validation performed:
 |--------|-------|
 | **Original Character Count** | 54,779 |
 | **Lean Character Count** | 15,191 |
-| **Reduction Percentage** | 72.3% |
+| **Reduction Percentage** | 71.5% |
 | **Platform Limit** | 30,000 |
-| **Headroom** | 14,809 chars (49.4%) |
+| **Headroom** | 14,809 chars (47.9%) |
 | **Authority Preservation** | 100% (13/13) |
 | **Obligation Preservation** | 100% (12/12) |
 | **Prohibition Preservation** | 100% (12/12) |

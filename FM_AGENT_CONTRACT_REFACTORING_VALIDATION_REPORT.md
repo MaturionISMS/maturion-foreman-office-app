@@ -12,7 +12,7 @@
 The FM agent contract refactoring has been **successfully completed and validated**.
 
 **Key Results**:
-- ✅ Character count reduced from 54,779 to 15,191 (72% reduction)
+- ✅ Character count reduced from 54,779 to 15,617 (72% reduction)
 - ✅ Contract now fits within platform execution limits (30,000 character maximum)
 - ✅ All authority, obligations, and prohibitions preserved (100% retention)
 - ✅ Builder appointment and ripple responsibility models remain unambiguous
@@ -30,9 +30,9 @@ The FM agent contract refactoring has been **successfully completed and validate
 
 ```
 Original:   54,779 characters (EXCEEDS 30,000 limit) ❌
-Lean:       15,191 characters (WITHIN 30,000 limit)  ✅
-Reduction:  72.3%
-Headroom:   14,809 characters (49.4% buffer)
+Lean:       15,617 characters (WITHIN 30,000 limit)  ✅
+Reduction:  71.5%
+Headroom:   14,383 characters (47.9% buffer)
 ```
 
 **Result**: ✅ PASS
@@ -262,7 +262,7 @@ reference_documents:
 
 ✅ **The lean FM agent contract is EXECUTABLE.**
 
-- Character count: 15,191 (within 30,000 limit)
+- Character count: 15,617 (within 30,000 limit)
 - YAML frontmatter: Valid
 - All sections: Present
 - All references: Valid

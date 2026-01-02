@@ -9,7 +9,7 @@
 
 ## Executive Summary
 
-The FM agent contract (`ForemanApp-agent.md`) has been successfully refactored from **54,779 characters** to **15,243 characters** (72% reduction) while **preserving all authority, obligations, and prohibitions**.
+The FM agent contract (`ForemanApp-agent.md`) has been successfully refactored from **54,779 characters** to **15,617 characters** (71.5% reduction) while **preserving all authority, obligations, and prohibitions**.
 
 The refactoring achieves executability within platform limits (30,000 character maximum) and maintains full constitutional alignment with all 13 Tier-0 governance documents.
 
@@ -131,7 +131,7 @@ This preserves the full historical context and detailed explanations for referen
 
 | Metric | Before | After | Change |
 |--------|--------|-------|--------|
-| Character Count | 54,779 | 15,243 | -72% |
+| Character Count | 54,779 | 15,617 | -71.5% |
 | Within Platform Limit (30,000) | ❌ NO | ✅ YES | ✅ Fixed |
 
 ---

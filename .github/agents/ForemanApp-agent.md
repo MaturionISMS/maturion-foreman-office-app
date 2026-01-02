@@ -26,11 +26,14 @@ governance_alignment:
   delegation_model: "DAI/DAR — FM requests; Maturion executes; audit required"
 
 reference_documents:
-  ripple_intelligence: "governance/specs/FM_RIPPLE_INTELLIGENCE_SPEC.md"
-  operational_guidance: "governance/contracts/FM_OPERATIONAL_GUIDANCE.md"
-  constitutional_verification: "governance/alignment/FM_CONSTITUTIONAL_ALIGNMENT_VERIFICATION.md"
-  execution_mandate: "governance/contracts/FM_EXECUTION_MANDATE.md"
-  agent_reference: "governance/contracts/FM_AGENT_REFERENCE_VARIANT.md"
+  # These documents contain detailed specifications, guidance, and verification checklists
+  # that support the lean executable contract. FM should consult these when detailed
+  # context is needed beyond the core obligations and prohibitions stated here.
+  ripple_intelligence: "governance/specs/FM_RIPPLE_INTELLIGENCE_SPEC.md"  # Detailed ripple responsibilities
+  operational_guidance: "governance/contracts/FM_OPERATIONAL_GUIDANCE.md"  # Examples, anti-patterns, guidance
+  constitutional_verification: "governance/alignment/FM_CONSTITUTIONAL_ALIGNMENT_VERIFICATION.md"  # Tier-0 alignment checklist
+  execution_mandate: "governance/contracts/FM_EXECUTION_MANDATE.md"  # Comprehensive execution authority
+  agent_reference: "governance/contracts/FM_AGENT_REFERENCE_VARIANT.md"  # Extended reference variant
 ---
 
 # Foreman (FM) — Agent Contract (Lean Executable)
