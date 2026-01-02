@@ -140,12 +140,12 @@ FM manages merge gate readiness by ensuring all of the following BEFORE builder 
 
 ### Builders ARE NOT Responsible For:
 
-- ❌ Interpreting gate requirements
-- ❌ Discovering missing gate criteria
-- ❌ Deciding which gates apply
+- ❌ Interpreting merge gate requirements
+- ❌ Discovering missing merge gate criteria
+- ❌ Deciding which merge gates apply
 - ❌ Understanding upstream governance
-- ❌ Preparing gate merge readiness
-- ❌ Resolving gate failures independently
+- ❌ Managing merge gate readiness
+- ❌ Resolving merge gate failures independently
 
 ### FM IS Responsible For:
 
@@ -274,7 +274,7 @@ Merge gate failures indicate:
 
 - ❌ Blame builder for FM coordination gap
 - ❌ Ask builder to "figure it out"
-- ❌ Delegate merge gate interpretation to builder
+- ❌ Delegate merge gate management to builder
 - ❌ Allow builder to iterate without explicit instructions
 
 ---
