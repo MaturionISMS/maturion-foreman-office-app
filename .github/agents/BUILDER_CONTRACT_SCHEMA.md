@@ -636,9 +636,52 @@ At completion of ANY work unit, builder MUST evaluate:
 
 ---
 
+### 6. Ripple Boundary Acknowledgment (## Ripple Boundary Acknowledgment — MANDATORY)
+
+**Content**: Explicit acknowledgment of ripple awareness vs. ripple authority boundary
+
+**Required Elements**:
+- Acknowledgment of ripple awareness capability
+- Explicit statement of ripple authority prohibition
+- Escalation protocol for ripple concerns
+- Reference to canonical ripple boundary specification
+
+**Purpose**: Prevent builders from assuming ripple authority based on ripple awareness context
+
+**Example**:
+```markdown
+## Ripple Boundary Acknowledgment — MANDATORY
+
+This builder acknowledges the **Builder Ripple Intelligence Boundary**.
+
+**Ripple Awareness** (PERMITTED):
+- ✅ Receive ripple context from FM during task assignment
+- ✅ Acknowledge ripple awareness in execution reports
+- ✅ Escalate ripple concerns to FM when context affects scope
+- ✅ Reference ripple context in evidence documentation
+
+**Ripple Authority** (PROHIBITED):
+- ❌ Initiate ripple signals (only Governance may originate)
+- ❌ Propagate ripple across repositories (only FM coordinates)
+- ❌ Coordinate ripple responses (only FM orchestrates)
+- ❌ Interpret ripple impact beyond assigned scope
+- ❌ Modify governance artifacts based on ripple
+- ❌ Update other agents' contracts due to ripple
+
+**Key Principle**: This builder is **informed** by ripple but does NOT **act** on ripple beyond assigned scope.
+
+**Escalation**: Ripple-related concerns MUST be escalated to FM using RIPPLE_CONCERN_ESCALATION format.
+
+**Canonical Authority**: `governance/agents/BUILDER_RIPPLE_BOUNDARY_SPEC.md`
+```
+
+**Validation**: Must include explicit awareness/authority distinction and canonical reference
+
+---
+
 ## Standard Sections (REQUIRED)
 
-### 6. Purpose (## Purpose)
+### 7. Purpose (## Purpose)
 
 **Content**: Brief description of why this builder exists and its role in the ecosystem
 
@@ -650,7 +693,7 @@ The UI Builder is responsible for implementing all user interface components,
 layouts, and interactive wizards in the Foreman Office App.
 ```
 
-### 7. Responsibilities (## Responsibilities)
+### 8. Responsibilities (## Responsibilities)
 
 **Content**: Detailed list of what this builder is responsible for
 
@@ -666,7 +709,7 @@ layouts, and interactive wizards in the Foreman Office App.
 - Ensure accessibility compliance (WCAG 2.1 AA)
 ```
 
-### 8. Capabilities (## Capabilities)
+### 9. Capabilities (## Capabilities)
 
 **Content**: Technical skills and domains this builder can work in
 
@@ -680,7 +723,7 @@ layouts, and interactive wizards in the Foreman Office App.
 - **Component Architecture**: Reusable components, composition patterns
 ```
 
-### 9. Forbidden Actions (## Forbidden Actions)
+### 10. Forbidden Actions (## Forbidden Actions)
 
 **Content**: Explicit list of what this builder MUST NOT do
 
@@ -694,7 +737,7 @@ layouts, and interactive wizards in the Foreman Office App.
 ❌ **Governance Changes**: No modification of governance artifacts
 ```
 
-### 10. Permissions (## Permissions)
+### 11. Permissions (## Permissions)
 
 **Content**: Detailed explanation of file system access rights
 
@@ -712,7 +755,7 @@ layouts, and interactive wizards in the Foreman Office App.
 - `apps/*/components/**` — UI component libraries
 ```
 
-### 11. Recruitment Information (## Recruitment Information)
+### 12. Recruitment Information (## Recruitment Information)
 
 **Content**: Metadata about when and how builder was recruited
 
@@ -727,7 +770,7 @@ layouts, and interactive wizards in the Foreman Office App.
 **Maturion Doctrine Version**: 1.0.0
 ```
 
-### 12. Gate Binding (## Gate Binding) [OPTIONAL during recruitment]
+### 13. Gate Binding (## Gate Binding) [OPTIONAL during recruitment]
 
 **Content**: Information about QA gates and PR requirements
 
@@ -910,6 +953,30 @@ At completion of ANY work unit, builder MUST evaluate:
 
 **Governance Position**: Enhancement capture is **mandatory**. Enhancement execution requires **explicit FM authorization**.
 
+## Ripple Boundary Acknowledgment — MANDATORY
+
+This builder acknowledges the **Builder Ripple Intelligence Boundary**.
+
+**Ripple Awareness** (PERMITTED):
+- ✅ Receive ripple context from FM during task assignment
+- ✅ Acknowledge ripple awareness in execution reports
+- ✅ Escalate ripple concerns to FM when context affects scope
+- ✅ Reference ripple context in evidence documentation
+
+**Ripple Authority** (PROHIBITED):
+- ❌ Initiate ripple signals (only Governance may originate)
+- ❌ Propagate ripple across repositories (only FM coordinates)
+- ❌ Coordinate ripple responses (only FM orchestrates)
+- ❌ Interpret ripple impact beyond assigned scope
+- ❌ Modify governance artifacts based on ripple
+- ❌ Update other agents' contracts due to ripple
+
+**Key Principle**: This builder is **informed** by ripple but does NOT **act** on ripple beyond assigned scope.
+
+**Escalation**: Ripple-related concerns MUST be escalated to FM using RIPPLE_CONCERN_ESCALATION format.
+
+**Canonical Authority**: `governance/agents/BUILDER_RIPPLE_BOUNDARY_SPEC.md`
+
 ## Purpose
 
 The UI Builder is responsible for implementing all user interface components,
@@ -1003,19 +1070,21 @@ A valid builder contract MUST:
 16. ✅ Have section: `## Zero Test & Test Debt Rules — MANDATORY`
 17. ✅ Have section: `## Gate-First Handover Protocol — MANDATORY`
 18. ✅ Have section: `## Mandatory Enhancement Capture — MANDATORY`
-19. ✅ Have section: `## Purpose`
-20. ✅ Have section: `## Responsibilities`
-21. ✅ Have section: `## Capabilities`
-22. ✅ Have section: `## Forbidden Actions`
-23. ✅ Have section: `## Permissions`
-24. ✅ Have section: `## Recruitment Information`
+19. ✅ Have section: `## Ripple Boundary Acknowledgment — MANDATORY`
+20. ✅ Have section: `## Purpose`
+21. ✅ Have section: `## Responsibilities`
+22. ✅ Have section: `## Capabilities`
+23. ✅ Have section: `## Forbidden Actions`
+24. ✅ Have section: `## Permissions`
+25. ✅ Have section: `## Recruitment Information`
 
 **Content Quality**:
-25. ✅ Align with `foreman/builder-manifest.json` responsibilities/forbidden
-26. ✅ Align with `foreman/builder/builder-capability-map.json` capabilities
-27. ✅ Align with `foreman/builder/builder-permission-policy.json` permissions
-28. ✅ Have no placeholder text ("TBD", "TODO", etc.)
-29. ✅ Maturion doctrine sections contain required elements (see schema above)
+26. ✅ Align with `foreman/builder-manifest.json` responsibilities/forbidden
+27. ✅ Align with `foreman/builder/builder-capability-map.json` capabilities
+28. ✅ Align with `foreman/builder/builder-permission-policy.json` permissions
+29. ✅ Have no placeholder text ("TBD", "TODO", etc.)
+30. ✅ Maturion doctrine sections contain required elements (see schema above)
+31. ✅ Ripple Boundary section references canonical specification
 
 ### 🔴 Validation Failure = Non-Compliant Builder
 
