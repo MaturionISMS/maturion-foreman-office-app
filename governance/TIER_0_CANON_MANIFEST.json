@@ -1,9 +1,9 @@
 {
-  "version": "1.1.0",
-  "last_updated": "2026-01-01T14:54:00Z",
+  "version": "1.2.0",
+  "last_updated": "2026-01-02T11:46:00Z",
   "authority": "Phase X - Trans-Repo Governance Runtime Activation",
   "status": "MANDATORY",
-  "description": "Tier-0 Canonical Governance Manifest - Defines the 13 constitutional documents that MUST be activated in FM agent contracts",
+  "description": "Tier-0 Canonical Governance Manifest - Defines the 14 constitutional documents that MUST be activated in FM agent contracts",
   
   "tier_0_canonical_documents": [
     {
@@ -196,6 +196,26 @@
       "immutable": true,
       "gate_type": "PRE_BUILD_GATE",
       "note": "Required before any build execution begins. No build work may proceed without declared and accepted mandate."
+    },
+    {
+      "id": "T0-014",
+      "path": "governance/alignment/FM_MERGE_GATE_MANAGEMENT_CANON.md",
+      "title": "FM Merge Gate Management (Canonical Clarification)",
+      "authority": "Constitutional Authority",
+      "purpose": "Explicit FM authority for merge gate preparation, validation, and management - clarifies builder boundaries",
+      "required_sections": [
+        "FM Merge Gate Management Authority (Explicit)",
+        "What Merge Gate Readiness Includes",
+        "Builder Responsibility vs FM Responsibility",
+        "Gate Failure Classification (Canonical Reinforcement)",
+        "STOP Discipline (Mandatory on Gate Failure)",
+        "FM Resolution Authority (Explicit)",
+        "Builder Boundaries (Explicit Protection)"
+      ],
+      "validation_required": true,
+      "immutable": true,
+      "gate_type": "MERGE_GATE",
+      "note": "Canonically clarifies FM manages merge gate readiness; builders execute to specification; merge gate failures are FM coordination gaps."
     }
   ],
   

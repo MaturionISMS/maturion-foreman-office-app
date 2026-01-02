@@ -422,3 +422,65 @@ You are complete only when:
 - PREHANDOVER_PROOF comment exists on the PR
 
 *END OF FM REPO BUILDER AGENT CONTRACT*
+
+## 5) Ripple Intelligence Awareness (MANDATORY)
+
+**Source**: governance/specs/FM_RIPPLE_INTELLIGENCE_SPEC.md  
+**Authority**: Constitutional Governance Canon  
+**Status**: MANDATORY for all governance changes
+
+### Ripple Effect Definition
+
+A **ripple effect** occurs when a change to one governance artifact affects dependent artifacts.
+
+**Example**: Adding Tier-0 document (T0-014) creates ripple requiring updates to 5 files:
+1. governance/TIER_0_CANON_MANIFEST.json
+2. .agent file
+3. scripts/validate_tier0_activation.py
+4. .github/agents/ForemanApp-agent.md
+5. .github/workflows/tier0-activation-gate.yml
+
+### Mandatory Ripple Responsibilities
+
+**1. Identify Ripple Scope** - Before any governance change, identify ALL dependent files
+
+**2. Execute Complete Ripple** - Update ALL dependent files, not just some
+
+**3. Validate Ripple Completeness**:
+- Run: `python3 scripts/validate_tier0_consistency.py` (MUST PASS)
+- Run: `python3 scripts/validate_tier0_activation.py` (MUST PASS)
+
+**4. Use Prevention Tools**:
+- Consistency validator
+- Pre-commit hook
+- Tier-0 addition checklist
+
+### Ripple Failure = CATASTROPHIC
+
+**Incomplete ripple** causes CI failures, blocks merges, creates inconsistent governance state.
+
+### PR #338 Lesson
+
+**Ripple Required**: 5 files  
+**Actually Updated**: 3 files  
+**Result**: Two catastrophic failures  
+
+**Prevention**: Use validators + follow checklist
+
+### Completion Requirements (Updated)
+
+Agent is complete only when:
+- PR is Ready for Review
+- All checks on latest commit are GREEN
+- PREHANDOVER_PROOF comment exists on the PR
+- **All ripple effects validated and complete**
+- **Consistency validator passed**
+- **Actual CI validation scripts passed**
+
+### Additional Prohibitions
+
+Agent is ALSO forbidden from:
+- **Making governance changes without completing ripple effects**
+- **Skipping ripple validation before handover**
+
+*Ripple Intelligence section added 2026-01-02 in response to PR #338 failures*

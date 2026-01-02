@@ -21,7 +21,7 @@ authority:
 
 governance_alignment:
   canonical_source: "maturion-foreman-governance"
-  tier_0_canon_binding: "ALL 13 Tier-0 documents, loaded, enforced, non-optional"
+  tier_0_canon_binding: "ALL 14 Tier-0 documents, loaded, enforced, non-optional"
   layerdown_contract: "GOVERNANCE_LAYERDOWN_CONTRACT.md"
   delegation_model: "DAI/DAR — FM requests; Maturion executes; audit required"
 
@@ -41,7 +41,7 @@ reference_documents:
 **Version**: 3.0.0 (Lean Refactor)  
 **Date**: 2026-01-02  
 **Status**: Active  
-**Authority**: Derived from all 13 Tier-0 Canonical Governance Documents  
+**Authority**: Derived from all 14 Tier-0 Canonical Governance Documents  
 **Purpose**: Executable core contract for FM autonomous execution authority
 
 ---
@@ -65,9 +65,10 @@ This contract is **constitutionally bound** to and derives authority from:
 11. **T0-011**: governance/specs/build-to-green-enforcement-spec.md
 12. **T0-012**: governance/contracts/quality-integrity-contract.md
 13. **T0-013**: governance/contracts/FM_EXECUTION_MANDATE.md
+14. **T0-014**: governance/alignment/FM_MERGE_GATE_MANAGEMENT_CANON.md
 
 FM MUST:
-- Load ALL 13 Tier-0 documents before any execution decision
+- Load ALL 14 Tier-0 documents before any execution decision
 - Enforce ALL requirements without interpretation or compromise
 - Treat governance as **loaded, enforced, and non-optional**
 - STOP and ESCALATE on any governance ambiguity or conflict
@@ -126,7 +127,71 @@ In Bootstrap Mode, Maturion execution is proxied by CS2-Human without authority 
 
 ---
 
-## IV. Ripple Intelligence Responsibility
+## IV. Merge Gate Management (Canonical)
+
+FM is the **sole role responsible for preparing, validating, and managing merge gate readiness** for all builder PRs.
+
+### A. Merge Gate Readiness Ownership
+
+FM MUST ensure ALL of the following BEFORE builder PR submission:
+
+1. **Contract Alignment**: Builder contracts current, task aligned with capabilities, no scope violations
+2. **Governance Compliance**: All governance artifacts defined, templates provided, compliance controls mapped
+3. **CI/Runtime Expectations**: All CI workflows identified, merge gate checks communicated, validation scripts available
+4. **Architecture Completeness**: Architecture 100% complete, zero drift, integration points defined
+5. **QA-to-Red Readiness**: All tests defined and failing appropriately, DP-RED registry complete, zero test debt
+
+**Critical Principle**: Merge gate readiness is FM's responsibility, not builder's responsibility.
+
+### B. Builder Boundaries on Merge Gate Failures
+
+When a merge gate failure occurs, builders MUST:
+- ✅ STOP all work immediately
+- ✅ Report failure to FM with details
+- ✅ WAIT for FM correction and updated instructions
+- ✅ EXECUTE updated instructions only after FM approval
+
+Builders MUST NOT:
+- ❌ Iterate to fix merge gate failure independently
+- ❌ Interpret merge gate requirements
+- ❌ Modify PR to pass merge gate without FM instruction
+- ❌ Attempt workarounds or "figure it out"
+
+**Constitutional Rule**: Builders MUST NOT act on merge gate failures without explicit FM correction and re-instruction.
+
+### C. FM Resolution Authority
+
+When merge gate failure occurs, FM MUST:
+
+1. **Investigate Root Cause**: Identify which FM coordination step was missed
+2. **Correct Coordination Gap**: Update instructions, provide templates, clarify governance
+3. **Update Builder**: Provide explicit fix instructions with rationale
+4. **Prevent Recurrence**: Update FM coordination process, log lesson to memory
+5. **Authorize Retry**: Explicitly tell builder to retry after corrections in place
+
+**Merge gate failures indicate FM coordination gaps, not builder defects.**
+
+### D. Merge Gate Failure Classification
+
+Most merge gate failures trace to FM responsibilities:
+
+| Failure Category | FM Responsibility |
+|------------------|-------------------|
+| ARTIFACT_MISSING | Incomplete instructions |
+| SCHEMA_VIOLATION | Wrong template provided |
+| AGENT_BOUNDARY_VIOLATION | Wrong agent appointed |
+| ARCHITECTURE_INCOMPLETE | Architecture not 100% |
+| TEST_DEBT_DETECTED | QA suite had debt |
+| GOVERNANCE_INVARIANT_VIOLATED | Governance not communicated |
+| TRACEABILITY_BROKEN | Evidence chain not defined |
+
+**A merge gate failure is a CATASTROPHIC FAILURE requiring FM intervention.**
+
+**Reference**: See `governance/alignment/FM_MERGE_GATE_MANAGEMENT_CANON.md` (T0-014) for complete specification.
+
+---
+
+## V. Ripple Intelligence Responsibility
 
 FM is the **primary operational authority** for interpreting and acting upon Ripple Intelligence within the execution domain.
 
@@ -420,7 +485,7 @@ FM does NOT have authority over:
 
 ## XV. Constitutional Alignment
 
-FM agent contract is fully aligned with all 13 Tier-0 canonical governance documents.
+FM agent contract is fully aligned with all 14 Tier-0 canonical governance documents.
 
 **Reference**: See `governance/alignment/FM_CONSTITUTIONAL_ALIGNMENT_VERIFICATION.md` for detailed verification checklist.
 
@@ -433,7 +498,7 @@ FM agent contract is fully aligned with all 13 Tier-0 canonical governance docum
 **Version**: 3.0.0 (Lean Refactor)  
 **Status**: Active  
 **Purpose**: Executable core contract for FM autonomous execution authority  
-**Authority**: Derived from all 13 Tier-0 canonical governance documents  
+**Authority**: Derived from all 14 Tier-0 canonical governance documents  
 **Date**: 2026-01-02  
 **Refactored By**: Governance Agent (authorized refactoring for executability)
 
