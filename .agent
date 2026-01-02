@@ -141,6 +141,16 @@ governance:
         authority: Constitutional
         validation_required: true
         gate_type: PRE_BUILD_GATE
+      
+      # T0-014: FM Execution Mandate Addendum 001 (Bootstrap Authorship Clarification)
+      - id: T0-014
+        path: governance/contracts/FM_EXECUTION_MANDATE_ADDENDUM_001.md
+        title: FM Execution Mandate - Addendum 001 (Bootstrap Authorship Clarification)
+        purpose: Bootstrap-accurate clarification of authorship vs. mechanical execution boundary
+        authority: Constitutional (Addendum)
+        validation_required: true
+        gate_type: PRE_BUILD_GATE
+        binding_with: T0-013
     
     # Pre-execution requirements
     activation_requirements:

@@ -3,7 +3,7 @@
 Tier-0 Governance Runtime Activation Validator
 
 This script validates that Tier-0 canonical governance documents are:
-1. Properly referenced in the FM agent contract (all 13 documents)
+1. Properly referenced in the FM agent contract (all 14 documents)
 2. Present and accessible in the repository
 3. Schema-valid (where applicable)
 4. Not out of sync with the governance repository
@@ -11,7 +11,7 @@ This script validates that Tier-0 canonical governance documents are:
 
 This is a MERGE-BLOCKING check. If Tier-0 activation fails, the PR MUST NOT merge.
 
-Version: 2.0.0 (Manifest-Driven)
+Version: 2.1.0 (Updated for FM Execution Mandate Addendum 001)
 Authority: Phase X - Trans-Repo Governance Runtime Activation
 Status: MANDATORY (merge-blocking)
 
@@ -30,7 +30,7 @@ class Tier0ActivationValidator:
     """Validates Tier-0 governance runtime activation"""
     
     MANIFEST_PATH = "governance/TIER_0_CANON_MANIFEST.json"
-    EXPECTED_TIER0_COUNT = 13
+    EXPECTED_TIER0_COUNT = 14
     
     def __init__(self, repo_root: str):
         self.repo_root = Path(repo_root)
