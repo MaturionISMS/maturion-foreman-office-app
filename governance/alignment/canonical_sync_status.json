@@ -1,0 +1,69 @@
+{
+  "governance_version": {
+    "canonical_repo": "maturion-foreman-governance",
+    "last_sync_commit": "initial-fm-governance-sync",
+    "last_sync_timestamp": "2026-01-02T10:40:00Z",
+    "fm_governance_version": "1.0.0",
+    "canonical_governance_version": "1.0.0",
+    "sync_status": "ALIGNED"
+  },
+  "ripple_status": {
+    "current_status": "STABLE",
+    "active_ripple": false,
+    "last_ripple_event": null,
+    "pending_changes": []
+  },
+  "builder_contract_alignment": {
+    "ui-builder": {
+      "contract_version": "2.0.0",
+      "doctrine_version": "1.0.0",
+      "ripple_aware": true,
+      "last_verified": "2026-01-02T10:40:00Z",
+      "alignment_status": "CURRENT"
+    },
+    "api-builder": {
+      "contract_version": "2.0.0",
+      "doctrine_version": "1.0.0",
+      "ripple_aware": true,
+      "last_verified": "2026-01-02T10:40:00Z",
+      "alignment_status": "CURRENT"
+    },
+    "schema-builder": {
+      "contract_version": "2.0.0",
+      "doctrine_version": "1.0.0",
+      "ripple_aware": true,
+      "last_verified": "2026-01-02T10:40:00Z",
+      "alignment_status": "CURRENT"
+    },
+    "integration-builder": {
+      "contract_version": "2.0.0",
+      "doctrine_version": "1.0.0",
+      "ripple_aware": true,
+      "last_verified": "2026-01-02T10:40:00Z",
+      "alignment_status": "CURRENT"
+    },
+    "qa-builder": {
+      "contract_version": "2.0.0",
+      "doctrine_version": "1.0.0",
+      "ripple_aware": true,
+      "last_verified": "2026-01-02T10:40:00Z",
+      "alignment_status": "CURRENT"
+    }
+  },
+  "schema_version": "1.0.0",
+  "documentation": {
+    "purpose": "This file tracks the synchronization status between canonical governance and FM governance.",
+    "update_trigger": "Updated whenever governance ripple (downward) occurs.",
+    "usage": "FM MUST verify this file before builder appointment to ensure ripple alignment.",
+    "sync_status_values": {
+      "ALIGNED": "Governance is current and synchronized",
+      "DRIFT_DETECTED": "Synchronization needed - governance has changed",
+      "SYNC_REQUIRED": "Mandatory synchronization required before proceeding"
+    },
+    "ripple_status_values": {
+      "STABLE": "No active ripple - governance is stable",
+      "IN_PROGRESS": "Governance ripple currently propagating",
+      "CONFLICT": "Governance ambiguity or conflict detected"
+    }
+  }
+}
