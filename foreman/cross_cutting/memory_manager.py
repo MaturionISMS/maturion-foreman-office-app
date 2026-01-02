@@ -18,6 +18,14 @@ _proposals = {}
 _audit_log = {}
 
 
+def clear_all():
+    """Clear all memory manager state for testing."""
+    global _memories, _proposals, _audit_log
+    _memories = {}
+    _proposals = {}
+    _audit_log = {}
+
+
 class GlobalMemoryManager:
     """Manages the global memory fabric. QA-147 to QA-154"""
     
@@ -85,7 +93,7 @@ class GlobalMemoryManager:
                 try:
                     json.loads(corrupted_file.read_text())
                 except:
-                    raise FabricCorruptionError(f"Corrupted memory: {key}")
+                    raise FabricCorruptionError(f"Memory fabric corruption detected for key: {key}")
             return None
         
         if version is not None:

@@ -13,6 +13,13 @@ _token_usage = {}
 _build_costs = {}
 
 
+def clear_all():
+    """Clear all cost tracker state for testing."""
+    global _token_usage, _build_costs
+    _token_usage = {}
+    _build_costs = {}
+
+
 class CostTracker:
     """Tracks AI usage costs per build. QA-142 to QA-146"""
     
