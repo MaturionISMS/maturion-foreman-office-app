@@ -13,7 +13,7 @@ Responsibilities:
 - Manage failure modes and state consistency
 """
 
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 from datetime import datetime, timedelta
 
 
