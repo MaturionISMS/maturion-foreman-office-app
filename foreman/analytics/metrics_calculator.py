@@ -10,9 +10,14 @@ from typing import Dict, Any, List
 from datetime import datetime, timedelta
 
 
-_build_completions = {}
-_build_times = {}
-_build_costs = {}
+# Import shared storage from usage_analyzer
+import sys
+sys.path.insert(0, '/home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app')
+from foreman.analytics import usage_analyzer
+
+_build_completions = usage_analyzer._build_completions
+_build_times = usage_analyzer._build_times
+_build_costs = usage_analyzer._build_costs
 
 
 class MetricsCalculator:

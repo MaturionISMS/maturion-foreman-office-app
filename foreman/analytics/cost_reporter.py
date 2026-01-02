@@ -15,7 +15,9 @@ class CostReporter:
         """Generate per-build report. QA-144"""
         from foreman.analytics.cost_tracker import _build_costs
         
-        cost = _build_costs.get(self.organisation_id, {}).get(build_id, 0)
+        cost_info = _build_costs.get(self.organisation_id, {}).get(build_id, 0)
+        cost = cost_info.get("cost") if isinstance(cost_info, dict) else cost_info
+        
         return {
             "build_id": build_id,
             "total_cost": cost,
@@ -39,7 +41,10 @@ class CostReporter:
         """Generate period report. QA-144"""
         from foreman.analytics.cost_tracker import _build_costs
         
-        total = sum(_build_costs.get(self.organisation_id, {}).values())
+        costs_data = _build_costs.get(self.organisation_id, {})
+        costs = [v.get("cost") if isinstance(v, dict) else v for v in costs_data.values()]
+        total = sum(costs)
+        
         return {
             "total_cost": total,
             "daily_breakdown": [],

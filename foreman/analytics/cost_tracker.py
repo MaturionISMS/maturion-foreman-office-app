@@ -66,12 +66,21 @@ class CostTracker:
     
     def record_build_cost(self, build_id: str, cost_usd: float, builder_id: str = None, timestamp: datetime = None):
         """Record a build cost directly. QA-143, QA-144"""
-        _build_costs[self.organisation_id][build_id] = cost_usd
+        if timestamp is None:
+            timestamp = datetime.utcnow()
+        _build_costs[self.organisation_id][build_id] = {
+            "cost": cost_usd,
+            "builder_id": builder_id,
+            "timestamp": timestamp
+        }
     
     def get_cost_breakdown(self, build_id: str) -> Dict[str, Any]:
         """Get detailed cost breakdown. QA-143"""
+        cost_info = _build_costs[self.organisation_id].get(build_id, 0)
+        cost = cost_info.get("cost") if isinstance(cost_info, dict) else cost_info
+        
         return {
-            "by_model": {"gpt-4": _build_costs[self.organisation_id].get(build_id, 0)},
-            "by_component": {"total": _build_costs[self.organisation_id].get(build_id, 0)},
+            "by_model": {"gpt-4": cost},
+            "by_component": {"total": cost},
             "timeline": []
         }

@@ -11,7 +11,10 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 from .exceptions import DataLoadError
 
-# In-memory storage for testing
+# In-memory storage for testing (module-level, shared across all classes)
+import sys
+sys.path.insert(0, '/home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app')
+
 _build_completions = {}
 _build_times = {}
 _build_costs = {}

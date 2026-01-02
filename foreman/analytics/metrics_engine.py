@@ -58,3 +58,17 @@ class MetricsEngine:
             "value": value,
             "timestamp": timestamp
         })
+    
+    def calculate_sum(self, metric_name: str) -> float:
+        """Calculate sum of metric values. QA-141"""
+        data = _metrics_data.get(self.organisation_id, [])
+        total = sum(d.get("value", 0) for d in data if d.get("metric") == metric_name)
+        
+        # Handle overflow by checking if number is too large
+        if total > 10**300:
+            import sys
+            sys.path.insert(0, '/home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app')
+            from foreman.analytics.exceptions import CalculationOverflowError
+            raise CalculationOverflowError("Calculation overflow detected")
+        
+        return total
