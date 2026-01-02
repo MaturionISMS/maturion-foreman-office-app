@@ -83,6 +83,36 @@ FM MUST acknowledge:
 
 ---
 
+### ✅ 5. Ripple Intelligence Alignment
+
+FM MUST confirm:
+- [ ] Governance canon version is known and documented
+- [ ] Last canonical sync status is verified (ALIGNED status required)
+- [ ] Builder agent contracts (.agent files) reflect current Ripple Intelligence obligations
+- [ ] All canonical_authorities in builder contracts are current
+- [ ] No governance ripple (downward) is in progress
+- [ ] No ripple ambiguity or conflict exists
+- [ ] Ripple alignment confirmation can be provided for each builder appointment
+
+**Verification Command**:
+```bash
+# Check canonical sync status
+cat governance/alignment/canonical_sync_status.json
+
+# Verify builder contract versions
+for builder in ui api schema integration qa; do
+  echo "Checking ${builder}-builder..."
+  grep "maturion_doctrine_version\|canonical_authorities" .github/agents/${builder}-builder.md
+done
+```
+
+**Expected Result**: 
+- Sync status = "ALIGNED"
+- All builder contracts reference current BUILD_PHILOSOPHY.md version
+- All canonical_authorities exist and are current
+
+---
+
 ## III. Hard Stop Conditions
 
 FM MUST STOP and escalate if:
@@ -94,6 +124,9 @@ FM MUST STOP and escalate if:
 | Builder registry report shows errors | STOP → Fix errors → Re-run validation |
 | Builders not canonically recruited | STOP → Execute Wave 0 recruitment (exceptional case) |
 | FM attempts to re-recruit already-recruited builders | STOP → Self-correct → Acknowledge existing recruitment |
+| **Ripple alignment cannot be confirmed** | **STOP → Execute governance sync → Re-verify → Escalate if persistent** |
+| **Governance ripple in progress** | **STOP → Wait for ripple completion → Re-verify** |
+| **Ripple conflict detected** | **STOP → Escalate to Johan immediately** |
 
 ---
 
@@ -105,6 +138,9 @@ FM MAY proceed with Wave 1.0+ execution ONLY when:
 - ✅ All 5 builders confirmed as canonically recruited
 - ✅ Builder recruitment continuity acknowledged
 - ✅ No re-recruitment gates invented
+- ✅ **Ripple Intelligence Alignment confirmed for all builders**
+- ✅ **Governance canon version documented**
+- ✅ **No ripple ambiguity or conflict exists**
 - ✅ FM ready to proceed with builder appointment (not recruitment)
 
 **Authorization Statement**:
@@ -112,6 +148,13 @@ FM MAY proceed with Wave 1.0+ execution ONLY when:
 Builder recruitment continuity verified.
 All 5 builders (ui-builder, api-builder, schema-builder, integration-builder, qa-builder)
 are canonically recruited, CS2-approved, and active.
+
+Ripple Intelligence Alignment confirmed.
+Governance canon version: <version>
+Last canonical sync: <date>
+Ripple status: STABLE
+All builder contracts are governance-current.
+
 FM authorized to proceed with builder appointment for Wave 1.0+ tasks.
 ```
 

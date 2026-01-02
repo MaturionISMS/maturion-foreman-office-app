@@ -84,7 +84,7 @@ Builder Agents (UI, API, Schema, Integration, QA)
    - Is QA-to-Red available? (for builders)
 
 2. **Validate Preconditions**
-   - For builders: Architecture frozen? QA-to-Red exists? Build Authorization Gate = PASS?
+   - For builders: Architecture frozen? QA-to-Red exists? Build Authorization Gate = PASS? **Ripple Intelligence Alignment = CONFIRMED?**
    - For Foreman: App Description authoritative? Governance loaded? Memory available?
 
 3. **Prepare Appointment Package**
@@ -173,6 +173,7 @@ Success Criteria:
 - Missing QA-to-Red (for builders) → INVALID APPOINTMENT
 - Ambiguous scope → INVALID APPOINTMENT
 - Non-standard instruction format (for builders) → INVALID APPOINTMENT
+- **Ripple intelligence alignment not confirmed (for builders) → INVALID APPOINTMENT**
 
 ---
 
@@ -376,11 +377,207 @@ The following appointments are INVALID and MUST be rejected:
 **Invalid**: Agent appointing themselves or expanding their own scope  
 **Agent Response**: "INVALID APPOINTMENT: Self-appointment prohibited. All appointments must come from authorized appointing authority."
 
+### 11. Ripple Intelligence Alignment Not Confirmed (Builders)
+**Invalid**: Appointing builder without explicit confirmation that ripple-awareness alignment is current  
+**Agent Response**: "INVALID APPOINTMENT: Ripple Intelligence Alignment not confirmed. Builder agent contract must reflect current Ripple Intelligence obligations, and builder context must be current with latest governance canon. Appointment cannot proceed under ripple ambiguity."
+
 **When Invalid Appointment Detected**:
 1. Agent REJECTS appointment immediately
 2. Agent provides specific violation reason
 3. Agent requests corrected appointment
 4. Agent DOES NOT proceed with work
+
+---
+
+## IV-A. Ripple Intelligence Alignment Requirements (Builders)
+
+**Purpose**: Ensure builders are appointed with current governance canon context, preventing stale assumptions and drift.
+
+**Authority**: Ripple Intelligence governance (governance/alignment/GOVERNANCE_RIPPLE_COMPATIBILITY.md)
+
+---
+
+### Mandatory Pre-Appointment Ripple Alignment Confirmation
+
+Before appointing any builder, FM MUST explicitly confirm:
+
+1. **Builder Agent Contract Currency**
+   - Builder `.agent` file reflects current Ripple Intelligence obligations
+   - All canonical authorities referenced in `.agent` file are current
+   - No governance drift exists between builder contract and canonical governance
+
+2. **Governance Canon Currency**
+   - Latest governance canon version is known and documented
+   - Any recent governance ripple (downward) has been propagated
+   - Builder context includes current governance version reference
+
+3. **Ripple Ambiguity Resolution**
+   - If no ripple applies: FM MUST explicitly state "No active ripple applies; governance canon is stable"
+   - If ripple is in progress: FM MUST wait for ripple completion before appointment
+   - If ripple conflict exists: FM MUST escalate to Johan before appointment
+
+---
+
+### Ripple Alignment Confirmation Statement
+
+FM MUST include the following in every builder appointment:
+
+```
+RIPPLE INTELLIGENCE ALIGNMENT CONFIRMATION
+
+Governance Canon Version: <version-or-commit-reference>
+Last Canonical Sync: <date>
+Ripple Status: <STABLE | IN_PROGRESS | CONFLICT>
+Builder Contract Version: <version>
+Canonical Authorities Current: <YES | NO>
+
+Confirmation Statement:
+- [ ] Builder agent contract reflects current Ripple Intelligence obligations
+- [ ] Builder context is current with latest governance canon
+- [ ] No ripple ambiguity exists
+- [ ] Appointment may proceed with governance-current context
+
+FM declares: Ripple Intelligence Alignment = CONFIRMED
+```
+
+**If ANY checkbox is unchecked → Ripple Intelligence Alignment = NOT CONFIRMED → Appointment is INVALID**
+
+---
+
+### Ripple Alignment Verification Procedure
+
+FM SHALL verify ripple alignment using the following procedure:
+
+**Step 1: Check Governance Canon Status**
+```bash
+# Verify last governance sync timestamp and status
+cat governance/alignment/canonical_sync_status.json | grep -E '"sync_status"|"current_status"'
+
+# Expected output should show:
+# "sync_status": "ALIGNED"
+# "current_status": "STABLE"
+
+# Or use jq for more precise validation:
+jq '.governance_version.sync_status, .ripple_status.current_status' governance/alignment/canonical_sync_status.json
+
+# Must return: "ALIGNED" and "STABLE"
+```
+
+**Step 2: Verify Builder Contract Currency**
+```bash
+# Check builder .agent file canonical_authorities includes ripple intelligence
+for builder in ui api schema integration qa; do
+  echo "Checking ${builder}-builder..."
+  grep -A 5 "canonical_authorities:" .github/agents/${builder}-builder.md | \
+    grep "GOVERNANCE_RIPPLE_COMPATIBILITY.md" || echo "❌ MISSING ripple authority"
+done
+
+# All builders must show GOVERNANCE_RIPPLE_COMPATIBILITY.md in output
+# Any "❌ MISSING" indicates builder not ripple-aware
+
+# Verify maturion_doctrine_version matches BUILD_PHILOSOPHY.md
+grep "maturion_doctrine_version" .github/agents/*-builder.md
+# Should all show: maturion_doctrine_version: "1.0.0"
+```
+
+**Step 3: Evaluate Ripple Status**
+- **STABLE**: No recent governance changes, no ripple in progress → Proceed
+- **IN_PROGRESS**: Governance ripple (downward) currently propagating → WAIT
+- **CONFLICT**: Governance conflict or ambiguity detected → ESCALATE to Johan
+
+**Step 4: Document Confirmation**
+- Record ripple alignment confirmation in appointment record
+- Include governance canon version reference
+- Store in memory/governance/appointments/ for audit trail
+
+---
+
+### Prohibited Actions During Ripple Ambiguity
+
+FM MUST NOT:
+- ❌ Appoint builders with stale governance context
+- ❌ Proceed under ripple ambiguity (unknown governance state)
+- ❌ Skip ripple alignment confirmation to expedite appointment
+- ❌ Assume governance is current without verification
+- ❌ Appoint builders while governance ripple is in progress
+
+---
+
+### Ripple Alignment Failure Response
+
+If ripple alignment cannot be confirmed:
+
+**Response 1: Governance Drift Detected**
+1. STOP builder appointment process
+2. Initiate governance sync (downward ripple propagation)
+3. Update builder agent contracts if needed
+4. Re-verify ripple alignment
+5. Resume appointment only after alignment confirmed
+
+**Response 2: Ripple In Progress**
+1. STOP builder appointment process
+2. WAIT for ripple completion
+3. Verify ripple completion (sync_status = "ALIGNED")
+4. Re-verify builder contract currency
+5. Resume appointment only after ripple complete
+
+**Response 3: Ripple Conflict**
+1. STOP builder appointment process
+2. Document conflict details
+3. ESCALATE to Johan with:
+   - Governance conflict description
+   - Affected builders
+   - Proposed resolution options
+4. WAIT for Johan resolution
+5. Resume appointment only after conflict resolved
+
+---
+
+### Ripple Alignment Audit Trail
+
+For every builder appointment, FM MUST create ripple alignment record:
+
+```json
+{
+  "scope": "governance",
+  "key": "ripple-alignment-<task-id>",
+  "task_id": "<task-id>",
+  "builder_id": "<builder-id>",
+  "governance_canon_version": "<version>",
+  "last_canonical_sync": "<ISO-8601>",
+  "ripple_status": "STABLE | IN_PROGRESS | CONFLICT",
+  "builder_contract_version": "<version>",
+  "canonical_authorities_current": true,
+  "alignment_confirmed": true,
+  "confirmed_by": "Maturion Foreman (FM)",
+  "confirmed_at": "<ISO-8601>",
+  "appointment_authorized": true
+}
+```
+
+**Storage**: `memory/governance/ripple-alignment/`
+
+---
+
+### Success Criteria
+
+Ripple Intelligence Alignment is successful when:
+
+1. ✅ FM cannot appoint builder without explicit ripple confirmation
+2. ✅ Builder agent contracts are guaranteed governance-current at appointment time
+3. ✅ Governance canon version is documented in every appointment
+4. ✅ Ripple ambiguity prevents appointment (safety ratchet)
+5. ✅ Audit trail exists for all ripple alignment confirmations
+6. ✅ One-Time Build integrity is preserved
+
+---
+
+### References
+
+- **Ripple Intelligence Canon**: `governance/alignment/GOVERNANCE_RIPPLE_COMPATIBILITY.md`
+- **Builder Contract Schema**: `.github/agents/BUILDER_CONTRACT_SCHEMA.md`
+- **Agent Context Sync Workflow**: `governance/workflows/AGENT_CONTEXT_SYNC_WORKFLOW.md`
+- **Builder Recruitment Continuity**: `foreman/builder/BUILDER_RECRUITMENT_CONTINUITY_CHECKLIST.md`
 
 ---
 

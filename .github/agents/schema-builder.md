@@ -35,6 +35,7 @@ canonical_authorities:
   - BUILD_PHILOSOPHY.md
   - foreman/builder-specs/build-to-green-rule.md
   - .github/agents/ForemanApp-agent.md
+  - governance/alignment/GOVERNANCE_RIPPLE_COMPATIBILITY.md
   - foreman/builder/schema-builder-spec.md
 maturion_doctrine_version: "1.0.0"
 handover_protocol: "gate-first-deterministic"
