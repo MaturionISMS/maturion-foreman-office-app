@@ -306,6 +306,64 @@ The following governance rules are **ABSOLUTE** (no exceptions, no compromises):
 4. **Constitutional File Protection**: Builders NEVER modify protected paths (`.github/workflows/`, `BUILD_PHILOSOPHY.md`, `foreman/`, etc.)
 5. **Design Freeze**: Architecture frozen before build; no modifications during execution
 6. **Build-to-Green**: GREEN means 100% pass, zero failures, zero debt
+7. **Mandatory Code Checking**: Builders MUST perform code checking on all generated code; "someone else will review it" is NOT valid
+
+### Builder Code Checking Requirements (ACTIVATED 2026-01-03)
+
+**Authority**: Issue directive from Johan (Wave 1.0.7 failure mode prevention)
+
+#### A. Builder Obligations
+
+Builders are **constitutionally required** to:
+
+1. ✅ Perform code checking on ALL generated code before handover
+2. ✅ Verify logical correctness against architecture specifications
+3. ✅ Verify implementation makes RED tests GREEN correctly
+4. ✅ Check for obvious defects, errors, or omissions
+5. ✅ Perform self-review before marking work complete
+6. ✅ Include code checking evidence in Builder QA Report
+
+Builders MUST NOT:
+
+- ❌ Skip code checking to save time
+- ❌ Assume "CI will catch it"
+- ❌ Assume "FM will review it"
+- ❌ Assume "someone else will check it"
+- ❌ Delegate code checking responsibility implicitly
+
+**Critical Prohibition**: "Someone else will review it" is NOT a valid execution posture.
+
+#### B. FM Verification Authority
+
+FM MUST:
+
+1. ✅ Verify that code checking was performed by builders
+2. ✅ Reject work where code checking is absent or superficial
+3. ✅ Require evidence of code checking in Builder QA Reports
+4. ✅ Require re-execution if obvious defects are detected
+5. ✅ Treat missing code checking as governance violation
+
+FM MUST NOT:
+
+- ❌ Perform code checking on behalf of builders
+- ❌ Accept work without code checking evidence
+- ❌ Allow builders to bypass code checking responsibility
+
+#### C. Code Checking vs CI/Review Distinction
+
+**Code checking** is:
+- Builder self-review of generated code
+- Pre-handover verification of correctness
+- Builder obligation, not optional practice
+
+**Code checking is NOT**:
+- CI validation (happens after handover)
+- FM review (FM verifies process, not code)
+- Human code review (happens after merge gate)
+
+**Principle**: Builders MUST NOT rely on CI, governance agents, or FM to catch basic correctness issues.
+
+**Reference**: `governance/specs/FM_AI_ESCALATION_AND_CAPABILITY_SCALING_SPEC.md` (Mandatory Code Checking)
 
 ---
 
@@ -656,16 +714,17 @@ FM agent contract is fully aligned with all 14 Tier-0 canonical governance docum
 
 **This lean FM agent contract represents the executable core of canonical governance intent.**
 
-**Version**: 3.1.0 (AI Escalation & Capability Scaling Activation)  
+**Version**: 3.2.0 (AI Escalation, Capability Scaling & Mandatory Code Checking)  
 **Status**: Active  
 **Purpose**: Executable core contract for FM autonomous execution authority  
 **Authority**: Derived from all 14 Tier-0 canonical governance documents  
 **Date**: 2026-01-03  
-**Updated By**: Governance Liaison (AI escalation & capability-aware scaling activation)
+**Updated By**: FM Repo Builder (AI escalation, capability-aware scaling & mandatory code checking activation)
 
 **Activated Governance** (2026-01-03):
-- `governance/specs/FM_AI_ESCALATION_AND_CAPABILITY_SCALING_SPEC.md`
-- `governance/specs/FM_EXECUTION_SURFACE_OBSERVABILITY_SPEC.md`
+- `governance/specs/FM_AI_ESCALATION_AND_CAPABILITY_SCALING_SPEC.md` (AI Escalation & Capability Scaling)
+- `governance/specs/FM_EXECUTION_SURFACE_OBSERVABILITY_SPEC.md` (Execution Surface Observability)
+- **NEW**: Mandatory Code Checking (Section VIII.7 & Builder Code Checking Requirements)
 
 **Detailed Content Relocated To**:
 - `governance/specs/FM_RIPPLE_INTELLIGENCE_SPEC.md`

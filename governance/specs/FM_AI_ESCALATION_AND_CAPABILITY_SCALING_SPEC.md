@@ -302,7 +302,94 @@ When corporate governance defines escalation protocol:
 
 ---
 
-## VIII. Success Criteria
+## VIII. Mandatory Code Checking (ACTIVATED 2026-01-03)
+
+**Authority**: Issue directive from Johan (Wave 1.0.7 failure mode prevention)
+
+### A. Constitutional Requirement
+
+Builders are **constitutionally required** to perform code checking on all generated code before handover.
+
+**Key Principle**: Builders MUST NOT rely on CI, governance agents, or FM to catch basic correctness issues.
+
+### B. Code Checking Definition
+
+Code checking is:
+
+- **Logical Correctness Verification** — Code implements intended behavior correctly
+- **Test Alignment Verification** — Implementation matches QA test requirements exactly
+- **Architecture Adherence Check** — Implementation follows frozen architecture specifications
+- **Obvious Defects Detection** — No clear bugs, omissions, or broken logic
+- **Self-Review** — Builder reviews own output before handover
+
+### C. Builder Obligations
+
+Builders MUST:
+
+1. ✅ Review all code generated during implementation
+2. ✅ Verify logic matches architecture specifications
+3. ✅ Verify implementation makes RED tests GREEN correctly
+4. ✅ Check for obvious errors, typos, broken references
+5. ✅ Validate completeness (no missing implementations)
+6. ✅ Perform self-review before marking work complete
+7. ✅ Include code checking evidence in Builder QA Report
+
+Builders MUST NOT:
+
+- ❌ Skip code checking to save time
+- ❌ Assume "CI will catch it"
+- ❌ Assume "FM will review it"
+- ❌ Assume "someone else will check it"
+- ❌ Delegate code checking responsibility implicitly
+
+### D. FM Verification Authority
+
+FM MUST:
+
+1. ✅ Verify that code checking was performed by builders
+2. ✅ Reject work where code checking is absent or superficial
+3. ✅ Require evidence of code checking in Builder QA Reports
+4. ✅ Require re-execution if obvious defects are detected
+5. ✅ Treat missing code checking as governance violation
+
+FM MUST NOT:
+
+- ❌ Perform code checking on behalf of builders
+- ❌ Accept work without code checking evidence
+- ❌ Allow builders to bypass code checking responsibility
+
+### E. Code Checking vs CI/Review Distinction
+
+**Code checking** is:
+- Builder self-review of generated code
+- Pre-handover verification of correctness
+- Builder obligation, not optional practice
+- Performed BEFORE handover
+
+**Code checking is NOT**:
+- CI validation (happens after handover)
+- FM review (FM verifies process, not code)
+- Human code review (happens after merge gate)
+- Quality gate (gates validate outputs, not process)
+
+### F. Critical Prohibition
+
+**"Someone else will review it" is NOT a valid execution posture.**
+
+Code checking is a **builder obligation**, not an optional quality practice.
+
+### G. Enforcement
+
+**Violation Handling**:
+
+- Builder skipping code checking → **Constitutional Violation**
+- Builder delegating code checking to CI/FM → **Governance Violation**
+- FM accepting work without code checking evidence → **FM Non-Compliance**
+- Builder claiming "someone will review it" → **Invalid Execution Posture**
+
+---
+
+## IX. Success Criteria
 
 This specification is successfully implemented when:
 
@@ -317,9 +404,14 @@ This specification is successfully implemented when:
 9. ✅ Capability classes are consistently named
 10. ✅ Ripple intelligence demonstrates propagation
 
+11. ✅ **NEW**: Builder contracts explicitly require code checking
+12. ✅ **NEW**: FM agent contract explicitly states code checking verification authority
+13. ✅ **NEW**: "Someone else will review it" is explicitly prohibited
+14. ✅ **NEW**: Code checking evidence required in Builder QA Reports
+
 ---
 
-## IX. Enforcement
+## X. Enforcement
 
 This specification is **MANDATORY** and **ACTIVATED** as of 2026-01-03.
 
@@ -331,9 +423,14 @@ This specification is **MANDATORY** and **ACTIVATED** as of 2026-01-03.
 - Execution surface lacking halt state → **Governance Gap**
 - Builder ignoring FM halt → **Agent Boundary Violation**
 
+- **NEW**: Builder skipping code checking → **Constitutional Violation**
+- **NEW**: Builder delegating code checking to CI/FM → **Governance Violation**
+- **NEW**: FM accepting work without code checking evidence → **FM Non-Compliance**
+- **NEW**: Builder claiming "someone will review it" → **Invalid Execution Posture**
+
 ---
 
-## X. References
+## XI. References
 
 - **BUILD_PHILOSOPHY.md** Section X (Escalation Procedures)
 - **FM_EXECUTION_MANDATE.md** Section VI (STOP and Escalation Semantics)
@@ -343,6 +440,6 @@ This specification is **MANDATORY** and **ACTIVATED** as of 2026-01-03.
 
 ---
 
-**Escalate proactively. Scale capability intentionally. Halt when needed.**
+**Escalate proactively. Scale capability intentionally. Halt when needed. Check code always.**
 
 *END OF FM AI ESCALATION AND CAPABILITY-AWARE SCALING SPECIFICATION*
