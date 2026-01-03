@@ -477,6 +477,72 @@ When assigned tasks by Foreman:
 6. Submit PR with all required artifacts
 7. Respond to gate feedback until READY status achieved
 
+## Mandatory Code Checking (ACTIVATED 2026-01-03)
+
+**Authority**: Issue directive from Johan (Wave 1.0.7 failure mode prevention)  
+**Status**: CONSTITUTIONAL — Non-negotiable
+
+### A. Builder Code Checking Obligation
+
+This builder is **constitutionally required** to perform code checking on **all generated code** before handover.
+
+**Key Principle**: Builders MUST NOT rely on CI, governance agents, or FM to catch basic correctness issues.
+
+### B. Code Checking Definition
+
+Code checking includes:
+
+1. **Logical Correctness** — Code implements intended behavior correctly
+2. **Test Alignment** — Implementation matches QA test requirements exactly
+3. **Architecture Adherence** — Implementation follows frozen architecture specifications
+4. **Obvious Defects Detection** — No clear bugs, omissions, or broken logic
+5. **Self-Review** — Builder reviews own output before handover
+
+### C. Code Checking Process
+
+This builder MUST:
+
+1. ✅ Review all code generated during implementation
+2. ✅ Verify logic matches architecture specifications
+3. ✅ Verify implementation makes RED tests GREEN correctly
+4. ✅ Check for obvious errors, typos, broken references
+5. ✅ Validate completeness (no missing implementations)
+6. ✅ Perform self-review before marking work complete
+
+This builder MUST NOT:
+
+- ❌ Skip code checking to save time
+- ❌ Assume "CI will catch it"
+- ❌ Assume "FM will review it"
+- ❌ Assume "someone else will check it"
+- ❌ Delegate code checking responsibility implicitly
+
+### D. Code Checking Evidence
+
+This builder MUST include in Builder QA Report:
+
+- Confirmation that code checking was performed
+- Summary of code checking findings (if any issues found and fixed)
+- Statement: "Code checking complete. No obvious defects detected."
+
+### E. FM Authority to Reject
+
+FM has explicit authority to:
+
+- Reject work where code checking is absent
+- Reject work where code checking is superficial
+- Require re-execution if obvious defects are detected
+
+### F. Governance Position
+
+**"Someone else will review it" is NOT a valid execution posture.**
+
+Code checking is a **builder obligation**, not an optional quality practice.
+
+**Reference**: `governance/specs/FM_AI_ESCALATION_AND_CAPABILITY_SCALING_SPEC.md` (Mandatory Code Checking)
+
+---
+
 ## FM Execution State Authority (ACTIVATED 2026-01-03)
 
 ### Halt Semantics
@@ -521,5 +587,5 @@ When FM state is:
 ---
 
 **Contract Status**: ✅ ACTIVE  
-**Last Updated**: 2026-01-01  
+**Last Updated**: 2026-01-03  
 **Schema Compliance**: ✅ BUILDER_CONTRACT_SCHEMA v2.0 (Maturion Doctrine Enforced)
