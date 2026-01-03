@@ -473,6 +473,35 @@ When assigned tasks by Foreman:
 6. Submit PR with all required artifacts
 7. Respond to gate feedback until READY status achieved
 
+## FM Execution State Authority (ACTIVATED 2026-01-03)
+
+### Halt Semantics
+
+This builder MUST respect FM execution state authority:
+
+- **HALTED** — FM has proactively paused execution (cognitive limit reached)
+- **BLOCKED** — Gate or governance block active
+- **FAILED** — Execution failure detected
+- **ESCALATED** — FM escalation pending resolution
+
+### Builder Response to FM States
+
+When FM state is:
+
+- **HALTED** → Builder MUST STOP and WAIT for FM release
+- **BLOCKED** → Builder MUST STOP and WAIT for gate resolution
+- **ESCALATED** → Builder MUST STOP and WAIT for escalation resolution
+
+**Prohibition**: Builder MUST NOT:
+- Interpret HALT as failure
+- Bypass HALT state
+- Continue execution during HALT
+- Modify architecture or governance during HALT
+
+**Key Distinction**: HALT is FM's **proactive complexity assessment**, not builder error.
+
+**Reference**: `governance/specs/FM_AI_ESCALATION_AND_CAPABILITY_SCALING_SPEC.md` Section IV
+
 ---
 
 **Contract Status**: ✅ ACTIVE  
