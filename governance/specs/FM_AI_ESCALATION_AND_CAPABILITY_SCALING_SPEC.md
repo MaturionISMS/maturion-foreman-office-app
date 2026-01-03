@@ -403,6 +403,7 @@ This specification is successfully implemented when:
 8. ✅ Escalation and halt are observable without inference
 9. ✅ Capability classes are consistently named
 10. ✅ Ripple intelligence demonstrates propagation
+
 11. ✅ **NEW**: Builder contracts explicitly require code checking
 12. ✅ **NEW**: FM agent contract explicitly states code checking verification authority
 13. ✅ **NEW**: "Someone else will review it" is explicitly prohibited
@@ -421,6 +422,7 @@ This specification is **MANDATORY** and **ACTIVATED** as of 2026-01-03.
 - FM failing to escalate when required → **Constitutional Violation**
 - Execution surface lacking halt state → **Governance Gap**
 - Builder ignoring FM halt → **Agent Boundary Violation**
+
 - **NEW**: Builder skipping code checking → **Constitutional Violation**
 - **NEW**: Builder delegating code checking to CI/FM → **Governance Violation**
 - **NEW**: FM accepting work without code checking evidence → **FM Non-Compliance**
