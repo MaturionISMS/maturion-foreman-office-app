@@ -44,8 +44,8 @@ class MetricsEngine:
         if cache_key in _cache.get(self.organisation_id, {}):
             return _cache[self.organisation_id][cache_key]
         
-        # Simulate computation time
-        time.sleep(0.01)
+        # Simulate computation time to make caching benefit measurable
+        time.sleep(0.005)  # 5ms to ensure measureable difference
         
         # Calculate from source data
         data = _metrics_data.get(self.organisation_id, [])

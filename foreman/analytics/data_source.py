@@ -8,6 +8,12 @@ from datetime import datetime
 _metrics_data = {}
 
 
+def clear_all():
+    """Clear all data source state for testing."""
+    global _metrics_data
+    _metrics_data = {}
+
+
 class MetricsDataSource:
     """Provides data source for metrics."""
     

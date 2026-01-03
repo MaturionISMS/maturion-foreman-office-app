@@ -107,11 +107,12 @@ class UsageAnalyzer:
             "timestamp": datetime.utcnow()
         })
     
-    def get_build_details_for_period(self, time_period: str) -> List[Dict]:
+    def get_build_details_for_period(self, time_period: str, organisation_id: str = None) -> List[Dict]:
         """
         Get detailed build information for drill-down.
         
         QA-133: Drill-down availability
         """
-        completions = _build_completions.get(self.organisation_id, [])
+        org_id = organisation_id if organisation_id else self.organisation_id
+        completions = _build_completions.get(org_id, [])
         return completions
