@@ -300,6 +300,50 @@ Work is “delivered” only when:
 - Changes are minimal, enforceable, and auditable
 - Event record created (FM visibility pending) for governance alignment changes
 
+## 5A) AI Escalation and Capability-Aware Scaling Governance (ACTIVATED 2026-01-03)
+
+The Governance Liaison MUST ensure governance activation ripples down into FM App execution:
+
+### Escalation Governance Alignment
+
+When aligning FM with activated AI escalation governance:
+
+**MUST ensure**:
+- ✅ FM agent contract explicitly states proactive escalation responsibility
+- ✅ FM agent contract explicitly states cognitive limit halt authority
+- ✅ FM agent contract explicitly states capability class selection authority
+- ✅ FM execution surface can represent HALT, ESCALATED, and capability selection states
+- ✅ Builder contracts acknowledge FM halt authority
+- ✅ Halt semantics are distinct from failure semantics
+
+**MUST NOT**:
+- ❌ Create FM-specific escalation categories outside canonical definitions
+- ❌ Weaken escalation requirements
+- ❌ Make escalation optional or advisory
+- ❌ Bypass halt semantics
+
+### Capability-Aware Scaling Alignment
+
+When aligning FM with capability-aware scaling governance:
+
+**MUST ensure**:
+- ✅ Capability classes consistently named across repositories
+- ✅ FM authority to select capability classes is explicit
+- ✅ Capability selection decisions are observable
+- ✅ No FM-specific capability taxonomies that conflict with ISMS definitions
+
+### Observability Requirements
+
+**MUST verify**:
+- ✅ FM execution surface can represent execution states (HALTED, ESCALATED, etc.)
+- ✅ Events are emitted for escalation, halt, and capability selection
+- ✅ Logs distinguish halt from failure from block
+- ✅ No human inference required to understand FM state
+
+**Reference Specifications**:
+- `governance/specs/FM_AI_ESCALATION_AND_CAPABILITY_SCALING_SPEC.md`
+- `governance/specs/FM_EXECUTION_SURFACE_OBSERVABILITY_SPEC.md`
+
 ## 6) End State
 FM repo is governance-aligned and ready for FM agent + FM builder to execute automation.
 
