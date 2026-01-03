@@ -23,10 +23,10 @@ class AuditLogger:
         if organisation_id not in _audit_events:
             _audit_events[organisation_id] = []
     
-    def log_governance_event(self, actor: str, action: str, outcome: str, 
+    def log_governance_event(self, actor: str, action: str, target: str = None, outcome: str = None,
                             resource: str = None, metadata: Dict = None) -> Dict[str, Any]:
         """Log governance event. QA-169"""
-        return self.log_event(actor, action, outcome, resource, metadata)
+        return self.log_event(actor, action, outcome or "SUCCESS", target or resource, metadata)
     
     def log_event(self, actor: str, action: str, outcome: str, 
                   resource: str = None, metadata: Dict = None) -> Dict[str, Any]:

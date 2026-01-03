@@ -21,12 +21,13 @@ class EvidenceStore:
         if organisation_id not in _evidence_artifacts:
             _evidence_artifacts[organisation_id] = {}
     
-    def store_artifact(self, artifact_id: str, content: Any, 
+    def store_artifact(self, artifact_id: str, content: Any, artifact_type: str = None,
                       metadata: Dict = None, category: str = "general") -> Dict[str, bool]:
         """Store evidence artifact. QA-180"""
         artifact = {
             "artifact_id": artifact_id,
             "content": content,
+            "artifact_type": artifact_type or category,
             "metadata": metadata or {},
             "category": category,
             "timestamp": datetime.utcnow().isoformat(),

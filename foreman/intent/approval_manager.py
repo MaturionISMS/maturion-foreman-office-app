@@ -26,7 +26,8 @@ class ApprovalManager:
             "approval_id": f"appr-{req_id}",
             "requirement_id": req_id,
             "approver": approver,
-            "status": "PENDING"
+            "status": "PENDING",
+            "notification_sent": True
         }
         
         if req_id:

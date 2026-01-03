@@ -16,17 +16,18 @@ class NotificationDispatcher:
         if organisation_id not in _notifications:
             _notifications[organisation_id] = []
     
-    def create_notification(self, recipient: str, message: str, 
+    def create_notification(self, recipient: str, message: str, subject: str = None,
                           channel: str = "email", priority: str = "NORMAL") -> Dict[str, Any]:
         """Create notification. QA-190"""
-        return self.dispatch_notification(recipient, message, channel, priority)
+        return self.dispatch_notification(recipient, message, channel, priority, subject)
     
     def dispatch_notification(self, recipient: str, message: str, 
-                            channel: str = "email", priority: str = "NORMAL") -> Dict[str, Any]:
+                            channel: str = "email", priority: str = "NORMAL", subject: str = None) -> Dict[str, Any]:
         """Dispatch notification. QA-190"""
         notification = {
             "recipient": recipient,
             "message": message,
+            "subject": subject or "Notification",
             "channel": channel,
             "priority": priority,
             "status": "SENT",

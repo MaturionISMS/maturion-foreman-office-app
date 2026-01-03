@@ -8,6 +8,7 @@ from typing import Dict, Any, List
 import sys
 sys.path.insert(0, '/home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app')
 from foreman.analytics.exceptions import DataCorruptionError
+from foreman.analytics.metrics_engine import _metrics_data
 
 _history = {}
 
@@ -23,7 +24,9 @@ class MetricHistoryStorage:
     def get_metric_history(self, metric_name: str, days: int) -> List[Dict]:
         """Get metric history for specified days."""
         cutoff = datetime.utcnow() - timedelta(days=days)
-        history = _history.get(self.organisation_id, [])
+        
+        # Get from _metrics_data which is the authoritative source
+        history = _metrics_data.get(self.organisation_id, [])
         
         filtered = [
             h for h in history

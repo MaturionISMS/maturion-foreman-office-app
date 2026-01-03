@@ -12,8 +12,8 @@ class EscalationManager:
     """Manages escalations. QA-208 to QA-210"""
     
     def __init__(self, organisation_id: str = None):
-        # Make organisation_id optional for compatibility
-        self.organisation_id = organisation_id or "global"
+        # Make organisation_id optional with default
+        self.organisation_id = organisation_id if organisation_id is not None else 'global'
         if self.organisation_id not in _escalations:
             _escalations[self.organisation_id] = {}
     

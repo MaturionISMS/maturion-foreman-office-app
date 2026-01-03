@@ -8,11 +8,10 @@ QA Coverage: QA-133, QA-134, QA-135
 
 from typing import Dict, Any, List
 from datetime import datetime, timedelta
-
-
-# Import shared storage from usage_analyzer
 import sys
 sys.path.insert(0, '/home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app')
+
+# Import shared storage from usage_analyzer
 from foreman.analytics import usage_analyzer
 
 _build_completions = usage_analyzer._build_completions

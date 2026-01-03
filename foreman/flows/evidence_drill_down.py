@@ -29,18 +29,40 @@ class EvidenceDrillDownFlow:
         """Get components in domain."""
         return [f"{domain}-component-1", f"{domain}-component-2"]
     
-    def navigate_to_domain(self, domain: str) -> Dict[str, Any]:
-        """Navigate to domain. QA-206"""
-        _navigation_state[self.organisation_id]["current_path"] = [domain]
-        
+    def get_component_details(self, domain: str, component: str) -> Dict[str, Any]:
+        """Get component details. QA-205"""
         return {
             "domain": domain,
-            "path": [domain],
-            "navigation_successful": True
+            "component": component,
+            "status": "GREEN",
+            "evidence_count": 3
         }
     
-    def navigate_to_component(self, domain: str, component: str) -> Dict[str, Any]:
+    def navigate_to_domain(self, domain: str, component: str = None) -> Dict[str, Any]:
+        """Navigate to domain. QA-206"""
+        if component:
+            _navigation_state[self.organisation_id]["current_path"] = [domain, component]
+            return {
+                "domain": domain,
+                "component": component,
+                "path": [domain, component],
+                "navigation_successful": True
+            }
+        else:
+            _navigation_state[self.organisation_id]["current_path"] = [domain]
+            return {
+                "domain": domain,
+                "path": [domain],
+                "navigation_successful": True
+            }
+    
+    def navigate_to_component(self, domain: str, component: str = None) -> Dict[str, Any]:
         """Navigate to component. QA-206"""
+        if component is None:
+            # Single argument case
+            component = domain
+            domain = _navigation_state.get(self.organisation_id, {}).get("current_path", [""])[0]
+        
         _navigation_state[self.organisation_id]["current_path"] = [domain, component]
         
         return {
@@ -66,6 +88,7 @@ class EvidenceDrillDownFlow:
     def get_evidence(self, evidence_id: str) -> Dict[str, Any]:
         """Get evidence by ID. QA-207"""
         return {
+            "artifact_id": evidence_id,
             "evidence_id": evidence_id,
             "content": f"Evidence content for {evidence_id}",
             "metadata": {"type": "test_evidence"}

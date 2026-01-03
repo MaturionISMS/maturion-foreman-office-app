@@ -11,12 +11,25 @@ _cache = {}
 _metrics_data = {}
 
 
+def store_metric_data(organisation_id: str, metric: str, value: float, timestamp: datetime):
+    """Store metric data for history tracking."""
+    if organisation_id not in _metrics_data:
+        _metrics_data[organisation_id] = []
+    
+    _metrics_data[organisation_id].append({
+        "metric": metric,
+        "value": value,
+        "timestamp": timestamp
+    })
+
+
 class MetricsEngine:
     """Engine for metric aggregation and computation. QA-137 to QA-141"""
     
     def __init__(self, organisation_id: str):
         self.organisation_id = organisation_id
-        _cache[organisation_id] = {}
+        if organisation_id not in _cache:
+            _cache[organisation_id] = {}
         if organisation_id not in _metrics_data:
             _metrics_data[organisation_id] = []
     
@@ -58,6 +71,9 @@ class MetricsEngine:
             "value": value,
             "timestamp": timestamp
         })
+        
+        # Also call storage helper
+        store_metric_data(self.organisation_id, metric_name, value, timestamp)
     
     def calculate_sum(self, metric_name: str) -> float:
         """Calculate sum of metric values. QA-141"""
