@@ -1078,9 +1078,23 @@ Future governance MUST:
 
 ### Status
 
-**Recorded** — Non-Retroactive  
+**ACTIVE EXECUTION EXPECTATION** — Updated 2026-01-03  
 **Applies To:** All future governed builds  
-**Effective:** 2026-01-01
+**Effective:** 2026-01-01  
+**Status Change:** Elevated from passive learning to active FM execution requirement
+
+**BL-016 Active Requirements:**
+- FM SHALL proactively recognize execution complexity/cognitive limits
+- FM SHALL halt or pause execution BEFORE failure thresholds are reached
+- FM MAY exercise halt authority when complexity signals are detected
+- Proactive intervention is governance-correct risk management, not failure admission
+- Complexity monitoring is a mandatory FM supervision activity
+
+**Integration Evidence:**
+- Wave 1.0.7 execution halt (2026-01-03) triggered BL-016 elevation
+- Phase 1 builder instruction updated with OPOJD terminal state discipline
+- FM execution posture realigned with proactive complexity management
+- Halt authority formalized as governance tool
 
 ---
 

@@ -174,6 +174,82 @@ Submit Phase 1 completion report in PR #365 including:
 
 ---
 
+## Execution State Discipline (OPOJD Requirement)
+
+### Allowed Execution States
+
+Under One-Time Build Law and governance learnings (BL-016, BL-018), ONLY the following execution states are permitted:
+
+1. **BLOCKED** — Execution cannot proceed due to:
+   - Missing dependencies
+   - Unresolved ambiguity in requirements
+   - Platform/environment failure
+   - Clarification required from FM
+
+2. **COMPLETE** — Execution finished with:
+   - 15/15 tests GREEN (100%)
+   - Zero test debt
+   - All evidence artifacts generated
+   - Ready for FM gate review
+
+### Prohibited Execution States
+
+❌ **PARTIAL PROGRESS** — Not a valid state  
+❌ **INCREMENTAL COMPLETION** — Not recognized  
+❌ **PERCENTAGE REPORTS** — Not acceptable (e.g., "10/15 tests passing")  
+❌ **ITERATIVE STATUS UPDATES** — Violates OPOJD  
+❌ **WORK-IN-PROGRESS SUBMISSIONS** — Not permitted
+
+### Reporting Requirements
+
+**IF BLOCKED:**
+- Report BLOCKED state immediately with:
+  - Specific blocker description
+  - Attempted resolution steps
+  - FM action required
+- WAIT for FM response
+- DO NOT proceed without FM clearance
+
+**IF COMPLETE:**
+- Report COMPLETE state with:
+  - 15/15 tests GREEN confirmation
+  - Evidence artifacts location
+  - Builder completion report
+  - FM gate review request
+- Submit ONLY when 100% complete
+- NO partial submissions
+
+**NEVER REPORT:**
+- Partial pass counts (e.g., "12/15 tests passing")
+- Progress percentages (e.g., "80% complete")
+- Incremental status updates (e.g., "Token tracker done, working on cost calculator")
+- Work-in-progress checkpoints
+
+### Mindset Compliance
+
+**Builder mindset compliance is a CONDITION of continued appointment.**
+
+Builders SHALL:
+- Internalize OPOJD terminal state discipline
+- Report ONLY in BLOCKED or COMPLETE states
+- Request clarification if execution state is ambiguous
+- Reference `governance/canon/BOOTSTRAP_EXECUTION_LEARNINGS.md` for governance context
+
+Builders SHALL NOT:
+- Adopt iterative/agile progress reporting patterns
+- Submit partial work for "feedback loops"
+- Request "progress checks" or "interim reviews"
+- Interpret FM supervision as encouragement for partial delivery
+
+### Governance Reference
+
+**Binding Documents:**
+- `BUILD_PHILOSOPHY.md` — One-Time Build Correctness principle
+- `governance/canon/BOOTSTRAP_EXECUTION_LEARNINGS.md` — BL-016 (proactive complexity management), BL-018 (platform constraints)
+- `WAVE_1.0.7_PHASED_EXECUTION_SPEC.md` — Phase segmentation = platform accommodation, NOT partial delivery acceptance
+
+---
+
 ## Build Philosophy Compliance
 
 **One-Time Build Correctness:**
