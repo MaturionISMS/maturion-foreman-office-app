@@ -5,15 +5,30 @@ Provides test isolation for analytics tests.
 """
 
 import pytest
+import importlib
+import sys
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture(autouse=True, scope="function")
 def clear_analytics_state():
     """
     Clear all analytics module state before and after each test.
     
     This ensures test isolation by resetting all module-level storage.
     """
+    # Force reload all analytics modules to pick up code changes
+    analytics_modules = [
+        'foreman.analytics.metrics_engine',
+        'foreman.analytics.usage_analyzer',
+        'foreman.analytics.data_source',
+        'foreman.analytics.cost_tracker',
+        'foreman.analytics.metrics_calculator',
+    ]
+    
+    for module_name in analytics_modules:
+        if module_name in sys.modules:
+            importlib.reload(sys.modules[module_name])
+    
     # Import all analytics modules that have clear_all()
     from foreman.analytics import usage_analyzer, data_source
     from foreman.analytics import cost_tracker, token_counter, anomaly_detector, cost_reporter
