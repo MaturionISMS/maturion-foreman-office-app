@@ -23,6 +23,7 @@ def clear_analytics_state():
     usage_analyzer.clear_all()
     data_source.clear_all()
     cost_tracker.clear_all()
+    metrics_engine.clear_all()  # This also clears data_source._metrics_data
     if hasattr(token_counter, 'clear_all'):
         token_counter.clear_all()
     if hasattr(anomaly_detector, 'clear_all'):
@@ -31,10 +32,9 @@ def clear_analytics_state():
         cost_reporter.clear_all()
     
     # Clear module-level dicts directly
-    alert_manager._thresholds = {}
-    alert_manager._alerts = {}
-    metrics_engine._cache = {}
-    storage._history = {}
+    alert_manager._thresholds.clear()
+    alert_manager._alerts.clear()
+    storage._history.clear()
     
     yield
     
@@ -42,6 +42,7 @@ def clear_analytics_state():
     usage_analyzer.clear_all()
     data_source.clear_all()
     cost_tracker.clear_all()
+    metrics_engine.clear_all()
     if hasattr(token_counter, 'clear_all'):
         token_counter.clear_all()
     if hasattr(anomaly_detector, 'clear_all'):
@@ -49,7 +50,6 @@ def clear_analytics_state():
     if hasattr(cost_reporter, 'clear_all'):
         cost_reporter.clear_all()
         
-    alert_manager._thresholds = {}
-    alert_manager._alerts = {}
-    metrics_engine._cache = {}
-    storage._history = {}
+    alert_manager._thresholds.clear()
+    alert_manager._alerts.clear()
+    storage._history.clear()

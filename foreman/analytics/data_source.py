@@ -11,7 +11,7 @@ _metrics_data = {}
 def clear_all():
     """Clear all data source state for testing."""
     global _metrics_data
-    _metrics_data = {}
+    _metrics_data.clear()  # Clear the dict in-place, don't create a new one
 
 
 class MetricsDataSource:

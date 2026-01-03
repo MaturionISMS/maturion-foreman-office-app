@@ -22,9 +22,9 @@ _build_costs = {}
 def clear_all():
     """Clear all usage analyzer state for testing."""
     global _build_completions, _build_times, _build_costs
-    _build_completions = {}
-    _build_times = {}
-    _build_costs = {}
+    _build_completions.clear()
+    _build_times.clear()
+    _build_costs.clear()
 
 
 class UsageAnalyzer:
