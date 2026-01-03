@@ -1253,3 +1253,397 @@ Future builder executions in Wave 1.0 (ui-builder, api-builder, integration-buil
 **Retroactive Exception:** Wave 1.0.1 (schema-builder) accepted with ad-hoc classification
 
 ---
+
+## BL-018 — Platform Context Window Constraints Require Execution Segmentation
+
+### Classification
+- **Type:** Platform Learning
+- **Phase:** Wave 1.0 Execution (Wave 1.0.7 Build-to-Green)
+- **Severity:** CATASTROPHIC (initial classification), RESOLVED (platform accommodation)
+- **Status:** Recorded
+- **Impacts:** All future large-scope builder executions
+
+---
+
+### Context
+
+Wave 1.0.7 (qa-builder Build-to-Green) was assigned to complete 79 QA components (QA-132 to QA-210) comprising Analytics Subsystem (15 QA), Cross-Cutting Components (64 QA), and Core User Flows (11 QA) in a single Build-to-Green execution.
+
+Wave 1.0.7 followed successful completions of:
+- Wave 1.0.1 (schema-builder, 18 QA) - ✅ GREEN, MERGED
+- Wave 1.0.4 (api-builder, 35 QA) - ✅ GREEN, MERGED
+- Wave 1.0.5 (integration-builder, 39 QA) - ✅ GREEN, MERGED
+- Wave 1.0.6 (ui-builder Build-to-Green, 39 QA) - ✅ GREEN, MERGED
+
+---
+
+### Observed Issue
+
+**Initial Execution Attempt:**
+qa-builder executed partial Build-to-Green implementation, achieving 20/43 tests passing (47%). Builder submitted incomplete work claiming task was "too big to finish all in one go."
+
+**Initial FM Classification:**
+FM classified this as **CATASTROPHIC FAILURE** - constitutional violation of One-Time Build Correctness principle (BUILD_PHILOSOPHY.md Section IX: One-Prompt One-Job Doctrine).
+
+**Initial Corrective Action:**
+FM issued `WAVE_1.0.7_FM_CORRECTIVE_INSTRUCTION.md` directing builder to:
+- STOP all partial delivery attempts
+- RESTART with clean implementation
+- COMPLETE all 43/43 tests to GREEN in single PR
+- NO SHORTCUTS - quality > speed
+
+**Builder Response:**
+Builder reported persistent inability to complete full scope, citing platform constraints rather than capability limitations.
+
+**Escalation Analysis:**
+Upon CS2 escalation and FM review, root cause was identified as **GitHub Copilot platform context window limitation**, not builder failure or governance violation.
+
+---
+
+### Root Cause
+
+**Platform Constraint, NOT Governance Violation:**
+
+GitHub Copilot (agent execution platform) has context window limitations that prevent single-pass completion of large-scope build tasks (>50 QA components or >2000 lines of code).
+
+**Key Distinction:**
+- Builder capability: ADEQUATE (proven in prior waves)
+- Builder intent: COMPLIANT (attempting to follow One-Time Build)
+- Platform capacity: INSUFFICIENT (context window exhausted)
+
+**Evidence:**
+- Wave 1.0.4 (35 QA): ✅ Completed successfully
+- Wave 1.0.5 (39 QA): ✅ Completed successfully
+- Wave 1.0.6 (39 QA): ✅ Completed successfully
+- Wave 1.0.7 (79 QA): ❌ Context window exceeded
+
+**Threshold Observation:**
+Platform constraint manifests at approximately 40-50 QA components or 2000-2500 lines of implementation code per execution.
+
+---
+
+### Initial Misclassification
+
+**Why Initial Classification Was Incorrect:**
+
+1. **Prior Success Pattern:**
+   - All previous builders completed assigned scopes successfully
+   - No prior evidence of platform limitations
+   - Failure pattern was unprecedented
+
+2. **Builder Report Ambiguity:**
+   - Initial report: "too big to finish all in one go"
+   - Could indicate: capability gap, effort avoidance, OR platform constraint
+   - Without platform constraint evidence, governance violation was correct interpretation
+
+3. **Constitutional Severity:**
+   - Partial delivery violates One-Time Build Law
+   - Incomplete execution threatens entire governance model
+   - CATASTROPHIC classification was warranted given information available
+
+**FM Response Was Correct Given Information:**
+- FM correctly enforced One-Time Build principle
+- FM correctly issued corrective instruction
+- FM correctly escalated when pattern persisted
+- FM correctly re-evaluated when platform constraint evidence emerged
+
+---
+
+### Learning
+
+**Platform constraints are REAL constraints, not governance exceptions.**
+
+When genuine platform limitations prevent One-Time Build execution, the correct response is **execution segmentation** (platform accommodation), not **governance weakening** (partial acceptance).
+
+**Critical Distinctions:**
+
+1. **Execution Segmentation ≠ Phased Delivery:**
+   - Execution segmentation: Platform-required chunking of unified work
+   - Phased delivery: Acceptance of incomplete work as complete
+
+2. **Platform Constraint ≠ Governance Violation:**
+   - Platform constraint: Technical limitation of execution environment
+   - Governance violation: Intentional or negligent non-compliance
+
+3. **Accommodation ≠ Exception:**
+   - Accommodation: Adjusted execution mechanics preserving principles
+   - Exception: Suspension of principles for convenience
+
+---
+
+### Resolution: Platform Constraint Accommodation
+
+**FM Authorization: Controlled Phased Execution**
+
+FM authorized 3-phase execution strategy for Wave 1.0.7 as **platform constraint accommodation**:
+
+**Phase 1: Analytics Subsystem**
+- Scope: QA-132 to QA-146 (15 components)
+- Execution: PR #365
+- Success: 15/15 tests GREEN
+- Gate: GATE-QA-BUILDER-PHASE-1-WAVE-1.0
+
+**Phase 2: Cross-Cutting Components Part 1**
+- Scope: QA-147 to QA-171 (13 components)
+- Execution: New PR after Phase 1 FM approval
+- Success: +13 tests GREEN (28 total in Wave 1.0.7 context)
+- Gate: GATE-QA-BUILDER-PHASE-2-WAVE-1.0
+
+**Phase 3: Cross-Cutting Components Part 2 + Core Flows**
+- Scope: QA-172 to QA-210 (15 components)
+- Execution: New PR after Phase 2 FM approval
+- Success: +15 tests GREEN (43 total, Wave 1.0.7 complete)
+- Gate: GATE-QA-BUILDER-PHASE-3-WAVE-1.0 (Wave-level gate)
+
+**Key Preservation Principles:**
+
+1. **Wave 1.0.7 Remains Single One-Time Build Unit:**
+   - 79 QA components unified delivery scope
+   - NOT phased delivery, partial acceptance, or incremental completion
+   - Wave incomplete until all 79 QA GREEN
+
+2. **Each Phase Must Be Built Correctly Once:**
+   - Phase 1: 15/15 GREEN required
+   - Phase 2: 13/13 GREEN required
+   - Phase 3: 15/15 GREEN required
+   - One-Time Build principle preserved per segment
+
+3. **FM Gate Control Mandatory:**
+   - Each segment requires explicit FM authorization before advancing
+   - No segment self-authorizing or independently "complete"
+   - Builder strictly bounded by FM supervision
+
+4. **Merge ≠ Wave Completion:**
+   - Merging PR #365 = Execution Segment 1 completion ONLY
+   - Wave 1.0.7 = INCOMPLETE post-Phase 1 merge
+   - Wave-level gate conditions INTENTIONALLY NOT satisfied
+   - Platform projection event, not wave completion signal
+
+---
+
+### Governance Position
+
+**Constitutional Principle Preserved:**
+
+One-Time Build Law (BUILD_PHILOSOPHY.md Section IX) states:
+> "Builders must execute complete 'Build to Green' instructions in one continuous cycle."
+
+**Accommodation Interpretation:**
+- "Complete instructions" = Complete ASSIGNED segment
+- "One continuous cycle" = Within segment scope
+- Phase 1 instruction: Complete Analytics (15 QA) in one cycle ✅
+- NOT: Complete partial Analytics and stop ❌
+
+**Governance Alignment:**
+- One-Time Build Law: PRESERVED (single build unit, platform-accommodated execution)
+- FM Authority: REINFORCED (explicit gate control)
+- Zero Test Debt: MAINTAINED (each phase 100% GREEN)
+- Governance Posture: UNCHANGED
+
+**This is NOT:**
+- Phased delivery acceptance
+- Partial work approval
+- Governance weakening
+- Constitutional exception
+
+**This IS:**
+- Platform reality recognition
+- Execution mechanics adjustment
+- Principle-preserving accommodation
+- Controlled segmentation with FM gates
+
+---
+
+### Prevention for Future Large-Scope Tasks
+
+**Scope Assessment Requirements:**
+
+Before assigning any builder task >40 QA components or >2000 lines estimated implementation:
+
+1. **Platform Capacity Assessment:**
+   - Review historical completion sizes
+   - Identify platform threshold (40-50 QA or 2000-2500 LOC)
+   - Determine if scope exceeds proven platform capacity
+
+2. **Pre-Emptive Segmentation:**
+   - If scope > threshold, design segments BEFORE builder assignment
+   - Define segment boundaries (subsystem-aligned preferred)
+   - Specify success criteria per segment
+   - Define FM gates between segments
+
+3. **Segment Size Validation:**
+   - Each segment ≤ 40 QA components
+   - Each segment ≤ 2000 LOC estimated
+   - Each segment = complete functional unit (subsystem preferred)
+   - Each segment independently testable
+
+4. **FM Gate Planning:**
+   - Define gate criteria per segment
+   - Specify merge handling (segment ≠ wave completion)
+   - Document wave-level completion criteria
+   - Establish evidence requirements per segment
+
+**Builder Assignment Protocol:**
+
+For large-scope tasks requiring segmentation:
+
+1. **Issue Segmented Instructions:**
+   - Phase 1 instruction specifies Phase 1 scope ONLY
+   - Phase 2/3 instructions issued AFTER prior phase FM approval
+   - Each instruction = complete, standalone, One-Time Build directive
+
+2. **Segment Scope Constraints:**
+   - Explicit "ONLY Phase X scope" constraints
+   - Explicit "NO Phase Y/Z work" prohibitions
+   - Clear segment boundaries (QA ranges, subsystems)
+
+3. **Gate Discipline:**
+   - Builder reports segment completion
+   - FM reviews segment submission
+   - FM declares segment gate status
+   - FM issues next segment authorization (if applicable)
+
+4. **Wave Completion Clarity:**
+   - Wave incomplete until all segments complete
+   - Final segment gate = wave-level gate
+   - Explicit wave completion declaration by FM
+
+**Validator Checklist (Pre-Assignment):**
+- [ ] Scope assessed for platform capacity
+- [ ] If scope > 40 QA or > 2000 LOC: segmentation designed
+- [ ] Segment boundaries defined (subsystem-aligned preferred)
+- [ ] Success criteria defined per segment
+- [ ] FM gates defined between segments
+- [ ] Merge handling documented (segment ≠ wave completion)
+- [ ] Wave-level completion criteria explicit
+- [ ] Evidence requirements specified per segment
+
+---
+
+### Impact
+
+**Execution Continuity:**
+- Wave 1.0.7 execution salvaged via platform accommodation
+- Builder capability validated (not builder failure)
+- FM gate control reinforced
+- One-Time Build principle preserved
+
+**Future Build Planning:**
+- Large-scope tasks require pre-emptive segmentation assessment
+- Platform capacity thresholds now known (~40 QA, ~2000 LOC)
+- Segmentation protocol established
+- FM remains execution authority
+
+**Governance Integrity:**
+- No constitutional weakening occurred
+- Accommodation ≠ exception
+- Platform reality recognized without principle compromise
+- Build Philosophy remains supreme authority
+
+---
+
+### Related Governance Artifacts
+
+**Created in Response:**
+- `WAVE_1.0.7_PHASED_EXECUTION_SPEC.md` - 3-phase execution specification
+- `WAVE_1.0.7_PHASE_1_BUILDER_INSTRUCTION.md` - Phase 1 execution instruction
+- `WAVE_1.0.7_FM_CORRECTIVE_INSTRUCTION.md` - Initial corrective instruction (superseded by phased spec)
+
+**Updated in Response:**
+- `BOOTSTRAP_EXECUTION_LEARNINGS.md` (this document) - BL-018 learning captured
+- `WAVE_1.0_PROGRESS_DASHBOARD.md` - Platform-constrained phased execution status
+- `PROJECT_PROGRESS_DASHBOARD.md` - Wave 1.0.7 phased execution reflected
+
+**Related Learnings:**
+- BL-0004: Bootstrap Execution Proxy Is a Governance-Safe Deviation (precedent for platform accommodation)
+- BL-016: FM Autonomy Drift (binding language prevents misinterpretation)
+- BL-017: Warning Acceptance Criteria (pre-execution criteria prevent ad-hoc classification)
+
+---
+
+### Proposed Solutions for Future Prevention
+
+**1. Pre-Execution Scope Assessment Tool**
+
+Create automated scope assessment tool:
+- Input: QA range, architecture section
+- Analysis: Estimate LOC, complexity, component count
+- Output: Platform capacity assessment, segmentation recommendation
+- Integration: Mandatory before builder assignment
+
+**2. Platform Capacity Monitoring**
+
+Implement platform capacity monitoring:
+- Track actual completion sizes per builder
+- Update platform threshold baselines
+- Alert when assigned scope exceeds threshold
+- Recommend segmentation proactively
+
+**3. Builder Instruction Templates**
+
+Create segmented execution templates:
+- Phase X instruction template (scope-constrained)
+- Segment boundary specification format
+- FM gate criteria template
+- Evidence requirements per segment
+
+**4. Execution Segmentation Policy**
+
+Formalize segmentation policy in governance:
+- Define platform capacity thresholds (40 QA, 2000 LOC)
+- Specify when segmentation mandatory vs optional
+- Define segment size constraints (≤40 QA per segment)
+- Establish FM gate requirements between segments
+- Clarify merge handling (segment ≠ wave completion)
+
+**5. Builder Onboarding Enhancement**
+
+Update builder contracts and onboarding:
+- Clarify platform constraint accommodation is valid
+- Distinguish platform constraint from capability gap
+- Specify escalation protocol (attempt → report constraint → wait FM instruction)
+- Prohibit partial delivery as solution (segmentation only valid via FM authorization)
+
+**6. Wave Planning Enhancements**
+
+Enhance wave planning process:
+- Add scope assessment step before builder assignment
+- Require segmentation design for large-scope tasks
+- Define segment boundaries during planning (not during execution)
+- Document platform capacity assumptions in wave plan
+
+**7. FM Execution Playbook Update**
+
+Update FM execution playbook:
+- Add platform constraint recognition protocol
+- Define segmentation authorization criteria
+- Specify segment gate review process
+- Clarify wave-level vs segment-level gate distinction
+
+---
+
+### Ratchet Statement
+
+This learning is accepted **once** as discovery of genuine platform constraint.
+
+Future large-scope tasks (>40 QA components or >2000 LOC estimated) **MUST**:
+- Include pre-execution scope assessment
+- Design segmentation BEFORE builder assignment (if scope > threshold)
+- Specify explicit segment boundaries and gates
+- Distinguish segment completion from wave completion
+- Maintain FM gate control between segments
+
+**Ad-hoc discovery of platform constraints during execution is not acceptable after BL-018.**
+
+**Pre-emptive segmentation design is now mandatory for large-scope tasks.**
+
+---
+
+### Status
+
+**Recorded** — Non-Retroactive  
+**Applies To:** All future large-scope builder executions (>40 QA or >2000 LOC)  
+**Effective:** 2026-01-03  
+**Resolution:** Platform constraint accommodation via controlled execution segmentation
+
+---
