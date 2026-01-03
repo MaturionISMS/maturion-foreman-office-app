@@ -6,9 +6,13 @@ QA Coverage: QA-137 to QA-141
 from datetime import datetime
 from typing import Dict, Any, List
 import time
+import sys
+sys.path.insert(0, '/home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app')
+
+# Import shared storage from data_source
+from foreman.analytics.data_source import _metrics_data
 
 _cache = {}
-_metrics_data = {}
 
 
 def store_metric_data(organisation_id: str, metric: str, value: float, timestamp: datetime):
@@ -45,8 +49,9 @@ class MetricsEngine:
         
         # Calculate from source data
         data = _metrics_data.get(self.organisation_id, [])
-        builds_completed = sum(1 for d in data if d.get("metric") == "builds_completed")
-        builds_failed = sum(1 for d in data if d.get("metric") == "builds_failed")
+        # Sum the VALUES, not count the records
+        builds_completed = sum(d.get("value", 0) for d in data if d.get("metric") == "builds_completed")
+        builds_failed = sum(d.get("value", 0) for d in data if d.get("metric") == "builds_failed")
         total = builds_completed + builds_failed
         
         result = {

@@ -8,7 +8,8 @@ from typing import Dict, Any, List
 import sys
 sys.path.insert(0, '/home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app')
 from foreman.analytics.exceptions import DataCorruptionError
-from foreman.analytics.metrics_engine import _metrics_data
+# Import shared storage from data_source
+from foreman.analytics.data_source import _metrics_data
 
 _history = {}
 
