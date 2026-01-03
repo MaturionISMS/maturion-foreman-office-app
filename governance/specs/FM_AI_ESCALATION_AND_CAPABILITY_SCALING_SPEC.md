@@ -302,7 +302,7 @@ When corporate governance defines escalation protocol:
 
 ---
 
-## VII. Mandatory Code Checking (ACTIVATED 2026-01-03)
+## VIII. Mandatory Code Checking (ACTIVATED 2026-01-03)
 
 **Authority**: Issue directive from Johan (Wave 1.0.7 failure mode prevention)
 
@@ -389,7 +389,7 @@ Code checking is a **builder obligation**, not an optional quality practice.
 
 ---
 
-## VIII. Success Criteria
+## IX. Success Criteria
 
 This specification is successfully implemented when:
 
@@ -410,7 +410,7 @@ This specification is successfully implemented when:
 
 ---
 
-## IX. Enforcement
+## X. Enforcement
 
 This specification is **MANDATORY** and **ACTIVATED** as of 2026-01-03.
 
@@ -428,7 +428,7 @@ This specification is **MANDATORY** and **ACTIVATED** as of 2026-01-03.
 
 ---
 
-## X. References
+## XI. References
 
 - **BUILD_PHILOSOPHY.md** Section X (Escalation Procedures)
 - **FM_EXECUTION_MANDATE.md** Section VI (STOP and Escalation Semantics)
