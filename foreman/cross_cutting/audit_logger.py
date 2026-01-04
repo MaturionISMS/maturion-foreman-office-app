@@ -4,7 +4,7 @@ QA Coverage: QA-169 to QA-179
 """
 
 from datetime import datetime
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 _audit_events = {}
 
@@ -24,9 +24,25 @@ class AuditLogger:
             _audit_events[organisation_id] = []
     
     def log_governance_event(self, actor: str, action: str, target: str = None, outcome: str = None,
-                            resource: str = None, metadata: Dict = None) -> Dict[str, Any]:
+                            resource: str = None, metadata: Dict = None, details: Dict = None) -> Dict[str, Any]:
         """Log governance event. QA-169"""
-        return self.log_event(actor, action, outcome or "SUCCESS", target or resource, metadata)
+        combined_metadata = {**(metadata or {}), **(details or {})}
+        entry_id = f"evt-{len(_audit_events[self.organisation_id])+1}"
+        
+        log_entry = {
+            "entry_id": entry_id,
+            "timestamp": datetime.utcnow(),
+            "actor": actor,
+            "action": action,
+            "target": target or resource,
+            "outcome": outcome or "SUCCESS",
+            "details": details or {},
+            "metadata": combined_metadata,
+            "immutable": True
+        }
+        
+        _audit_events[self.organisation_id].append(log_entry)
+        return log_entry
     
     def log_event(self, actor: str, action: str, outcome: str, 
                   resource: str = None, metadata: Dict = None) -> Dict[str, Any]:
@@ -47,6 +63,17 @@ class AuditLogger:
             "success": True,
             "event_id": f"evt-{len(_audit_events[self.organisation_id])}"
         }
+    
+    def get_log_entry(self, entry_id: str) -> Optional[Dict]:
+        """Get specific log entry by ID. QA-169"""
+        for entry in _audit_events.get(self.organisation_id, []):
+            if entry.get("entry_id") == entry_id:
+                return entry
+        return None
+    
+    def modify_log_entry(self, entry_id: str, **kwargs):
+        """Attempt to modify log entry (should fail due to immutability). QA-169"""
+        raise Exception("Audit log is immutable - cannot modify entries")
     
     def query_events(self, filters: Dict = None) -> List[Dict]:
         """Query audit log. QA-173"""

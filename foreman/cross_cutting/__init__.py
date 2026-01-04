@@ -31,3 +31,12 @@ def clear_all():
     """Clear all cross-cutting state for testing."""
     global _registries
     _registries = {}
+    
+    # Import and clear each module's state
+    try:
+        from foreman.cross_cutting import memory_manager, audit_logger, system_health_watchdog
+        memory_manager.clear_all()
+        audit_logger.clear_all()
+        system_health_watchdog.clear_all()
+    except Exception:
+        pass  # Ignore import errors during test setup
