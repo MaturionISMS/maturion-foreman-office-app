@@ -16,7 +16,7 @@ Each sub-issue file is a **ready-to-issue artifact** that can be used verbatim t
 
 **Total Wave 2.0 Scope:**
 - **14 Subwaves**
-- **190 QA Components** (QA-211 to QA-400)
+- **200 QA Components** (QA-211 to QA-530, excluding duplicate ranges)
 - **5 Builders** (ui-builder, api-builder, integration-builder, qa-builder, schema-builder)
 - **Estimated Duration:** 12-16 weeks
 
@@ -28,8 +28,8 @@ Each sub-issue file is a **ready-to-issue artifact** that can be used verbatim t
 
 | File | Subwave | Builder | QA Range | Count | Complexity | Duration | Dependencies |
 |------|---------|---------|----------|-------|------------|----------|--------------|
-| `SUBWAVE_2.1_UI_BUILDER_ENHANCED_DASHBOARD.md` | 2.1 | ui-builder | QA-361 to QA-375 | 15 | LOW | 4-6 days | Wave 1.0 ✅ |
-| `SUBWAVE_2.2_UI_BUILDER_PARKING_STATION_ADVANCED.md` | 2.2 | ui-builder | QA-376 to QA-385 | 10 | LOW | 3-4 days | 2.1 |
+| `SUBWAVE_2.1_UI_BUILDER_ENHANCED_DASHBOARD.md` | 2.1 | ui-builder | QA-401 to QA-415 | 15 | LOW | 4-6 days | Wave 1.0 ✅ |
+| `SUBWAVE_2.2_UI_BUILDER_PARKING_STATION_ADVANCED.md` | 2.2 | ui-builder | QA-416 to QA-425 | 10 | LOW | 3-4 days | 2.1 |
 
 **Status:** Entry point for Wave 2.0 execution  
 **Parallelization:** Sequential (same builder)
@@ -40,8 +40,8 @@ Each sub-issue file is a **ready-to-issue artifact** that can be used verbatim t
 
 | File | Subwave | Builder | QA Range | Count | Complexity | Duration | Dependencies |
 |------|---------|---------|----------|-------|------------|----------|--------------|
-| `SUBWAVE_2.3_API_BUILDER_SYSTEM_OPTIMIZATIONS_PHASE1.md` | 2.3 | api-builder | QA-341 to QA-350 | 10 | MEDIUM | 4-5 days | 2.1, 2.2 |
-| `SUBWAVE_2.4_INTEGRATION_BUILDER_SYSTEM_OPTIMIZATIONS_PHASE2.md` | 2.4 | integration-builder | QA-351 to QA-360 | 10 | MEDIUM | 4-5 days | 2.3 |
+| `SUBWAVE_2.3_API_BUILDER_SYSTEM_OPTIMIZATIONS_PHASE1.md` | 2.3 | api-builder | QA-426 to QA-435 | 10 | MEDIUM | 4-5 days | 2.1, 2.2 |
+| `SUBWAVE_2.4_INTEGRATION_BUILDER_SYSTEM_OPTIMIZATIONS_PHASE2.md` | 2.4 | integration-builder | QA-436 to QA-445 | 10 | MEDIUM | 4-5 days | 2.3 |
 
 **Status:** Sequential optimization phases  
 **Parallelization:** 2.3 and 2.4 can be parallel (different builders)
@@ -53,7 +53,7 @@ Each sub-issue file is a **ready-to-issue artifact** that can be used verbatim t
 | File | Subwave | Builder | QA Range | Count | Complexity | Duration | Dependencies |
 |------|---------|---------|----------|-------|------------|----------|--------------|
 | `SUBWAVE_2.5_qa_builder_Advanced_Analytics_Phase1.md` | 2.5 | qa-builder | QA-211 to QA-225 | 15 | HIGH | 5-7 days | 2.3, 2.4 |
-| `SUBWAVE_2.6_api_builder_Advanced_Analytics_Phase2.md` | 2.6 | api-builder | QA-226 to QA-240 | 15 | HIGH | 5-7 days | 2.5 |
+| `SUBWAVE_2.6_api_builder_Advanced_Analytics_Phase2.md` | 2.6 | api-builder | QA-446 to QA-460 | 15 | HIGH | 5-7 days | 2.5 |
 | `SUBWAVE_2.7_integration_builder_Governance_Advanced.md` | 2.7 | integration-builder | QA-386 to QA-395 | 10 | MEDIUM | 4-5 days | 2.4 |
 | `SUBWAVE_2.8_integration_builder_Full_Watchdog_Coverage.md` | 2.8 | integration-builder | QA-396 to QA-400 | 5 | LOW | 2-3 days | 2.4 |
 
@@ -66,8 +66,8 @@ Each sub-issue file is a **ready-to-issue artifact** that can be used verbatim t
 
 | File | Subwave | Builder | QA Range | Count | Complexity | Duration | Dependencies |
 |------|---------|---------|----------|-------|------------|----------|--------------|
-| `SUBWAVE_2.9_integration_builder_Deep_Integration_Phase1.md` | 2.9 | integration-builder | QA-271 to QA-285 | 15 | MEDIUM | 6-8 days | 2.5, 2.6, 2.7, 2.8 |
-| `SUBWAVE_2.10_integration_builder_Deep_Integration_Phase2.md` | 2.10 | integration-builder | QA-286 to QA-300 | 15 | MEDIUM | 6-8 days | 2.9 |
+| `SUBWAVE_2.9_integration_builder_Deep_Integration_Phase1.md` | 2.9 | integration-builder | QA-461 to QA-475 | 15 | MEDIUM | 6-8 days | 2.5, 2.6, 2.7, 2.8 |
+| `SUBWAVE_2.10_integration_builder_Deep_Integration_Phase2.md` | 2.10 | integration-builder | QA-476 to QA-490 | 15 | MEDIUM | 6-8 days | 2.9 |
 
 **Status:** Sequential integration phases  
 **Parallelization:** Sequential (same builder, dependent phases)
@@ -91,8 +91,8 @@ Each sub-issue file is a **ready-to-issue artifact** that can be used verbatim t
 
 | File | Subwave | Builder | QA Range | Count | Complexity | Duration | Dependencies |
 |------|---------|---------|----------|-------|------------|----------|--------------|
-| `SUBWAVE_2.13_integration_builder_qa_builder_Complete_E2E_Flows_Phase1.md` | 2.13 | integration-builder + qa-builder | QA-301 to QA-320 | 20 | HIGH | 8-10 days | 2.11, 2.12 |
-| `SUBWAVE_2.14_integration_builder_qa_builder_Complete_E2E_Flows_Phase2.md` | 2.14 | integration-builder + qa-builder | QA-321 to QA-340 | 20 | HIGH | 8-10 days | 2.13 |
+| `SUBWAVE_2.13_integration_builder_qa_builder_Complete_E2E_Flows_Phase1.md` | 2.13 | integration-builder + qa-builder | QA-491 to QA-510 | 20 | HIGH | 8-10 days | 2.11, 2.12 |
+| `SUBWAVE_2.14_integration_builder_qa_builder_Complete_E2E_Flows_Phase2.md` | 2.14 | integration-builder + qa-builder | QA-511 to QA-530 | 20 | HIGH | 8-10 days | 2.13 |
 
 **Status:** Final Wave 2.0 subwaves  
 **Parallelization:** Sequential (dependent phases)  

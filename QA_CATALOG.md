@@ -625,21 +625,39 @@ BUILDER_GREEN_SCOPE_RULES.md (Assignment Rules)
 
 ---
 
+#### Subwave 2.3: System Optimizations Phase 1 (QA-426 to QA-435)
+
+**Caching Implementation (QA-426 to QA-430):** 5 QA
+- QA-426: Cache layer initialization (verify cache creation, configuration, readiness)
+- QA-427: Cache key generation (verify key uniqueness, collision handling, consistency)
+- QA-428: Cache hit/miss handling (verify hit returns cached data, miss fetches fresh)
+- QA-429: Cache invalidation logic (verify TTL expiration, manual invalidation, cascade)
+- QA-430: Cache statistics tracking (verify hit rate, miss rate, eviction metrics)
+
+**Query Optimization (QA-431 to QA-435):** 5 QA
+- QA-431: Query analysis and profiling (verify slow query detection, logging, alerting)
+- QA-432: Query plan optimization (verify index usage, join optimization, plan caching)
+- QA-433: Index usage optimization (verify index selection, coverage, efficiency)
+- QA-434: Query result caching (verify cache integration, invalidation, consistency)
+- QA-435: Query performance monitoring (verify execution time, query count, alerts)
+
+---
+
 #### Subwave 2.4: System Optimizations Phase 2 (QA-436 to QA-445)
 
 **Connection Pooling (QA-436 to QA-440):** 5 QA
-- QA-436: Connection pool initialization (verify pool creation, configuration, size limits)
-- QA-437: Connection acquisition (verify checkout, timeout handling, availability)
-- QA-438: Connection return (verify release, validation, reuse)
-- QA-439: Connection pool health monitoring (verify health checks, stale detection, recovery)
-- QA-440: Connection pool statistics (verify active/idle counts, wait times, utilization)
+- QA-436: Connection pool initialization optimization (verify pool creation, configuration, size limits)
+- QA-437: Connection acquisition optimization (verify checkout, efficient wait handling, availability)
+- QA-438: Connection return optimization (verify release, validation, reuse)
+- QA-439: Connection pool health monitoring optimization (verify health checks, stale detection, recovery)
+- QA-440: Connection pool statistics optimization (verify active/idle counts, wait times, utilization)
 
 **Lazy Loading Optimization (QA-441 to QA-445):** 5 QA
-- QA-441: Lazy loading initialization (verify deferred loading, trigger detection)
-- QA-442: Lazy loading data fetch (verify on-demand fetch, caching, efficiency)
-- QA-443: Lazy loading error handling (verify fetch failure, retry logic, fallback)
-- QA-444: Lazy loading performance metrics (verify load time, data volume, cache hit rate)
-- QA-445: Lazy loading consistency (verify data freshness, invalidation, synchronization)
+- QA-441: Lazy loading initialization optimization (verify deferred loading, trigger detection)
+- QA-442: Lazy loading data fetch optimization (verify on-demand fetch, caching, efficiency)
+- QA-443: Lazy loading exception management optimization (verify fetch exception handling, retry logic, fallback)
+- QA-444: Lazy loading performance metrics optimization (verify load time, data volume, cache hit rate)
+- QA-445: Lazy loading consistency optimization (verify data freshness, invalidation, synchronization)
 
 ---
 
@@ -671,25 +689,25 @@ BUILDER_GREEN_SCOPE_RULES.md (Assignment Rules)
 #### Subwave 2.9: Deep Integration Phase 1 (QA-461 to QA-475)
 
 **Cross-Subsystem Integration (QA-461 to QA-465):** 5 QA
-- QA-461: Subsystem event propagation (verify event emission, routing, delivery)
-- QA-462: Subsystem data synchronization (verify data consistency, conflict resolution, audit)
-- QA-463: Subsystem state coordination (verify state tracking, consistency, recovery)
-- QA-464: Subsystem dependency management (verify dependency resolution, ordering, failure handling)
-- QA-465: Cross-subsystem error handling (verify error propagation, isolation, recovery)
+- QA-461: Subsystem event propagation integration (verify event emission, routing, delivery)
+- QA-462: Subsystem data synchronization integration (verify data consistency, conflict resolution, audit)
+- QA-463: Subsystem state coordination integration (verify state tracking, consistency, recovery)
+- QA-464: Subsystem dependency management integration (verify dependency resolution, ordering, failure handling)
+- QA-465: Cross-subsystem error handling integration (verify error propagation, isolation, recovery)
 
 **Event Bus Implementation (QA-466 to QA-470):** 5 QA
-- QA-466: Event bus initialization (verify bus creation, subscriber registration, topic setup)
-- QA-467: Event publishing (verify event emission, serialization, routing)
-- QA-468: Event subscription (verify subscriber registration, event filtering, delivery)
-- QA-469: Event ordering guarantees (verify ordering preservation, sequence numbers, delivery)
-- QA-470: Event bus failure handling (verify lost event detection, retry, dead letter queue)
+- QA-466: Event bus initialization for integration (verify bus creation, subscriber registration, topic setup)
+- QA-467: Event publishing for integration (verify event emission, serialization, routing)
+- QA-468: Event subscription for integration (verify subscriber registration, event filtering, delivery)
+- QA-469: Event ordering guarantees for integration (verify ordering preservation, sequence numbers, delivery)
+- QA-470: Event bus failure handling for integration (verify lost event detection, retry, dead letter queue)
 
 **Service Communication (QA-471 to QA-475):** 5 QA
-- QA-471: Service discovery (verify service registration, lookup, availability)
-- QA-472: Service request/response (verify request handling, response generation, timeout)
-- QA-473: Service retry logic (verify retry attempts, exponential backoff, circuit breaker)
-- QA-474: Service health checking (verify health endpoint, status reporting, auto-recovery)
-- QA-475: Service communication security (verify authentication, authorization, encryption)
+- QA-471: Service discovery for integration (verify service registration, lookup, availability)
+- QA-472: Service request/response for integration (verify request handling, response generation, timeout)
+- QA-473: Service retry logic for integration (verify retry attempts, exponential backoff, circuit breaker)
+- QA-474: Service health checking for integration (verify health endpoint, status reporting, auto-recovery)
+- QA-475: Service communication security for integration (verify authentication, authorization, encryption)
 
 ---
 

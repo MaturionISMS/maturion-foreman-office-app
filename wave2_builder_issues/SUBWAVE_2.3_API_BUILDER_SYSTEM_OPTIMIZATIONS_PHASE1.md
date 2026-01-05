@@ -3,7 +3,7 @@
 **Wave:** 2.0  
 **Subwave:** 2.3  
 **Builder:** api-builder  
-**QA Range:** QA-341 to QA-350 (10 QA components)  
+**QA Range:** QA-426 to QA-435 (10 QA components)  
 **Complexity:** MEDIUM  
 **Duration Estimate:** 4-5 days  
 **Dependencies:** GATE-SUBWAVE-2.1 PASS, GATE-SUBWAVE-2.2 PASS  
@@ -131,7 +131,7 @@ Terminal states: BLOCKED or COMPLETE only
 ## Builder Appointment Package
 
 ### 1. Scope Statement
-- **QA Range:** QA-341 to QA-350
+- **QA Range:** QA-426 to QA-435
 - **QA Count:** 10 components
 - **Complexity:** MEDIUM
 - **Duration:** 4-5 days

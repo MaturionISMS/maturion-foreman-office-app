@@ -3,7 +3,7 @@
 **Wave:** 2.0  
 **Subwave:** 2.10  
 **Builder:** integration-builder  
-**QA Range:** QA-286 to QA-300 (15 QA components)  
+**QA Range:** QA-476 to QA-490 (15 QA components)
 **Complexity:** MEDIUM  
 **Duration Estimate:** 6-8 days  
 **Dependencies:** GATE-SUBWAVE-2.9 PASS  
@@ -24,7 +24,7 @@ Implement **Deep Integration Phase2** features to make **15 RED tests GREEN**.
 ### QA Components
 **Total:** 15 tests  
 **Location:** `tests/wave2_0_qa_infrastructure/test_deep_integration_phase2_*.py`  
-**Range:** QA-286 to QA-300
+**Range:** QA-476 to QA-490
 
 ### Out of Scope
 - Other subwave QA ranges
@@ -34,7 +34,7 @@ Implement **Deep Integration Phase2** features to make **15 RED tests GREEN**.
 ## Builder Appointment Package
 
 1. **Scope Statement**
-   - QA Range: QA-286 to QA-300
+   - QA Range: QA-476 to QA-490
    - QA Count: 15 components
    - Complexity: MEDIUM
    - Duration: 6-8 days

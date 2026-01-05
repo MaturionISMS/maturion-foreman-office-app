@@ -67,11 +67,11 @@ This document defines the **Wave 2.0 Implementation Plan** for Foreman Office, e
 |----------|----------|-------|-------------|------------|
 | Advanced Analytics | QA-211 to QA-240 | 30 | Predictive models, cost optimization | HIGH |
 | Complex Failure Modes | QA-241 to QA-270 | 30 | Recovery, timeout, error cascades | HIGH |
-| Deep Integration | QA-271 to QA-300 | 30 | Cross-module orchestration | MEDIUM |
-| Complete E2E Flows | QA-301 to QA-340 | 40 | Full Intent → Handover flows | HIGH |
-| System Optimizations | QA-341 to QA-360 | 20 | Performance, caching, resources | MEDIUM |
-| Enhanced Dashboard | QA-361 to QA-375 | 15 | Advanced UI features | LOW |
-| Parking Station Advanced | QA-376 to QA-385 | 10 | Prioritization, bulk ops | LOW |
+| Deep Integration | QA-461 to QA-490 | 30 | Cross-module orchestration | MEDIUM |
+| Complete E2E Flows | QA-491 to QA-530 | 40 | Full Intent → Handover flows | HIGH |
+| System Optimizations | QA-426 to QA-445 | 20 | Performance, caching, resources | MEDIUM |
+| Enhanced Dashboard | QA-401 to QA-415 | 15 | Advanced UI features | LOW |
+| Parking Station Advanced | QA-416 to QA-425 | 10 | Prioritization, bulk ops | LOW |
 | Governance Advanced | QA-386 to QA-395 | 10 | Conflict resolution, ripple | MEDIUM |
 | Full Watchdog Coverage | QA-396 to QA-400 | 5 | Health, recovery, alerting | LOW |
 
@@ -396,20 +396,20 @@ Every builder appointment MUST include:
 
 | Subwave | Scope | QA Range | Count | Builder(s) | Duration Est. |
 |---------|-------|----------|-------|------------|---------------|
-| 2.1 | Enhanced Dashboard | QA-361 to QA-375 | 15 | ui-builder | 4-6 days |
-| 2.2 | Parking Station Advanced | QA-376 to QA-385 | 10 | ui-builder | 3-4 days |
-| 2.3 | System Optimizations (Phase 1) | QA-341 to QA-350 | 10 | api-builder | 4-5 days |
-| 2.4 | System Optimizations (Phase 2) | QA-351 to QA-360 | 10 | integration-builder | 4-5 days |
+| 2.1 | Enhanced Dashboard | QA-401 to QA-415 | 15 | ui-builder | 4-6 days |
+| 2.2 | Parking Station Advanced | QA-416 to QA-425 | 10 | ui-builder | 3-4 days |
+| 2.3 | System Optimizations (Phase 1) | QA-426 to QA-435 | 10 | api-builder | 4-5 days |
+| 2.4 | System Optimizations (Phase 2) | QA-436 to QA-445 | 10 | integration-builder | 4-5 days |
 | 2.5 | Advanced Analytics (Phase 1) | QA-211 to QA-225 | 15 | qa-builder | 5-7 days |
-| 2.6 | Advanced Analytics (Phase 2) | QA-226 to QA-240 | 15 | api-builder | 5-7 days |
+| 2.6 | Advanced Analytics (Phase 2) | QA-446 to QA-460 | 15 | api-builder | 5-7 days |
 | 2.7 | Governance Advanced | QA-386 to QA-395 | 10 | integration-builder | 4-5 days |
 | 2.8 | Full Watchdog Coverage | QA-396 to QA-400 | 5 | integration-builder | 2-3 days |
-| 2.9 | Deep Integration (Phase 1) | QA-271 to QA-285 | 15 | integration-builder | 6-8 days |
-| 2.10 | Deep Integration (Phase 2) | QA-286 to QA-300 | 15 | integration-builder | 6-8 days |
+| 2.9 | Deep Integration (Phase 1) | QA-461 to QA-475 | 15 | integration-builder | 6-8 days |
+| 2.10 | Deep Integration (Phase 2) | QA-476 to QA-490 | 15 | integration-builder | 6-8 days |
 | 2.11 | Complex Failure Modes (Phase 1) | QA-241 to QA-255 | 15 | api-builder + qa-builder | 7-9 days |
 | 2.12 | Complex Failure Modes (Phase 2) | QA-256 to QA-270 | 15 | api-builder + qa-builder | 7-9 days |
-| 2.13 | Complete E2E Flows (Phase 1) | QA-301 to QA-320 | 20 | integration-builder + qa-builder | 8-10 days |
-| 2.14 | Complete E2E Flows (Phase 2) | QA-321 to QA-340 | 20 | integration-builder + qa-builder | 8-10 days |
+| 2.13 | Complete E2E Flows (Phase 1) | QA-491 to QA-510 | 20 | integration-builder + qa-builder | 8-10 days |
+| 2.14 | Complete E2E Flows (Phase 2) | QA-511 to QA-530 | 20 | integration-builder + qa-builder | 8-10 days |
 
 **Total Subwaves:** 14  
 **Total Duration Estimate:** 12-16 weeks (3-4 months)
