@@ -1,0 +1,19 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.2, pluggy-1.6.0 -- /usr/bin/python
+cachedir: .pytest_cache
+rootdir: /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app
+configfile: pytest.ini
+collecting ... collected 10 items
+
+tests/wave2_0_qa_infrastructure/test_system_optimizations_phase2.py::TestConnectionPooling::test_qa_436_pool_initialization PASSED [ 10%]
+tests/wave2_0_qa_infrastructure/test_system_optimizations_phase2.py::TestConnectionPooling::test_qa_437_connection_acquisition PASSED [ 20%]
+tests/wave2_0_qa_infrastructure/test_system_optimizations_phase2.py::TestConnectionPooling::test_qa_438_connection_return PASSED [ 30%]
+tests/wave2_0_qa_infrastructure/test_system_optimizations_phase2.py::TestConnectionPooling::test_qa_439_pool_health_monitoring PASSED [ 40%]
+tests/wave2_0_qa_infrastructure/test_system_optimizations_phase2.py::TestConnectionPooling::test_qa_440_pool_statistics PASSED [ 50%]
+tests/wave2_0_qa_infrastructure/test_system_optimizations_phase2.py::TestLazyLoading::test_qa_441_lazy_initialization PASSED [ 60%]
+tests/wave2_0_qa_infrastructure/test_system_optimizations_phase2.py::TestLazyLoading::test_qa_442_lazy_data_fetch PASSED [ 70%]
+tests/wave2_0_qa_infrastructure/test_system_optimizations_phase2.py::TestLazyLoading::test_qa_443_lazy_error_handling PASSED [ 80%]
+tests/wave2_0_qa_infrastructure/test_system_optimizations_phase2.py::TestLazyLoading::test_qa_444_lazy_performance_metrics PASSED [ 90%]
+tests/wave2_0_qa_infrastructure/test_system_optimizations_phase2.py::TestLazyLoading::test_qa_445_lazy_consistency PASSED [100%]
+
+======================== 10 passed, 5 warnings in 3.67s ========================
