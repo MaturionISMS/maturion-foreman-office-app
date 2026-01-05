@@ -62,13 +62,11 @@
     ]
   },
   "2.3": {
-    "qa_range": "QA-341 to QA-350",
+    "qa_range": "QA-426 to QA-435",
     "count": 10,
     "purpose": "Builder System Optimizations Phase1",
-    "status": "MISALIGNED",
-    "issues": [
-      "MISMATCH: Claimed 'optimization' but catalog shows failure modes"
-    ]
+    "status": "ALIGNED",
+    "issues": []
   },
   "2.4": {
     "qa_range": "QA-351 to QA-360",
