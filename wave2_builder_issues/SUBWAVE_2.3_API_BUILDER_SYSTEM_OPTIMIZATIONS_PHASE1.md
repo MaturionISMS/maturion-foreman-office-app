@@ -3,7 +3,7 @@
 **Wave:** 2.0  
 **Subwave:** 2.3  
 **Builder:** api-builder  
-**QA Range:** QA-341 to QA-350 (10 QA components)  
+**QA Range:** QA-426 to QA-435 (10 QA components)  
 **Complexity:** MEDIUM  
 **Duration Estimate:** 4-5 days  
 **Dependencies:** GATE-SUBWAVE-2.1 PASS, GATE-SUBWAVE-2.2 PASS  
@@ -30,22 +30,22 @@ Implement **System Optimizations Phase 1** for the Foreman Office App to make **
 ### QA Components to Implement
 
 **Total Test Count:** 10 tests  
-**Test Location:** `tests/wave2_0_qa_infrastructure/test_optimizations_phase1_*.py`
+**Test Location:** `tests/wave2_0_qa_infrastructure/test_system_optimizations_phase1.py`
 
 **System Optimizations Phase 1:**
-- **Caching Implementation** (QA-341 to QA-345): 5 tests
-  - QA-341: Cache layer initialization
-  - QA-342: Cache key generation
-  - QA-343: Cache hit/miss handling
-  - QA-344: Cache invalidation logic
-  - QA-345: Cache statistics tracking
+- **Caching Implementation** (QA-426 to QA-430): 5 tests
+  - QA-426: Cache layer initialization
+  - QA-427: Cache key generation
+  - QA-428: Cache hit/miss handling
+  - QA-429: Cache invalidation logic
+  - QA-430: Cache statistics tracking
 
-- **Query Optimization** (QA-346 to QA-350): 5 tests
-  - QA-346: Query analysis and profiling
-  - QA-347: Query plan optimization
-  - QA-348: Index usage optimization
-  - QA-349: Query result caching
-  - QA-350: Query performance monitoring
+- **Query Optimization** (QA-431 to QA-435): 5 tests
+  - QA-431: Query analysis and profiling
+  - QA-432: Query plan optimization
+  - QA-433: Index usage optimization
+  - QA-434: Query result caching
+  - QA-435: Query performance monitoring
 
 ### Out of Scope
 - ❌ Resource management — Phase 2 (Subwave 2.4)
@@ -104,7 +104,7 @@ Implement **System Optimizations Phase 1** for the Foreman Office App to make **
 
 ### Validate Tests
 ```bash
-pytest tests/wave2_0_qa_infrastructure/test_optimizations_phase1_*.py -v
+pytest tests/wave2_0_qa_infrastructure/test_system_optimizations_phase1.py -v
 ```
 
 **Expected:** 10/10 GREEN

@@ -566,20 +566,37 @@ BUILDER_GREEN_SCOPE_RULES.md (Assignment Rules)
 - QA-399: Data consistency failure (verify detection, verify reconciliation, verify escalation)
 - QA-400: System-wide failure (verify graceful shutdown, verify state preservation, verify escalation, verify recovery plan)
 
-**Additional Failure Modes (QA-401+)**
-- QA-401 and beyond: Additional failure modes as architectural detail deepens or new scenarios discovered
+**Additional Failure Modes (QA-401 to QA-425)**
+- QA-401 to QA-425: Reserved for future failure mode definitions as architectural detail deepens
+
+**System Optimizations (QA-426 to QA-435)**
+
+**Caching Implementation (QA-426 to QA-430)**
+- QA-426: Cache layer initialization (verify cache creation, configuration, and readiness)
+- QA-427: Cache key generation (verify key uniqueness, collision handling, consistency)
+- QA-428: Cache hit/miss handling (verify hit returns cached data, miss fetches fresh)
+- QA-429: Cache invalidation logic (verify TTL expiration, manual invalidation, cascade)
+- QA-430: Cache statistics tracking (verify hit rate, miss rate, eviction metrics)
+
+**Query Optimization (QA-431 to QA-435)**
+- QA-431: Query analysis and profiling (verify slow query detection, logging, alerting)
+- QA-432: Query plan optimization (verify index usage, join optimization, plan caching)
+- QA-433: Index usage optimization (verify index selection, coverage, efficiency)
+- QA-434: Query result caching (verify cache integration, invalidation, consistency)
+- QA-435: Query performance monitoring (verify execution time, query count, alerts)
 
 ---
 
 ## QA Catalog Statistics
 
-**Total QA Components:** 400+
+**Total QA Components:** 435
 
 **By Category:**
 - Component-Based QA: 199 (QA-001 to QA-199)
 - Flow-Based QA: 43 (QA-200 to QA-242)
 - State Transition-Based QA: 78 (QA-243 to QA-320)
-- Failure Mode-Based QA: 80+ (QA-321 to QA-400+)
+- Failure Mode-Based QA: 80 (QA-321 to QA-400)
+- System Optimizations: 10 (QA-426 to QA-435)
 
 **By Subsystem:**
 - Conversational Interface: 22 QA components
