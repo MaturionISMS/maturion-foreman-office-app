@@ -36,6 +36,7 @@ reference_documents:
   agent_reference: "governance/contracts/FM_AGENT_REFERENCE_VARIANT.md"  # Extended reference variant
   ai_escalation_and_capability: "governance/specs/FM_AI_ESCALATION_AND_CAPABILITY_SCALING_SPEC.md"  # AI escalation and capability-aware scaling (ACTIVATED 2026-01-03)
   execution_surface_observability: "governance/specs/FM_EXECUTION_SURFACE_OBSERVABILITY_SPEC.md"  # Execution surface observability requirements (ACTIVATED 2026-01-03)
+  in_between_wave_reconciliation: "governance/specs/IN_BETWEEN_WAVE_RECONCILIATION_SPEC.md"  # IBWR mandatory execution between waves (ACTIVATED 2026-01-04)
 ---
 
 # Foreman (FM) — Agent Contract (Lean Executable)
@@ -622,6 +623,52 @@ FM MUST treat builder recruitment as **one-time and continuous across waves**.
 
 FM MUST NOT re-recruit builders in later waves.
 
+### F. In-Between Wave Reconciliation (IBWR) Gate
+
+FM MUST execute **In-Between Wave Reconciliation (IBWR)** after EVERY wave gate PASS and BEFORE next wave authorization.
+
+**Mandatory Execution**:
+- IBWR MUST be executed after Wave N gate declares PASS
+- IBWR MUST complete with status PASS before Wave N+1 authorization
+- IBWR CANNOT be skipped to "save time"
+
+**FM Responsibilities**:
+1. ✅ Initiate IBWR immediately after wave gate PASS
+2. ✅ Collect all execution evidence (escalations, iterations, clarifications)
+3. ✅ Identify systemic issues and patterns
+4. ✅ Generate mandatory canonical artifacts (see IBWR specification)
+5. ✅ Execute corrective actions or plan completion
+6. ✅ Verify ripple propagation completeness
+7. ✅ Declare IBWR status (PASS / CORRECTIVE_ACTIONS_REQUIRED)
+
+**Mandatory Artifacts**:
+- Wave Reconciliation Report (`WAVE_<N>_RECONCILIATION_REPORT.md`)
+- Retrospective Certification (`WAVE_<N>_RETROSPECTIVE_CERTIFICATION.md`)
+- Corrective Actions Summary (`WAVE_<N>_CORRECTIVE_ACTIONS.md`, if applicable)
+
+**Artifact Location**: `/governance/reports/waves/`
+
+**HARD STOP (Next Wave Authorization)**: 
+
+FM MUST NOT authorize Wave N+1 planning or execution when:
+- ❌ Wave N IBWR not initiated
+- ❌ Wave N IBWR phases incomplete
+- ❌ Wave N IBWR mandatory artifacts missing
+- ❌ Wave N IBWR status ≠ PASS
+- ❌ Wave N corrective actions incomplete
+
+**Blocking Condition**: Next wave authorization is STRUCTURALLY BLOCKED until IBWR PASS.
+
+**Rationale**: Wave 1 demonstrated that without IBWR:
+- Corrections occur reactively instead of proactively
+- Ripple propagation is delayed
+- Execution relies on human memory instead of structure
+- Systemic issues are not captured between waves
+
+**Constitutional Grounding**: This requirement layers-down the governance requirement from PR #867 into operational execution surface.
+
+**Specification Reference**: `governance/specs/IN_BETWEEN_WAVE_RECONCILIATION_SPEC.md`
+
 ---
 
 ## XV. Builder Recruitment Rules
@@ -714,17 +761,20 @@ FM agent contract is fully aligned with all 14 Tier-0 canonical governance docum
 
 **This lean FM agent contract represents the executable core of canonical governance intent.**
 
-**Version**: 3.2.0 (AI Escalation, Capability Scaling & Mandatory Code Checking)  
+**Version**: 3.3.0 (IBWR Mandatory Execution)  
 **Status**: Active  
 **Purpose**: Executable core contract for FM autonomous execution authority  
 **Authority**: Derived from all 14 Tier-0 canonical governance documents  
-**Date**: 2026-01-03  
-**Updated By**: FM Repo Builder (AI escalation, capability-aware scaling & mandatory code checking activation)
+**Date**: 2026-01-04  
+**Updated By**: FM Repo Builder (IBWR layer-down from governance PR #867)
 
-**Activated Governance** (2026-01-03):
+**Activated Governance** (2026-01-04):
+- `governance/specs/IN_BETWEEN_WAVE_RECONCILIATION_SPEC.md` (IBWR Mandatory Execution)
+
+**Previously Activated** (2026-01-03):
 - `governance/specs/FM_AI_ESCALATION_AND_CAPABILITY_SCALING_SPEC.md` (AI Escalation & Capability Scaling)
 - `governance/specs/FM_EXECUTION_SURFACE_OBSERVABILITY_SPEC.md` (Execution Surface Observability)
-- **NEW**: Mandatory Code Checking (Section VIII.7 & Builder Code Checking Requirements)
+- **Mandatory Code Checking** (Section VIII.7 & Builder Code Checking Requirements)
 
 **Detailed Content Relocated To**:
 - `governance/specs/FM_RIPPLE_INTELLIGENCE_SPEC.md`
@@ -732,8 +782,9 @@ FM agent contract is fully aligned with all 14 Tier-0 canonical governance docum
 - `governance/alignment/FM_CONSTITUTIONAL_ALIGNMENT_VERIFICATION.md`
 - `governance/contracts/FM_EXECUTION_MANDATE.md`
 - `governance/contracts/FM_AGENT_REFERENCE_VARIANT.md`
-- `governance/specs/FM_AI_ESCALATION_AND_CAPABILITY_SCALING_SPEC.md` (NEW)
-- `governance/specs/FM_EXECUTION_SURFACE_OBSERVABILITY_SPEC.md` (NEW)
+- `governance/specs/FM_AI_ESCALATION_AND_CAPABILITY_SCALING_SPEC.md`
+- `governance/specs/FM_EXECUTION_SURFACE_OBSERVABILITY_SPEC.md`
+- `governance/specs/IN_BETWEEN_WAVE_RECONCILIATION_SPEC.md` (NEW)
 
 **This lean contract is executable, authoritative, and complete.**
 
