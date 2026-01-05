@@ -1,0 +1,92 @@
+{
+  "subwave": "2.7",
+  "builder": "integration-builder",
+  "qa_range": "QA-386 to QA-395",
+  "total_tests": 10,
+  "passed": 10,
+  "failed": 0,
+  "test_debt": 0,
+  "timestamp": "2026-01-05T16:30:00Z",
+  "test_categories": {
+    "security_failure_modes": {
+      "qa_range": "QA-386 to QA-390",
+      "count": 5,
+      "status": "GREEN",
+      "tests": [
+        {
+          "id": "QA-386",
+          "name": "Unauthorized access attempt",
+          "status": "PASS"
+        },
+        {
+          "id": "QA-387",
+          "name": "Authority escalation abuse",
+          "status": "PASS"
+        },
+        {
+          "id": "QA-388",
+          "name": "Data tampering attempt",
+          "status": "PASS"
+        },
+        {
+          "id": "QA-389",
+          "name": "Governance bypass attempt",
+          "status": "PASS"
+        },
+        {
+          "id": "QA-390",
+          "name": "Memory fabric unauthorized write",
+          "status": "PASS"
+        }
+      ]
+    },
+    "integration_failure_modes": {
+      "qa_range": "QA-391 to QA-395",
+      "count": 5,
+      "status": "GREEN",
+      "tests": [
+        {
+          "id": "QA-391",
+          "name": "GitHub API rate limit",
+          "status": "PASS"
+        },
+        {
+          "id": "QA-392",
+          "name": "GitHub webhook delivery failure",
+          "status": "PASS"
+        },
+        {
+          "id": "QA-393",
+          "name": "External service unavailable",
+          "status": "PASS"
+        },
+        {
+          "id": "QA-394",
+          "name": "Data sync failure",
+          "status": "PASS"
+        },
+        {
+          "id": "QA-395",
+          "name": "Integration contract violation",
+          "status": "PASS"
+        }
+      ]
+    }
+  },
+  "architecture_alignment": {
+    "verified": true,
+    "modules_implemented": [
+      "fm/runtime/security_failure_handler.py",
+      "fm/runtime/integration_failure_handler.py"
+    ]
+  },
+  "tenant_isolation": {
+    "verified": true,
+    "all_operations_require_organisation_id": true
+  },
+  "code_checking": {
+    "performed": true,
+    "obvious_defects": "none",
+    "self_review_complete": true
+  }
+}

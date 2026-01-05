@@ -479,7 +479,355 @@ This learning triggers updates to:
 **Moderate**: 0  
 **Minor**: 0
 
-**Next Learning ID**: BL-019
+**Next Learning ID**: BL-021
+
+---
+
+## BL-019: QA Catalog Semantic Alignment MUST Be Verified Before Subwave Authorization (EMERGENCY - SECOND CATASTROPHIC FAILURE)
+
+**Date Registered**: 2026-01-05  
+**Classification**: CATASTROPHIC  
+**Issue Reference**: Wave 2.2 Block (Issue #399), Subwave 2.3 Block  
+**Root Cause Analysis**: `ROOT_CAUSE_ANALYSIS_WAVE_2_2_BLOCK.md`, Emergency Corrective Action Plan BL-019
+
+### Learning Statement
+
+QA Catalog alignment verification is MANDATORY before subwave authorization. FM MUST verify not only that QA IDs exist, but that QA **semantic content** matches the subwave's intended scope. Failure to do so causes catastrophic builder blocks and execution halts.
+
+### Rationale
+
+BL-018 established that FM must verify QA ranges exist in QA_CATALOG.md. However, BL-018 did NOT require semantic verification (checking that QA definitions match subwave intent).
+
+**Wave 2.2 and 2.3 Failures:**
+- Subwave 2.2 ("Parking Station Advanced") was assigned QA-376 to QA-385
+- QA Catalog showed QA-376 to QA-385 exist ✓
+- BUT QA-376 to QA-385 describe "failure modes", not "parking station features" ✗
+- Builder correctly declared BLOCKED — impossible requirement
+
+**Similar failure in Subwave 2.3:**
+- Subwave 2.3 ("System Optimizations Phase 1") assigned QA-426 to QA-435
+- QA Catalog semantic mismatch discovered during verification
+- Second catastrophic failure of same class
+
+**Root Cause:** BL-018 was necessary but insufficient. FM verified QA IDs exist but did not verify semantic alignment between QA definitions and subwave scope.
+
+### Mandatory Requirements (Permanent)
+
+Before authorizing ANY subwave, FM MUST verify:
+
+1. **QA Range Exists** (BL-018): QA IDs exist in QA_CATALOG.md
+2. **Semantic Alignment** (BL-019): QA definitions semantically match subwave scope
+3. **No Semantic Conflicts**: QA range describes the features the subwave claims to implement
+4. **Architecture Traceability**: QA components trace to architecture elements that subwave will implement
+
+### Prohibited Actions (Permanent)
+
+1. ❌ Authorizing subwaves based only on QA ID existence (BL-018 alone is insufficient)
+2. ❌ Assuming sequential QA numbering implies semantic grouping
+3. ❌ Assuming subwave names match QA content without verification
+4. ❌ Proceeding with authorization when semantic mismatch is detected
+
+### Enforcement Mechanism
+
+**Enhanced Pre-Authorization Gate (extends BL-018):**
+```
+For Subwave X.Y with QA range QA-AAA to QA-BBB:
+
+1. Verify QA-AAA to QA-BBB exist in QA_CATALOG.md (BL-018)
+2. Read QA-AAA to QA-BBB definitions from QA_CATALOG.md
+3. Verify QA definitions semantically describe subwave X.Y scope
+4. If mismatch detected:
+   - HALT authorization
+   - Document mismatch
+   - ESCALATE to CS2 for architecture decision
+5. If aligned:
+   - Document verification evidence
+   - Proceed to authorization
+```
+
+### Application Examples
+
+**✅ CORRECT Semantic Verification (Subwave 2.1)**:
+```
+Subwave: "Enhanced Dashboard"
+QA Range: QA-401 to QA-415
+QA Definitions (from catalog):
+  - QA-401: Drill-down navigation
+  - QA-402: Advanced filtering
+  - QA-403 to QA-415: Dashboard real-time updates
+
+Semantic Check: ✅ PASS
+- "Enhanced Dashboard" semantically matches drill-down, filtering, real-time updates
+- Architecture element (Dashboard subsystem) exists
+- Proceed to authorization
+```
+
+**❌ INCORRECT Semantic Verification (Subwave 2.2)**:
+```
+Subwave: "Parking Station Advanced"
+QA Range: QA-376 to QA-385
+QA Definitions (from catalog):
+  - QA-376: Database write failure handling
+  - QA-377: State conflict resolution
+  - QA-378 to QA-385: Various failure mode handling
+
+Semantic Check: ❌ FAIL
+- "Parking Station Advanced" does NOT match failure mode handling
+- QA-376 to QA-385 are cross-cutting failure modes, not parking features
+- HALT authorization
+- ESCALATE: Architecture decision required
+```
+
+### Issue-Specific Application
+
+**For Wave 2.2, 2.3 (and any future misalignments):**
+
+1. **Forward Scan**: Review ALL remaining Wave 2 subwaves (2.3 to 2.14)
+2. **Semantic Verification**: Check each QA range against subwave intent
+3. **Correct Misalignments**:
+   - Option A: Reassign correct QA ranges from catalog
+   - Option B: Extend QA_CATALOG.md with new QA IDs for subwave scope
+   - Option C: Remove subwave from wave (out of scope)
+4. **Update Documentation**: Correct WAVE_2_ROLLOUT_PLAN.md, sub-issue specs
+5. **Re-authorize**: Only after semantic alignment is verified
+
+### Related Learnings
+
+- BL-016: Builder Recruitment Automation
+- BL-017: Build-to-Green Completeness
+- BL-018: QA Catalog Range Verification (PREREQUISITE — BL-019 extends BL-018)
+
+### Governance Impact
+
+This learning triggers updates to:
+1. **FM Agent Contract Section XIV** — Add semantic verification to mandatory sequencing
+2. **Wave Planning Process** — Add QA semantic alignment verification gate
+3. **Pre-Authorization Checklist** — Add semantic verification step
+4. **Subwave Creation Protocol** — Require QA definition review before sub-issue creation
+5. **Emergency Corrective Action Plan** — Execute forward scan for Wave 2 immediately
+
+### Status
+
+**Learning Registered**: ✅ COMPLETE  
+**Classification Escalation**: CATASTROPHIC (second occurrence of structural planning failure)  
+**Ratchet Activated**: ✅ ACTIVE  
+**Emergency Corrective Action**: ✅ INITIATED (WAVE_2_EMERGENCY_CORRECTIVE_ACTION_PLAN_BL_019.md)  
+**Forward Scan**: ✅ REQUIRED (All Wave 2 subwaves 2.3 to 2.14)  
+**Governance Updates**: ⏳ PENDING (Post-emergency-fix)
+
+---
+
+## BL-020: FM MUST Verify QA-to-Red Test Existence Before Subwave Authorization (THIRD-TIME PATTERN — QA-to-Red Layer Failure)
+
+**Date Registered**: 2026-01-05  
+**Classification**: CATASTROPHIC  
+**Issue Reference**: Subwave 2.5 Block (Issue #417, PR #418)  
+**Root Cause Analysis**: FM Third-Time Failure (QA-211 to QA-225 Missing Tests)
+
+### Learning Statement
+
+QA-to-Red test **existence and location** verification is MANDATORY before subwave authorization. FM MUST verify not only that QA IDs exist and semantics align (BL-018, BL-019), but that the actual **RED test files** exist at the claimed location in the repository. Failure to do so causes catastrophic builder blocks.
+
+### Rationale
+
+**This is the THIRD occurrence of the same structural failure class:**
+
+1. **BL-018**: FM authorized subwaves without verifying QA IDs exist in QA_CATALOG.md
+2. **BL-019**: FM authorized subwaves without verifying QA semantic alignment with subwave scope
+3. **BL-020**: FM authorized subwaves without verifying QA-to-Red **tests exist in repository**
+
+**Subwave 2.5 Failure:**
+- Subwave 2.5 spec claimed tests exist at: `tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1_*.py`
+- QA-211 to QA-225 exist in QA_CATALOG.md ✓
+- Semantic mismatch: Rollout plan said "Advanced Analytics", QA Catalog said "Flow-Based QA" ✗
+- **Critical failure: No test files exist for QA-211 to QA-225** ✗
+- Builder correctly declared BLOCKED — impossible requirement (no tests to make GREEN)
+
+**Pattern:** FM is verifying documentation (QA_CATALOG.md, specs) but NOT verifying actual **repository artifacts** (test files, code).
+
+### Mandatory Requirements (Permanent)
+
+Before authorizing ANY subwave, FM MUST verify:
+
+1. **QA Range Exists** (BL-018): QA IDs exist in QA_CATALOG.md
+2. **Semantic Alignment** (BL-019): QA definitions semantically match subwave scope
+3. **QA-to-Red Tests Exist** (BL-020): Actual RED test files exist in repository at claimed location
+4. **Test File Location Accuracy**: Sub-issue spec test file paths are accurate and verifiable
+
+### Prohibited Actions (Permanent)
+
+1. ❌ Authorizing subwaves based only on documentation claims (specs, rollout plans)
+2. ❌ Assuming tests exist because QA Catalog entries exist
+3. ❌ Trusting sub-issue spec file paths without verification
+4. ❌ Proceeding when test files are missing or path is incorrect
+
+### Enforcement Mechanism
+
+**Complete Pre-Authorization Gate (extends BL-018, BL-019):**
+```
+For Subwave X.Y with QA range QA-AAA to QA-BBB:
+
+1. Verify QA-AAA to QA-BBB exist in QA_CATALOG.md (BL-018)
+2. Verify QA definitions semantically match subwave scope (BL-019)
+3. Verify QA-to-Red test files exist (BL-020):
+   a. Check sub-issue spec for claimed test file path
+   b. Verify file exists in repository at that path
+   c. Verify file contains tests for QA-AAA to QA-BBB
+   d. Verify tests are in RED state (NotImplementedError or similar)
+4. If tests missing:
+   - HALT authorization
+   - Create missing QA-to-Red tests OR correct file path
+   - Document correction in sub-issue spec
+5. If tests exist:
+   - Document verification evidence
+   - Proceed to authorization
+```
+
+### Application Examples
+
+**✅ CORRECT QA-to-Red Verification**:
+```
+Subwave: "Enhanced Dashboard"
+QA Range: QA-401 to QA-415
+Sub-issue claims: tests/wave2_0_qa_infrastructure/test_enhanced_dashboard.py
+
+Verification:
+1. QA-401 to QA-415 exist in QA_CATALOG.md ✓ (BL-018)
+2. Semantics match "Enhanced Dashboard" ✓ (BL-019)
+3. File exists: tests/wave2_0_qa_infrastructure/test_enhanced_dashboard.py ✓
+4. File contains test_qa_401 through test_qa_415 ✓
+5. Tests raise NotImplementedError (RED state) ✓
+
+Result: PASS — Proceed to authorization
+```
+
+**❌ INCORRECT QA-to-Red Verification (Subwave 2.5 Actual)**:
+```
+Subwave: "Advanced Analytics Phase 1"
+QA Range: QA-211 to QA-225
+Sub-issue claims: tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1_*.py
+
+Verification:
+1. QA-211 to QA-225 exist in QA_CATALOG.md ✓ (BL-018)
+2. Semantic check: ❌ FAIL
+   - QA Catalog says "Flow-Based QA", not "Analytics"
+   - Subwave name mismatch
+3. File existence: ❌ FAIL
+   - No file matching test_advanced_analytics_phase1_*.py exists
+   - No tests exist for QA-211 to QA-225 anywhere in repository
+
+Result: CATASTROPHIC BLOCK — Builder cannot execute Build-to-Green without RED tests
+Action: HALT, create missing tests, fix semantic mismatch, re-authorize
+```
+
+### Corrective Actions (Completed)
+
+**Structural Ratchet Implementation (One-Time Fix):**
+
+This PR implements the **one-time structural repair** for BL-020 as a **ratchet event** under One-Time Build / OPOJD doctrine:
+
+**PR Reference**: `maturion-foreman-office-app#[PR-NUMBER]` - BL-020 Structural Correction
+
+**Resolution Approach:**
+- **Preserved** QA-211 to QA-225 as "Flow-Based QA" (correct per QA_CATALOG.md)
+- **Created** new QA range QA-531 to QA-545 for "Advanced Analytics Phase 1"
+- **Separated** flow scenarios from analytics to eliminate semantic mismatch
+- **Generated** 15 RED tests for QA-531 to QA-545 in `test_advanced_analytics_phase1.py`
+- **Updated** Subwave 2.5 spec to reference QA-531-545
+- **Executed** QA-Catalog-Alignment Gate: PASS
+
+**Ratchet Conditions (Permanent Enforcement):**
+
+1. **No Repeat Repairs**: This pattern class is now CLOSED. Any future occurrence of "missing analytics QA/tests" is an EMERGENCY, not a "fix PR".
+
+2. **FM Pre-Authorization Upgrade**: FM MUST NOT authorize subwaves until:
+   - QA range exists in catalog (BL-018)
+   - Semantic alignment verified (BL-019)
+   - QA-to-Red tests exist in repository (BL-020)
+   - Gate execution documented with PASS
+
+3. **Governance Canon Binding**: FM Pre-Authorization Checklist (from governance repo) MUST be layered down to ForemanApp `.agent` contract so this verification is mandatory and automated.
+
+**Deliverables (This PR):**
+- ✅ `QA_CATALOG.md` extended with QA-531-545
+- ✅ `tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py` created (15 RED tests)
+- ✅ `wave2_builder_issues/SUBWAVE_2.5_qa_builder_Advanced_Analytics_Phase1.md` created
+- ✅ `QA_CATALOG_ALIGNMENT_GATE_SUBWAVE_2_5_EXECUTION.md` documented (PASS)
+- ✅ `wave2_builder_issues/MASTER_INDEX.md` corrected
+- ✅ `SUBWAVE_2_5_CORRECTIONS_COMPLETION_SUMMARY.md` created
+
+**Prevention (Future):**
+
+1. **FM Pre-Authorization Checklist** (from governance canon):
+   - MUST verify QA-to-Red tests exist before ANY subwave authorization
+   - MUST execute QA-Catalog-Alignment Gate
+   - MUST document gate PASS as evidence
+
+2. **Automated Tooling** (Recommended):
+   - `validate-qa-tests-existence.py` for automated verification
+   - CI/CD integration to prevent invalid subwave specs
+
+3. **Forward Scan** (Wave 2):
+   - Verify QA-to-Red tests exist for all remaining subwaves (2.6-2.14)
+   - Correct any missing tests or path errors before authorization
+
+2. **Add Automated Validation**:
+   - ✅ COMPLETE: Created `validate-qa-tests-existence.py` script in BL-020 resolution PR
+   - Script verifies: QA range, semantic alignment, test existence
+   - Machine-readable output for FM pre-authorization
+   - Documented in `VALIDATION_TOOL_QA_TESTS_README.md`
+
+3. **Update FM Pre-Authorization Checklist**:
+   - ⏳ PENDING: Governance canon layer-down to ForemanApp `.agent`
+   - Mandatory step: "Verify QA-to-Red tests exist in repository"
+   - Require evidence: QA-Catalog-Alignment Gate execution (PASS)
+
+### Related Learnings
+
+- BL-016: Builder Recruitment Automation (system configuration vs documentation)
+- BL-017: Build-to-Green Completeness
+- BL-018: QA Catalog Range Verification (PREREQUISITE)
+- BL-019: QA Semantic Alignment Verification (PREREQUISITE)
+
+**Pattern:** All three (BL-018, BL-019, BL-020) are the **same root failure** at different layers:
+- BL-018: FM verified specs but not QA Catalog
+- BL-019: FM verified QA Catalog IDs but not semantics
+- BL-020: FM verified QA Catalog but not actual test files
+
+**Systemic Root Cause:** FM planning operates on documentation without verifying repository artifacts.
+
+### Governance Impact
+
+This learning triggers updates to:
+1. **FM Agent Contract Section XIV** — Add QA-to-Red existence verification to mandatory sequencing
+2. **Pre-Authorization Checklist** — Add test file existence verification step
+3. **Subwave Creation Protocol** — Require QA-to-Red test creation BEFORE sub-issue generation
+4. **Wave Planning Process** — QA-to-Red compilation MUST be complete before any subwave authorization
+5. **Validation Tooling** — Create automated QA-to-Red existence checker
+
+### Status
+
+**Learning Registered**: ✅ COMPLETE  
+**Classification**: CATASTROPHIC (third occurrence of structural verification failure)  
+**Ratchet Activated**: ✅ ACTIVE (One-Time Build / OPOJD)  
+**Structural Repair**: ✅ COMPLETE (BL-020 Resolution PR)  
+**Corrective Action**: ✅ COMPLETE (QA-531-545 created, tests generated, gate executed)  
+**Forward Scan**: 🔄 RECOMMENDED (All Wave 2 subwaves 2.6 to 2.14)  
+**Governance Canon Layer-Down**: ⏳ PENDING (FM Pre-Authorization Checklist to ForemanApp `.agent`)  
+**Tooling**: ✅ COMPLETE (`validate-qa-tests-existence.py` created)
+
+**One-Time Build Compliance**: This PR is the **ratchet event** that closes this failure class. Future occurrences constitute EMERGENCY escalation per OPOJD doctrine.
+
+---
+
+## Registry Metadata
+
+**Total Learnings Registered**: 5  
+**Catastrophic**: 5 (BL-016, BL-017, BL-018, BL-019, BL-020)  
+**Critical**: 0  
+**Major**: 0  
+**Moderate**: 0  
+**Minor**: 0
 
 ---
 
