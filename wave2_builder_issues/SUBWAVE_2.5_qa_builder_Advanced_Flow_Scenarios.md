@@ -1,4 +1,4 @@
-# Subwave 2.5: Advanced Analytics Phase1 — qa-builder Build-to-Green
+# Subwave 2.5: Advanced Flow Scenarios — qa-builder Build-to-Green
 
 **Wave:** 2.0  
 **Subwave:** 2.5  
@@ -13,7 +13,7 @@
 
 ## Executive Summary
 
-Implement **Advanced Analytics Phase1** features to make **15 RED tests GREEN**.
+Implement **Advanced Flow Scenarios** features to make **15 RED tests GREEN**.
 
 **Mission:** Per WAVE_2_ROLLOUT_PLAN.md Section II, Subwave 2.5.
 
@@ -23,8 +23,12 @@ Implement **Advanced Analytics Phase1** features to make **15 RED tests GREEN**.
 
 ### QA Components
 **Total:** 15 tests  
-**Location:** `tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1_*.py`  
+**Location:** `tests/wave2_0_qa_infrastructure/test_advanced_flow_scenarios.py`  
 **Range:** QA-211 to QA-225
+
+**QA Breakdown:**
+- QA-211 to QA-215: User Intent → Build Execution Flow Advanced (state persistence, evidence generation, authorization, timeout, cancellation)
+- QA-216 to QA-225: Escalation Flow Complete (trigger detection, creation, routing, presentation, decision, resolution, timeout, concurrent escalations, error handling)
 
 ### Out of Scope
 - Other subwave QA ranges
@@ -40,7 +44,8 @@ Implement **Advanced Analytics Phase1** features to make **15 RED tests GREEN**.
    - Duration: 5-7 days
 
 2. **Architecture References**
-   - Wave 2 Architecture Specification (Advanced Analytics Phase1 section)
+   - Wave 2 Architecture Specification (Advanced Flow Scenarios section)
+   - Flow-Based QA specification (QA_CATALOG.md, QA-200 to QA-242)
    - Integration points per rollout plan
 
 3. **QA-to-Red Confirmation**
