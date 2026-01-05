@@ -262,9 +262,8 @@ class TestRealTimeUpdates:
         from ui.dashboard.enhanced_notifications import UpdateNotificationManager
         
         connection = RealtimeDashboardConnection(context=dashboard_enhanced_context)
-        notifications = UpdateNotificationManager(context=dashboard_enhanced_context)
-        
         connection.connect()
+        notifications = UpdateNotificationManager(context=dashboard_enhanced_context, connection=connection)
         
         # Simulate update that generates notification
         important_update = {
