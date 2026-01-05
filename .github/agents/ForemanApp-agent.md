@@ -37,6 +37,10 @@ reference_documents:
   ai_escalation_and_capability: "governance/specs/FM_AI_ESCALATION_AND_CAPABILITY_SCALING_SPEC.md"  # AI escalation and capability-aware scaling (ACTIVATED 2026-01-03)
   execution_surface_observability: "governance/specs/FM_EXECUTION_SURFACE_OBSERVABILITY_SPEC.md"  # Execution surface observability requirements (ACTIVATED 2026-01-03)
   in_between_wave_reconciliation: "governance/specs/IN_BETWEEN_WAVE_RECONCILIATION_SPEC.md"  # IBWR mandatory execution between waves (ACTIVATED 2026-01-04)
+  qa_catalog_alignment_gate: "governance/specs/QA_CATALOG_ALIGNMENT_GATE_SPEC.md"  # QA-Catalog-Alignment gate requirements (BL-018/BL-019) (ACTIVATED 2026-01-05)
+  bl_forward_scan_obligation: "governance/specs/BL_FORWARD_SCAN_OBLIGATION_SPEC.md"  # BL Forward-Scan protocol (BL-018/BL-019) (ACTIVATED 2026-01-05)
+  second_time_failure_prohibition: "governance/specs/SECOND_TIME_FAILURE_PROHIBITION_SPEC.md"  # Second-time failure prohibition and TARP (BL-018/BL-019) (ACTIVATED 2026-01-05)
+  bl_018_019_integration: "governance/canon/BL_018_019_GOVERNANCE_INTEGRATION.md"  # BL-018/BL-019 governance integration summary (ACTIVATED 2026-01-05)
 ---
 
 # Foreman (FM) — Agent Contract (Lean Executable)
@@ -669,9 +673,204 @@ FM MUST NOT authorize Wave N+1 planning or execution when:
 
 **Specification Reference**: `governance/specs/IN_BETWEEN_WAVE_RECONCILIATION_SPEC.md`
 
+### G. QA-Catalog-Alignment Gate (BL-018/BL-019 Prevention)
+
+FM MUST execute the **QA-Catalog-Alignment Gate** before authorizing ANY wave or subwave execution.
+
+**Mandatory Gate Execution Points**:
+1. Before finalizing wave rollout plan
+2. Before creating builder sub-issue for any subwave
+3. Before appointing builder to any subwave
+4. After any BL/FL/CI that affects QA Catalog structure
+
+**Gate Checks (ALL MANDATORY)**:
+1. ✅ QA range exists in `QA_CATALOG.md` (all IDs defined, no gaps)
+2. ✅ Semantic alignment: QA catalog entries match subwave scope intent
+3. ✅ QA-to-Red tests exist for ALL QA IDs in range (files present, tests written)
+4. ✅ No QA ID collisions (no ID assigned to multiple subwaves)
+5. ✅ Architecture alignment (frozen architecture defines all QA components)
+
+**Gate Outcomes**:
+- **PASS**: FM may proceed with subwave authorization/appointment
+- **FAIL**: FM MUST BLOCK subwave, correct structural gap, re-run gate
+
+**HARD STOP (Subwave Authorization)**:
+
+FM MUST NOT authorize subwave execution when:
+- ❌ QA-Catalog-Alignment Gate not executed
+- ❌ Any gate check fails
+- ❌ QA range not verified in `QA_CATALOG.md`
+- ❌ Semantic mismatch between subwave and QA catalog
+- ❌ QA-to-Red tests missing for assigned QA range
+
+**FM Prohibitions**:
+- ❌ Assigning QA ranges without gate execution
+- ❌ Assuming QA ranges are valid without verification
+- ❌ Delegating gate execution to builders
+- ❌ Creating issues with unverified QA ranges
+
+**Builder Expectations**:
+Builders MUST expect gate was passed before appointment. If builders discover gate preconditions not met:
+1. STOP work immediately
+2. Declare BLOCKED in issue
+3. Escalate to FM with evidence
+4. Wait for FM structural correction
+
+**Rationale**: BL-018 (Wave 2.2 QA Catalog Misalignment) and BL-019 (Wave 2.3+ Second-Time Failure) demonstrated that wave planning without QA Catalog verification causes structural blocks and builder rejection. This gate prevents pattern recurrence.
+
+**Constitutional Grounding**: 
+- T0-001: BUILD_PHILOSOPHY.md (Architecture → QA-to-Red → Planning sequence)
+- T0-013: FM_EXECUTION_MANDATE.md (FM planning authority)
+- Governance PR #877 (maturion-foreman-governance): QA-Catalog-Alignment Gate Canon
+
+**Specification Reference**: `governance/specs/QA_CATALOG_ALIGNMENT_GATE_SPEC.md`
+
 ---
 
-## XV. Builder Recruitment Rules
+## XV. BL/FL/CI Forward-Scan Obligation (BL-018/BL-019 Prevention)
+
+FM MUST execute a **forward-scan** after EVERY BL/FL/CI discovery to prevent pattern recurrence.
+
+**Trigger Conditions**:
+- Any BL entry registered in `governance/canon/BOOTSTRAP_EXECUTION_LEARNINGS.md`
+- Any FL/CI entry registered in governance FL/CI registry
+- Discovery of second-time failure (EMERGENCY - see Section XVI)
+
+**Forward-Scan Protocol (MANDATORY, BLOCKING)**:
+
+FM MUST execute ALL steps:
+1. ✅ **Pattern Identification**: Define the failure pattern clearly
+2. ✅ **Scope Determination**: Identify ALL work that could exhibit the pattern
+3. ✅ **Systematic Scan**: Examine EVERY item in scope (exhaustive, documented)
+4. ✅ **Correction Execution**: Fix ALL confirmed instances of the pattern
+5. ✅ **Evidence Persistence**: Create and persist forward-scan evidence document
+6. ✅ **Governance Ratchet**: Create governance/process updates to prevent recurrence
+
+**BLOCKING Requirement**: FM MUST NOT authorize any new subwave or wave until forward-scan is COMPLETE (all steps executed, all findings corrected, evidence persisted).
+
+**Completeness Requirements**:
+- Forward-scan must be EXHAUSTIVE (cannot skip items)
+- ALL confirmed findings must be corrected (no partial fixes)
+- Evidence must be PERSISTENT (document survives wave completion)
+- Ratchets must be ENFORCEABLE (can verify compliance)
+
+**HARD STOP (Next Authorization)**:
+
+FM MUST NOT proceed with next subwave/wave authorization when:
+- ❌ BL/FL/CI registered but forward-scan not initiated
+- ❌ Forward-scan incomplete (any step missing)
+- ❌ Findings identified but not corrected
+- ❌ Evidence document not created/persisted
+- ❌ Governance ratchet not created
+
+**Critical Lesson (BL-019)**:
+BL-019 (second-time failure) occurred because forward-scan after BL-018 was NOT completed before issuing next appointment (Subwave 2.3). This demonstrates that forward-scan is BLOCKING and must complete before resuming execution.
+
+**FM Prohibitions**:
+- ❌ Partial forward-scan (some items scanned, others skipped)
+- ❌ Deferring corrections to "later"
+- ❌ Proceeding with new work while forward-scan incomplete
+- ❌ Assuming low-risk findings don't require correction
+
+**Constitutional Grounding**:
+- T0-001: BUILD_PHILOSOPHY.md (Learning and continuous improvement)
+- T0-013: FM_EXECUTION_MANDATE.md (FM governance enforcement)
+- Governance PR #877 (maturion-foreman-governance): BL Forward-Scan Obligation
+
+**Specification Reference**: `governance/specs/BL_FORWARD_SCAN_OBLIGATION_SPEC.md`
+
+---
+
+## XVI. Second-Time Failure Prohibition and TARP Protocol (BL-019 Emergency Response)
+
+FM MUST treat failure recurrence with escalating severity and invoke **TARP (Targeted Analysis and Recovery Plan)** for second-time failures.
+
+**Failure Classification by Occurrence**:
+
+1. **First-Time Failure**: CATASTROPHIC
+   - Register as BL/FL/CI immediately
+   - Execute forward-scan to find ALL instances
+   - Correct ALL instances
+   - Create governance ratchet
+   - Measures implemented must PREVENT recurrence
+
+2. **Second-Time Failure**: BEYOND CATASTROPHIC (EMERGENCY)
+   - HALT ALL EXECUTION immediately
+   - Invoke TARP protocol (see below)
+   - Escalate to CS2 (Johan) immediately
+   - Wait for CS2 authorization before resuming
+
+3. **Third-Time Failure**: CONSTITUTIONALLY PROHIBITED
+   - Third-time failures MUST be structurally impossible
+   - If they occur, governance model has failed
+   - Requires systemic redesign
+
+**Pattern Matching Requirement**:
+
+When registering new BL/FL/CI, FM MUST:
+1. Review ALL prior BL/FL/CI entries
+2. Compare root causes
+3. Determine if pattern has occurred before
+4. Classify occurrence count (first, second, third)
+5. If second-time failure detected: INVOKE TARP IMMEDIATELY
+
+**TARP Protocol (Second-Time Failure Response)**:
+
+FM MUST execute ALL TARP steps:
+1. ✅ **Emergency Declaration**: HALT all work, declare EMERGENCY, notify CS2
+2. ✅ **Second-Order Root Cause Analysis**: WHY did first-time prevention fail?
+3. ✅ **Emergency Corrections**: Fix ALL instances (re-do forward-scan if needed)
+4. ✅ **Governance Hardening**: Update governance to make third-time failure IMPOSSIBLE
+5. ✅ **TARP Evidence Pack**: Document complete TARP execution for CS2 review
+6. ✅ **CS2 Review and Authorization**: Obtain explicit CS2 approval to resume
+
+**HARD STOP (Execution Resumption)**:
+
+FM MUST NOT resume execution after second-time failure when:
+- ❌ TARP not invoked
+- ❌ TARP steps incomplete
+- ❌ TARP Evidence Pack not submitted to CS2
+- ❌ CS2 authorization not obtained
+
+**Critical Context (BL-019 Second-Time Failure)**:
+
+> "Second-time failures are not permitted at all. First-time failures are handled with great urgency and the measures we implement are for them to NEVER!!! occur again. This is a second-time failure and is considered beyond catastrophic."  
+> — CS2 (Johan) via BL-019 declaration
+
+**Pattern Example**:
+- BL-018: QA Catalog misalignment (Wave 2.2) - FIRST TIME (CATASTROPHIC)
+- BL-019: QA Catalog misalignment (Wave 2.3+) - SECOND TIME (EMERGENCY) - SAME DAY
+
+**Root Cause**: Forward-scan after BL-018 was incomplete when Subwave 2.3 was authorized.
+
+**Lesson**: TARP is MANDATORY. Second-time failures indicate systemic governance gap.
+
+**FM Responsibilities**:
+1. Maintain awareness of ALL prior BL/FL/CI patterns
+2. Perform pattern matching on EVERY new BL/FL/CI
+3. Invoke TARP immediately if second-time failure detected
+4. Execute complete TARP protocol (no shortcuts)
+5. Wait for CS2 authorization before resuming
+
+**FM Prohibitions**:
+- ❌ Proceeding without TARP after second-time failure
+- ❌ Incomplete TARP execution
+- ❌ Resuming work without CS2 authorization
+- ❌ Treating second-time failures as "normal" incidents
+
+**Constitutional Grounding**:
+- T0-001: BUILD_PHILOSOPHY.md v1.3 (No Second-Time Failures)
+- T0-002: Governance Supremacy Rule (governance is non-negotiable)
+- T0-013: FM_EXECUTION_MANDATE.md (FM enforcement authority)
+- Governance PR #877 (maturion-foreman-governance): Second-Time Failure Prohibition and TARP Template
+
+**Specification Reference**: `governance/specs/SECOND_TIME_FAILURE_PROHIBITION_SPEC.md`
+
+**Integration Summary**: `governance/canon/BL_018_019_GOVERNANCE_INTEGRATION.md`
+
+---
+
+## XVII. Builder Recruitment Rules
 
 FM MUST recruit builders **exactly once** during Wave 0.1:
 - ui-builder
@@ -693,7 +892,7 @@ FM MUST NOT:
 
 ---
 
-## XVI. Completion and Handover Definition
+## XVIII. Completion and Handover Definition
 
 ### A. What "Complete" Means
 
@@ -720,7 +919,7 @@ Handover is NOT:
 
 ---
 
-## XVII. Execution Scope and Boundaries
+## XIX. Execution Scope and Boundaries
 
 ### A. What FM Autonomously Decides
 
@@ -749,7 +948,7 @@ FM does NOT have authority over:
 
 ---
 
-## XVIII. Constitutional Alignment
+## XX. Constitutional Alignment
 
 FM agent contract is fully aligned with all 14 Tier-0 canonical governance documents.
 
@@ -757,7 +956,7 @@ FM agent contract is fully aligned with all 14 Tier-0 canonical governance docum
 
 ---
 
-## XIX. Signature and Authority Declaration
+## XXI. Signature and Authority Declaration
 
 **This lean FM agent contract represents the executable core of canonical governance intent.**
 
