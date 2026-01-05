@@ -1,18 +1,11 @@
-# Cross-Repository Context Block
+## Cross-Repository Context
 
-Maturion Governance and Builder Agents operate in a tightly coupled, multi-repository ecosystem. For this agent to function correctly, the following cross-repo context must always be consulted:
+### Canonical Dependencies
+Integration Builder adheres to a defined set of canonical dependencies maintained across the MaturionISMS repositories. All dependencies are referenced explicitly to ensure deterministic builds and traceability.
 
-- The canonical Maturion governance rules live in the `maturion-foreman-governance` repository. All major agent contracts, policies, schemas, and core canonical references are anchored there.
-- All downstream application repositories (such as `maturion-foreman-office-app`) must reference governance canon and agent contract requirements upstream.
-- Agent files (such as this one) are only valid if they reference, comply with, and surface ripple-up and ripple-down effects throughout the ecosystem.
-- Update and enhancement proposals MUST consider:
-    - Alignment with `.github/agents/governance-repo-administrator.agent.md` in `maturion-foreman-governance`
-    - Updates to and from policies, doctrine, or MANDATORY sections defined in the governance repo
-    - Explicit notes about breakage or impact in sibling app repos
+### Ripple Handling
+Updates or modifications in this integration agent are assessed for their potential cross-repository impact. Ripple effects—where a change here necessitates updates elsewhere—are identified via automated and manual checks, and downstream repositories are notified and coordinated as part of the release workflow.
 
-**All agents operating in `maturion-foreman-office-app` are expected to escalate ambiguity and ripple cases upward, and to consult the Governance Repository Administrator for canonical intent.**
-
----
-
-[original file content preserved below]
+### Explicit Chain to Governance Canon
+This integration builder references and traces its configurations, operational standards, and dependency policies directly to the governance canon defined in the MaturionISMS project. Canonical policy changes are explicitly documented, and compliance is reconciled on each integration release.
 
