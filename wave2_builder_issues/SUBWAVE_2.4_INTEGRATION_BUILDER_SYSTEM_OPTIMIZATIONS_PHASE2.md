@@ -1,0 +1,97 @@
+# Subwave 2.4: System Optimizations Phase 2 — integration-builder Build-to-Green
+
+**Wave:** 2.0  
+**Subwave:** 2.4  
+**Builder:** integration-builder  
+**QA Range:** QA-351 to QA-360 (10 QA components)  
+**Complexity:** MEDIUM  
+**Duration Estimate:** 4-5 days  
+**Dependencies:** GATE-SUBWAVE-2.3 PASS  
+**Status:** READY FOR AUTHORIZATION
+
+---
+
+## Executive Summary
+
+Complete **System Optimizations Phase 2** with resource management, load balancing, and optimization coordination across subsystems.
+
+**Mission:** Complete system optimizations with resource management (5 QA) and cross-subsystem coordination (5 QA).
+
+---
+
+## Scope Definition
+
+### QA Components
+- **Resource Management** (QA-351 to QA-355): 5 tests
+- **Cross-Subsystem Optimization Coordination** (QA-356 to QA-360): 5 tests
+
+### Out of Scope
+- Phase 1 optimizations (already in 2.3)
+
+---
+
+## Builder Appointment Package
+
+1. **Scope:** QA-351 to QA-360, 10 components, MEDIUM complexity, 4-5 days
+2. **Architecture:** Resource management, coordination patterns
+3. **QA-to-Red:** All 10 in RED before execution
+4. **Execution:** Terminal states only, no checkpoint (≤10 QA)
+5. **Evidence:** `evidence/wave-2.0/integration-builder/subwave-2.4/`
+6. **Governance:** BUILD_PHILOSOPHY.md, integration-builder contract
+
+---
+
+## Success Criteria
+
+### Gate Requirements (GATE-SUBWAVE-2.4)
+
+- ✅ All 10 QA GREEN (100%)
+- ✅ Zero test debt
+- ✅ Architecture alignment verified
+- ✅ Code checking performed and documented
+- ✅ Evidence artifacts complete
+- ✅ Builder completion report with COMPLETE terminal state
+- ✅ FM gate review PASS
+
+**Gate Pass:** ALL requirements satisfied  
+**Gate Fail:** ANY requirement not satisfied
+
+---
+
+## Execution State Discipline
+
+### Allowed States
+1. **BLOCKED** — Cannot proceed due to impediment
+2. **COMPLETE** — 10/10 GREEN, all artifacts ready
+
+### Prohibited States
+❌ Partial progress reports  
+❌ Percentage updates  
+❌ Incremental submissions
+
+**Note:** No intermediate checkpoint required (≤10 QA)
+
+---
+
+## Dependencies
+
+**Prerequisites:** GATE-SUBWAVE-2.3 PASS  
+**Downstream:** Subwaves 2.5, 2.7, 2.8 BLOCKED until 2.4 PASS
+
+---
+
+## Parallelism
+
+**Can Execute In Parallel With:**
+- Potentially Phase 2.5, 2.7, 2.8 (if 2.3 complete)
+
+---
+
+## FM Authorization
+
+**Authority:** Maturion Foreman (FM)  
+**Reference:** WAVE_2_ROLLOUT_PLAN.md Section II, Subwave 2.4
+
+---
+
+**END SUBWAVE 2.4 SPECIFICATION**
