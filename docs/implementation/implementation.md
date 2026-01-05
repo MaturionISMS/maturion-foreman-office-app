@@ -574,7 +574,248 @@ The following work is acknowledged but deferred to future phases:
 
 ---
 
-## 10. Version History
+## 10. Governance Gates and Pre-Authorization Requirements
+
+**Authority**: Governance PR #877 (maturion-foreman-governance) - BL-018/BL-019 Canonization  
+**Status**: ACTIVE (Mandatory) — Effective 2026-01-05
+
+### Purpose
+
+This section documents the **governance gates** that FM must execute before authorizing any wave or subwave execution. These gates were canonized in response to BL-018 (Wave 2.2 QA Catalog Misalignment) and BL-019 (Second-Time Failure - EMERGENCY).
+
+**Note**: This section describes **conceptual requirements only**. No implementation code changes are required as part of governance layer-down. These gates apply to FM's planning and authorization processes, not to the application runtime.
+
+### QA-Catalog-Alignment Gate (BL-018/BL-019 Prevention)
+
+**Authority**: `governance/specs/QA_CATALOG_ALIGNMENT_GATE_SPEC.md`  
+**FM Contract Reference**: `.github/agents/ForemanApp-agent.md` Section XIV.G
+
+#### Gate Purpose
+Ensures that before any wave or subwave is authorized:
+1. All assigned QA ranges exist in `QA_CATALOG.md`
+2. QA catalog entries semantically match the subwave scope intent
+3. QA-to-Red tests exist for ALL QA IDs in the assigned range
+4. No QA ID collisions exist between subwaves
+5. Architecture is frozen and defines all components being tested
+
+#### Gate Execution Points
+FM MUST execute this gate:
+- Before finalizing wave rollout plan
+- Before creating builder sub-issue for any subwave
+- Before appointing builder to any subwave
+- After any BL/FL/CI that affects QA Catalog structure
+
+#### Gate Checks (MANDATORY)
+
+1. **QA Range Existence Check**
+   - Verify all QA IDs in assigned range are defined in `QA_CATALOG.md`
+   - Verify no gaps in the QA range sequence
+
+2. **Semantic Alignment Check**
+   - Verify QA catalog descriptions match subwave feature scope
+   - Example: If subwave is "Parking Station Advanced", QA catalog entries must describe parking station features, not failure modes
+
+3. **QA-to-Red Test Existence Check**
+   - Verify test files exist for all QA IDs at expected locations
+   - Verify tests are RED (not yet implemented) per QA-to-Red semantics
+   - Record test file locations for builder reference
+
+4. **QA ID Collision Check**
+   - Verify no QA ID is assigned to multiple subwaves in the same wave
+   - Verify no overlapping QA ranges
+
+5. **Architecture Alignment Check**
+   - Verify architecture document defines all components/flows/states referenced by QA catalog
+   - Verify architecture is FROZEN (not in draft)
+
+#### Gate Outcomes
+
+**PASS**: FM may proceed with subwave authorization, builder appointment, Build-to-Green execution
+
+**FAIL**: FM MUST:
+- BLOCK the subwave authorization
+- STOP wave progression at this point
+- ESCALATE to appropriate correction pathway:
+  - Extend QA Catalog if entries missing
+  - Reassign QA range if semantic mismatch
+  - Complete QA-to-Red foundation if tests missing
+  - De-conflict QA ranges if collision detected
+  - Complete/freeze architecture if gaps exist
+- REGISTER FL/CI entry documenting the failure
+- CORRECT the structural gap before retry
+- RE-RUN the gate after correction
+
+#### Builder Expectations
+
+Builders MUST expect that FM has passed this gate before appointment. If builders discover gate preconditions are NOT met:
+- STOP work immediately
+- Declare BLOCKED in appointment issue
+- Document specific precondition failure
+- Escalate to FM with evidence
+- Wait for FM structural correction
+
+**Critical**: Builders have NO AUTHORITY to "invent" missing QA catalog entries or QA-to-Red tests. If foundation is missing, declare BLOCKED.
+
+### BL Forward-Scan Obligation (Pattern Recurrence Prevention)
+
+**Authority**: `governance/specs/BL_FORWARD_SCAN_OBLIGATION_SPEC.md`  
+**FM Contract Reference**: `.github/agents/ForemanApp-agent.md` Section XV
+
+#### Forward-Scan Purpose
+After ANY BL/FL/CI discovery, FM must:
+1. Identify the failure pattern
+2. Scan ALL in-scope work for the pattern
+3. Correct EVERY instance of the pattern
+4. Produce and persist evidence
+5. Create governance ratchets to prevent recurrence
+
+#### Forward-Scan Trigger
+FM MUST execute forward-scan:
+- After any BL entry in `governance/canon/BOOTSTRAP_EXECUTION_LEARNINGS.md`
+- After any FL/CI entry in governance registry
+- After discovery of second-time failure (EMERGENCY)
+
+#### Forward-Scan Protocol (6 Steps - ALL MANDATORY)
+
+1. **Pattern Identification**
+   - Define the failure pattern clearly
+   - Generalize pattern to identify other potential occurrences
+
+2. **Scope Determination**
+   - Identify ALL work that could exhibit the pattern
+   - Current wave subwaves (authorized and planned)
+   - Future wave planning documents
+   - Architecture/QA/governance documents if pattern relates to them
+
+3. **Systematic Scan Execution**
+   - Examine EVERY item in scope for the pattern
+   - Document findings (confirmed, suspected, clear)
+   - Create scan log with evidence
+
+4. **Correction Execution**
+   - Fix ALL confirmed instances (no partial fixes)
+   - Verify corrections resolve the pattern
+   - Document correction evidence
+
+5. **Evidence Persistence**
+   - Create forward-scan evidence document
+   - Store permanently (e.g., `WAVE_2_FORWARD_SCAN_QA_ALIGNMENT_VERIFICATION.md`)
+   - Link from BL/FL/CI entry
+
+6. **Governance Ratchet Creation**
+   - Identify governance/process gaps that allowed the pattern
+   - Design ratchet (checklist, gate, automation, policy update)
+   - Implement ratchet in governance documents
+   - Update agent contracts to enforce ratchet
+
+#### Forward-Scan Blocking Requirement
+
+**BLOCKING**: FM MUST NOT authorize any new subwave or wave until forward-scan is COMPLETE (all steps executed, all findings corrected, evidence persisted).
+
+**Critical Lesson (BL-019)**: BL-019 occurred because forward-scan after BL-018 was NOT completed before issuing next appointment (Subwave 2.3). This demonstrates that forward-scan is BLOCKING and must complete before resuming execution.
+
+### Second-Time Failure Prohibition and TARP Protocol
+
+**Authority**: `governance/specs/SECOND_TIME_FAILURE_PROHIBITION_SPEC.md`  
+**FM Contract Reference**: `.github/agents/ForemanApp-agent.md` Section XVI
+
+#### Failure Classification by Occurrence
+
+1. **First-Time Failure**: CATASTROPHIC
+   - Handle with great urgency
+   - Implement measures to PREVENT recurrence
+   - Pattern must NEVER occur again
+
+2. **Second-Time Failure**: BEYOND CATASTROPHIC (EMERGENCY)
+   - HALT ALL EXECUTION immediately
+   - Invoke TARP (Targeted Analysis and Recovery Plan)
+   - Escalate to CS2 (Johan) immediately
+   - Wait for CS2 authorization before resuming
+
+3. **Third-Time Failure**: CONSTITUTIONALLY PROHIBITED
+   - Must be structurally impossible by governance design
+   - If occurs, governance model has failed
+
+#### TARP Protocol (Second-Time Failure Response)
+
+When FM detects second-time failure (same pattern as prior BL/FL/CI), FM MUST:
+
+1. **Emergency Declaration**
+   - STOP all active builder work immediately
+   - BLOCK all pending subwave authorizations
+   - Declare EMERGENCY in all active issues
+   - Notify CS2 immediately
+
+2. **Second-Order Root Cause Analysis**
+   - WHY did the first-time failure prevention measures fail?
+   - Was the ratchet correctly designed?
+   - Was the ratchet properly implemented and enforced?
+   - What systemic issue allowed recurrence?
+
+3. **Emergency Corrections**
+   - Correct ALL instances of second-time failure pattern
+   - Fix systemic gap that allowed recurrence
+   - Strengthen or replace failing ratchet
+   - Add redundant prevention mechanisms
+
+4. **Governance Hardening**
+   - Update governance to make third-time failure IMPOSSIBLE
+   - Add automation where manual checks failed
+   - Add redundant checks and enforcement gates
+   - Update agent contracts with strengthened obligations
+
+5. **TARP Evidence Pack**
+   - Document complete TARP execution for CS2 review
+   - Include timeline, evidence, prevention architecture, residual risk assessment
+
+6. **CS2 Review and Resumption Authorization**
+   - Submit TARP Evidence Pack to CS2
+   - Obtain explicit CS2 authorization to resume execution
+   - FM MUST NOT resume without CS2 approval
+
+#### Pattern Matching Requirement
+
+When registering new BL/FL/CI, FM MUST:
+1. Review ALL prior BL/FL/CI entries
+2. Compare root causes
+3. Classify occurrence count (first, second, third)
+4. If second-time failure detected: INVOKE TARP IMMEDIATELY
+
+### Implementation Impact
+
+**No Code Changes Required**: These governance gates and protocols apply to FM's planning and authorization processes. They do not require changes to:
+- Application runtime code
+- Wave 2 implementation modules
+- Test suites or test infrastructure
+- Builder implementation code paths
+
+**Documentation Only**: This section provides conceptual guidance for FM execution. The authoritative specifications are in the governance specs referenced above.
+
+### References
+
+**Governance Specifications (Canonical Authority)**:
+- `governance/specs/QA_CATALOG_ALIGNMENT_GATE_SPEC.md`
+- `governance/specs/BL_FORWARD_SCAN_OBLIGATION_SPEC.md`
+- `governance/specs/SECOND_TIME_FAILURE_PROHIBITION_SPEC.md`
+- `governance/canon/BL_018_019_GOVERNANCE_INTEGRATION.md`
+
+**Agent Contract Integration**:
+- `.github/agents/ForemanApp-agent.md` (Sections XIV.G, XV, XVI)
+- `.github/agents/qa-builder.md` (BL-018/BL-019 Awareness section)
+- `.github/agents/ui-builder.md` (BL-018/BL-019 Awareness section)
+- `.github/agents/api-builder.md` (BL-018/BL-019 Awareness section)
+- `.github/agents/schema-builder.md` (BL-018/BL-019 Awareness section)
+- `.github/agents/integration-builder.md` (BL-018/BL-019 Awareness section)
+
+**Case Study Documents**:
+- `FLCI_REGISTRY_UPDATE_BL_018.md` (First-time QA Catalog misalignment)
+- `FLCI_REGISTRY_UPDATE_BL_019_SECOND_FAILURE_CATASTROPHIC.md` (Second-time failure - EMERGENCY)
+- `WAVE_2_EMERGENCY_CORRECTIVE_ACTION_PLAN_BL_019.md` (TARP evidence)
+- `WAVE_2_FORWARD_SCAN_QA_ALIGNMENT_VERIFICATION.md` (Forward-scan evidence)
+
+---
+
+## 11. Version History
 
 - **v1.0.0 (2025-12-24):** Initial implementation strategy document created
   - Mapped gaps from surveys (ARCH-ALIGN-01, MEM-AUTH-01, FM-RESP-01, WD-OBS-01)
@@ -582,9 +823,16 @@ The following work is acknowledged but deferred to future phases:
   - Tracked current status (architecture complete, implementation pending)
   - Explicitly defined scope boundaries and non-goals
 
+- **v1.1.0 (2026-01-05):** Added Governance Gates and Pre-Authorization Requirements (Section 10)
+  - Documented QA-Catalog-Alignment Gate (BL-018/BL-019 prevention)
+  - Documented BL Forward-Scan Obligation (pattern recurrence prevention)
+  - Documented Second-Time Failure Prohibition and TARP protocol
+  - Cross-referenced to governance PR #877 and FM/builder agent contract updates
+  - Clarified: Documentation only, no implementation code changes required
+
 ---
 
-## 11. Related Documents
+## 12. Related Documents
 
 ### Architecture Specifications (Completed)
 - `docs/architecture/runtime/memory/MEMORY_LIFECYCLE_STATE_MACHINE.md`
@@ -597,6 +845,12 @@ The following work is acknowledged but deferred to future phases:
 - `foreman/behaviours/memory-rules.md`
 - `foreman/identity.md`
 - `foreman/roles-and-duties.md`
+
+### Governance Canon (This Repository - BL-018/BL-019 Integration)
+- `governance/specs/QA_CATALOG_ALIGNMENT_GATE_SPEC.md` (QA-Catalog-Alignment gate requirements)
+- `governance/specs/BL_FORWARD_SCAN_OBLIGATION_SPEC.md` (BL Forward-Scan protocol)
+- `governance/specs/SECOND_TIME_FAILURE_PROHIBITION_SPEC.md` (Second-time failure prohibition and TARP)
+- `governance/canon/BL_018_019_GOVERNANCE_INTEGRATION.md` (Integration summary from governance PR #877)
 
 ### Evidence and Proof Documents
 - `PREHANDOVER_PROOF_RUNTIME_MEMORY_ARCH.md` (Architecture completion proof)
