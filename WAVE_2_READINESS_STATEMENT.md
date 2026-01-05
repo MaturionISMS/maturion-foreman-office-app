@@ -220,7 +220,7 @@ Wave 2 Implementation Plan has been created, validated, and hardened using all l
   3. Wave 2 QA-to-Red compilation (⏳ PENDING)
   4. Platform readiness GREEN (✅ SATISFIED)
   5. Builder readiness confirmed (⏳ PENDING)
-  6. CS2 authorization (⏳ PENDING)
+  6. Wave 2 plan approved (⏳ PENDING - this document, awaiting CS2 authorization)
 - ✅ **Authorization Request:** Explicit request for CS2 review and authorization
 
 **Status:** ✅ **DELIVERED**
@@ -394,12 +394,11 @@ Wave 2 Implementation Plan has been created, validated, and hardened using all l
 
 **Prerequisites:**
 - ✅ Wave 1 IBWR complete (status = PASS)
-- ✅ Wave 2 implementation plan complete (this issue)
 - ⏳ Wave 2 architecture frozen
 - ⏳ Wave 2 QA-to-Red compiled
 - ✅ Platform readiness GREEN
 - ⏳ Builder readiness confirmed
-- ⏳ **CS2 (Johan) authorization granted** ← **BLOCKING**
+- ⏳ **Wave 2 plan approved (CS2 authorization granted)** ← **BLOCKING**
 
 **Owner:** CS2 (Johan Ras)
 
