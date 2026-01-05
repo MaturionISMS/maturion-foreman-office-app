@@ -115,10 +115,11 @@ def clear_test_state():
         pass  # Components not implemented yet (expected in RED phase)
     
     try:
-        from foreman.cross_cutting import memory_manager, authority_enforcer, audit_logger
+        from foreman.cross_cutting import memory_manager, authority_enforcer, audit_logger, system_health_watchdog
         memory_manager.clear_all()
         authority_enforcer.clear_all()
         audit_logger.clear_all()
+        system_health_watchdog.clear_all()
     except ImportError:
         pass  # Components not implemented yet (expected in RED phase)
     
@@ -134,9 +135,10 @@ def clear_test_state():
         pass
     
     try:
-        from foreman.cross_cutting import memory_manager, authority_enforcer, audit_logger
+        from foreman.cross_cutting import memory_manager, authority_enforcer, audit_logger, system_health_watchdog
         memory_manager.clear_all()
         authority_enforcer.clear_all()
         audit_logger.clear_all()
+        system_health_watchdog.clear_all()
     except ImportError:
         pass

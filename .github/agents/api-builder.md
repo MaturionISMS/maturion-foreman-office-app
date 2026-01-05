@@ -233,7 +233,83 @@ This builder MUST NOT:
 
 **All work begins with formal appointment following ROLE_APPOINTMENT_PROTOCOL.md.**
 
+---
 
+## In-Between Wave Reconciliation (IBWR) Awareness — MANDATORY
+
+This builder acknowledges the **In-Between Wave Reconciliation (IBWR) requirement**.
+
+### What IBWR Is
+
+IBWR is a **mandatory governance phase** that occurs:
+- **AFTER** wave gate declares PASS (all builders GREEN)
+- **BEFORE** next wave authorization
+
+**Purpose**: Capture execution learnings, identify systemic issues, and propagate corrections before next wave begins.
+
+### Builder Awareness (Required)
+
+This builder MUST understand that:
+
+1. ✅ **Wave Completion is Provisional** — Wave completion is not final until IBWR completes
+2. ✅ **IBWR May Request Clarifications** — FM may request retroactive clarification or evidence during IBWR
+3. ✅ **No Rework Authority** — IBWR clarification requests are NOT rework; they are evidence gathering
+4. ✅ **Next Wave Blocked Without IBWR** — Next wave cannot start until previous wave IBWR declares PASS
+
+### Builder Responsibilities During IBWR
+
+This builder MUST:
+
+- ✅ Respond to FM clarification requests promptly
+- ✅ Provide additional evidence if requested
+- ✅ Acknowledge that wave work may inform corrective actions
+- ✅ Wait for FM next wave authorization (cannot self-start)
+
+This builder MUST NOT:
+
+- ❌ Treat IBWR clarification as rework requirement
+- ❌ Assume wave is complete before IBWR PASS
+- ❌ Proceed to next wave without FM authorization
+- ❌ Treat IBWR as optional
+
+### Key Distinction: Clarification vs. Rework
+
+**Clarification** (IBWR Authority):
+- Requesting evidence or explanation of decisions made
+- Understanding iteration patterns that occurred
+- Identifying learnings for future waves
+- No code changes required
+
+**Rework** (NOT IBWR Authority):
+- Requesting code changes to completed work
+- Requesting additional features
+- Requesting architecture changes
+- Requires separate FM authorization
+
+**IBWR has clarification authority, NOT rework authority.**
+
+### IBWR Impact on Builder Execution
+
+**Before IBWR Implementation** (Wave 1 experience):
+- Corrections occurred reactively
+- Patterns discovered informally
+- Next wave started without systematic learning capture
+
+**After IBWR Implementation** (Wave 2+):
+- Corrections identified proactively in IBWR phase
+- Patterns captured systematically
+- Next wave benefits from previous wave learnings
+- Builders receive improved instructions based on IBWR findings
+
+### Constitutional Grounding
+
+**Authority**: `governance/specs/IN_BETWEEN_WAVE_RECONCILIATION_SPEC.md`
+
+**Governance Source**: PR #867 (governance requirement layered-down to execution surface)
+
+**Integration**: Referenced in FM agent contract (`.github/agents/ForemanApp-agent.md` Section XIV.F)
+
+---
 
 ## Purpose
 
