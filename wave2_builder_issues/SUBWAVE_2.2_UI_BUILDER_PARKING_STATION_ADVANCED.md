@@ -3,11 +3,11 @@
 **Wave:** 2.0  
 **Subwave:** 2.2  
 **Builder:** ui-builder  
-**QA Range:** QA-376 to QA-385 (10 QA components)  
+**QA Range:** QA-416 to QA-425 (10 QA components)  
 **Complexity:** LOW  
 **Duration Estimate:** 3-4 days  
 **Dependencies:** GATE-SUBWAVE-2.1 PASS  
-**Status:** READY FOR AUTHORIZATION (pending Subwave 2.1 completion)
+**Status:** CORRECTED (BL-019 Emergency QA Range Correction)
 
 ---
 
@@ -34,28 +34,28 @@ Implement **Parking Station Advanced** features for the Foreman Office App to ma
 ### QA Components to Implement
 
 **Total Test Count:** 10 tests  
-**Test Location:** `tests/wave2_0_qa_infrastructure/test_parking_station_advanced_*.py`
+**Test Location:** `tests/wave2_0_qa_infrastructure/test_parking_station_advanced.py`
 
 **Advanced Parking Station Features:**
-- **Prioritization Features** (QA-376 to QA-380): 5 tests
-  - QA-376: Priority UI component rendering
-  - QA-377: Priority assignment logic
-  - QA-378: Priority-based sorting
-  - QA-379: Priority escalation handling
-  - QA-380: Priority visualization
+- **Prioritization Features** (QA-416 to QA-420): 5 tests
+  - QA-416: Assign priority to parked idea (verify HIGH/MEDIUM/LOW assignment, visual indicator)
+  - QA-417: Sort parking station by priority (verify sort order, priority-based filtering)
+  - QA-418: Priority change workflow (verify priority update, audit log, notification)
+  - QA-419: Priority-based escalation (verify HIGH priority triggers escalation, alerts)
+  - QA-420: Priority display in UI (verify color coding, icon usage, accessibility)
 
-- **Bulk Operations** (QA-381 to QA-385): 5 tests
-  - QA-381: Bulk selection UI
-  - QA-382: Bulk action handlers
-  - QA-383: Bulk move operations
-  - QA-384: Bulk status updates
-  - QA-385: Bulk operation validation
+- **Bulk Operations** (QA-421 to QA-425): 5 tests
+  - QA-421: Bulk select parked ideas (verify multi-select UI, select all, select range)
+  - QA-422: Bulk priority update (verify bulk priority assignment, confirmation dialog)
+  - QA-423: Bulk archive ideas (verify bulk archive operation, undo capability, audit trail)
+  - QA-424: Bulk export ideas (verify export to CSV/JSON, include metadata, download)
+  - QA-425: Bulk operation error handling (verify partial failure, rollback, error reporting)
 
 ### Out of Scope
 - ❌ Enhanced Dashboard features — Subwave 2.1, do not modify
 - ❌ System optimizations — Subwaves 2.3+, do not modify
 - ❌ Any API, Schema, or Integration components — other builders
-- ❌ Extended parking QA beyond QA-376 to QA-385
+- ❌ Extended parking QA beyond QA-416 to QA-425
 
 ---
 

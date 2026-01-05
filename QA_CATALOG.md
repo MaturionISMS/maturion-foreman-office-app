@@ -571,33 +571,249 @@ BUILDER_GREEN_SCOPE_RULES.md (Assignment Rules)
 
 ---
 
+### Wave 2 Extensions (QA-401 to QA-530)
+
+**Wave 2 QA Extensions — BL-019 Emergency Corrections**
+
+**Version:** 2.1.0  
+**Date:** 2026-01-05  
+**Authority:** BL-019 Emergency Corrective Action Plan  
+**Purpose:** Extend QA Catalog with Wave 2 QA ranges to resolve semantic misalignments
+
+---
+
+#### Subwave 2.1: Enhanced Dashboard (QA-401 to QA-415)
+
+**Drill-Down Navigation (QA-401 to QA-405):** 5 QA
+- QA-401: Navigate from RED status to root cause (verify drill-down path, evidence retrieval)
+- QA-402: Navigate from AMBER status to reason (verify reason display, supporting data)
+- QA-403: Navigate to evidence artifacts (verify retrieval, display, immutability)
+- QA-404: Multi-level drill-down (verify breadcrumb trail, back navigation, state preservation)
+- QA-405: Drill-down error handling (verify evidence not found, broken link handling)
+
+**Advanced Filtering (QA-406 to QA-410):** 5 QA
+- QA-406: Filter dashboard by domain (verify domain selection, display updates)
+- QA-407: Filter dashboard by status (verify GREEN/AMBER/RED filtering, multi-select)
+- QA-408: Filter dashboard by time range (verify date range selection, data reload)
+- QA-409: Filter dashboard by component (verify component selection, hierarchy filtering)
+- QA-410: Filter combination (verify multiple filters together, AND/OR logic)
+
+**Real-Time Updates (QA-411 to QA-415):** 5 QA
+- QA-411: Real-time status update via WebSocket (verify push notification, UI update)
+- QA-412: Real-time domain addition (verify new domain appears, no page reload)
+- QA-413: Real-time evidence linking (verify evidence updates, notification)
+- QA-414: Real-time connection loss handling (verify fallback to polling, reconnection)
+- QA-415: Real-time update throttling (verify rate limiting, batch updates, no spam)
+
+---
+
+#### Subwave 2.2: Parking Station Advanced (QA-416 to QA-425)
+
+**Prioritization Features (QA-416 to QA-420):** 5 QA
+- QA-416: Assign priority to parked idea (verify HIGH/MEDIUM/LOW assignment, visual indicator)
+- QA-417: Sort parking station by priority (verify sort order, priority-based filtering)
+- QA-418: Priority change workflow (verify priority update, audit log, notification)
+- QA-419: Priority-based escalation (verify HIGH priority triggers escalation, alerts)
+- QA-420: Priority display in UI (verify color coding, icon usage, accessibility)
+
+**Bulk Operations (QA-421 to QA-425):** 5 QA
+- QA-421: Bulk select parked ideas (verify multi-select UI, select all, select range)
+- QA-422: Bulk priority update (verify bulk priority assignment, confirmation dialog)
+- QA-423: Bulk archive ideas (verify bulk archive operation, undo capability, audit trail)
+- QA-424: Bulk export ideas (verify export to CSV/JSON, include metadata, download)
+- QA-425: Bulk operation error handling (verify partial failure, rollback, error reporting)
+
+---
+
+#### Subwave 2.4: System Optimizations Phase 2 (QA-436 to QA-445)
+
+**Connection Pooling (QA-436 to QA-440):** 5 QA
+- QA-436: Connection pool initialization (verify pool creation, configuration, size limits)
+- QA-437: Connection acquisition (verify checkout, timeout handling, availability)
+- QA-438: Connection return (verify release, validation, reuse)
+- QA-439: Connection pool health monitoring (verify health checks, stale detection, recovery)
+- QA-440: Connection pool statistics (verify active/idle counts, wait times, utilization)
+
+**Lazy Loading Optimization (QA-441 to QA-445):** 5 QA
+- QA-441: Lazy loading initialization (verify deferred loading, trigger detection)
+- QA-442: Lazy loading data fetch (verify on-demand fetch, caching, efficiency)
+- QA-443: Lazy loading error handling (verify fetch failure, retry logic, fallback)
+- QA-444: Lazy loading performance metrics (verify load time, data volume, cache hit rate)
+- QA-445: Lazy loading consistency (verify data freshness, invalidation, synchronization)
+
+---
+
+#### Subwave 2.6: Advanced Analytics Phase 2 (QA-446 to QA-460)
+
+**Trend Analysis (QA-446 to QA-450):** 5 QA
+- QA-446: Trend calculation (verify trend detection, slope calculation, direction)
+- QA-447: Trend visualization (verify chart rendering, axis labels, legend)
+- QA-448: Trend forecasting (verify projection, confidence interval, accuracy)
+- QA-449: Trend anomaly detection (verify outlier detection, alert trigger, investigation)
+- QA-450: Trend comparison (verify baseline comparison, variance analysis, reporting)
+
+**Predictive Analytics (QA-451 to QA-455):** 5 QA
+- QA-451: Predictive model initialization (verify model loading, configuration, validation)
+- QA-452: Prediction generation (verify input processing, prediction output, confidence score)
+- QA-453: Prediction accuracy tracking (verify actual vs predicted, error metrics, improvement)
+- QA-454: Prediction visualization (verify prediction display, confidence bands, explanations)
+- QA-455: Prediction error handling (verify invalid input, model failure, fallback)
+
+**Custom Report Generation (QA-456 to QA-460):** 5 QA
+- QA-456: Report template creation (verify template definition, parameter specification, validation)
+- QA-457: Report data aggregation (verify data collection, filtering, calculation)
+- QA-458: Report rendering (verify format support, visualization, layout)
+- QA-459: Report export (verify PDF/CSV/JSON export, formatting, completeness)
+- QA-460: Report scheduling (verify scheduled generation, delivery, retention)
+
+---
+
+#### Subwave 2.9: Deep Integration Phase 1 (QA-461 to QA-475)
+
+**Cross-Subsystem Integration (QA-461 to QA-465):** 5 QA
+- QA-461: Subsystem event propagation (verify event emission, routing, delivery)
+- QA-462: Subsystem data synchronization (verify data consistency, conflict resolution, audit)
+- QA-463: Subsystem state coordination (verify state tracking, consistency, recovery)
+- QA-464: Subsystem dependency management (verify dependency resolution, ordering, failure handling)
+- QA-465: Cross-subsystem error handling (verify error propagation, isolation, recovery)
+
+**Event Bus Implementation (QA-466 to QA-470):** 5 QA
+- QA-466: Event bus initialization (verify bus creation, subscriber registration, topic setup)
+- QA-467: Event publishing (verify event emission, serialization, routing)
+- QA-468: Event subscription (verify subscriber registration, event filtering, delivery)
+- QA-469: Event ordering guarantees (verify ordering preservation, sequence numbers, delivery)
+- QA-470: Event bus failure handling (verify lost event detection, retry, dead letter queue)
+
+**Service Communication (QA-471 to QA-475):** 5 QA
+- QA-471: Service discovery (verify service registration, lookup, availability)
+- QA-472: Service request/response (verify request handling, response generation, timeout)
+- QA-473: Service retry logic (verify retry attempts, exponential backoff, circuit breaker)
+- QA-474: Service health checking (verify health endpoint, status reporting, auto-recovery)
+- QA-475: Service communication security (verify authentication, authorization, encryption)
+
+---
+
+#### Subwave 2.10: Deep Integration Phase 2 (QA-476 to QA-490)
+
+**Transaction Management (QA-476 to QA-480):** 5 QA
+- QA-476: Transaction initialization (verify transaction start, context creation, isolation level)
+- QA-477: Transaction commit (verify commit success, data persistence, finalization)
+- QA-478: Transaction rollback (verify rollback execution, state restoration, cleanup)
+- QA-479: Distributed transaction coordination (verify two-phase commit, coordinator, participants)
+- QA-480: Transaction failure recovery (verify failure detection, compensation, audit trail)
+
+**Data Consistency Management (QA-481 to QA-485):** 5 QA
+- QA-481: Consistency validation (verify data validation, constraint checking, error detection)
+- QA-482: Consistency repair (verify inconsistency detection, repair execution, verification)
+- QA-483: Consistency monitoring (verify continuous monitoring, alert generation, reporting)
+- QA-484: Eventual consistency handling (verify async propagation, convergence, reconciliation)
+- QA-485: Consistency conflict resolution (verify conflict detection, resolution strategy, audit)
+
+**Integration Testing Framework (QA-486 to QA-490):** 5 QA
+- QA-486: Test fixture setup (verify test data creation, environment setup, isolation)
+- QA-487: Integration test execution (verify test orchestration, assertion, reporting)
+- QA-488: Test cleanup (verify data cleanup, resource release, state reset)
+- QA-489: Integration test coverage (verify coverage metrics, gap detection, reporting)
+- QA-490: Integration test failure analysis (verify failure diagnosis, root cause, remediation)
+
+---
+
+#### Subwave 2.13: Complete E2E Flows Phase 1 (QA-491 to QA-510)
+
+**Intent-to-Build E2E Flow (QA-491 to QA-495):** 5 QA
+- QA-491: E2E intent intake (verify user input, validation, intent creation)
+- QA-492: E2E clarification (verify ambiguity detection, question generation, resolution)
+- QA-493: E2E requirement generation (verify spec creation, approval flow, freeze)
+- QA-494: E2E build execution (verify builder assignment, progress tracking, completion)
+- QA-495: E2E build delivery (verify deliverable creation, handover, acceptance)
+
+**Escalation E2E Flow (QA-496 to QA-500):** 5 QA
+- QA-496: E2E escalation trigger (verify detection, escalation creation, routing)
+- QA-497: E2E escalation presentation (verify inbox placement, notification, UI display)
+- QA-498: E2E escalation decision (verify decision capture, execution, resolution)
+- QA-499: E2E escalation audit (verify complete audit trail, evidence linking, immutability)
+- QA-500: E2E escalation error recovery (verify failure handling, retry, escalation)
+
+**Parking Station E2E Flow (QA-501 to QA-505):** 5 QA
+- QA-501: E2E idea submission (verify submission, validation, persistence)
+- QA-502: E2E discussion (verify discussion start, conversation link, participation)
+- QA-503: E2E requirement conversion (verify conversion trigger, spec generation, approval)
+- QA-504: E2E build from parking (verify build creation, traceability, execution)
+- QA-505: E2E parking audit (verify complete audit trail, state transitions, evidence)
+
+**Dashboard E2E Flow (QA-506 to QA-510):** 5 QA
+- QA-506: E2E status update (verify status change, dashboard update, notification)
+- QA-507: E2E drill-down (verify domain selection, evidence retrieval, display)
+- QA-508: E2E filter application (verify filter selection, data refresh, persistence)
+- QA-509: E2E real-time update (verify WebSocket push, UI refresh, consistency)
+- QA-510: E2E dashboard audit (verify complete audit trail, user actions, state changes)
+
+---
+
+#### Subwave 2.14: Complete E2E Flows Phase 2 (QA-511 to QA-530)
+
+**Multi-User E2E Flow (QA-511 to QA-515):** 5 QA
+- QA-511: E2E multi-user conversation (verify concurrent messages, ordering, delivery)
+- QA-512: E2E multi-user collaboration (verify shared context, updates, conflict resolution)
+- QA-513: E2E multi-user approval (verify multiple approvers, consensus, decision)
+- QA-514: E2E multi-user notification (verify targeted notifications, delivery, acknowledgment)
+- QA-515: E2E multi-user audit (verify complete audit trail, user attribution, traceability)
+
+**Error Recovery E2E Flow (QA-516 to QA-520):** 5 QA
+- QA-516: E2E failure detection (verify error detection, context capture, classification)
+- QA-517: E2E retry logic (verify retry attempts, exponential backoff, success)
+- QA-518: E2E fallback handling (verify fallback trigger, alternate path, recovery)
+- QA-519: E2E escalation on failure (verify escalation trigger, routing, resolution)
+- QA-520: E2E failure audit (verify complete audit trail, root cause, remediation)
+
+**Performance E2E Flow (QA-521 to QA-525):** 5 QA
+- QA-521: E2E response time (verify end-to-end latency, measurement, threshold)
+- QA-522: E2E throughput (verify request processing rate, capacity, limits)
+- QA-523: E2E resource utilization (verify CPU/memory/network usage, efficiency, optimization)
+- QA-524: E2E scalability (verify load handling, horizontal scaling, performance)
+- QA-525: E2E performance monitoring (verify metrics collection, alerting, reporting)
+
+**Security E2E Flow (QA-526 to QA-530):** 5 QA
+- QA-526: E2E authentication (verify user authentication, session management, security)
+- QA-527: E2E authorization (verify permission checking, access control, enforcement)
+- QA-528: E2E data encryption (verify encryption in transit, at rest, key management)
+- QA-529: E2E audit trail (verify complete security audit, immutability, compliance)
+- QA-530: E2E security incident response (verify incident detection, response, remediation)
+
+---
+
 ## QA Catalog Statistics
 
-**Total QA Components:** 400+
+**Total QA Components:** 530
 
 **By Category:**
 - Component-Based QA: 199 (QA-001 to QA-199)
 - Flow-Based QA: 43 (QA-200 to QA-242)
 - State Transition-Based QA: 78 (QA-243 to QA-320)
-- Failure Mode-Based QA: 80+ (QA-321 to QA-400+)
+- Failure Mode-Based QA: 80 (QA-321 to QA-400)
+- Wave 2 Extensions: 130 (QA-401 to QA-530)
 
 **By Subsystem:**
 - Conversational Interface: 22 QA components
-- Dashboard: 20 QA components
-- Parking Station: 15 QA components
+- Dashboard: 20 QA components (Wave 1) + 15 QA components (Wave 2) = 35 total
+- Parking Station: 15 QA components (Wave 1) + 10 QA components (Wave 2) = 25 total
 - Intent Processing: 20 QA components
 - Execution Orchestration: 15 QA components
 - Escalation & Supervision: 24 QA components
 - Governance Enforcement: 15 QA components
-- Analytics: 15 QA components
+- Analytics: 15 QA components (Wave 1) + 15 QA components (Wave 2) = 30 total
 - Cross-Cutting: 53 QA components
-- System-Wide: 201+ QA components (flows, states, failures)
+- System-Wide: 201 QA components (flows, states, failures, Wave 1)
+- Wave 2 Integrations: 30 QA components (Deep Integration Phase 1 & 2)
+- Wave 2 E2E Flows: 40 QA components (E2E Phase 1 & 2)
+- Wave 2 System Optimizations: 10 QA components (Phase 2)
 
 **Coverage:**
 - Architectural Components: 36 components, 100% coverage
 - Runtime Paths: 4 major paths, 100% coverage
 - State Transitions: 78+ transitions, 100% coverage
-- Failure Modes: 80+ scenarios, comprehensive coverage
+- Failure Modes: 80 scenarios, comprehensive coverage
+- Wave 2 Extensions: 130 QA components covering enhanced features, optimizations, analytics, integrations, and E2E flows
 
 ---
 
@@ -650,8 +866,8 @@ Builder B assigned: QA-023 to QA-042 (Dashboard Subsystem)
 
 I, Foreman (FM), confirm that this QA Catalog:
 
-- Provides authoritative index of 400+ QA components
-- Numbers QA components sequentially (QA-001 to QA-400+)
+- Provides authoritative index of 530 QA components
+- Numbers QA components sequentially (QA-001 to QA-530)
 - Maps every architectural element to numbered QA
 - Establishes immutability rules for QA numbering
 - Enables bounded builder assignment by QA range
@@ -659,11 +875,13 @@ I, Foreman (FM), confirm that this QA Catalog:
 - Enables build progress measurement by QA coverage
 - Supports non-coder orchestration (no code review required)
 - Aligns with FM_ARCHITECTURE_SPEC_V2_WIRING_COMPLETE.md
+- Includes Wave 2 extensions per BL-019 Emergency Corrective Action Plan
 - Is ready to serve as authoritative QA index
 
 **Accepted By:** Foreman (FM)  
-**Date:** 2025-12-31  
-**Derivation:** Re-derived from Architecture V2 (Wiring-Complete)
+**Date:** 2026-01-05  
+**Version:** 2.1.0 (Wave 2 Extensions Added)  
+**Derivation:** Wave 1 QA from Architecture V2 (Wiring-Complete), Wave 2 QA from BL-019 Emergency Corrective Action Plan
 
 ---
 

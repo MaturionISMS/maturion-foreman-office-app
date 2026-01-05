@@ -3,11 +3,11 @@
 **Wave:** 2.0  
 **Subwave:** 2.1  
 **Builder:** ui-builder  
-**QA Range:** QA-361 to QA-375 (15 QA components)  
+**QA Range:** QA-401 to QA-415 (15 QA components)  
 **Complexity:** LOW  
 **Duration Estimate:** 4-6 days  
 **Dependencies:** Wave 1.0 Complete ✅  
-**Status:** READY FOR AUTHORIZATION (pending Wave 2.0 prerequisites)
+**Status:** CORRECTED (BL-019 Emergency QA Range Correction)
 
 ---
 
@@ -35,35 +35,35 @@ Implement **Enhanced Dashboard** features for the Foreman Office App to make **1
 ### QA Components to Implement
 
 **Total Test Count:** 15 tests  
-**Test Location:** `tests/wave2_0_qa_infrastructure/test_dashboard_enhanced_*.py`
+**Test Location:** `tests/wave2_0_qa_infrastructure/test_enhanced_dashboard.py`
 
 **Enhanced Dashboard Features:**
-- **Drill-Down Navigation** (QA-361 to QA-365): 5 tests
-  - QA-361: Drill-down UI component rendering
-  - QA-362: Drill-down state management
-  - QA-363: Drill-down navigation handlers
-  - QA-364: Breadcrumb navigation
-  - QA-365: Drill-down data flow
+- **Drill-Down Navigation** (QA-401 to QA-405): 5 tests
+  - QA-401: Navigate from RED status to root cause (verify drill-down path, evidence retrieval)
+  - QA-402: Navigate from AMBER status to reason (verify reason display, supporting data)
+  - QA-403: Navigate to evidence artifacts (verify retrieval, display, immutability)
+  - QA-404: Multi-level drill-down (verify breadcrumb trail, back navigation, state preservation)
+  - QA-405: Drill-down error handling (verify evidence not found, broken link handling)
 
-- **Advanced Filtering** (QA-366 to QA-370): 5 tests
-  - QA-366: Filter UI component rendering
-  - QA-367: Filter state management
-  - QA-368: Multi-criteria filtering
-  - QA-369: Filter persistence
-  - QA-370: Filter reset handling
+- **Advanced Filtering** (QA-406 to QA-410): 5 tests
+  - QA-406: Filter dashboard by domain (verify domain selection, display updates)
+  - QA-407: Filter dashboard by status (verify GREEN/AMBER/RED filtering, multi-select)
+  - QA-408: Filter dashboard by time range (verify date range selection, data reload)
+  - QA-409: Filter dashboard by component (verify component selection, hierarchy filtering)
+  - QA-410: Filter combination (verify multiple filters together, AND/OR logic)
 
-- **Real-Time Dashboard Updates** (QA-371 to QA-375): 5 tests
-  - QA-371: WebSocket connection setup
-  - QA-372: Real-time data update handlers
-  - QA-373: Dashboard auto-refresh logic
-  - QA-374: Update notification UI
-  - QA-375: Real-time data consistency
+- **Real-Time Dashboard Updates** (QA-411 to QA-415): 5 tests
+  - QA-411: Real-time status update via WebSocket (verify push notification, UI update)
+  - QA-412: Real-time domain addition (verify new domain appears, no page reload)
+  - QA-413: Real-time evidence linking (verify evidence updates, notification)
+  - QA-414: Real-time connection loss handling (verify fallback to polling, reconnection)
+  - QA-415: Real-time update throttling (verify rate limiting, batch updates, no spam)
 
 ### Out of Scope
 - ❌ Parking Station features — Subwave 2.2, do not modify
 - ❌ System optimizations — Subwaves 2.3+, do not modify
 - ❌ Any API, Schema, or Integration components — other builders
-- ❌ Extended dashboard QA beyond QA-361 to QA-375
+- ❌ Extended dashboard QA beyond QA-401 to QA-415
 
 ---
 
@@ -80,13 +80,13 @@ Implement **Enhanced Dashboard** features for the Foreman Office App to make **1
 - **FM_ARCHITECTURE_SPEC_V2_WIRING_COMPLETE.md** — Wave 1 Dashboard foundation
 
 ### QA Catalog
-- **QA_CATALOG.md** (to be updated for Wave 2)
-- QA-361 to QA-375 specifications
+- **QA_CATALOG.md** (Updated for Wave 2 - BL-019 Corrections)
+- QA-401 to QA-415 specifications
 
 ### Test Suite (RED)
-- **Location:** `tests/wave2_0_qa_infrastructure/`
+- **Location:** `tests/wave2_0_qa_infrastructure/test_enhanced_dashboard.py`
 - **Status:** All 15 tests RED (awaiting implementation)
-- **Prerequisite:** Wave 2 QA-to-Red compilation must be complete
+- **Prerequisite:** Wave 2 QA-to-Red compilation complete ✅ (BL-019 Corrections)
 
 ---
 
