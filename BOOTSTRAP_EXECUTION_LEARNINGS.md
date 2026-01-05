@@ -303,19 +303,186 @@ This learning triggers:
 
 ---
 
+## BL-018: Wave Planning MUST Verify QA Catalog Before Subwave Assignment
+
+**Date Registered**: 2026-01-05  
+**Classification**: CATASTROPHIC  
+**Issue Reference**: Wave 2.2 Block — Parking Station Subwave (Issue #399)  
+**Root Cause Analysis**: `ROOT_CAUSE_ANALYSIS_WAVE_2_2_BLOCK.md`
+
+### Learning Statement
+
+Wave planning and subwave assignment MUST verify that all assigned QA ranges exist in the canonical QA Catalog and match the intended feature scope. QA ranges cannot be assumed or assigned sequentially without validation.
+
+### Rationale
+
+Wave 2.2 (Parking Station Advanced) was planned and documented with QA-376 to QA-385 as the assigned QA range for parking station features (prioritization and bulk operations). However, these QA IDs are actually defined in `QA_CATALOG.md` as:
+- **QA-376 to QA-380**: Network Failure Modes (network partition, WebSocket loss, API timeout, GitHub API failure, notification failure)
+- **QA-381 to QA-385**: Resource Failure Modes (memory exhaustion, CPU overload, disk space, file handle exhaustion, thread pool exhaustion)
+
+**Impact:**
+- Wave 2.2 subwave specification was structurally invalid and could not be executed
+- Builder (ui-builder) would have been assigned to implement failure mode tests instead of UI features
+- Issue #398 was created with non-existent QA components as scope
+- Wave 2 execution was blocked at subwave 2.2
+
+**Root Cause:** Wave 2 planning occurred without verifying QA component existence in the canonical QA Catalog, violating the One-Time Build principle of "Architecture → QA Catalog → QA-to-Red → Planning → Execution."
+
+**Governance Failure:** The planning process assumed QA components existed or would be created, but no validation step ensured QA Catalog alignment before sub-issue creation.
+
+### Mandatory Requirements (Permanent)
+
+All future wave planning and subwave assignment MUST include:
+
+1. **QA Catalog Verification**: Before assigning QA ranges to subwaves, verify all QA IDs exist in `QA_CATALOG.md`
+2. **QA Definition Alignment**: Verify QA component definitions match the intended feature scope of the subwave
+3. **QA ID Collision Check**: Verify assigned QA ranges are not already allocated to other features
+4. **Architecture Completeness**: Verify architecture sections exist for all subwave features before QA assignment
+5. **QA Catalog Extension (If Needed)**: If new features require QA components, extend `QA_CATALOG.md` BEFORE wave planning
+6. **Sequential Governance**: Architecture → QA Catalog → QA-to-Red → Wave Planning (in that order, no skipping)
+
+### Prohibited Actions (Permanent)
+
+1. ❌ Assigning QA ranges to subwaves without verifying QA_CATALOG.md
+2. ❌ Assuming QA components exist based on sequential numbering
+3. ❌ Planning waves before architecture is extended with new features
+4. ❌ Creating sub-issue specifications without QA Catalog validation
+5. ❌ Skipping QA-to-Red precondition verification before builder assignment
+6. ❌ Allowing builders to proceed with structurally invalid QA assignments
+
+### Enforcement Mechanism
+
+**Wave Planning Validation Gate** (Mandatory):
+```
+Before creating subwave sub-issue files:
+- [ ] All assigned QA ranges verified in QA_CATALOG.md
+- [ ] All QA definitions match subwave intent
+- [ ] No QA ID collisions with existing allocations
+- [ ] Architecture sections exist and are frozen for all subwave features
+- [ ] QA-to-Red tests exist (or planned) for all assigned QA ranges
+```
+
+**QA Catalog Extension Process** (If New Features):
+```
+1. Extend TRUE_NORTH_FM_ARCHITECTURE.md with new feature definitions
+2. Extend QA_CATALOG.md with new QA components and assign IDs
+3. Implement QA-to-Red tests for new QA components
+4. Verify QA-to-Red precondition satisfied (all tests RED)
+5. THEN proceed with wave planning and subwave assignment
+```
+
+**Ratchet Condition**: This learning establishes that wave planning without QA Catalog verification is a catastrophic structural failure requiring complete rework.
+
+### Application Examples
+
+**✅ CORRECT Wave Planning**:
+```
+1. Review TRUE_NORTH_FM_ARCHITECTURE.md for Wave N features
+2. Check QA_CATALOG.md: Do QA components exist for all features?
+   - If YES: Proceed with step 3
+   - If NO: Extend QA_CATALOG.md first, then create QA-to-Red tests
+3. Assign QA ranges to subwaves based on verified QA_CATALOG.md entries
+4. Validate: All QA IDs exist and match intended feature scope
+5. Create sub-issue specifications with verified QA ranges
+6. Issue to builders with QA-to-Red precondition satisfied
+
+Example: Subwave X.Y requires "Feature Z" (10 QA)
+- Verify QA_CATALOG.md contains QA-XXX to QA-YYY for "Feature Z"
+- Verify QA definitions describe "Feature Z" capabilities
+- Assign QA-XXX to QA-YYY to Subwave X.Y
+- Create sub-issue with verified QA range
+```
+
+**❌ INCORRECT Wave Planning (Wave 2.2 Actual)**:
+```
+1. Identify desired feature: "Parking Station Advanced"
+2. Assume QA-376 to QA-385 are available (sequential numbering)
+3. Assign QA-376 to QA-385 to "Parking Station Advanced"
+4. Create sub-issue specification describing parking features
+5. Issue to builder with structurally invalid scope
+6. Builder discovers QA-376 to QA-385 are failure modes, not parking features
+7. Builder declares BLOCKED, wave execution halts
+
+Result: CATASTROPHIC FAILURE — Wave planning without QA Catalog verification ❌
+```
+
+### Issue-Specific Application
+
+**For Wave 2.2 (Parking Station Advanced):**
+
+This subwave was created with an invalid QA range. FM must decide:
+
+**Option A**: "Parking Station Advanced" is Wave 2 scope
+- Extend TRUE_NORTH_FM_ARCHITECTURE.md with parking advanced definition
+- Extend QA_CATALOG.md with QA-401 to QA-410 (new IDs, avoiding collision)
+- Implement QA-to-Red tests for parking prioritization and bulk operations
+- Regenerate SUBWAVE_2.2_UI_BUILDER_PARKING_STATION_ADVANCED.md with correct QA range
+- Update issue #398 with corrected scope
+- Authorize builder to proceed
+
+**Option B**: "Parking Station Advanced" is NOT Wave 2 scope
+- Remove Subwave 2.2 from Wave 2 Rollout Plan
+- Close issue #398 as "Structurally Invalid / Scope Change"
+- Update Wave 2 sequencing (Subwave 2.3 depends on 2.1, not 2.2)
+- Proceed with remaining Wave 2 subwaves
+
+**Option C**: Defer to Wave 3+
+- Remove Subwave 2.2 from Wave 2 Rollout Plan
+- Close issue #398 as "Deferred to Wave 3+"
+- Create backlog entry for future implementation
+- Proceed with remaining Wave 2 subwaves
+
+### Verification Actions
+
+**Immediate (Wave 2):**
+1. Audit ALL remaining Wave 2 subwaves (2.3 to 2.14)
+2. Verify QA ranges exist in QA_CATALOG.md and match subwave intent
+3. Correct any additional misalignments before authorization
+4. Update WAVE_2_ROLLOUT_PLAN.md with verified QA ranges
+
+**Long-Term (All Future Waves):**
+1. Add mandatory QA Catalog verification to wave planning process
+2. Update Platform Readiness Checklist with QA Catalog extension verification
+3. Enforce Architecture → QA → Planning sequence constitutionally
+4. Automated validation: Check QA ranges against QA_CATALOG.md before sub-issue creation
+
+### Related Learnings
+
+- BL-016: Builder Recruitment Automation (governance automation requirements)
+- BL-017: Build-to-Green Completeness (quality over speed)
+- Future learnings will reference this as precedent for wave planning discipline
+
+### Governance Impact
+
+This learning triggers updates to:
+1. **Wave Planning Process** — Add mandatory QA Catalog verification gate
+2. **Platform Readiness Checklist** — Add QA Catalog extension verification for new waves
+3. **Subwave Creation Protocol** — Enforce QA validation before sub-issue file generation
+4. **FM Agent Contract** — Add QA Catalog verification to mandatory sequencing (Section XIV)
+5. **QA_CATALOG.md** — Document QA extension process for future waves
+
+### Status
+
+**Learning Registered**: ✅ COMPLETE  
+**Ratchet Activated**: ✅ ACTIVE  
+**Corrective Action**: ⏳ IN PROGRESS (Issue #399)  
+**Governance Updates**: ⏳ PENDING (Post-fix)
+
+---
+
 ## Registry Metadata
 
-**Total Learnings Registered**: 2  
-**Catastrophic**: 2 (BL-016, BL-017)  
+**Total Learnings Registered**: 3  
+**Catastrophic**: 3 (BL-016, BL-017, BL-018)  
 **Critical**: 0  
 **Major**: 0  
 **Moderate**: 0  
 **Minor**: 0
 
-**Next Learning ID**: BL-018
+**Next Learning ID**: BL-019
 
 ---
 
 **Maintained by**: Maturion Foreman (FM)  
-**Last Updated**: 2026-01-02  
+**Last Updated**: 2026-01-05  
 **Registry Status**: ACTIVE
