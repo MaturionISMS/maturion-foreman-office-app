@@ -51,7 +51,7 @@ This rollout plan provides the **complete operational specification** for Wave 2
 | 2.2 | Parking Station Advanced | QA-416 to QA-425 | 10 | ui-builder | 3-4 days | 2.1 |
 | 2.3 | System Optimizations Phase 1 | QA-426 to QA-435 | 10 | api-builder | 4-5 days | 2.1, 2.2 |
 | 2.4 | System Optimizations Phase 2 | QA-436 to QA-445 | 10 | integration-builder | 4-5 days | 2.3 |
-| 2.5 | Advanced Analytics Phase 1 | QA-211 to QA-225 | 15 | qa-builder | 5-7 days | 2.3, 2.4 |
+| 2.5 | Advanced Flow Scenarios | QA-211 to QA-225 | 15 | qa-builder | 5-7 days | 2.3, 2.4 |
 | 2.6 | Advanced Analytics Phase 2 | QA-446 to QA-460 | 15 | api-builder | 5-7 days | 2.5 |
 | 2.7 | Governance Advanced | QA-386 to QA-395 | 10 | integration-builder | 4-5 days | 2.4 |
 | 2.8 | Full Watchdog Coverage | QA-396 to QA-400 | 5 | integration-builder | 2-3 days | 2.4 |
@@ -398,7 +398,7 @@ Wave 1.0 ✅ → 2.1 → 2.2 → 2.3 → 2.4 → {2.5, 2.7, 2.8} → 2.6 → 2.9
 
 ---
 
-### Subwave 2.5: Advanced Analytics Phase 1
+### Subwave 2.5: Advanced Flow Scenarios
 
 **QA Range:** QA-211 to QA-225 (15 components)  
 **Builder:** qa-builder  
@@ -408,12 +408,11 @@ Wave 1.0 ✅ → 2.1 → 2.2 → 2.3 → 2.4 → {2.5, 2.7, 2.8} → 2.6 → 2.9
 
 #### Scope
 
-**Mission:** Implement advanced analytics capabilities including predictive modeling, trend analysis, and insight generation (Phase 1).
+**Mission:** Implement advanced flow scenario capabilities including flow state management, evidence generation, authorization enforcement, and complete escalation flow orchestration.
 
 **QA Components:**
-- QA-211 to QA-215: Predictive modeling (5 QA)
-- QA-216 to QA-220: Trend analysis (5 QA)
-- QA-221 to QA-225: Insight generation (5 QA)
+- QA-211 to QA-215: User Intent → Build Execution Flow Advanced (state persistence, evidence generation, authorization, timeout, cancellation) (5 QA)
+- QA-216 to QA-225: Escalation Flow Complete (trigger detection, creation, routing, presentation, decision, resolution, timeout, concurrent escalations, error handling) (10 QA)
 
 #### Builder Assignment
 
@@ -424,20 +423,20 @@ Wave 1.0 ✅ → 2.1 → 2.2 → 2.3 → 2.4 → {2.5, 2.7, 2.8} → 2.6 → 2.9
 **Capabilities Required:**
 - QA infrastructure implementation
 - Test execution and validation
-- Analytics subsystem testing
+- Flow-based testing
 - Complex scenario coverage
 
 #### Required Outputs
 
 **Implementation Deliverables:**
-1. Advanced analytics test infrastructure in `tests/wave2_0_qa_infrastructure/`
-2. Predictive model test suites
-3. Trend analysis test coverage
-4. Insight generation validation tests
+1. Advanced flow scenario test infrastructure in `tests/wave2_0_qa_infrastructure/`
+2. Flow state management test suites
+3. Escalation flow test coverage
+4. Authorization and timeout validation tests
 
 **QA Deliverables:**
 - All 15 tests GREEN (100%)
-- Test files: `tests/wave2_0_qa_infrastructure/test_analytics_advanced_phase1_*.py`
+- Test files: `tests/wave2_0_qa_infrastructure/test_advanced_flow_scenarios.py`
 - Zero test debt
 
 **Evidence Artifacts:**
@@ -448,15 +447,16 @@ Wave 1.0 ✅ → 2.1 → 2.2 → 2.3 → 2.4 → {2.5, 2.7, 2.8} → 2.6 → 2.9
 #### Architecture References
 
 **Frozen Architecture:**
-- Advanced analytics specification (Phase 1)
-- Predictive modeling architecture
-- Trend analysis algorithms
-- Insight generation logic
+- Flow-Based QA specification (QA-200 to QA-242 section in QA_CATALOG.md)
+- Intent → Build Execution Flow architecture
+- Escalation Flow architecture
+- State persistence and recovery patterns
+- Evidence generation patterns
 
 **Integration Points:**
-- Basic analytics subsystem (Wave 1.0)
-- Optimization subsystem (2.3, 2.4)
-- Data collection infrastructure
+- Core flows subsystem (Wave 1.0, QA-200 to QA-210)
+- Conversational Interface subsystem (escalation UI)
+- State management infrastructure
 
 #### Checkpoints
 
