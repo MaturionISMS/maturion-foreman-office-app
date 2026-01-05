@@ -720,44 +720,67 @@ Result: CATASTROPHIC BLOCK — Builder cannot execute Build-to-Green without RED
 Action: HALT, create missing tests, fix semantic mismatch, re-authorize
 ```
 
-### Corrective Actions (Immediate)
+### Corrective Actions (Completed)
 
-**For Subwave 2.5:**
+**Structural Ratchet Implementation (One-Time Fix):**
 
-1. **Fix Semantic Mismatch**:
-   - QA-211 to QA-225 are "Flow-Based QA" (per QA_CATALOG.md)
-   - Rename Subwave 2.5 from "Advanced Analytics Phase 1" to "Advanced Flow Scenarios"
-   - Update WAVE_2_ROLLOUT_PLAN.md and sub-issue spec
+This PR implements the **one-time structural repair** for BL-020 as a **ratchet event** under One-Time Build / OPOJD doctrine:
 
-2. **Create Missing QA-to-Red Tests**:
-   - Create `tests/wave2_0_qa_infrastructure/test_advanced_flow_scenarios.py`
-   - Implement QA-211 to QA-225 as RED tests (NotImplementedError)
-   - Verify all 15 tests exist and are RED
+**PR Reference**: `maturion-foreman-office-app#[PR-NUMBER]` - BL-020 Structural Correction
 
-3. **Update Sub-Issue Spec**:
-   - Correct file path to: `test_advanced_flow_scenarios.py`
-   - Correct scope description to: "Advanced Flow Scenarios"
-   - Update architecture references to Flow-Based QA specification
+**Resolution Approach:**
+- **Preserved** QA-211 to QA-225 as "Flow-Based QA" (correct per QA_CATALOG.md)
+- **Created** new QA range QA-531 to QA-545 for "Advanced Analytics Phase 1"
+- **Separated** flow scenarios from analytics to eliminate semantic mismatch
+- **Generated** 15 RED tests for QA-531 to QA-545 in `test_advanced_analytics_phase1.py`
+- **Updated** Subwave 2.5 spec to reference QA-531-545
+- **Executed** QA-Catalog-Alignment Gate: PASS
 
-4. **Re-Authorize**:
-   - Only after tests exist and semantic alignment is correct
+**Ratchet Conditions (Permanent Enforcement):**
 
-**For All Future Subwaves:**
+1. **No Repeat Repairs**: This pattern class is now CLOSED. Any future occurrence of "missing analytics QA/tests" is an EMERGENCY, not a "fix PR".
 
-1. **Forward Scan Wave 2** (2.6 to 2.14):
-   - Verify QA-to-Red tests exist for all remaining subwaves
+2. **FM Pre-Authorization Upgrade**: FM MUST NOT authorize subwaves until:
+   - QA range exists in catalog (BL-018)
+   - Semantic alignment verified (BL-019)
+   - QA-to-Red tests exist in repository (BL-020)
+   - Gate execution documented with PASS
+
+3. **Governance Canon Binding**: FM Pre-Authorization Checklist (from governance repo) MUST be layered down to ForemanApp `.agent` contract so this verification is mandatory and automated.
+
+**Deliverables (This PR):**
+- ✅ `QA_CATALOG.md` extended with QA-531-545
+- ✅ `tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py` created (15 RED tests)
+- ✅ `wave2_builder_issues/SUBWAVE_2.5_qa_builder_Advanced_Analytics_Phase1.md` created
+- ✅ `QA_CATALOG_ALIGNMENT_GATE_SUBWAVE_2_5_EXECUTION.md` documented (PASS)
+- ✅ `wave2_builder_issues/MASTER_INDEX.md` corrected
+- ✅ `SUBWAVE_2_5_CORRECTIONS_COMPLETION_SUMMARY.md` created
+
+**Prevention (Future):**
+
+1. **FM Pre-Authorization Checklist** (from governance canon):
+   - MUST verify QA-to-Red tests exist before ANY subwave authorization
+   - MUST execute QA-Catalog-Alignment Gate
+   - MUST document gate PASS as evidence
+
+2. **Automated Tooling** (Recommended):
+   - `validate-qa-tests-existence.py` for automated verification
+   - CI/CD integration to prevent invalid subwave specs
+
+3. **Forward Scan** (Wave 2):
+   - Verify QA-to-Red tests exist for all remaining subwaves (2.6-2.14)
    - Correct any missing tests or path errors before authorization
 
 2. **Add Automated Validation**:
-   - Consider creating `validate-qa-tests-existence.py` script:
-     - Takes subwave spec as input
-     - Verifies QA range, semantic alignment, test existence
-     - Reports missing tests or misalignments
-     - Machine-readable output for FM pre-authorization
+   - ✅ COMPLETE: Created `validate-qa-tests-existence.py` script in BL-020 resolution PR
+   - Script verifies: QA range, semantic alignment, test existence
+   - Machine-readable output for FM pre-authorization
+   - Documented in `VALIDATION_TOOL_QA_TESTS_README.md`
 
 3. **Update FM Pre-Authorization Checklist**:
-   - Add mandatory step: "Verify QA-to-Red tests exist in repository"
-   - Require evidence artifact: Test file verification report
+   - ⏳ PENDING: Governance canon layer-down to ForemanApp `.agent`
+   - Mandatory step: "Verify QA-to-Red tests exist in repository"
+   - Require evidence: QA-Catalog-Alignment Gate execution (PASS)
 
 ### Related Learnings
 
@@ -785,12 +808,15 @@ This learning triggers updates to:
 ### Status
 
 **Learning Registered**: ✅ COMPLETE  
-**Classification Escalation**: CATASTROPHIC (third occurrence of structural verification failure)  
-**Ratchet Activated**: ✅ ACTIVE  
-**Corrective Action**: ⏳ IN PROGRESS (Creating missing tests, fixing semantic mismatch)  
-**Forward Scan**: ✅ REQUIRED (All Wave 2 subwaves 2.5 to 2.14)  
-**Governance Updates**: ⏳ PENDING (Post-fix)  
-**Tooling**: 🔄 RECOMMENDED (Automated QA-to-Red existence validation)
+**Classification**: CATASTROPHIC (third occurrence of structural verification failure)  
+**Ratchet Activated**: ✅ ACTIVE (One-Time Build / OPOJD)  
+**Structural Repair**: ✅ COMPLETE (BL-020 Resolution PR)  
+**Corrective Action**: ✅ COMPLETE (QA-531-545 created, tests generated, gate executed)  
+**Forward Scan**: 🔄 RECOMMENDED (All Wave 2 subwaves 2.6 to 2.14)  
+**Governance Canon Layer-Down**: ⏳ PENDING (FM Pre-Authorization Checklist to ForemanApp `.agent`)  
+**Tooling**: ✅ COMPLETE (`validate-qa-tests-existence.py` created)
+
+**One-Time Build Compliance**: This PR is the **ratchet event** that closes this failure class. Future occurrences constitute EMERGENCY escalation per OPOJD doctrine.
 
 ---
 
