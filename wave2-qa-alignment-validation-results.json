@@ -1,13 +1,10 @@
 {
   "2.10": {
-    "qa_range": "QA-286 to QA-300",
+    "qa_range": "QA-476 to QA-490",
     "count": 15,
     "purpose": "Builder Deep Integration Phase2",
-    "status": "MISALIGNED",
-    "issues": [
-      "Missing QA IDs in catalog: [294, 295, 296, 297, 298]...",
-      "MISMATCH: Claimed 'integration' but catalog shows state transitions"
-    ]
+    "status": "ALIGNED",
+    "issues": []
   },
   "2.11": {
     "qa_range": "QA-241 to QA-255",
@@ -24,42 +21,32 @@
     "issues": []
   },
   "2.13": {
-    "qa_range": "QA-301 to QA-320",
+    "qa_range": "QA-491 to QA-510",
     "count": 20,
     "purpose": "Builder Qa Builder Complete E2E Flows Phase1",
-    "status": "UNDEFINED",
-    "issues": [
-      "Missing QA IDs in catalog: [302, 303, 304, 305, 306]...",
-      "MISMATCH: Claimed 'E2E flows' but catalog does not show flow definitions"
-    ]
+    "status": "ALIGNED",
+    "issues": []
   },
   "2.14": {
-    "qa_range": "QA-321 to QA-340",
+    "qa_range": "QA-511 to QA-530",
     "count": 20,
     "purpose": "Builder Qa Builder Complete E2E Flows Phase2",
-    "status": "UNDEFINED",
-    "issues": [
-      "MISMATCH: Claimed 'E2E flows' but catalog does not show flow definitions"
-    ]
+    "status": "ALIGNED",
+    "issues": []
   },
   "2.1": {
-    "qa_range": "QA-361 to QA-375",
+    "qa_range": "QA-401 to QA-415",
     "count": 15,
     "purpose": "Builder Enhanced Dashboard",
-    "status": "MISALIGNED",
-    "issues": [
-      "Missing QA IDs in catalog: [361, 362, 363, 364, 365]...",
-      "MISMATCH: Claimed 'dashboard' but catalog shows database failure modes"
-    ]
+    "status": "ALIGNED",
+    "issues": []
   },
   "2.2": {
-    "qa_range": "QA-376 to QA-385",
+    "qa_range": "QA-416 to QA-425",
     "count": 10,
     "purpose": "Builder Parking Station Advanced",
-    "status": "MISALIGNED",
-    "issues": [
-      "MISMATCH: Claimed 'parking' but catalog shows network/resource failure modes"
-    ]
+    "status": "ALIGNED",
+    "issues": []
   },
   "2.3": {
     "qa_range": "QA-426 to QA-435",
@@ -69,12 +56,12 @@
     "issues": []
   },
   "2.4": {
-    "qa_range": "QA-351 to QA-360",
+    "qa_range": "QA-436 to QA-445",
     "count": 10,
     "purpose": "Builder System Optimizations Phase2",
-    "status": "UNDEFINED",
+    "status": "MISALIGNED",
     "issues": [
-      "No QA definitions found in catalog for this range"
+      "MISMATCH: Claimed 'optimization' but catalog shows failure modes"
     ]
   },
   "2.5": {
@@ -85,13 +72,11 @@
     "issues": []
   },
   "2.6": {
-    "qa_range": "QA-226 to QA-240",
+    "qa_range": "QA-446 to QA-460",
     "count": 15,
     "purpose": "Builder Advanced Analytics Phase2",
-    "status": "MISALIGNED",
-    "issues": [
-      "MISMATCH: Claimed 'analytics' but catalog shows parking/dashboard flows"
-    ]
+    "status": "ALIGNED",
+    "issues": []
   },
   "2.7": {
     "qa_range": "QA-386 to QA-395",
@@ -108,12 +93,10 @@
     "issues": []
   },
   "2.9": {
-    "qa_range": "QA-271 to QA-285",
+    "qa_range": "QA-461 to QA-475",
     "count": 15,
     "purpose": "Builder Deep Integration Phase1",
-    "status": "MISALIGNED",
-    "issues": [
-      "MISMATCH: Claimed 'integration' but catalog shows state transitions"
-    ]
+    "status": "ALIGNED",
+    "issues": []
   }
 }

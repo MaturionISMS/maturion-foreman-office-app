@@ -47,20 +47,22 @@ This rollout plan provides the **complete operational specification** for Wave 2
 
 | Subwave | Name | QA Range | Count | Builder(s) | Duration | Dependencies |
 |---------|------|----------|-------|------------|----------|--------------|
-| 2.1 | Enhanced Dashboard | QA-361 to QA-375 | 15 | ui-builder | 4-6 days | Wave 1.0 ✅ |
-| 2.2 | Parking Station Advanced | QA-376 to QA-385 | 10 | ui-builder | 3-4 days | 2.1 |
-| 2.3 | System Optimizations Phase 1 | QA-341 to QA-350 | 10 | api-builder | 4-5 days | 2.1, 2.2 |
-| 2.4 | System Optimizations Phase 2 | QA-351 to QA-360 | 10 | integration-builder | 4-5 days | 2.3 |
+| 2.1 | Enhanced Dashboard | QA-401 to QA-415 | 15 | ui-builder | 4-6 days | Wave 1.0 ✅ |
+| 2.2 | Parking Station Advanced | QA-416 to QA-425 | 10 | ui-builder | 3-4 days | 2.1 |
+| 2.3 | System Optimizations Phase 1 | QA-426 to QA-435 | 10 | api-builder | 4-5 days | 2.1, 2.2 |
+| 2.4 | System Optimizations Phase 2 | QA-436 to QA-445 | 10 | integration-builder | 4-5 days | 2.3 |
 | 2.5 | Advanced Analytics Phase 1 | QA-211 to QA-225 | 15 | qa-builder | 5-7 days | 2.3, 2.4 |
-| 2.6 | Advanced Analytics Phase 2 | QA-226 to QA-240 | 15 | api-builder | 5-7 days | 2.5 |
+| 2.6 | Advanced Analytics Phase 2 | QA-446 to QA-460 | 15 | api-builder | 5-7 days | 2.5 |
 | 2.7 | Governance Advanced | QA-386 to QA-395 | 10 | integration-builder | 4-5 days | 2.4 |
 | 2.8 | Full Watchdog Coverage | QA-396 to QA-400 | 5 | integration-builder | 2-3 days | 2.4 |
-| 2.9 | Deep Integration Phase 1 | QA-271 to QA-285 | 15 | integration-builder | 6-8 days | 2.5, 2.6, 2.7, 2.8 |
-| 2.10 | Deep Integration Phase 2 | QA-286 to QA-300 | 15 | integration-builder | 6-8 days | 2.9 |
+| 2.9 | Deep Integration Phase 1 | QA-461 to QA-475 | 15 | integration-builder | 6-8 days | 2.5, 2.6, 2.7, 2.8 |
+| 2.10 | Deep Integration Phase 2 | QA-476 to QA-490 | 15 | integration-builder | 6-8 days | 2.9 |
 | 2.11 | Complex Failure Modes Phase 1 | QA-241 to QA-255 | 15 | api-builder + qa-builder | 7-9 days | 2.9, 2.10 |
 | 2.12 | Complex Failure Modes Phase 2 | QA-256 to QA-270 | 15 | api-builder + qa-builder | 7-9 days | 2.11 |
-| 2.13 | Complete E2E Flows Phase 1 | QA-301 to QA-320 | 20 | integration-builder + qa-builder | 8-10 days | 2.11, 2.12 |
-| 2.14 | Complete E2E Flows Phase 2 | QA-321 to QA-340 | 20 | integration-builder + qa-builder | 8-10 days | 2.13 |
+| 2.13 | Complete E2E Flows Phase 1 | QA-491 to QA-510 | 20 | integration-builder + qa-builder | 8-10 days | 2.11, 2.12 |
+| 2.14 | Complete E2E Flows Phase 2 | QA-511 to QA-530 | 20 | integration-builder + qa-builder | 8-10 days | 2.13 |
+
+**Note:** QA ranges updated per BL-019 Emergency Corrective Action Plan (2026-01-05)
 
 ---
 
@@ -85,7 +87,7 @@ Wave 1.0 ✅ → 2.1 → 2.2 → 2.3 → 2.4 → {2.5, 2.7, 2.8} → 2.6 → 2.9
 
 ### Subwave 2.1: Enhanced Dashboard
 
-**QA Range:** QA-361 to QA-375 (15 components)  
+**QA Range:** QA-401 to QA-415 (15 components)  
 **Builder:** ui-builder  
 **Complexity:** LOW  
 **Duration Estimate:** 4-6 days  
@@ -96,9 +98,9 @@ Wave 1.0 ✅ → 2.1 → 2.2 → 2.3 → 2.4 → {2.5, 2.7, 2.8} → 2.6 → 2.9
 **Mission:** Enhance the existing Dashboard subsystem with advanced features including drill-down capabilities, filtering, and real-time updates.
 
 **QA Components:**
-- QA-361 to QA-365: Drill-down navigation (5 QA)
-- QA-366 to QA-370: Advanced filtering (5 QA)
-- QA-371 to QA-375: Real-time dashboard updates (5 QA)
+- QA-401 to QA-405: Drill-down navigation (5 QA)
+- QA-406 to QA-410: Advanced filtering (5 QA)
+- QA-411 to QA-415: Real-time dashboard updates (5 QA)
 
 #### Builder Assignment
 
@@ -170,7 +172,7 @@ Wave 1.0 ✅ → 2.1 → 2.2 → 2.3 → 2.4 → {2.5, 2.7, 2.8} → 2.6 → 2.9
 
 ### Subwave 2.2: Parking Station Advanced
 
-**QA Range:** QA-376 to QA-385 (10 components)  
+**QA Range:** QA-416 to QA-425 (10 components)  
 **Builder:** ui-builder  
 **Complexity:** LOW  
 **Duration Estimate:** 3-4 days  
@@ -181,8 +183,8 @@ Wave 1.0 ✅ → 2.1 → 2.2 → 2.3 → 2.4 → {2.5, 2.7, 2.8} → 2.6 → 2.9
 **Mission:** Add advanced features to the Parking Station including prioritization, bulk operations, and enhanced issue management.
 
 **QA Components:**
-- QA-376 to QA-380: Prioritization features (5 QA)
-- QA-381 to QA-385: Bulk operations (5 QA)
+- QA-416 to QA-420: Prioritization features (5 QA)
+- QA-421 to QA-425: Bulk operations (5 QA)
 
 #### Builder Assignment
 
@@ -323,7 +325,7 @@ Wave 1.0 ✅ → 2.1 → 2.2 → 2.3 → 2.4 → {2.5, 2.7, 2.8} → 2.6 → 2.9
 
 ### Subwave 2.4: System Optimizations Phase 2
 
-**QA Range:** QA-351 to QA-360 (10 components)  
+**QA Range:** QA-436 to QA-445 (10 components)  
 **Builder:** integration-builder  
 **Complexity:** MEDIUM  
 **Duration Estimate:** 4-5 days  
@@ -481,7 +483,7 @@ Wave 1.0 ✅ → 2.1 → 2.2 → 2.3 → 2.4 → {2.5, 2.7, 2.8} → 2.6 → 2.9
 
 ### Subwave 2.6: Advanced Analytics Phase 2
 
-**QA Range:** QA-226 to QA-240 (15 components)  
+**QA Range:** QA-446 to QA-460 (15 components)  
 **Builder:** api-builder  
 **Complexity:** HIGH  
 **Duration Estimate:** 5-7 days  
@@ -720,7 +722,7 @@ Wave 1.0 ✅ → 2.1 → 2.2 → 2.3 → 2.4 → {2.5, 2.7, 2.8} → 2.6 → 2.9
 
 ### Subwave 2.9: Deep Integration Phase 1
 
-**QA Range:** QA-271 to QA-285 (15 components)  
+**QA Range:** QA-461 to QA-475 (15 components)  
 **Builder:** integration-builder  
 **Complexity:** MEDIUM  
 **Duration Estimate:** 6-8 days  
@@ -806,7 +808,7 @@ Wave 1.0 ✅ → 2.1 → 2.2 → 2.3 → 2.4 → {2.5, 2.7, 2.8} → 2.6 → 2.9
 
 ### Subwave 2.10: Deep Integration Phase 2
 
-**QA Range:** QA-286 to QA-300 (15 components)  
+**QA Range:** QA-476 to QA-490 (15 components)  
 **Builder:** integration-builder  
 **Complexity:** MEDIUM  
 **Duration Estimate:** 6-8 days  
@@ -1069,7 +1071,7 @@ Wave 1.0 ✅ → 2.1 → 2.2 → 2.3 → 2.4 → {2.5, 2.7, 2.8} → 2.6 → 2.9
 
 ### Subwave 2.13: Complete E2E Flows Phase 1
 
-**QA Range:** QA-301 to QA-320 (20 components)  
+**QA Range:** QA-491 to QA-510 (20 components)  
 **Builder:** integration-builder + qa-builder (collaborative)  
 **Complexity:** HIGH  
 **Duration Estimate:** 8-10 days  
@@ -1158,7 +1160,7 @@ Wave 1.0 ✅ → 2.1 → 2.2 → 2.3 → 2.4 → {2.5, 2.7, 2.8} → 2.6 → 2.9
 
 ### Subwave 2.14: Complete E2E Flows Phase 2
 
-**QA Range:** QA-321 to QA-340 (20 components)  
+**QA Range:** QA-511 to QA-530 (20 components)  
 **Builder:** integration-builder + qa-builder (collaborative)  
 **Complexity:** HIGH  
 **Duration Estimate:** 8-10 days  

@@ -595,31 +595,36 @@ BUILDER_GREEN_SCOPE_RULES.md (Assignment Rules)
 
 ## QA Catalog Statistics
 
-**Total QA Components:** 400+
+**Total QA Components:** 530
 
 **By Category:**
 - Component-Based QA: 199 (QA-001 to QA-199)
 - Flow-Based QA: 43 (QA-200 to QA-242)
 - State Transition-Based QA: 78 (QA-243 to QA-320)
-- Failure Mode-Based QA: 80+ (QA-321 to QA-400+)
+- Failure Mode-Based QA: 80 (QA-321 to QA-400)
+- Wave 2 Extensions: 130 (QA-401 to QA-530)
 
 **By Subsystem:**
 - Conversational Interface: 22 QA components
-- Dashboard: 20 QA components
-- Parking Station: 15 QA components
+- Dashboard: 20 QA components (Wave 1) + 15 QA components (Wave 2) = 35 total
+- Parking Station: 15 QA components (Wave 1) + 10 QA components (Wave 2) = 25 total
 - Intent Processing: 20 QA components
 - Execution Orchestration: 15 QA components
 - Escalation & Supervision: 24 QA components
 - Governance Enforcement: 15 QA components
-- Analytics: 15 QA components
+- Analytics: 15 QA components (Wave 1) + 15 QA components (Wave 2) = 30 total
 - Cross-Cutting: 53 QA components
-- System-Wide: 201+ QA components (flows, states, failures)
+- System-Wide: 201 QA components (flows, states, failures, Wave 1)
+- Wave 2 Integrations: 30 QA components (Deep Integration Phase 1 & 2)
+- Wave 2 E2E Flows: 40 QA components (E2E Phase 1 & 2)
+- Wave 2 System Optimizations: 10 QA components (Phase 2)
 
 **Coverage:**
 - Architectural Components: 36 components, 100% coverage
 - Runtime Paths: 4 major paths, 100% coverage
 - State Transitions: 78+ transitions, 100% coverage
-- Failure Modes: 80+ scenarios, comprehensive coverage
+- Failure Modes: 80 scenarios, comprehensive coverage
+- Wave 2 Extensions: 130 QA components covering enhanced features, optimizations, analytics, integrations, and E2E flows
 
 ---
 
@@ -672,8 +677,8 @@ Builder B assigned: QA-023 to QA-042 (Dashboard Subsystem)
 
 I, Foreman (FM), confirm that this QA Catalog:
 
-- Provides authoritative index of 400+ QA components
-- Numbers QA components sequentially (QA-001 to QA-400+)
+- Provides authoritative index of 530 QA components
+- Numbers QA components sequentially (QA-001 to QA-530)
 - Maps every architectural element to numbered QA
 - Establishes immutability rules for QA numbering
 - Enables bounded builder assignment by QA range
@@ -681,11 +686,13 @@ I, Foreman (FM), confirm that this QA Catalog:
 - Enables build progress measurement by QA coverage
 - Supports non-coder orchestration (no code review required)
 - Aligns with FM_ARCHITECTURE_SPEC_V2_WIRING_COMPLETE.md
+- Includes Wave 2 extensions per BL-019 Emergency Corrective Action Plan
 - Is ready to serve as authoritative QA index
 
 **Accepted By:** Foreman (FM)  
-**Date:** 2025-12-31  
-**Derivation:** Re-derived from Architecture V2 (Wiring-Complete)
+**Date:** 2026-01-05  
+**Version:** 2.1.0 (Wave 2 Extensions Added)  
+**Derivation:** Wave 1 QA from Architecture V2 (Wiring-Complete), Wave 2 QA from BL-019 Emergency Corrective Action Plan
 
 ---
 

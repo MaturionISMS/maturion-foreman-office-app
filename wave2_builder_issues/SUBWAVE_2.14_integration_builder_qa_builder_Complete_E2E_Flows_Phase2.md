@@ -3,7 +3,7 @@
 **Wave:** 2.0  
 **Subwave:** 2.14  
 **Builder:** integration-builder+qa-builder  
-**QA Range:** QA-321 to QA-340 (20 QA components)  
+**QA Range:** QA-511 to QA-530 (20 QA components)
 **Complexity:** HIGH  
 **Duration Estimate:** 8-10 days  
 **Dependencies:** GATE-SUBWAVE-2.13 PASS  
@@ -24,7 +24,7 @@ Implement **Complete E2E Flows Phase2** features to make **20 RED tests GREEN**.
 ### QA Components
 **Total:** 20 tests  
 **Location:** `tests/wave2_0_qa_infrastructure/test_complete_e2e_flows_phase2_*.py`  
-**Range:** QA-321 to QA-340
+**Range:** QA-511 to QA-530
 
 ### Out of Scope
 - Other subwave QA ranges
@@ -34,7 +34,7 @@ Implement **Complete E2E Flows Phase2** features to make **20 RED tests GREEN**.
 ## Builder Appointment Package
 
 1. **Scope Statement**
-   - QA Range: QA-321 to QA-340
+   - QA Range: QA-511 to QA-530
    - QA Count: 20 components
    - Complexity: HIGH
    - Duration: 8-10 days
