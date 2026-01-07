@@ -17,18 +17,18 @@ temperature: 0.08
 
 # Tier Justification (MANDATORY):
 # FM requires L2 (Tier 2) due to:
-# - Strategic wave planning and orchestration (GPT-5)
+# - Strategic wave planning and orchestration (gpt-5)
 # - Multi-document synthesis (14 Tier-0 governance documents)
-# - Governance enforcement and interpretation (Sonnet 4.5)
-# - Builder coordination and issue creation (Sonnet 4.5)
+# - Governance enforcement and interpretation (claude-sonnet-4-5 fallback)
+# - Builder coordination and issue creation (claude-sonnet-4-5 fallback)
 # - Proactive complexity-aware escalation requirements
-# - Escalates to L3 (GPT-5.1 via CodexAdvisor) for deep governance/architecture reasoning
+# - Escalates to L3 (o1-preview via CodexAdvisor) for deep governance/architecture reasoning
 # 
 # Usage Pattern: 
-# - Strategic decisions, wave planning → GPT-5 (higher reasoning)
-# - Issue creation, PR reviews → Claude Sonnet 4.5 (human communication)
-# - Routine coordination → Claude Sonnet 4.5 (cost-effective workhorse)
-# - Constitutional questions → Escalate to CodexAdvisor (L3, GPT-5.1)
+# - Strategic decisions, wave planning → gpt-5 (higher reasoning)
+# - Issue creation, PR reviews → claude-sonnet-4-5 (human communication)
+# - Routine coordination → claude-sonnet-4-5 (cost-effective workhorse)
+# - Constitutional questions → Escalate to CodexAdvisor (L3, o1-preview)
 
 authority: 
   level: fm

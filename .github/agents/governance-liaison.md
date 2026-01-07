@@ -14,12 +14,13 @@ model: claude-sonnet-4-5
 model_tier: premium
 model_tier_level: L2
 model_class: extended-reasoning
+model_fallback: gpt-5
 temperature: 0.1
 
 # Tier Justification:
 # Governance Liaison requires L2 due to:
-# - Governance commentary and policy reasoning
-# - Issue creation for governance updates
+# - Governance commentary and policy reasoning (claude-sonnet-4-5 excellent)
+# - Issue creation for governance updates (calm tone, clear structure)
 # - PR review for governance compliance
 # - Cross-repo governance alignment
 authority:

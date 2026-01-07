@@ -13,11 +13,12 @@ agent:
     Defers all execution planning to Foreman.
 
 # Model Tier Specification (MODEL_TIER_AGENT_CONTRACT_BINDING.md)
-model: gpt-5-1
+model: o1-preview
 model_tier: reasoning
 model_tier_level: L3
 model_class: constitutional-interpretation
-temperature: 0.3
+model_fallback: o3
+temperature: 1.0
 
 # Tier Justification:
 # CodexAdvisor requires L3 due to:
@@ -25,7 +26,7 @@ temperature: 0.3
 # - Cross-repo coherence and architecture soundness reviews
 # - Authority dispute resolution
 # - Deep system architecture reasoning
-# - Highest tier advisory role (advises FM)
+# - Highest tier advisory role (advises FM at L2)
 
 governance:
   canonical_source: maturion-foreman-governance
