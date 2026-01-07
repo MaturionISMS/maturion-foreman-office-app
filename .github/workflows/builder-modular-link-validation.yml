@@ -1,0 +1,204 @@
+name: Builder Modular Link Validation
+
+# CI CLASSIFICATION: Hard Gate
+# Purpose: Validates modular link integrity between builder agent contracts and extended references
+# Failure Semantics:
+#   - Broken links → Code failure → Block merge
+#   - Missing reference files → Code failure → Block merge
+#   - Infrastructure failures → Explicit infra-failure signal → Success + Comment
+# Timeout: 5 minutes (simple validation only)
+# Authority: PR #453 (Builder Agent Modularization)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - '.github/agents/**/*.md'
+      - 'governance/agents/builder-references/**/*.md'
+      - 'scripts/validate_builder_modular_links.py'
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - '.github/agents/**/*.md'
+      - 'governance/agents/builder-references/**/*.md'
+      - 'scripts/validate_builder_modular_links.py'
+
+# Explicit, least-privilege permissions
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate-modular-links:
+    name: Validate Builder Modular Links
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Run Builder Modular Link Validation
+        id: validate
+        run: |
+          echo "🔍 Validating builder agent modular links..."
+          
+          if python3 scripts/validate_builder_modular_links.py; then
+            echo "validation_status=passed" >> $GITHUB_OUTPUT
+            echo "✅ Validation PASSED"
+          else
+            echo "validation_status=failed" >> $GITHUB_OUTPUT
+            echo "❌ Validation FAILED"
+            exit 1
+          fi
+      
+      - name: Upload Evidence Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: builder-modular-link-validation-evidence
+          path: builder-modular-link-validation-evidence.json
+          retention-days: 90
+      
+      - name: Report Success
+        if: success() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ✅ **Builder Modular Link Validation PASSED**
+              
+              Builder agent modular link validation complete:
+              - All modular links valid and accessible ✅
+              - Reference directory structure complete ✅
+              - Split-modular pattern maintains integrity ✅
+              
+              **Evidence**: Download artifact \`builder-modular-link-validation-evidence\` for detailed report
+              
+              ---
+              
+              **Pattern**: Core + Reference Modular  
+              **Authority**: PR #453 (Builder Agent Modularization)  
+              **Validation**: scripts/validate_builder_modular_links.py
+              `
+            })
+      
+      - name: Report Failure
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ❌ **Builder Modular Link Validation BLOCKED**
+              
+              One or more modular links are broken or reference files are missing.
+              
+              **Common Issues**:
+              - Referenced file does not exist
+              - Section reference (§ "Section Name") not found in target file
+              - Reference directory structure incomplete
+              
+              **Action Required**:
+              1. Review workflow logs for detailed error messages
+              2. Download artifact \`builder-modular-link-validation-evidence\` for full report
+              3. Fix broken links in builder agent .md files
+              4. Ensure all referenced files and sections exist
+              5. Re-run validation
+              
+              ---
+              
+              **Files Validated**:
+              - .github/agents/ui-builder.md
+              - .github/agents/api-builder.md
+              - .github/agents/schema-builder.md
+              - .github/agents/integration-builder.md
+              - .github/agents/qa-builder.md
+              
+              **Reference Directory**: governance/agents/builder-references/
+              
+              **Validation Script**: scripts/validate_builder_modular_links.py
+              `
+            })
+      
+      - name: Generate Infrastructure Failure Report
+        if: always() && env.INFRA_FAILURE != ''
+        run: |
+          mkdir -p /tmp/infra-failure
+          cat > /tmp/infra-failure/report.json << 'EOF'
+          {
+            "failure_type": "infrastructure",
+            "workflow": "builder-modular-link-validation",
+            "job": "validate-modular-links",
+            "failure_category": "${{ env.INFRA_FAILURE }}",
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "recommended_action": "investigate",
+            "details": {
+              "workflow_run": "${{ github.run_id }}"
+            }
+          }
+          EOF
+      
+      - name: Upload Infrastructure Failure Artifact
+        if: always() && env.INFRA_FAILURE != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: infra-failure-report-modular-link-validation
+          path: /tmp/infra-failure/report.json
+          retention-days: 30
+      
+      - name: Comment Infrastructure Failure on PR
+        if: always() && env.INFRA_FAILURE != '' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const failureType = process.env.INFRA_FAILURE;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ⚠️ **Infrastructure Failure Detected**
+              
+              **Workflow**: Builder Modular Link Validation  
+              **Failure Type**: \`${failureType}\`  
+              **Timestamp**: ${new Date().toISOString()}
+              
+              This is **NOT a code failure**. The workflow encountered an infrastructure issue.
+              
+              **Your code changes are NOT blocked by this failure**
+              
+              **Infrastructure Failure Report**: Download artifact \`infra-failure-report-modular-link-validation\`
+              `
+            })
+      
+      - name: Mark Success Despite Infrastructure Failure
+        if: always() && env.INFRA_FAILURE != ''
+        run: |
+          echo "✅ Job marked as success - Infrastructure failure (not code failure)"
+          exit 0
+      
+      - name: Workflow Success
+        if: always() && (success() || env.INFRA_FAILURE != '')
+        run: |
+          if [ -n "$INFRA_FAILURE" ]; then
+            echo "✅ Builder Modular Link Validation completed (infrastructure failure handled)"
+          else
+            echo "✅ Builder Modular Link Validation completed successfully"
+          fi
+          exit 0
