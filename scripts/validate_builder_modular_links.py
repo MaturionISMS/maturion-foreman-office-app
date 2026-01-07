@@ -199,11 +199,23 @@ def validate_builder_agent_file(base_dir: Path, agent_file: Path, verbose: bool 
     success = results['links_broken'] == 0
     return success, results
 
+def get_builders_from_filesystem(agents_dir: Path) -> List[str]:
+    """
+    Dynamically discover builders from the filesystem.
+    Returns list of builder names (without .md extension).
+    """
+    builders = []
+    if agents_dir.exists():
+        for file in agents_dir.glob('*-builder.md'):
+            builders.append(file.stem)
+    return sorted(builders)
+
 def validate_extended_reference_files(base_dir: Path, verbose: bool = False) -> Tuple[bool, Dict]:
     """
     Validate that all expected extended reference files exist and are accessible.
     """
     reference_dir = base_dir / 'governance' / 'agents' / 'builder-references'
+    agents_dir = base_dir / '.github' / 'agents'
     
     results = {
         'directory': str(reference_dir.relative_to(base_dir)),
@@ -224,8 +236,8 @@ def validate_extended_reference_files(base_dir: Path, verbose: bool = False) -> 
     if not results['readme_exists']:
         results['errors'].append("README.md not found in builder-references directory")
     
-    # Find all extended reference files
-    expected_builders = ['ui-builder', 'api-builder', 'schema-builder', 'integration-builder', 'qa-builder']
+    # Dynamically discover builders from filesystem
+    expected_builders = get_builders_from_filesystem(agents_dir)
     
     for builder in expected_builders:
         ref_file = reference_dir / f'{builder}-extended-reference.md'
@@ -336,7 +348,12 @@ def main():
     print("Validating builder agent modular links...")
     print("-" * 80)
     
-    builders = ['ui-builder', 'api-builder', 'schema-builder', 'integration-builder', 'qa-builder']
+    # Dynamically discover builders from filesystem
+    builders = get_builders_from_filesystem(agents_dir)
+    
+    if not builders:
+        log_warning("No builder files found in .github/agents/")
+        all_results['overall_success'] = False
     
     for builder in builders:
         agent_file = agents_dir / f'{builder}.md'

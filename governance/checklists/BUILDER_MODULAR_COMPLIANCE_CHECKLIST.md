@@ -90,8 +90,8 @@ When adding a new builder:
 - [ ] **Core Agent File Created**: `.github/agents/{builder-name}.md` created
 - [ ] **Extended Reference Created**: `governance/agents/builder-references/{builder-name}-extended-reference.md` created
 - [ ] **README Updated**: Add new builder to `governance/agents/builder-references/README.md` table
-- [ ] **Validation Script Updated**: Add builder to `scripts/validate_builder_modular_links.py` (if hardcoded list exists)
-- [ ] **CI Workflow Covers**: New builder included in CI validation
+- [ ] **Naming Convention Followed**: Builder file named `{builder-name}-builder.md` (required for auto-discovery)
+- [ ] **CI Workflow Covers**: New builder automatically discovered by validation script
 - [ ] **Pattern Followed**: New files follow existing modular pattern
 - [ ] **Links Established**: Core file includes at least 1 reference link to extended doc
 - [ ] **Validation Passes**: All modular link validation passes for new builder
