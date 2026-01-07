@@ -52,7 +52,7 @@ Each sub-issue file is a **ready-to-issue artifact** that can be used verbatim t
 
 | File | Subwave | Builder | QA Range | Count | Complexity | Duration | Dependencies |
 |------|---------|---------|----------|-------|------------|----------|--------------|
-| `SUBWAVE_2.5_qa_builder_Advanced_Analytics_Phase1.md` | 2.5 | qa-builder | QA-211 to QA-225 | 15 | HIGH | 5-7 days | 2.3, 2.4 |
+| `SUBWAVE_2.5_qa_builder_Advanced_Analytics_Phase1.md` | 2.5 | qa-builder | QA-531 to QA-545 | 15 | HIGH | 5-7 days | 2.3, 2.4 |
 | `SUBWAVE_2.6_api_builder_Advanced_Analytics_Phase2.md` | 2.6 | api-builder | QA-446 to QA-460 | 15 | HIGH | 5-7 days | 2.5 |
 | `SUBWAVE_2.7_integration_builder_Governance_Advanced.md` | 2.7 | integration-builder | QA-386 to QA-395 | 10 | MEDIUM | 4-5 days | 2.4 |
 | `SUBWAVE_2.8_integration_builder_Full_Watchdog_Coverage.md` | 2.8 | integration-builder | QA-396 to QA-400 | 5 | LOW | 2-3 days | 2.4 |

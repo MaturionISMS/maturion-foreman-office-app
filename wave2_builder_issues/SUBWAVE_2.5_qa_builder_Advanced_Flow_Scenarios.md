@@ -1,23 +1,21 @@
-# Subwave 2.5: Advanced Analytics Phase 1 — qa-builder Build-to-Green
+# Subwave 2.5: Advanced Flow Scenarios — qa-builder Build-to-Green
 
 **Wave:** 2.0  
 **Subwave:** 2.5  
 **Builder:** qa-builder  
-**QA Range:** QA-531 to QA-545 (15 QA components)  
+**QA Range:** QA-211 to QA-225 (15 QA components)  
 **Complexity:** HIGH  
 **Duration Estimate:** 5-7 days  
 **Dependencies:** GATE-SUBWAVE-2.3, 2.4 PASS  
-**Status:** CORRECTED (BL-020 QA Range Correction)
+**Status:** READY FOR AUTHORIZATION
 
 ---
 
 ## Executive Summary
 
-Implement **Advanced Analytics Phase 1** features to make **15 RED tests GREEN**.
+Implement **Advanced Flow Scenarios** features to make **15 RED tests GREEN**.
 
 **Mission:** Per WAVE_2_ROLLOUT_PLAN.md Section II, Subwave 2.5.
-
-**BL-020 Correction:** This subwave was originally assigned QA-211 to QA-225, which conflicted with flow-based escalation scenarios. Corrected to QA-531 to QA-545 for Advanced Analytics Phase 1.
 
 ---
 
@@ -25,31 +23,29 @@ Implement **Advanced Analytics Phase 1** features to make **15 RED tests GREEN**
 
 ### QA Components
 **Total:** 15 tests  
-**Location:** `tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py`  
-**Range:** QA-531 to QA-545
+**Location:** `tests/wave2_0_qa_infrastructure/test_advanced_flow_scenarios.py`  
+**Range:** QA-211 to QA-225
 
 **QA Breakdown:**
-- QA-531 to QA-535: Predictive Modeling (model initialization, training, inference, evaluation, versioning)
-- QA-536 to QA-540: Trend Analysis (detection initialization, historical analysis, real-time monitoring, visualization, forecasting)
-- QA-541 to QA-545: Insight Generation (extraction, validation, prioritization, presentation, actionability)
+- QA-211 to QA-215: User Intent → Build Execution Flow Advanced (state persistence, evidence generation, authorization, timeout, cancellation)
+- QA-216 to QA-225: Escalation Flow Complete (trigger detection, creation, routing, presentation, decision, resolution, timeout, concurrent escalations, error handling)
 
 ### Out of Scope
 - Other subwave QA ranges
-- Flow-based scenarios (QA-211 to QA-225 remain for flow scenarios)
 
 ---
 
 ## Builder Appointment Package
 
 1. **Scope Statement**
-   - QA Range: QA-531 to QA-545
+   - QA Range: QA-211 to QA-225
    - QA Count: 15 components
    - Complexity: HIGH
    - Duration: 5-7 days
 
 2. **Architecture References**
-   - Wave 2 Architecture Specification (Advanced Analytics Phase 1 section)
-   - Analytics subsystem specification (QA_CATALOG.md, QA-531 to QA-545)
+   - Wave 2 Architecture Specification (Advanced Flow Scenarios section)
+   - Flow-Based QA specification (QA_CATALOG.md, QA-200 to QA-242)
    - Integration points per rollout plan
 
 3. **QA-to-Red Confirmation**
@@ -67,7 +63,7 @@ Implement **Advanced Analytics Phase 1** features to make **15 RED tests GREEN**
 6. **Governance References**
    - BUILD_PHILOSOPHY.md — One-Time Build Correctness
    - .github/agents/qa-builder.md — Builder contract
-   - BL-016, BL-018, BL-019, BL-020 learnings
+   - BL-016, BL-018, BL-019 learnings
 
 ---
 
@@ -149,7 +145,7 @@ Implement **Advanced Analytics Phase 1** features to make **15 RED tests GREEN**
 ## Validation
 
 ```bash
-pytest tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py -v
+pytest tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1_*.py -v
 ```
 
 **Expected:** 15/15 GREEN, zero failures
@@ -207,23 +203,12 @@ pytest tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py -v
 
 ---
 
-## BL-020 Correction History
-
-**Original Assignment:** QA-211 to QA-225 (conflicted with flow scenarios)  
-**Corrected Assignment:** QA-531 to QA-545 (Advanced Analytics Phase 1)  
-**Correction Date:** 2026-01-05  
-**Correction Authority:** FM per BL-020 Corrective Action  
-**QA-Catalog-Alignment Gate:** PASS after correction
-
----
-
 ## FM Authorization
 
 **Status:** READY FOR AUTHORIZATION (pending dependencies)  
 **Authority:** Maturion Foreman (FM)  
 **FM Agent Contract Version:** 3.3.0  
-**Rollout Plan Reference:** WAVE_2_ROLLOUT_PLAN.md Section II, Subwave 2.5  
-**BL-020 Correction:** QA range corrected from QA-211-225 to QA-531-545
+**Rollout Plan Reference:** WAVE_2_ROLLOUT_PLAN.md Section II, Subwave 2.5
 
 ---
 
