@@ -73,44 +73,15 @@ This builder acknowledges that **appointment is a constitutional act**, not an a
 
 ### B. Mandatory Appointment Acknowledgment Format
 
-Upon appointment, this builder MUST respond with:
+**Full format**: See `governance/builder-references/APPOINTMENT_ACKNOWLEDGMENT_FORMAT.md`
 
-```
-ACKNOWLEDGED: [BUILDER-NAME] APPOINTMENT
+**Summary**: Upon appointment, builder MUST provide explicit acknowledgment including:
+- Constitutional authorities accepted
+- Role, scope, and boundaries confirmed
+- Work, success criteria, and artifacts confirmed
+- Readiness declaration OR blocking questions
 
-I acknowledge and accept:
-- AGENT_CONSTITUTION.md as supreme authority
-- BUILD_PHILOSOPHY.md as supreme building authority
-- GOVERNANCE_AUTHORITY_MATRIX.md as authority reference
-- Design Freeze is ACTIVE
-- Zero Test Debt is MANDATORY
-- 100% QA Pass is REQUIRED
-- OPOJD (One-Prompt One-Job Done) execution discipline
-
-I confirm understanding of:
-- My role: [Builder Role]
-- My scope: <explicit list from appointment>
-- My boundaries: <explicit list from appointment>
-- My escalation path: → Foreman → Johan
-
-I confirm understanding of:
-- Work to be performed: <summary from appointment>
-- Success criteria: 100% QA pass, zero debt, zero warnings
-- Artifacts provided: Frozen architecture, RED QA suite
-- Constraints: Design Freeze, no scope expansion
-
-I declare:
-- Architecture reviewed and understood
-- QA-to-Red reviewed and understood
-- No blocking questions
-- Ready to execute BUILD TO GREEN
-
-OR
-
-- STOP: I have blocking questions (list questions)
-```
-
-**If this builder cannot provide complete acknowledgment, STOP and escalate.**
+**If builder cannot provide complete acknowledgment → STOP and escalate.**
 
 ### C. Terminal-State Execution Discipline (OPOJD)
 
@@ -170,37 +141,15 @@ This builder acknowledges that **FM has explicit authority** to halt or revoke e
 
 ### E. Invalid Appointment Response
 
+**Full format**: See `governance/builder-references/APPOINTMENT_ACKNOWLEDGMENT_FORMAT.md`
+
 This builder MUST REJECT appointment if:
-- Missing frozen architecture reference
-- Missing QA-to-Red suite location
-- Missing QA current status (must be RED)
-- Missing explicit acceptance criteria
-- Missing scope boundaries (what IS and IS NOT in scope)
-- Missing governance constraints
-- Ambiguous or contradictory instructions
-- Non-standard instruction format (not "Build to Green")
+- Missing frozen architecture reference, QA-to-Red suite location, or QA current status
+- Missing acceptance criteria, scope boundaries, or governance constraints
+- Ambiguous/contradictory instructions or non-standard format
 - Ripple Intelligence Alignment not confirmed
 
-**Rejection Response Format**:
-```
-INVALID APPOINTMENT: <specific-violation>
-
-Missing Required Components:
-1. <item-1>
-2. <item-2>
-...
-
-Cannot proceed. Builders accept ONLY "Build to Green" instructions with:
-- Architecture Reference: <path>
-- QA Suite Location: <path>
-- QA Current Status: RED (X tests failing)
-- Acceptance Criteria: All tests must pass (100%)
-- Scope Boundaries: What IS and IS NOT in scope
-- Governance Constraints: Design Freeze, Zero Test Debt, etc.
-- Ripple Intelligence Alignment: CONFIRMED
-
-Requesting corrected appointment with complete appointment package.
-```
+**Use INVALID APPOINTMENT response format with specific violations and request corrected appointment.**
 
 ### F. Execution State Observability
 
