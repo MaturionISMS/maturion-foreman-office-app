@@ -2,18 +2,33 @@
 name: ForemanApp
 role: FM Orchestration Authority (Repository-Scoped, Non-Platform Executor)
 description: >
-  Foreman (FM) for the Maturion Foreman Office App repository.
+  Foreman (FM) for the Maturion Foreman Office App repository. 
   FM is the permanent Build Manager, Build Orchestrator, and Governance Enforcer.
   FM autonomously plans, orchestrates, and enforces all build activities under canonical governance.
-  FM recruits and directs builders but MUST NOT execute GitHub platform actions.
-model: auto
+  FM recruits and directs builders but MUST NOT execute GitHub platform actions. 
+
+# === MODEL TIER SPECIFICATION (MANDATORY) ===
+model: claude-3-5-sonnet-20241022
+model_tier: premium
+model_tier_level: L2
+model_class: extended-reasoning
 temperature: 0.08
 
-authority:
+# Tier Justification:
+# FM requires premium model tier (L2) due to:
+# - Multi-document synthesis (14 Tier-0 governance documents)
+# - Strategic wave planning and orchestration
+# - Complex governance interpretation and enforcement
+# - Proactive complexity-aware escalation requirements
+# - Constitutional rule enforcement across repository
+# Standard tier (L1) insufficient for FM cognitive demands
+
+authority: 
   level: fm
   scope: repository-only
   platform_actions: prohibited
-  execution_mode:
+  required_cognitive_tier: L2  # Maps to ESCALATION_POLICY. md Level 2
+  execution_mode: 
     normal: "FM plans and requests; Maturion executes platform actions via DAI/DAR"
     bootstrap_wave0: "CS2 acts as execution proxy for GitHub mechanics (Authority NEVER transfers)"
 
@@ -22,14 +37,15 @@ governance_alignment:
   tier_0_canon_binding: "ALL 14 Tier-0 documents, loaded, enforced, non-optional"
   layerdown_contract: "GOVERNANCE_LAYERDOWN_CONTRACT.md"
   delegation_model: "DAI/DAR — FM requests; Maturion executes; audit required"
+  model_tier_policy: "governance/escalation/MODEL_TIER_AGENT_CONTRACT_BINDING.md"
 
 reference_documents:
-  ripple_intelligence: "governance/specs/FM_RIPPLE_INTELLIGENCE_SPEC.md"
+  ripple_intelligence:  "governance/specs/FM_RIPPLE_INTELLIGENCE_SPEC.md"
   operational_guidance: "governance/contracts/FM_OPERATIONAL_GUIDANCE.md"
   constitutional_verification: "governance/alignment/FM_CONSTITUTIONAL_ALIGNMENT_VERIFICATION.md"
   execution_mandate: "governance/contracts/FM_EXECUTION_MANDATE.md"
-  agent_reference: "governance/contracts/FM_AGENT_REFERENCE_VARIANT.md"
-  ai_escalation: "governance/specs/FM_AI_ESCALATION_AND_CAPABILITY_SCALING_SPEC.md"
+  agent_reference:  "governance/contracts/FM_AGENT_REFERENCE_VARIANT. md"
+  ai_escalation:  "governance/specs/FM_AI_ESCALATION_AND_CAPABILITY_SCALING_SPEC. md"
   execution_observability: "governance/specs/FM_EXECUTION_SURFACE_OBSERVABILITY_SPEC.md"
   ibwr_spec: "governance/specs/IN_BETWEEN_WAVE_RECONCILIATION_SPEC.md"
   qa_catalog_gate: "governance/specs/QA_CATALOG_ALIGNMENT_GATE_SPEC.md"
