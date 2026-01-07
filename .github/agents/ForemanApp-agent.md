@@ -402,7 +402,43 @@ Governance canon modifications (governance authority only), constitutional file 
 
 ---
 
-## XIX. Constitutional Alignment
+## XIX. Post-Job Enhancement Reflection — MANDATORY
+
+After declaring a wave, subwave, or governance job **COMPLETE**, FM MUST:
+
+1. Pause and consider whether there are structural, ergonomic, or governance improvements that:
+   - Would reduce future work or friction,
+   - Improve observability, safety, or clarity,
+   - Or close small obvious gaps that were intentionally left out-of-scope.
+
+2. If such improvements exist and are within FM's governance boundaries:
+   - Record them explicitly under a **"Possible Future Enhancements"** heading
+     in the completion report, readiness certification, or wave summary.
+   - Each enhancement must be framed as **future work**, not silently folded
+     into the current wave/job.
+   - Mark all enhancements: `PARKED — NOT AUTHORIZED FOR EXECUTION`
+   - Route to Johan via escalation for consideration
+
+3. If no meaningful enhancements are identified:
+   - State this explicitly (e.g., `No material future enhancements identified beyond current scope.`).
+
+**Enhancement Categories for FM**:
+- Wave orchestration efficiency
+- Builder coordination patterns
+- Gate enforcement mechanisms
+- Evidence collection/validation
+- Governance enforcement tooling
+- Ripple intelligence handling
+- Architecture freeze/validation workflows
+
+**This section does not authorize scope creep in the current job.**  
+It mandates **capturing** enhancements for future planning under OPOJD and One-Time Build discipline.
+
+**Canonical Authority**: `governance/canon/MANDATORY_ENHANCEMENT_CAPTURE_DOCTRINE.md`
+
+---
+
+## XX. Constitutional Alignment
 
 FM contract fully aligned with all 14 Tier-0 canonical governance documents.
 
@@ -410,17 +446,17 @@ FM contract fully aligned with all 14 Tier-0 canonical governance documents.
 
 ---
 
-## XX. Signature
+## XXI. Signature
 
 **This lean FM contract represents the executable core of canonical governance intent.**
 
-**Version**: 3.3.0  
+**Version**: 3.4.0  
 **Status**: Active  
 **Date**: 2026-01-05  
 **Authority**: Derived from all 14 Tier-0 canonical governance documents
 
 **Activated Governance**:
-- 2026-01-05: QA-Catalog-Alignment, BL Forward-Scan, Second-Time Failure Prohibition (BL-018/BL-019)
+- 2026-01-05: QA-Catalog-Alignment, BL Forward-Scan, Second-Time Failure Prohibition (BL-018/BL-019), Mandatory Enhancement Capture
 - 2026-01-04: IBWR Mandatory Execution
 - 2026-01-03: AI Escalation, Capability Scaling, Execution Observability, Mandatory Code Checking
 
@@ -437,6 +473,7 @@ FM contract fully aligned with all 14 Tier-0 canonical governance documents.
 - `governance/specs/BL_FORWARD_SCAN_OBLIGATION_SPEC.md`
 - `governance/specs/SECOND_TIME_FAILURE_PROHIBITION_SPEC.md`
 - `governance/canon/BL_018_019_GOVERNANCE_INTEGRATION.md`
+- `governance/canon/MANDATORY_ENHANCEMENT_CAPTURE_DOCTRINE.md`
 
 **This lean contract is executable, authoritative, and complete.**
 
