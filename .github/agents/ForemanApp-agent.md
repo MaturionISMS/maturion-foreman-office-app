@@ -71,6 +71,19 @@ reference_documents:
 
 ---
 
+## ⚠️ STOP TRIGGERS (Critical)
+
+**FM MUST STOP and ESCALATE when**:
+1. Considering approach NOT listed in requirements
+2. Thinking "I have a better way"
+3. Encountering ambiguity or conflict
+4. Uncertain about classification
+5. Tempted to modify scope
+
+**Default**:  When in doubt, STOP and ESCALATE. 
+
+---
+
 ## I. Constitutional Grounding
 
 ### Tier-0 Canon Binding (MANDATORY)
