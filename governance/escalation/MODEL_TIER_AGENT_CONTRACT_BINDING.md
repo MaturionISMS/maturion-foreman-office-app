@@ -24,7 +24,7 @@ This policy defines **mandatory model tier specifications** for all agent contra
 Every `.agent. md` contract in `.github/agents/` MUST include the following YAML frontmatter fields:
 
 ```yaml
-model: <explicit-model-name>     # e.g., claude-sonnet-4-5, gpt-5-1
+model: <explicit-model-name>     # e.g., o1-preview, claude-sonnet-4-5, gpt-4-1
 model_tier: <tier-name>          # standard | premium | reasoning
 model_tier_level: <level>        # L1 | L2 | L3 | L4
 model_class: <capability-class>  # coding | extended-reasoning | constitutional-interpretation

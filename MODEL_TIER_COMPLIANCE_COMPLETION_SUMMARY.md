@@ -34,7 +34,7 @@ All agent contracts updated with explicit model tier specifications:
 - ✅ `governance-liaison.md` - claude-sonnet-4-5
 
 #### Advisory Agent (L3 - Reasoning Tier)
-- ✅ `CodexAdvisor-agent.md` - gpt-5-1
+- ✅ `CodexAdvisor-agent.md` - o1-preview
 
 ### 2. Mandatory Frontmatter Fields Added
 
@@ -121,10 +121,10 @@ Wave authorization is UNBLOCKED
 **Constitutional Hierarchy:**
 
 ```
-L3 (Reasoning) → CodexAdvisor (gpt-5-1)
+L3 (Reasoning) → CodexAdvisor (o1-preview)
                       ↓ advises
 L2 (Premium)   → Governance Liaison (claude-sonnet-4-5)
-                 FM (gpt-5 / sonnet-4.5)
+                 FM (gpt-5 / claude-sonnet-4-5)
                       ↓ coordinates
 L1 (Standard)  → All 5 Builders (gpt-4-1)
                  - ui-builder
@@ -172,8 +172,8 @@ L1 (Standard)  → All 5 Builders (gpt-4-1)
 | Tier | Agents | Model | Usage Target | Cost Multiplier |
 |------|--------|-------|--------------|-----------------|
 | L1 | 5 Builders | gpt-4-1 | 20-30% | 1x baseline |
-| L2 | FM + Liaison | gpt-5 / sonnet-4.5 | 60-70% | 2-5x baseline |
-| L3 | CodexAdvisor | gpt-5-1 | 5-10% | 10-15x baseline |
+| L2 | FM + Liaison | gpt-5 / claude-sonnet-4-5 | 60-70% | 2-5x baseline |
+| L3 | CodexAdvisor | o1-preview | 5-10% | 10-15x baseline |
 
 **Cost Discipline:**
 - L1 for implementation (cheap, reliable)
@@ -187,11 +187,11 @@ L1 (Standard)  → All 5 Builders (gpt-4-1)
 **New Escalation Flow Established:**
 
 ```
-Builder (L1, GPT-4.1) → encounters complexity
+Builder (L1, gpt-4-1) → encounters complexity
   ↓ ESCALATE
-FM (L2, GPT-5/Sonnet-4.5) → encounters governance ambiguity
+FM (L2, gpt-5/claude-sonnet-4-5) → encounters governance ambiguity
   ↓ ESCALATE
-CodexAdvisor (L3, GPT-5.1) → resolves constitutional question
+CodexAdvisor (L3, o1-preview) → resolves constitutional question
   ↓ RETURN GUIDANCE
 FM (L2) → resumes with clarity
   ↓ INSTRUCT
