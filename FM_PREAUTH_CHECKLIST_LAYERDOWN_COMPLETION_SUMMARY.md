@@ -292,7 +292,7 @@ This implementation prevents recurrence of:
 
 **Status:** ✅ COMPLETE  
 **Date:** 2026-01-07  
-**Commit:** `25310ae` ("Add FM Pre-Authorization Checklist spec, agent binding, and example evidence")
+**Branch:** `copilot/layer-down-fm-checklist`
 
 ---
 

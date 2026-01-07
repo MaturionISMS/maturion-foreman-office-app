@@ -600,7 +600,7 @@ If checklist FAILS at step 1, steps 2-4 are BLOCKED.
 
 | Version | Date | Changes | Authority |
 |---------|------|---------|-----------|
-| 1.0.0 | 2026-01-07 | Initial FM repository implementation | Governance PR #879 layer-down |
+| 1.0.0 | 2026-01-07 | Initial FM repository implementation | Gov PR #879 |
 
 ---
 

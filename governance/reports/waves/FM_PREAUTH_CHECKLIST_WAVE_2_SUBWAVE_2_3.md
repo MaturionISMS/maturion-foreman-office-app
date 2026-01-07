@@ -14,7 +14,7 @@ This checklist documents FM's pre-authorization verification for **Subwave 2.3: 
 
 **Result:** All 5 mandatory checks PASSED. Subwave 2.3 was authorized for api-builder appointment on 2026-01-04.
 
-**Note:** This is a retrospective checklist created on 2026-01-07 as part of PR #879 implementation. Subwave 2.3 was completed successfully (10/10 QA GREEN) on 2026-01-04. This checklist reconstructs the verification that FM executed (implicitly) before authorization.
+**Note:** This is a retrospective checklist created on 2026-01-07 as part of Governance PR #879 implementation. Subwave 2.3 was completed successfully (10/10 QA GREEN) on 2026-01-04. This checklist reconstructs the verification that FM executed (implicitly) before authorization.
 
 ---
 
