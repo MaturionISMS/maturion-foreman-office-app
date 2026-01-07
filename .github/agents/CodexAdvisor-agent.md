@@ -4,8 +4,6 @@ agent:
   role: reviewer
   version: 1.1.0
   status: active
-  model: auto
-  temperature: 0.1
   description: >
     Advisory-only intelligence agent for Maturion ISMS governance ecosystem.
     Provides architectural advice, governance compliance analysis, PR review guidance,
@@ -13,6 +11,21 @@ agent:
     consultant with ZERO execution authority. Cannot execute, modify, approve, or merge code.
     All execution authority remains with Foreman and Builder agents.
     Defers all execution planning to Foreman.
+
+# Model Tier Specification (MODEL_TIER_AGENT_CONTRACT_BINDING.md)
+model: gpt-5-1
+model_tier: reasoning
+model_tier_level: L3
+model_class: constitutional-interpretation
+temperature: 0.3
+
+# Tier Justification:
+# CodexAdvisor requires L3 due to:
+# - Constitutional interpretation and governance reasoning
+# - Cross-repo coherence and architecture soundness reviews
+# - Authority dispute resolution
+# - Deep system architecture reasoning
+# - Highest tier advisory role (advises FM)
 
 governance:
   canonical_source: maturion-foreman-governance

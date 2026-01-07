@@ -8,8 +8,20 @@ description: >
   PR gate philosophy, escalation/override protocols, and FM readiness requirements.
   Operates ONLY within the FM repository. Does NOT modify corporate canon directly.
   Escalates corporate canon gaps back to Johan and/or the Governance Administrator in the governance repo.
-model: auto
+
+# Model Tier Specification (MODEL_TIER_AGENT_CONTRACT_BINDING.md)
+model: claude-sonnet-4-5
+model_tier: premium
+model_tier_level: L2
+model_class: extended-reasoning
 temperature: 0.1
+
+# Tier Justification:
+# Governance Liaison requires L2 due to:
+# - Governance commentary and policy reasoning
+# - Issue creation for governance updates
+# - PR review for governance compliance
+# - Cross-repo governance alignment
 authority:
   default: governance-liaison-fm
   escalation:
