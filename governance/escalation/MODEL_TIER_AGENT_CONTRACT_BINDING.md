@@ -24,7 +24,7 @@ This policy defines **mandatory model tier specifications** for all agent contra
 Every `.agent. md` contract in `.github/agents/` MUST include the following YAML frontmatter fields:
 
 ```yaml
-model: <explicit-model-name>     # e.g., claude-sonnet-4-5, gpt-5-1
+model: <explicit-model-name>     # e.g., o1-preview, claude-sonnet-4-5, gpt-4-1
 model_tier: <tier-name>          # standard | premium | reasoning
 model_tier_level: <level>        # L1 | L2 | L3 | L4
 model_class: <capability-class>  # coding | extended-reasoning | constitutional-interpretation
@@ -51,29 +51,29 @@ model_fallback: <fallback-model> # Optional: fallback for routine tasks
 
 **Cognitive Capacity**: Constitutional interpretation, deep architecture reasoning, governance evolution  
 **Use Case**: Long-term decisions, system soundness reviews, crisis resolution  
-**Context Window**: Full governance corpus required  
 **Usage Rule**: **Use sparingly** — Only when the decision matters long-term
 
-**Model Assignments**: 
+**Model Assignments**:  
 
 | Role | Model | Rationale | Cost Discipline |
 |------|-------|-----------|-----------------|
-| CodexAdvisor (Chief Advisor) | GPT-5.1 | Best at hierarchy enforcement, governance reasoning, cross-repo coherence, authority disputes | HIGH — Reserve for architecture & governance |
-| Deep Architecture Review | GPT-5 | Strong system reasoning, slightly cheaper than 5.1 | MEDIUM-HIGH |
-| Crisis / Conflict Resolution | GPT-5.1 | Best long-range reasoning and constraint holding | HIGH |
-| "Is This System Sound?" Reviews | GPT-5.1 | Thinks like a systems architect | HIGH |
+| CodexAdvisor (Chief Advisor) | **o1-preview** | Best reasoning model, constitutional interpretation, proven track record | HIGH — Reserve for governance |
+| Deep Architecture Review | **o3** | Latest reasoning model, advanced capabilities | HIGH |
+| Crisis / Conflict Resolution | **o1-preview** | Best long-range reasoning and constraint holding | HIGH |
+| System Soundness Reviews | **o1-preview** | Thinks like a systems architect | HIGH |
 
 **Agents at This Tier**:
 - `CodexAdvisor-agent.md` (Chief Advisor)
-- Johan Ras (CS2) with GPT-5.1 as advisor (L4)
+- Johan Ras (CS2) with o1-preview as advisor (L4)
 
 **Frontmatter Template**:
 ```yaml
-model: gpt-5-1
+model: o1-preview
 model_tier: reasoning
 model_tier_level: L3
 model_class: constitutional-interpretation
-temperature:  0.3
+model_fallback: o3
+temperature: 1.0
 
 # Tier Justification: 
 # CodexAdvisor requires L3 due to:
@@ -89,7 +89,6 @@ temperature:  0.3
 
 **Cognitive Capacity**: Multi-document synthesis, strategic planning, governance enforcement  
 **Use Case**:  Coordinate builders, enforce governance, create issues, review PRs  
-**Context Window**: 128K+ tokens (full repository governance)  
 **Usage Rule**: **If a human will read it, use this tier**  
 **Target Usage**: **60-70% of total agent usage should be Tier 2**
 
@@ -97,16 +96,16 @@ temperature:  0.3
 
 | Role | Model | Rationale | Cost Discipline |
 |------|-------|-----------|-----------------|
-| Foreman Planning Aid | GPT-5 | Strategic wave planning, governance enforcement | MEDIUM-HIGH |
-| Issue Creation | Claude Sonnet 4.5 | Excellent structure, calm tone, human-readable | LOW-MEDIUM |
-| PR Review Comments | Claude Sonnet 4.5 | Reads code well, flags risk without noise | LOW-MEDIUM |
-| Governance Commentary | Claude Sonnet 4.5 | Strong policy and declarative reasoning | LOW-MEDIUM |
-| Architecture Explanations | Claude Sonnet 4.5 | Clear explanations without over-engineering | LOW-MEDIUM |
-| Design Discussions | Claude Sonnet 4 | Slightly cheaper, still solid | LOW |
+| Foreman Planning Aid | **gpt-5** | Strategic wave planning, governance enforcement | MEDIUM-HIGH |
+| Issue Creation | **claude-sonnet-4-5** | Excellent structure, calm tone, human-readable | LOW-MEDIUM |
+| PR Review Comments | **claude-sonnet-4-5** | Reads code well, flags risk without noise | LOW-MEDIUM |
+| Governance Commentary | **claude-sonnet-4-5** | Strong policy and declarative reasoning | LOW-MEDIUM |
+| Architecture Explanations | **claude-sonnet-4-5** | Clear explanations without over-engineering | LOW-MEDIUM |
+| Design Discussions | **gpt-5** | Strategic reasoning | MEDIUM |
 
 **Agents at This Tier**:
-- `ForemanApp-agent.md` (FM)
-- `governance-liaison.md` (Governance Liaison)
+- `ForemanApp-agent.md` (FM) - uses gpt-5 primary, claude-sonnet-4-5 fallback
+- `governance-liaison.md` (Governance Liaison) - uses claude-sonnet-4-5 primary
 
 **Frontmatter Template (FM)**:
 ```yaml
@@ -119,11 +118,11 @@ temperature: 0.08
 
 # Tier Justification:
 # FM requires L2 due to:
-# - Strategic wave planning (GPT-5)
+# - Strategic wave planning (gpt-5)
 # - Multi-document synthesis (14 Tier-0 docs)
-# - Governance enforcement (Sonnet 4.5)
-# - Builder coordination (Sonnet 4.5)
-# - Escalates to GPT-5.1 (L3) for deep governance reasoning
+# - Governance enforcement (claude-sonnet-4-5 fallback)
+# - Builder coordination (claude-sonnet-4-5 fallback)
+# - Escalates to o1-preview (L3) for deep governance reasoning
 ```
 
 **Frontmatter Template (Governance Liaison)**:
@@ -132,12 +131,13 @@ model: claude-sonnet-4-5
 model_tier:  premium
 model_tier_level:  L2
 model_class: extended-reasoning
+model_fallback: gpt-5
 temperature: 0.1
 
 # Tier Justification:
 # Liaison requires L2 due to: 
-# - Governance commentary and policy reasoning
-# - Issue creation for governance updates
+# - Governance commentary and policy reasoning (claude-sonnet-4-5 excellent)
+# - Issue creation for governance updates (calm tone, clear structure)
 # - PR review for governance compliance
 # - Cross-repo governance alignment
 ```
@@ -146,21 +146,18 @@ temperature: 0.1
 
 ### Tier 3: Standard (L1) — Operational & Mechanical Tasks
 
-**Cognitive Capacity**: Focused implementation, scoped work, clear specifications  
+**Cognitive Capacity**:  Focused implementation, scoped work, clear specifications  
 **Use Case**: Execute well-defined tasks with frozen architecture and QA-to-Red  
-**Context Window**: 8K-32K tokens sufficient  
 **Usage Rule**: **Don't spend intelligence where structure is enough**
 
 **Model Assignments**:
 
 | Role | Model | Rationale | Cost Discipline |
 |------|-------|-----------|-----------------|
-| Builder Implementation | GPT-4.1 | Reliable, cheap, good for structured tasks | LOW |
-| Repetitive Issue Templates | GPT-4.1 | Fast, consistent | LOW |
-| Summaries / Checklists | GPT-4.1 | Good enough, inexpensive | LOW |
-| Repo Hygiene Checks | GPT-4.1 | Adequate for mechanical tasks | LOW |
-| Fast Reasoning / Glue Tasks | GPT-5-mini | Very cheap, very fast | VERY LOW |
-| Lightweight Code Comments | GPT-5-mini | Adequate, low cost | VERY LOW |
+| Builder Implementation | **gpt-4-1** | Reliable, cheap, good for structured tasks | LOW |
+| Repetitive Tasks | **gpt-4-1** | Fast, consistent | LOW |
+| Fast Reasoning / Glue Tasks | **gpt-5-mini** | Very cheap, very fast | VERY LOW |
+| Lightweight Tasks | **gpt-5-mini** | Adequate, low cost | VERY LOW |
 
 **Agents at This Tier**:
 - `ui-builder.md`
@@ -179,11 +176,11 @@ model_fallback:  gpt-5-mini
 temperature: 0.3
 
 # Tier Justification:
-# Builders require L1 due to: 
+# <Builder name> requires L1 due to: 
 # - Scoped implementation work with frozen architecture
 # - Clear QA-to-Red specifications
-# - Repetitive, well-defined tasks
-# - Cost-effective for high-volume work
+# - Repetitive, well-defined coding tasks
+# - Cost-effective for high-volume implementation work
 ```
 
 ---
@@ -234,9 +231,9 @@ Example:  Both FM and Governance Liaison are L2, but:
 
 | Question | Answer |
 |----------|--------|
-| **Thinking about the system? ** | → GPT-5.1 (Tier 1, L3) |
-| **Talking to humans?** | → Claude Sonnet 4.5 (Tier 2, L2) |
-| **Doing repetitive work?** | → GPT-4.1 / GPT-5-mini (Tier 3, L1) |
+| **Thinking about the system?** | → o1-preview (Tier 1, L3) |
+| **Talking to humans?** | → claude-sonnet-4-5 (Tier 2, L2) |
+| **Doing repetitive work?** | → gpt-4-1 / gpt-5-mini (Tier 3, L1) |
 
 ---
 
@@ -331,17 +328,17 @@ model_tier_level: L2
 
 When FM detects cognitive limits: 
 1. **HALT** current work
-2. **ESCALATE** to L3 (CodexAdvisor) or L4 (Johan with GPT-5.1)
+2. **ESCALATE** to L3 (CodexAdvisor) or L4 (Johan with o1-preview)
 3. **REQUEST** higher tier model or human intervention
 4. **WAIT** for authorization
 
 **Example Escalation Path**:
 ```
-Builder (L1, GPT-4.1) → encounters complexity
+Builder (L1, gpt-4-1) → encounters complexity
   ↓ ESCALATE
-FM (L2, GPT-5) → encounters governance ambiguity
+FM (L2, gpt-5) → encounters governance ambiguity
   ↓ ESCALATE
-CodexAdvisor (L3, GPT-5.1) → resolves constitutional question
+CodexAdvisor (L3, o1-preview) → resolves constitutional question
   ↓ RETURN GUIDANCE
 FM (L2) → resumes with clarity
   ↓ INSTRUCT
@@ -365,10 +362,10 @@ When builders fail repeatedly:
 ### Cost Optimization Strategy:
 
 **Start at Lowest Viable Tier**:
-- Use L1 for implementation (GPT-4.1, GPT-5-mini)
-- Use L2 for orchestration (GPT-5, Sonnet 4.5)
-- Use L3 only for constitutional issues (GPT-5.1)
-- Use L4 for emergencies (Johan + GPT-5.1)
+- Use L1 for implementation (gpt-4-1, gpt-5-mini)
+- Use L2 for orchestration (gpt-5, claude-sonnet-4-5)
+- Use L3 only for constitutional issues (o1-preview)
+- Use L4 for emergencies (Johan + o1-preview)
 
 **Target Usage Distribution**:
 - **60-70%**:  Tier 2 (L2) — Advisory, coordination, governance
@@ -382,11 +379,11 @@ When builders fail repeatedly:
 - ❌ Downgrade tier to save cost (governance violation)
 
 **Cost Multipliers** (approximate):
-- L1 (GPT-4.1): 1x baseline
-- L1 (GPT-5-mini): 0.3x baseline (very cheap)
-- L2 (Sonnet 4.5): 2-3x baseline
-- L2 (GPT-5): 4-5x baseline
-- L3 (GPT-5.1): 10-15x baseline
+- L1 (gpt-4-1): 1x baseline
+- L1 (gpt-5-mini): 0.3x baseline (very cheap)
+- L2 (claude-sonnet-4-5): 2-3x baseline
+- L2 (gpt-5): 4-5x baseline
+- L3 (o1-preview): 10-15x baseline
 - L4 (Human): Project-dependent
 
 ---
@@ -407,10 +404,10 @@ temperature: 0.08
 ```
 
 **Usage Pattern**:
-- **Strategic planning**: GPT-5 (higher reasoning)
-- **Issue creation / PR reviews**: Claude Sonnet 4.5 (better human communication)
-- **Routine coordination**: Claude Sonnet 4.5 (cost-effective)
-- **Deep governance questions**:  Escalate to GPT-5.1 (L3)
+- **Strategic planning**: gpt-5 (higher reasoning)
+- **Issue creation / PR reviews**: claude-sonnet-4-5 (better human communication)
+- **Routine coordination**: claude-sonnet-4-5 (cost-effective)
+- **Deep governance questions**: Escalate to o1-preview (L3)
 
 ---
 
@@ -419,15 +416,16 @@ temperature: 0.08
 ```yaml
 name: CodexAdvisor
 role:  Chief Advisor (Advisory-Only)
-model: gpt-5-1
+model: o1-preview
 model_tier: reasoning
 model_tier_level: L3
 model_class: constitutional-interpretation
-temperature: 0.3
+model_fallback: o3
+temperature: 1.0
 ```
 
 **Usage Pattern**:
-- **Always**: GPT-5.1 (constitutional reasoning, governance interpretation)
+- **Always**: o1-preview (constitutional reasoning, governance interpretation)
 - **Never downgrade**: CodexAdvisor is always highest tier
 
 ---
@@ -441,13 +439,14 @@ model: claude-sonnet-4-5
 model_tier:  premium
 model_tier_level:  L2
 model_class: extended-reasoning
+model_fallback: gpt-5
 temperature: 0.1
 ```
 
 **Usage Pattern**:
-- **Always**: Claude Sonnet 4.5 (governance commentary, policy reasoning)
-- **Issue creation**: Claude Sonnet 4.5 (excellent structure)
-- **PR reviews**: Claude Sonnet 4.5 (reads code well)
+- **Always**: claude-sonnet-4-5 (governance commentary, policy reasoning)
+- **Issue creation**: claude-sonnet-4-5 (excellent structure)
+- **PR reviews**: claude-sonnet-4-5 (reads code well)
 
 ---
 
@@ -465,9 +464,9 @@ temperature: 0.3
 ```
 
 **Usage Pattern**:
-- **Implementation**: GPT-4.1 (reliable, cost-effective)
-- **Simple summaries / checklists**: GPT-5-mini (very cheap)
-- **Complex architecture questions**:  Escalate to FM (L2)
+- **Implementation**: gpt-4-1 (reliable, cost-effective)
+- **Simple summaries / checklists**: gpt-5-mini (very cheap)
+- **Complex architecture questions**: Escalate to FM (L2)
 
 ---
 
@@ -510,7 +509,7 @@ FM MAY temporarily escalate a builder to L2 for:
 1. FM documents escalation need
 2. FM requests tier upgrade for specific task
 3. Johan approves
-4. Builder executes at L2 (using GPT-5 or Sonnet 4.5)
+4. Builder executes at L2 (using gpt-5 or claude-sonnet-4-5)
 5. Builder reverts to L1 after task
 
 ### Platform Limitations:
@@ -538,9 +537,9 @@ If platform does not support explicit model selection:
 
 This policy succeeds when:
 - ✅ All agents specify explicit model tiers
-- ✅ FM operates at L2 (GPT-5 / Sonnet 4.5)
-- ✅ CodexAdvisor operates at L3 (GPT-5.1)
-- ✅ Builders operate at L1 (GPT-4.1 / GPT-5-mini)
+- ✅ FM operates at L2 (gpt-5 / claude-sonnet-4-5)
+- ✅ CodexAdvisor operates at L3 (o1-preview)
+- ✅ Builders operate at L1 (gpt-4-1 / gpt-5-mini)
 - ✅ Tier hierarchy is enforced
 - ✅ Escalation paths are clear
 - ✅ 60-70% of usage is Tier 2 (cost-optimized workhorse)
@@ -551,16 +550,18 @@ This policy succeeds when:
 
 ## XIV. Quick Reference Summary
 
-### Recommended Default Mapping
+### Recommended Model Mapping
 
-| Agent | Model | Tier | Level | Cost |
-|-------|-------|------|-------|------|
-| CodexAdvisor | GPT-5.1 | Reasoning | L3 | HIGH |
-| ForemanApp (Strategic) | GPT-5 | Premium | L2 | MEDIUM-HIGH |
-| ForemanApp (Routine) | Claude Sonnet 4.5 | Premium | L2 | LOW-MEDIUM |
-| Governance Liaison | Claude Sonnet 4.5 | Premium | L2 | LOW-MEDIUM |
-| Builders (Implementation) | GPT-4.1 | Standard | L1 | LOW |
-| Builders (Lightweight) | GPT-5-mini | Standard | L1 | VERY LOW |
+| Agent | Primary Model | Fallback | Tier | Level | Cost |
+|-------|---------------|----------|------|-------|------|
+| CodexAdvisor | o1-preview | o3 | Reasoning | L3 | HIGH |
+| ForemanApp | gpt-5 | claude-sonnet-4-5 | Premium | L2 | MED-HIGH |
+| Governance Liaison | claude-sonnet-4-5 | gpt-5 | Premium | L2 | LOW-MED |
+| UI Builder | gpt-4-1 | gpt-5-mini | Standard | L1 | LOW |
+| API Builder | gpt-4-1 | gpt-5-mini | Standard | L1 | LOW |
+| Schema Builder | gpt-4-1 | gpt-5-mini | Standard | L1 | LOW |
+| Integration Builder | gpt-4-1 | gpt-5-mini | Standard | L1 | LOW |
+| QA Builder | gpt-4-1 | gpt-5-mini | Standard | L1 | LOW |
 
 ---
 
@@ -635,11 +636,11 @@ All agents operating at L2 (Premium) or L3 (Reasoning) tiers MUST declare their 
 ```
 ---
 **Agent**: ForemanApp
-**Model**: GPT-5 (Tier L2 Premium)
+**Model**: gpt-5 (Tier L2 Premium)
 **Temperature**: 0.08
-**Decision Type**: Wave 2. 0 Authorization
+**Decision Type**: Wave 2.0 Authorization
 **Date**: 2026-01-07
-**Authority**:  FM Agent Contract v3.5. 0
+**Authority**: FM Agent Contract v3.5.0
 ---
 ```
 
@@ -647,10 +648,10 @@ All agents operating at L2 (Premium) or L3 (Reasoning) tiers MUST declare their 
 ```
 ---
 **Agent**: CodexAdvisor
-**Model**: GPT-5.1 (Tier L3 Reasoning)
-**Temperature**: 0.3
+**Model**: o1-preview (Tier L3 Reasoning)
+**Temperature**: 1.0
 **Decision Type**: Constitutional Interpretation
-**Date**:  2026-01-07
+**Date**: 2026-01-07
 **Authority**: Model Tier Binding Policy Section XVI
 ---
 ```
@@ -662,9 +663,9 @@ All agents operating at L2 (Premium) or L3 (Reasoning) tiers MUST declare their 
 **Format**: `[Agent | Model Tier-Level | Date]`
 
 **Examples**:
-- `[ForemanApp | GPT-5 L2 | 2026-01-07]`
-- `[ForemanApp | Sonnet-4.5 L2 | 2026-01-07]` (when using fallback)
-- `[Governance Liaison | Sonnet-4.5 L2 | 2026-01-07]`
+- `[ForemanApp | gpt-5 L2 | 2026-01-07]`
+- `[ForemanApp | claude-sonnet-4-5 L2 | 2026-01-07]` (when using fallback)
+- `[Governance Liaison | claude-sonnet-4-5 L2 | 2026-01-07]`
 
 **Usage**:  End of issue comments, PR reviews, routine coordination
 
@@ -689,7 +690,7 @@ All agents operating at L2 (Premium) or L3 (Reasoning) tiers MUST declare their 
 ---
 **Escalation From**: UI Builder (L1 Standard)
 **Escalation To**: ForemanApp (L2)
-**Current Model**: GPT-4.1
+**Current Model**: gpt-4-1
 **Reason**: Governance ambiguity in architecture freeze interpretation
 **Requested Tier**: L2
 **Date**: 2026-01-07
@@ -701,7 +702,7 @@ All agents operating at L2 (Premium) or L3 (Reasoning) tiers MUST declare their 
 ---
 **Escalation From**: ForemanApp (L2 Premium)
 **Escalation To**: CodexAdvisor (L3)
-**Current Model**: GPT-5
+**Current Model**: gpt-5
 **Reason**: Constitutional question regarding Zero Test Debt interpretation
 **Requested Tier**: L3
 **Date**: 2026-01-07
@@ -716,10 +717,10 @@ When using `model_fallback`, agents MUST indicate which model was actually used:
 
 **Example (FM using fallback)**:
 ```
-[ForemanApp | Sonnet-4.5 L2 (fallback) | 2026-01-07]
+[ForemanApp | claude-sonnet-4-5 L2 (fallback) | 2026-01-07]
 ```
 
-This indicates FM used Claude Sonnet 4.5 (fallback) instead of primary GPT-5.
+This indicates FM used claude-sonnet-4-5 (fallback) instead of primary gpt-5.
 
 ---
 
@@ -769,18 +770,18 @@ For routine coordination, I may use [Fallback Model] (if specified).
 
 **Example Response (FM)**:
 ```
-I am currently using GPT-5 (Tier L2 Premium) as specified in my agent contract (ForemanApp-agent.md v3.5.0).
+I am currently using gpt-5 (Tier L2 Premium) as specified in my agent contract (ForemanApp-agent.md v3.5.0).
 
 **Model Details**:
-- Model:  GPT-5
+- Model: gpt-5
 - Tier: Premium
 - Level: L2
 - Temperature: 0.08
-- Fallback: Claude Sonnet 4.5
-- Contract: . github/agents/ForemanApp-agent.md v3.5.0
+- Fallback: claude-sonnet-4-5
+- Contract: .github/agents/ForemanApp-agent.md v3.5.0
 
-For strategic wave planning and governance enforcement, I use GPT-5.
-For routine issue creation and PR reviews, I may use Claude Sonnet 4.5 (fallback).
+For strategic wave planning and governance enforcement, I use gpt-5.
+For routine issue creation and PR reviews, I may use claude-sonnet-4-5 (fallback).
 ```
 
 ---

@@ -14,7 +14,7 @@ All 7 agent contracts in `.github/agents/` have been updated to comply with `gov
 
 | Agent | Model | Tier | Level | Class |
 |-------|-------|------|-------|-------|
-| **CodexAdvisor** | gpt-5-1 | reasoning | L3 | constitutional-interpretation |
+| **CodexAdvisor** | o1-preview | reasoning | L3 | constitutional-interpretation |
 | **Governance Liaison** | claude-sonnet-4-5 | premium | L2 | extended-reasoning |
 | **UI Builder** | gpt-4-1 | standard | L1 | coding |
 | **API Builder** | gpt-4-1 | standard | L1 | coding |

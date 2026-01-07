@@ -202,23 +202,24 @@ temperature: 0.1
 
 ### Agent 7: CodexAdvisor-agent.md (L3 - Reasoning Tier)
 
-- ✅ `model` field is explicit (`gpt-5-1`, not `auto`)
+- ✅ `model` field is explicit (`o1-preview`, not `auto`)
 - ✅ `model_tier` is valid (`reasoning`)
 - ✅ `model_tier_level` is valid (`L3`)
 - ✅ `model_class` is specified (`constitutional-interpretation`)
-- ✅ `temperature` is set (`0.3`)
-- ✅ `model_fallback` not present (optional for L3)
+- ✅ `temperature` is set (`1.0`)
+- ✅ `model_fallback` is present (`o3`)
 - ✅ Inline tier justification comment present
-- ✅ Model matches tier (L3 = GPT-5.1)
+- ✅ Model matches tier (L3 = o1-preview)
 - ✅ Tier matches role (CodexAdvisor = L3)
 
 **Frontmatter:**
 ```yaml
-model: gpt-5-1
+model: o1-preview
 model_tier: reasoning
 model_tier_level: L3
 model_class: constitutional-interpretation
-temperature: 0.3
+model_fallback: o3
+temperature: 1.0
 
 # Tier Justification:
 # CodexAdvisor requires L3 due to:
@@ -226,7 +227,7 @@ temperature: 0.3
 # - Cross-repo coherence and architecture soundness reviews
 # - Authority dispute resolution
 # - Deep system architecture reasoning
-# - Highest tier advisory role (advises FM)
+# - Highest tier advisory role (advises FM at L2)
 ```
 
 ---
@@ -247,7 +248,7 @@ temperature: 0.3
 **Constitutional Hierarchy Confirmed:**
 
 ```
-L3 (Reasoning) → CodexAdvisor (gpt-5-1)
+L3 (Reasoning) → CodexAdvisor (o1-preview)
                       ↓ advises
 L2 (Premium)   → Governance Liaison (claude-sonnet-4-5)
                       ↓ coordinates
@@ -272,8 +273,8 @@ L1 (Standard)  → All 5 Builders (gpt-4-1)
 | Schema Builder | gpt-4-1 | standard | L1 | coding | 0.3 | gpt-5-mini |
 | Integration Builder | gpt-4-1 | standard | L1 | coding | 0.3 | gpt-5-mini |
 | QA Builder | gpt-4-1 | standard | L1 | coding | 0.3 | gpt-5-mini |
-| Governance Liaison | claude-sonnet-4-5 | premium | L2 | extended-reasoning | 0.1 | - |
-| CodexAdvisor | gpt-5-1 | reasoning | L3 | constitutional-interpretation | 0.3 | - |
+| Governance Liaison | claude-sonnet-4-5 | premium | L2 | extended-reasoning | 0.1 | gpt-5 |
+| CodexAdvisor | o1-preview | reasoning | L3 | constitutional-interpretation | 1.0 | o3 |
 
 ---
 
@@ -338,15 +339,15 @@ Before next wave authorization, FM can verify:
 - **5-10%**: L3 (Reasoning) - Deep reasoning, architecture
 - **<5%**: L4 (Human) - Emergency escalation
 
-**Cost Multipliers (Relative to L1 GPT-4.1 baseline):**
+**Cost Multipliers (Relative to L1 gpt-4-1 baseline):**
 
-- L1 (GPT-4.1): 1x baseline
-- L1 (GPT-5-mini fallback): 0.3x baseline
-- L2 (Claude Sonnet 4.5): 2-3x baseline
-- L3 (GPT-5.1): 10-15x baseline
+- L1 (gpt-4-1): 1x baseline
+- L1 (gpt-5-mini fallback): 0.3x baseline
+- L2 (claude-sonnet-4-5): 2-3x baseline
+- L3 (o1-preview): 10-15x baseline
 
 **Optimization Strategy:**
-- Builders (5 agents) use cost-effective L1 with GPT-4.1
+- Builders (5 agents) use cost-effective L1 with gpt-4-1
 - Governance Liaison uses L2 for policy reasoning (efficient for human-readable output)
 - CodexAdvisor uses L3 for constitutional interpretation (highest quality for critical decisions)
 
@@ -373,11 +374,11 @@ Before next wave authorization, FM can verify:
 **New Escalation Flow:**
 
 ```
-Builder (L1, GPT-4.1) → encounters complexity
+Builder (L1, gpt-4-1) → encounters complexity
   ↓ ESCALATE
-FM (L2, GPT-5/Sonnet-4.5) → encounters governance ambiguity
+FM (L2, gpt-5/claude-sonnet-4-5) → encounters governance ambiguity
   ↓ ESCALATE
-CodexAdvisor (L3, GPT-5.1) → resolves constitutional question
+CodexAdvisor (L3, o1-preview) → resolves constitutional question
   ↓ RETURN GUIDANCE
 FM (L2) → resumes with clarity
   ↓ INSTRUCT
