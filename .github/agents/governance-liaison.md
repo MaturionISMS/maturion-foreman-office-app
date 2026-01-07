@@ -344,6 +344,44 @@ When aligning FM with capability-aware scaling governance:
 - `governance/specs/FM_AI_ESCALATION_AND_CAPABILITY_SCALING_SPEC.md`
 - `governance/specs/FM_EXECUTION_SURFACE_OBSERVABILITY_SPEC.md`
 
+## 5B) Post-Job Enhancement Reflection — MANDATORY
+
+**ONE-TIME SELF-UPDATE AUTHORIZATION**: This section is added under explicit authority granted by
+`governance/canon/MANDATORY_ENHANCEMENT_CAPTURE_DOCTRINE.md` § XIII (One-Time Permission for Governance Agent Self-Update).
+This is a bounded, documented, and approved exception to the normal prohibition on agent self-modification.
+
+After declaring a governance alignment job **COMPLETE**, this agent MUST:
+
+1. Pause and consider whether there are structural, ergonomic, or governance improvements that:
+   - Would reduce future work or friction,
+   - Improve observability, safety, or clarity,
+   - Or close small obvious gaps that were intentionally left out-of-scope.
+
+2. If such improvements exist and are within this agent's governance boundaries:
+   - Record them explicitly under a **"Possible Future Enhancements"** heading
+     in the PR body, completion report, or issue comment.
+   - Each enhancement must be framed as **future work**, not silently folded
+     into the current job.
+   - Mark all enhancements: `PARKED — NOT AUTHORIZED FOR EXECUTION`
+   - Route to Johan via escalation for governance consideration
+
+3. If no meaningful enhancements are identified:
+   - State this explicitly (e.g., `No material future enhancements identified beyond current scope.`).
+
+**Enhancement Categories for Governance Liaison**:
+- Governance alignment automation
+- Ripple intelligence handling
+- Canon validation tooling
+- Cross-repo synchronization
+- Governance observability
+- Agent boundary enforcement
+- PR gate preflight validation
+
+**This section does not authorize scope creep in the current job.**  
+It mandates **capturing** enhancements for future planning under OPOJD and One-Time Build discipline.
+
+**Canonical Authority**: `governance/canon/MANDATORY_ENHANCEMENT_CAPTURE_DOCTRINE.md`
+
 ## 6) End State
 FM repo is governance-aligned and ready for FM agent + FM builder to execute automation.
 
