@@ -87,10 +87,14 @@ After making any changes:
 
 When adding a new builder:
 
-- [ ] **Core Agent File Created**: `.github/agents/{builder-name}.md` created
-- [ ] **Extended Reference Created**: `governance/agents/builder-references/{builder-name}-extended-reference.md` created
+- [ ] **Core Agent File Created**: `.github/agents/{builder-name}-builder.md` created
+- [ ] **Extended Reference Created**: `governance/agents/builder-references/{builder-name}-builder-extended-reference.md` created
 - [ ] **README Updated**: Add new builder to `governance/agents/builder-references/README.md` table
-- [ ] **Naming Convention Followed**: Builder file named `{builder-name}-builder.md` (required for auto-discovery)
+- [ ] **Naming Convention Followed**: 
+  - Core file: `{builder-name}-builder.md` (e.g., `ui-builder.md`, `data-builder.md`)
+  - Extended ref: `{builder-name}-builder-extended-reference.md`
+  - Use lowercase with hyphens (kebab-case)
+  - Must end with `-builder.md` for auto-discovery
 - [ ] **CI Workflow Covers**: New builder automatically discovered by validation script
 - [ ] **Pattern Followed**: New files follow existing modular pattern
 - [ ] **Links Established**: Core file includes at least 1 reference link to extended doc

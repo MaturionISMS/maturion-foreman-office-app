@@ -93,10 +93,19 @@ def validate_file_exists(base_dir: Path, link: Dict[str, str]) -> Tuple[bool, Op
 
 def validate_section_reference(base_dir: Path, link: Dict[str, str]) -> Tuple[bool, Optional[str]]:
     """
-    Validate section references if present (§ "Section Name" syntax).
-    Returns (success, error_message)
+    Validate section references if present in the link context.
+    
+    Section references use the format: § "Section Name"
+    Example: See extended reference § "BL-018/BL-019 UI Builder Scenarios"
+    
+    Args:
+        base_dir: Base directory of the repository
+        link: Link dictionary containing path and context
+    
+    Returns:
+        Tuple of (success, error_message)
     """
-    # Check if link has section reference
+    # Check if link has section reference (§ "Section Name" syntax)
     section_pattern = r'§\s*"([^"]+)"'
     section_match = re.search(section_pattern, link['context'])
     
@@ -202,10 +211,26 @@ def validate_builder_agent_file(base_dir: Path, agent_file: Path, verbose: bool 
 def get_builders_from_filesystem(agents_dir: Path) -> List[str]:
     """
     Dynamically discover builders from the filesystem.
-    Returns list of builder names (without .md extension).
+    
+    Searches for files matching the pattern: *-builder.md
+    This is the required naming convention for builder agent files.
+    
+    Examples of valid builder names:
+        - ui-builder.md
+        - api-builder.md
+        - schema-builder.md
+        - integration-builder.md
+        - qa-builder.md
+    
+    Args:
+        agents_dir: Path to .github/agents directory
+    
+    Returns:
+        Sorted list of builder names (without .md extension)
     """
     builders = []
     if agents_dir.exists():
+        # Pattern: *-builder.md (e.g., ui-builder.md, api-builder.md)
         for file in agents_dir.glob('*-builder.md'):
             builders.append(file.stem)
     return sorted(builders)
@@ -375,7 +400,7 @@ def main():
             if results['links_found'] > 0:
                 log_success(f"{builder}: {results['links_valid']}/{results['links_found']} links valid")
             else:
-                log_info(f"{builder}: No modular links (may not use pattern)", True)
+                log_info(f"{builder}: No modular links (may not use pattern)", verbose)
         else:
             all_results['agents_failed'] += 1
             all_results['overall_success'] = False
