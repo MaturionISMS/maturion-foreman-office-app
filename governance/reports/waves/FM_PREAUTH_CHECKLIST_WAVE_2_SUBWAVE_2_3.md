@@ -26,7 +26,7 @@ This checklist documents FM's pre-authorization verification for **Subwave 2.3: 
 **Verification:**
 ```bash
 # Check QA_CATALOG.md for QA-426 to QA-435
-$ grep "QA-42[6-9]\|QA-43[0-5]" QA_CATALOG.md | wc -l
+$ grep -E 'QA-42[6-9]|QA-43[0-5]' QA_CATALOG.md | wc -l
 10
 ```
 
