@@ -582,4 +582,217 @@ This policy succeeds when:
 
 ---
 
+## XVI. Model Transparency and Signature Requirements
+
+### Purpose
+
+All agents operating at L2 (Premium) or L3 (Reasoning) tiers MUST declare their active model tier in strategic decisions, governance enforcement actions, and upon request. This ensures transparency about which cognitive tier was used for critical decisions.
+
+---
+
+### Mandatory Model Declaration Scenarios
+
+**L2 Agents (FM, Governance Liaison) MUST declare model in**:
+1. Wave authorization decisions
+2. Architecture freeze declarations
+3. Builder appointment notifications
+4. Escalation requests
+5. Gate pass/fail declarations
+6. Strategic planning summaries
+7. Upon explicit user request
+
+**L3 Agents (CodexAdvisor) MUST declare model in**: 
+1. Constitutional interpretations
+2. Governance canon recommendations
+3. Architecture soundness reviews
+4. Authority dispute resolutions
+5. Crisis/conflict resolution guidance
+6. Upon explicit user request
+
+**L1 Agents (Builders)**:
+- Model declaration OPTIONAL (cost-sensitive, high-volume work)
+- Required only when escalating to FM or upon explicit request
+
+---
+
+### Signature Formats
+
+#### Strategic Decisions (L2/L3 — Full Signature)
+
+**Format**:
+```
+---
+**Agent**:  [Agent Name]
+**Model**:  [Model Name] (Tier [Level] [Tier Name])
+**Temperature**: [Value]
+**Decision Type**: [Type]
+**Date**:  YYYY-MM-DD
+**Authority**: [Contract Reference]
+---
+```
+
+**Example (FM Wave Authorization)**:
+```
+---
+**Agent**: ForemanApp
+**Model**: GPT-5 (Tier L2 Premium)
+**Temperature**: 0.08
+**Decision Type**: Wave 2. 0 Authorization
+**Date**: 2026-01-07
+**Authority**:  FM Agent Contract v3.5. 0
+---
+```
+
+**Example (CodexAdvisor Constitutional Interpretation)**:
+```
+---
+**Agent**: CodexAdvisor
+**Model**: GPT-5.1 (Tier L3 Reasoning)
+**Temperature**: 0.3
+**Decision Type**: Constitutional Interpretation
+**Date**:  2026-01-07
+**Authority**: Model Tier Binding Policy Section XVI
+---
+```
+
+---
+
+#### Routine Responses (L2 — Short Signature)
+
+**Format**: `[Agent | Model Tier-Level | Date]`
+
+**Examples**:
+- `[ForemanApp | GPT-5 L2 | 2026-01-07]`
+- `[ForemanApp | Sonnet-4.5 L2 | 2026-01-07]` (when using fallback)
+- `[Governance Liaison | Sonnet-4.5 L2 | 2026-01-07]`
+
+**Usage**:  End of issue comments, PR reviews, routine coordination
+
+---
+
+#### Escalation Requests (All Tiers — Full Signature Required)
+
+**Format**:
+```
+---
+**Escalation From**: [Agent Name] ([Current Tier])
+**Escalation To**: [Target Tier/Agent]
+**Current Model**: [Model Name]
+**Reason**: [Brief reason]
+**Requested Tier**: [L2/L3/L4]
+**Date**: YYYY-MM-DD
+---
+```
+
+**Example (Builder → FM)**:
+```
+---
+**Escalation From**: UI Builder (L1 Standard)
+**Escalation To**: ForemanApp (L2)
+**Current Model**: GPT-4.1
+**Reason**: Governance ambiguity in architecture freeze interpretation
+**Requested Tier**: L2
+**Date**: 2026-01-07
+---
+```
+
+**Example (FM → CodexAdvisor)**:
+```
+---
+**Escalation From**: ForemanApp (L2 Premium)
+**Escalation To**: CodexAdvisor (L3)
+**Current Model**: GPT-5
+**Reason**: Constitutional question regarding Zero Test Debt interpretation
+**Requested Tier**: L3
+**Date**: 2026-01-07
+---
+```
+
+---
+
+### Model Fallback Declaration
+
+When using `model_fallback`, agents MUST indicate which model was actually used: 
+
+**Example (FM using fallback)**:
+```
+[ForemanApp | Sonnet-4.5 L2 (fallback) | 2026-01-07]
+```
+
+This indicates FM used Claude Sonnet 4.5 (fallback) instead of primary GPT-5.
+
+---
+
+### Enforcement
+
+**FM Pre-Authorization Check MUST verify**:
+- [ ] All L2/L3 agents include model signature in strategic decisions
+- [ ] All escalation requests include full signature
+- [ ] Model declared matches agent contract specification
+- [ ] Fallback usage is declared when applicable
+
+**Violation**:  Missing model signature in strategic decision = **GOVERNANCE VIOLATION**
+
+---
+
+### Observability Integration
+
+Model signatures enable:
+1. **Audit Trail**: Track which model made which decision
+2. **Cost Analysis**: Correlate decisions with model tier costs
+3. **Quality Analysis**: Assess decision quality by model tier
+4. **Compliance**: Verify tier usage matches policy
+
+**Future Enhancement**:  Automated logging to `governance/events/model-usage-log.jsonl`
+
+---
+
+### User Request Response
+
+When user asks "What model are you using?", agent MUST respond with: 
+
+**Format**:
+```
+I am currently using [Model Name] (Tier [Level] [Tier Name]) as specified in my agent contract ([Contract File]).
+
+**Model Details**:
+- Model:  [Model Name]
+- Tier: [Tier Name]
+- Level: [Level]
+- Temperature: [Value]
+- Fallback: [Fallback Model] (if applicable)
+- Contract: [Contract File] v[Version]
+
+For strategic decisions, I use [Primary Model]. 
+For routine coordination, I may use [Fallback Model] (if specified).
+```
+
+**Example Response (FM)**:
+```
+I am currently using GPT-5 (Tier L2 Premium) as specified in my agent contract (ForemanApp-agent.md v3.5.0).
+
+**Model Details**:
+- Model:  GPT-5
+- Tier: Premium
+- Level: L2
+- Temperature: 0.08
+- Fallback: Claude Sonnet 4.5
+- Contract: . github/agents/ForemanApp-agent.md v3.5.0
+
+For strategic wave planning and governance enforcement, I use GPT-5.
+For routine issue creation and PR reviews, I may use Claude Sonnet 4.5 (fallback).
+```
+
+---
+
+### Signature Placement
+
+**Strategic Decisions**:  Signature at **END** of response (after content)
+
+**Routine Responses**: Signature at **END** (optional, but recommended)
+
+**Escalations**: Signature in **HEADER** (before escalation content)
+
+---
+
 **END OF MODEL TIER AGENT CONTRACT BINDING POLICY**
