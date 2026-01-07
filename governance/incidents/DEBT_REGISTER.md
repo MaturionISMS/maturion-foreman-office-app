@@ -54,81 +54,69 @@ Approved for merge with documented execution debt. FM classified warnings as "ac
 
 ---
 
-### DEBT-002: Wave 0 RED QA Tests [RESOLVED]
+### DEBT-002: Wave 0 RED QA Tests
 
 **Debt ID**: DEBT-002  
 **Type**: Unimplemented Tests  
 **Severity**: HIGH  
-**Debt Size**: 60 RED tests across 5 categories (actual count, not 65 as estimated)  
+**Debt Size**: 65 RED tests across 5 categories  
 **Origin**: Wave 0 (pre-Wave 1.0 baseline)  
 **Origin Date**: 2025-12-22 or earlier  
 **Builder**: Multiple (core platform team)  
-**Status**: ✅ **RESOLVED**  
-**Resolution Date**: 2026-01-07  
-**Age at Resolution**: 16 days  
+**Status**: UNRESOLVED  
+**Age**: 16+ days (as of 2026-01-07)
 
 **Debt Description**:
-60 tests written in TDD style (tests before implementation) and moved to RED_QA/ directory. All tests failing due to missing implementations. Tests excluded from CI via pytest.ini.
+65 tests written in TDD style (tests before implementation) and moved to RED_QA/ directory. All tests failing due to missing implementations. Tests excluded from CI via pytest.ini. Current active test suite: 100% passing (33/33) but 65 tests not executed.
 
-**Test Categories** (actual counts):
-1. **Decision Determinism** (11 tests) - `test_decision_determinism.py`
-2. **Evidence Integrity** (14 tests) - `test_evidence_integrity.py`
-3. **Evidence Schema Validation** (15 tests) - `test_evidence_schema_validation.py`
-4. **Governance Supremacy** (11 tests) - `test_governance_supremacy.py`
+**Test Categories**:
+1. **Decision Determinism** (8 tests) - `test_decision_determinism.py`
+   - DecisionTracker, decision replay, trace recording
+2. **Evidence Integrity** (20 tests) - `test_evidence_integrity.py`
+   - EvidenceGenerator, automatic evidence generation, schema validation
+3. **Evidence Schema Validation** (12 tests) - `test_evidence_schema_validation.py`
+   - JSON schema validation infrastructure
+4. **Governance Supremacy** (16 tests) - `test_governance_supremacy.py`
+   - ArchitectureFreezeManager, QAEnforcementManager, governance enforcement
 5. **Liveness Continuity** (9 tests) - `test_liveness_continuity.py`
+   - HeartbeatMonitor, RecoveryManager, runtime monitoring
 
-**Resolution Decision**:
-All 60 tests **DEFERRED** to future waves per governance-aligned decision:
-- **Wave 3.1**: Evidence Integrity (14) + Evidence Schema Validation (15) = 29 tests
-- **Wave 3.2**: Decision Determinism (11 tests)
-- **Wave 3.3**: Governance Supremacy (11 tests)
-- **Wave 4.0+**: Liveness Continuity (9 tests)
+**Gate Decision at Discovery**:
+Tests moved to RED_QA/ and excluded from CI. Classified as "intentional TDD RED tests awaiting implementation". Resolution: proper classification, not elimination.
 
-**Rationale**:
-- All tests represent valid future functionality (not obsolete)
-- Implementation requires comprehensive architecture not yet frozen
-- Deferral maintains Zero Test Debt compliance (no tests deleted)
-- Proper Wave planning ensures One-Time Build Correctness
-- Current system operates without these features (not blocking)
+**Impact**:
+- Immediate: LOW (active suite 100% GREEN, excluded tests not running)
+- Medium-term: HIGH (represents unimplemented functionality, technical debt)
+- Long-term: CRITICAL (TDD without implementation = broken discipline)
 
-**Actions Completed**:
-- ✅ Decision documented: `governance/decisions/DEBT_002_RESOLUTION_DECISION.md`
-- ✅ Tests moved to `tests/future/wave3/` and `tests/future/wave4/`
-- ✅ Future functionality documented: `FUTURE_FUNCTIONALITY.md`
-- ✅ Wave READMEs created with implementation requirements
-- ✅ pytest.ini updated (now excludes `tests/future/`)
-- ✅ RED_QA directory removed (empty)
-- ✅ Active test suite unaffected (still 100% passing)
+**Elimination Plan - Requires Decision**:
+Three options per category:
+1. **IMPLEMENT**: Assign builder, freeze architecture, execute Build-to-Green
+2. **DEFER**: Move to `tests/future/`, document in FUTURE_FUNCTIONALITY.md, create Wave 3.0+ issue
+3. **REMOVE**: Delete tests, document rationale, justify as speculative
 
-**Evidence**:
-- Resolution commit: [To be filled by report_progress]
-- Decision document: `governance/decisions/DEBT_002_RESOLUTION_DECISION.md`
-- New test location: `tests/future/wave3/` and `tests/future/wave4/`
-- Future roadmap: `FUTURE_FUNCTIONALITY.md`
+**FM Recommendation**:
+- **IMPLEMENT**: Evidence Integrity (20 tests) - critical for audit and governance
+- **DEFER**: Decision Determinism (8 tests), Governance Supremacy (16 tests) - Wave 3.0+
+- **REMOVE**: Evidence Schema Validation (12 tests) - overlaps with Evidence Integrity
+- **REMOVE**: Liveness Continuity (9 tests) - monitoring not core, premature
+
+**Owner**: TBD (depends on IMPLEMENT/DEFER/REMOVE decision)  
+**Deadline**: 2026-01-28 (21 days from registration)  
+**Escalation**: If deadline missed, HALT all new work and escalate to Johan
 
 **Related Documents**:
-- `governance/decisions/DEBT_002_RESOLUTION_DECISION.md` [NEW]
-- `FUTURE_FUNCTIONALITY.md` [NEW]
-- `tests/future/README.md` [NEW]
-- `tests/future/wave3/README.md` [NEW]
-- `tests/future/wave4/README.md` [NEW]
 - `governance/incidents/INCIDENT-20251222-TEST-DEBT.md`
+- `tests/wave0_minimum_red/RED_QA/README.md`
+- `tests/wave0_minimum_red/RED_QA/IMPLEMENTATION_TRACKING.md`
 - `governance/incidents/HISTORICAL_WAVE_PR_WARNING_TEST_DEBT_SURVEY_RCA.md`
 
-**Tracking** (COMPLETE):
-- ✅ DEFER decision made for all categories
-- ✅ Tests moved to tests/future/ with proper wave assignments
-- ✅ Future functionality documented in FUTURE_FUNCTIONALITY.md
-- ✅ Wave 3.0+ and Wave 4.0+ tracking created
-- ✅ RED_QA/ directory removed (empty)
-- ✅ pytest.ini updated
-- ✅ Zero RED tests remaining in active suite
-
-**Governance Compliance**:
-✅ Zero Test Debt Constitutional Rule - No tests deleted  
-✅ FM Agent Contract - Proper deferral with documentation  
-✅ One-Time Build Correctness - Future implementation planned properly  
-✅ Minimal Changes - Debt cleanup without scope creep
+**Tracking**:
+- [ ] IMPLEMENT/DEFER/REMOVE decision made per category
+- [ ] If IMPLEMENT: Architecture frozen, QA-to-Red defined, builder assigned
+- [ ] If DEFER: Tests moved to tests/future/, issues created for Wave 3.0+
+- [ ] If REMOVE: Tests deleted, rationale documented
+- [ ] Verification: RED_QA/ directory empty or properly scoped
 
 ---
 
@@ -180,31 +168,27 @@ Approved for merge. Warning mentioned in completion summary but NOT analyzed or 
 
 ## Debt Statistics
 
-**Total Active Debt Items**: 2  
+**Total Active Debt Items**: 3  
 **Total Warnings**: 195 (194 + 1)  
-**Total Unimplemented Tests**: 0 (60 tests deferred to future waves)  
-**Oldest Debt Age**: 5 days (DEBT-001, DEBT-003)  
-**Average Debt Age**: 5 days  
+**Total Unimplemented Tests**: 65  
+**Oldest Debt Age**: 16+ days (DEBT-002)  
+**Average Debt Age**: ~9 days  
 
 **By Severity**:
-- HIGH: 0 (DEBT-002 resolved)
+- HIGH: 1 (DEBT-002)
 - MEDIUM: 1 (DEBT-001)
 - LOW: 1 (DEBT-003)
 
 **By Builder**:
 - schema-builder: 1 debt item (DEBT-001)
 - api-builder: 1 debt item (DEBT-003)
+- Multiple/TBD: 1 debt item (DEBT-002)
 
 ---
 
 ## Debt Resolution History
 
-### DEBT-002: Wave 0 RED QA Tests ✅
-**Resolved**: 2026-01-07  
-**Age at Resolution**: 16 days  
-**Resolution**: All 60 tests DEFERRED to Wave 3.0+ and Wave 4.0+ with proper documentation  
-**Evidence**: `governance/decisions/DEBT_002_RESOLUTION_DECISION.md`, `FUTURE_FUNCTIONALITY.md`  
-**Impact**: Zero RED tests remain, Zero test debt accumulated
+*(No resolved debt items yet)*
 
 ---
 
@@ -224,18 +208,14 @@ Approved for merge. Warning mentioned in completion summary but NOT analyzed or 
 
 ## Monthly Audit Log
 
-**2026-01-07**: 
-- Debt register created, 3 items registered
-- DEBT-002 resolved (60 tests deferred to Wave 3.0+ and Wave 4.0+)
-- Active debt items: 2 (DEBT-001, DEBT-003)
-
+**2026-01-07**: Debt register created, 3 items registered  
 **Next Audit**: 2026-02-07
 
 ---
 
 **Maintained By**: FM Agent  
 **Last Updated**: 2026-01-07  
-**Status**: Active (2 unresolved items, 1 resolved item)
+**Status**: Active (3 unresolved items)
 
 ---
 
