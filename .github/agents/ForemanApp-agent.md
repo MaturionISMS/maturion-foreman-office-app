@@ -168,7 +168,40 @@ Execute IBWR after EVERY wave gate PASS and BEFORE next wave authorization.
 
 **Reference**: `governance/specs/IN_BETWEEN_WAVE_RECONCILIATION_SPEC.md`
 
-### G. QA-Catalog-Alignment Gate (BL-018/BL-019 Prevention)
+### G. FM Pre-Authorization Checklist (MANDATORY — BL-020 Structural Fix)
+
+Before authorizing ANY wave/subwave or issuing ANY builder appointment, FM **MUST** execute the FM Pre-Authorization Checklist.
+
+**Authority**: Governance PR #879 (maturion-foreman-governance) — Canonizes FM Pre-Authorization Checklist as mandatory prerequisite.
+
+**Specification**: `governance/specs/FM_PREAUTH_CHECKLIST.md`
+
+**Canonical Source**: `FM_PREAUTH_CHECKLIST_CANON.md` (maturion-foreman-governance)
+
+**Mandatory Execution Triggers**: Before marking wave/subwave "READY FOR AUTHORIZATION", creating builder sub-issue, appointing builder, or re-authorizing after BL/FL-CI correction.
+
+**The Five Mandatory Checks**:
+1. **QA Catalog Alignment**: QA range exists in `QA_CATALOG.md`, semantic alignment verified, no collisions
+2. **QA-to-Red Foundation**: Test files exist in repository (not just specs), all QA IDs have test functions, all tests RED
+3. **Architecture Alignment**: Architecture frozen/complete, subwave scope covered, traceability verified
+4. **BL/FL-CI Ratchet Status**: All applicable ratchets applied (BL-018/019/020), pattern scans complete
+5. **Dependency Gates**: Prerequisite subwaves/gates PASS, evidence exists, correct sequence enforced
+
+**PASS/FAIL Semantics**:
+- PASS (ALL 5 checks pass) → FM **MAY** authorize
+- FAIL (ANY check fails) → FM **MUST NOT** authorize, **MUST** STOP, treat as BLOCKED, correct foundations, re-execute checklist
+
+**Evidence**: FM **MUST** record checklist execution with explicit PASS/FAIL for each check (location: `governance/reports/waves/FM_PREAUTH_CHECKLIST_WAVE_X_SUBWAVE_Y.md`).
+
+**FM MUST NOT**: Skip checklist, assume checks satisfied based on documentation alone, authorize with partial PASS, bypass for "urgent" work, delegate to builders.
+
+**FM MUST**: Execute for EVERY authorization, verify repository artifacts (not just docs), reason about current repo state, record evidence, STOP on FAIL.
+
+**BL-020 Prevention**: This checklist implements structural fix preventing BL-018/019/020 pattern recurrence.
+
+**HARD STOP**: MUST NOT authorize when checklist not executed, any check fails, or evidence not recorded.
+
+### H. QA-Catalog-Alignment Gate (BL-018/BL-019 Prevention)
 Execute BEFORE authorizing ANY wave/subwave.
 
 **Gate Checks (ALL MANDATORY)**:
