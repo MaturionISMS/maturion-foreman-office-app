@@ -1,0 +1,24 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.2, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app
+configfile: pytest.ini
+collecting ... collected 15 items
+
+tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py::TestPredictiveModeling::test_qa_531_predictive_model_initialization PASSED [  6%]
+tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py::TestPredictiveModeling::test_qa_532_predictive_model_training PASSED [ 13%]
+tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py::TestPredictiveModeling::test_qa_533_predictive_model_inference PASSED [ 20%]
+tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py::TestPredictiveModeling::test_qa_534_predictive_model_evaluation PASSED [ 26%]
+tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py::TestPredictiveModeling::test_qa_535_predictive_model_versioning PASSED [ 33%]
+tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py::TestTrendAnalysis::test_qa_536_trend_detection_initialization PASSED [ 40%]
+tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py::TestTrendAnalysis::test_qa_537_historical_trend_analysis PASSED [ 46%]
+tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py::TestTrendAnalysis::test_qa_538_realtime_trend_monitoring PASSED [ 53%]
+tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py::TestTrendAnalysis::test_qa_539_trend_visualization PASSED [ 60%]
+tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py::TestTrendAnalysis::test_qa_540_trend_forecasting PASSED [ 66%]
+tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py::TestInsightGeneration::test_qa_541_insight_extraction PASSED [ 73%]
+tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py::TestInsightGeneration::test_qa_542_insight_validation PASSED [ 80%]
+tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py::TestInsightGeneration::test_qa_543_insight_prioritization PASSED [ 86%]
+tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py::TestInsightGeneration::test_qa_544_insight_presentation PASSED [ 93%]
+tests/wave2_0_qa_infrastructure/test_advanced_analytics_phase1.py::TestInsightGeneration::test_qa_545_insight_actionability PASSED [100%]
+
+======================== 15 passed, 7 warnings in 0.06s ========================
