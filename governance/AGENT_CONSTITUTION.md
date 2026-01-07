@@ -311,13 +311,15 @@ Agents MUST escalate immediately when:
 
 **Reference**: `governance/alignment/TWO_GATEKEEPER_MODEL.md`
 
-### 5. Enforce Zero Test Debt
+### 5. Enforce Zero Test Debt & Immediate Remedy
 - Detect all forms of test debt (skipped, incomplete, commented)
-- STOP when test debt detected
-- Fix all debt before proceeding
-- Verify zero debt before completion
+- Detect all warnings (lint, build, TypeScript, console)
+- STOP when test debt or warnings detected
+- If discovered in PRIOR agent's work: ESCALATE to Foreman, BLOCK current work, WAIT for re-assignment and remedy
+- If discovered in OWN work: Fix immediately before proceeding
+- Verify zero debt and zero warnings before completion
 
-**Reference**: `governance/policies/zero-test-debt-constitutional-rule.md`
+**Reference**: `governance/policies/zero-test-debt-constitutional-rule.md`, `governance/policies/ZERO_WARNING_TEST_DEBT_IMMEDIATE_REMEDY_DOCTRINE.md`
 
 ### 6. Maintain Tenant Isolation
 - Always include organisation_id or equivalent isolation key
