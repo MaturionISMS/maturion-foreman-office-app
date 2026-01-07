@@ -11,7 +11,7 @@ Data Contract:
 - Fields: conversationId, userId, state, createdAt, archivedAt, resumedAt
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 from sqlalchemy import Column, String, DateTime, Integer, Enum as SQLEnum
 from sqlalchemy.orm import relationship
@@ -97,8 +97,8 @@ class Conversation(TenantIsolatedModel):
         
         self.state = ConversationState.ARCHIVED
         self.archived_reason = reason
-        self.archived_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+        self.archived_at = datetime.now(timezone.utc).replace(tzinfo=None)
+        self.updated_at = datetime.now(timezone.utc).replace(tzinfo=None)
     
     def resume(self) -> None:
         """
@@ -113,8 +113,8 @@ class Conversation(TenantIsolatedModel):
             raise ValueError(f"Conversation {self.id} is not archived (current state: {self.state.value})")
         
         self.state = ConversationState.RESUMED
-        self.resumed_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+        self.resumed_at = datetime.now(timezone.utc).replace(tzinfo=None)
+        self.updated_at = datetime.now(timezone.utc).replace(tzinfo=None)
     
     def update_message_stats(self) -> None:
         """
@@ -125,4 +125,4 @@ class Conversation(TenantIsolatedModel):
         self.message_count = len(self.messages)
         if self.messages:
             self.last_message_at = max(msg.created_at for msg in self.messages)
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now(timezone.utc).replace(tzinfo=None)

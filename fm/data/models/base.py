@@ -5,7 +5,7 @@ Architecture Reference: FM_ARCHITECTURE_SPEC_V2_WIRING_COMPLETE.md
 Tenant Isolation: Mandatory organisation_id on all tables
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 from sqlalchemy import Column, String, DateTime, create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -29,8 +29,8 @@ class TenantIsolatedModel(Base):
     organisation_id = Column(String(255), nullable=False, index=True)
     
     # Audit timestamps (MANDATORY)
-    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, nullable=False, default=lambda: datetime.now(timezone.utc).replace(tzinfo=None))
+    updated_at = Column(DateTime, nullable=False, default=lambda: datetime.now(timezone.utc).replace(tzinfo=None), onupdate=lambda: datetime.now(timezone.utc).replace(tzinfo=None))
 
 
 class DatabaseConfig:
