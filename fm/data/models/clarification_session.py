@@ -11,7 +11,7 @@ Data Contract:
 - Fields: clarificationId, messageId, questions, responses, state, resolvedAt
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional, List, Dict
 from sqlalchemy import Column, String, DateTime, Float, Integer, ForeignKey, Text, Enum as SQLEnum
 from sqlalchemy.orm import relationship
@@ -154,7 +154,7 @@ class ClarificationSession(TenantIsolatedModel):
         """
         if self.iteration_count >= self.max_iterations:
             self.state = ClarificationState.STALLED
-            self.stalled_at = datetime.utcnow()
+            self.stalled_at = datetime.now(timezone.utc).replace(tzinfo=None)
             raise ValueError(f"Clarification session {self.id} exceeded max iterations ({self.max_iterations})")
         
         self.iteration_count += 1
@@ -164,7 +164,7 @@ class ClarificationSession(TenantIsolatedModel):
         current_questions.append({
             "iteration": self.iteration_count,
             "questions": questions,
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(timezone.utc).replace(tzinfo=None).isoformat()
         })
         self.questions = current_questions
         
@@ -174,12 +174,12 @@ class ClarificationSession(TenantIsolatedModel):
             current_responses.append({
                 "iteration": self.iteration_count,
                 "response": response,
-                "timestamp": datetime.utcnow().isoformat()
+                "timestamp": datetime.now(timezone.utc).replace(tzinfo=None).isoformat()
             })
             self.responses = current_responses
         
         self.state = ClarificationState.ACTIVE
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now(timezone.utc).replace(tzinfo=None)
     
     def resolve(self, resolved_intent: Dict) -> None:
         """
@@ -191,15 +191,15 @@ class ClarificationSession(TenantIsolatedModel):
             resolved_intent: Final resolved intent data
         """
         self.state = ClarificationState.RESOLVED
-        self.resolved_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+        self.resolved_at = datetime.now(timezone.utc).replace(tzinfo=None)
+        self.updated_at = datetime.now(timezone.utc).replace(tzinfo=None)
         
         # Store resolved intent in responses
         current_responses = self.responses if isinstance(self.responses, list) else []
         current_responses.append({
             "iteration": "final",
             "resolved_intent": resolved_intent,
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(timezone.utc).replace(tzinfo=None).isoformat()
         })
         self.responses = current_responses
     
@@ -215,7 +215,7 @@ class ClarificationSession(TenantIsolatedModel):
         if self.iteration_count >= self.max_iterations and self.state != ClarificationState.RESOLVED:
             if self.state != ClarificationState.STALLED:
                 self.state = ClarificationState.STALLED
-                self.stalled_at = datetime.utcnow()
-                self.updated_at = datetime.utcnow()
+                self.stalled_at = datetime.now(timezone.utc).replace(tzinfo=None)
+                self.updated_at = datetime.now(timezone.utc).replace(tzinfo=None)
             return True
         return False

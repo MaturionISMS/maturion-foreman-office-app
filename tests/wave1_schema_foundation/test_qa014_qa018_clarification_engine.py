@@ -13,7 +13,7 @@ Data Contract:
 
 import pytest
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 
 from fm.data.models import (
     ClarificationSession,
@@ -148,11 +148,11 @@ class TestClarificationEngine:
             "confidence": 0.95
         }
         
-        before_resolve = datetime.utcnow()
+        before_resolve = datetime.now(timezone.utc).replace(tzinfo=None)
         sample_clarification_session.resolve(resolved_intent)
         db_session.commit()
         db_session.refresh(sample_clarification_session)
-        after_resolve = datetime.utcnow()
+        after_resolve = datetime.now(timezone.utc).replace(tzinfo=None)
         
         # Verify sufficient information check
         assert sample_clarification_session.state == ClarificationState.RESOLVED, "State should be RESOLVED"
@@ -396,7 +396,7 @@ class TestClarificationEngine:
         
         # For this test: verify session can be marked as stalled
         session.state = ClarificationState.STALLED
-        session.stalled_at = datetime.utcnow()
+        session.stalled_at = datetime.now(timezone.utc).replace(tzinfo=None)
         db_session.commit()
         
         db_session.refresh(session)
