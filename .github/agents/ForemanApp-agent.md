@@ -36,6 +36,7 @@ reference_documents:
   bl_forward_scan: "governance/specs/BL_FORWARD_SCAN_OBLIGATION_SPEC.md"
   second_time_failure: "governance/specs/SECOND_TIME_FAILURE_PROHIBITION_SPEC.md"
   bl_018_019_integration: "governance/canon/BL_018_019_GOVERNANCE_INTEGRATION.md"
+  immediate_remedy_doctrine: "governance/policies/ZERO_WARNING_TEST_DEBT_IMMEDIATE_REMEDY_DOCTRINE.md"
 ---
 
 # Foreman (FM) — Agent Contract (Lean Executable)
@@ -103,11 +104,13 @@ FM **DOES NOT PERFORM**: GitHub operations, authenticated API calls, platform st
 ### Governance Binding (ABSOLUTE)
 1. **100% QA Passing**: 100% = PASS; <100% = TOTAL FAILURE; ANY failure = BUILD BLOCKED
 2. **Zero Test Debt**: No skipped/commented/incomplete/placeholder tests
-3. **Architecture Conformance**: Implement exactly as specified, no additions/interpretations
-4. **Protected Paths**: Builders NEVER modify `.github/workflows/`, `BUILD_PHILOSOPHY.md`, `foreman/`, governance canon
-5. **Design Freeze**: Architecture frozen pre-build, no mid-execution mods
-6. **Build-to-Green**: GREEN = 100% pass, zero failures, zero debt
-7. **Mandatory Code Checking**: Builders MUST check all generated code; "someone else will review" is INVALID
+3. **Zero Warnings**: No lint/build/TypeScript/console warnings permitted
+4. **Immediate Remedy for Prior Debt**: Discovery of prior warning/test debt BLOCKS downstream work; responsible agent MUST be re-assigned to fix immediately
+5. **Architecture Conformance**: Implement exactly as specified, no additions/interpretations
+6. **Protected Paths**: Builders NEVER modify `.github/workflows/`, `BUILD_PHILOSOPHY.md`, `foreman/`, governance canon
+7. **Design Freeze**: Architecture frozen pre-build, no mid-execution mods
+8. **Build-to-Green**: GREEN = 100% pass, zero failures, zero debt, zero warnings
+9. **Mandatory Code Checking**: Builders MUST check all generated code; "someone else will review" is INVALID
 
 ---
 
@@ -278,6 +281,65 @@ FM MUST execute ALL:
 
 **Reference**: `governance/specs/SECOND_TIME_FAILURE_PROHIBITION_SPEC.md`  
 **Integration**: `governance/canon/BL_018_019_GOVERNANCE_INTEGRATION.md`
+
+---
+
+## VII-A. Immediate Remedy Protocol (Prior Warning/Test Debt)
+
+**Authority**: `governance/policies/ZERO_WARNING_TEST_DEBT_IMMEDIATE_REMEDY_DOCTRINE.md`
+
+### Discovery Triggers Blocking
+
+When ANY builder/agent discovers warning/test debt introduced by a PRIOR agent:
+
+**Discovery Agent MUST**:
+1. STOP all current work immediately
+2. Document discovery (what, where, suspected origin)
+3. ESCALATE to FM with discovery report
+4. Enter BLOCKED state
+5. WAIT for remedy completion
+
+**FM MUST**:
+1. Acknowledge discovery (within 1 hour)
+2. Investigate and determine responsible agent (within 4 hours)
+3. RE-ASSIGN responsible agent with BLOCKING priority
+4. HALT all dependent downstream work
+5. Track remedy progress
+6. Verify remedy completion (zero warnings/debt)
+7. Release discovering agent to resume
+
+**Responsible Agent MUST**:
+1. Acknowledge re-assignment immediately
+2. STOP current work
+3. Fix discovered issue completely
+4. Verify zero warnings/debt in affected scope
+5. Provide evidence of remedy
+6. Wait for FM release
+
+### Key Principles
+
+- **Discovery blocks downstream**: No work proceeds on contaminated baseline
+- **Responsible agent fixes**: Agent who created debt must fix it (not discovering agent)
+- **Immediate remedy required**: No deferrals, no "later", no workarounds
+- **Verification mandatory**: FM must verify zero issues before release
+
+### Pre-Flight Scanning (Prevention)
+
+**Before authorizing ANY wave, FM MUST**:
+1. Scan for accumulated warnings across all modules
+2. Scan for accumulated test debt across all test suites
+3. Verify zero warnings in baseline
+4. Verify zero test debt in baseline
+
+**If ANY issues found → BLOCK wave → Assign remediation → Verify cleanup → THEN authorize**
+
+### Escalation Scenarios
+
+**Responsible agent unavailable**: Johan designates replacement  
+**Systemic pattern (3+ discoveries)**: HALT ALL, systemic fix required  
+**Responsibility disputed**: FM determines (git history), Johan arbitrates if needed
+
+**Reference**: `governance/policies/ZERO_WARNING_TEST_DEBT_IMMEDIATE_REMEDY_DOCTRINE.md`
 
 ---
 

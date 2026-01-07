@@ -423,6 +423,46 @@ This builder enforces **Zero Test Debt** policy.
 
 ---
 
+## Immediate Remedy for Prior Debt — MANDATORY
+
+**Authority**: `governance/policies/ZERO_WARNING_TEST_DEBT_IMMEDIATE_REMEDY_DOCTRINE.md`
+
+### Discovery Protocol
+
+**If this builder discovers warning/test debt introduced by a PRIOR agent**:
+
+1. **STOP** all current work immediately
+2. **DOCUMENT** discovery:
+   - What was found (warnings, test debt, quality issues)
+   - Where it was found (file paths, line numbers)
+   - Suspected origin (which prior agent/wave)
+   - Impact on current work
+3. **ESCALATE** to Foreman with discovery report
+4. **ENTER** BLOCKED state
+5. **WAIT** for Foreman to resolve (do NOT fix prior agent's issues)
+
+**This builder MUST NOT**:
+- ❌ Attempt to fix prior agent's warnings/debt
+- ❌ Work around the issue
+- ❌ Continue downstream work on contaminated baseline
+- ❌ "Save it for later"
+- ❌ Suppress or hide the issue
+
+### Re-Assignment Response
+
+**If this builder is RE-ASSIGNED to fix own prior warnings/debt**:
+
+1. **ACKNOWLEDGE** re-assignment immediately
+2. **STOP** current work (if any)
+3. **FIX** discovered issue completely
+4. **VERIFY** zero warnings/debt in affected scope
+5. **PROVIDE** evidence of remedy
+6. **WAIT** for Foreman release
+
+**Key Principle**: **Responsible agent fixes their own debt. Discovery blocks downstream work.**
+
+---
+
 ## Gate-First Handover Protocol — MANDATORY
 
 This builder uses **deterministic gate-first handover semantics**.
