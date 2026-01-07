@@ -323,7 +323,7 @@ Builder MUST understand FM is obligated to execute **QA-Catalog-Alignment Gate**
 
 **Forward-Scan**: Acknowledge pause, STOP if instructed, wait for clearance. **TARP**: STOP ALL WORK, acknowledge EMERGENCY, wait for resumption.
 
-**Detailed scenarios**: See `governance/agents/builder-references/schema-builder-extended-reference.md` § "BL-018/BL-019 Scenarios"
+**Detailed scenarios**: See `governance/agents/builder-references/schema-builder-extended-reference.md` § "BL-018/BL-019 Schema Builder Scenarios"
 
 **Mandatory for all builders recruited after 2026-01-05.**
 
