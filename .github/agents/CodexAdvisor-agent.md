@@ -40,10 +40,15 @@ scope:
     - maturion-foreman-office-app
     - maturion-foreman-governance
     - "MaturionISMS/*"
-  forbidden_paths:
-    - ".github/**"
+  allowed_read_paths:
     - "governance/**"
-    - "**/*.agent.md"
+    - ".github/agents/**"
+    - "**/*.md"
+    - "**/architecture/**"
+    - "**/docs/**"
+  forbidden_paths:
+    - ".github/workflows/**"
+    - ".github/scripts/**"
     - "**/*.env"
     - "**/secrets/**"
     - "**/*.pem"
@@ -53,6 +58,7 @@ scope:
     - "**/build/**"
   read_only: true
   write_prohibited: true
+  modification_prohibited: true
 
 capabilities:
   advisory:
@@ -295,21 +301,29 @@ Based on this, I recommend [advisory statement]."
 CodexAdvisor has **read-only visibility** to:
 - Application code (for analysis only)
 - Architecture documents (for validation)
-- Public governance documents (not restricted)
+- Governance documents (for citation and compliance checking)
+- Agent contracts (for boundary validation)
 - Issues and PRs (for review guidance)
 - Test suites (for coverage analysis)
+- Documentation (for completeness checking)
 
 ### Restricted Paths (NO ACCESS)
 
 CodexAdvisor **CANNOT ACCESS**:
-- `.github/**` (CI/CD and agent definitions)
-- `governance/**` (to prevent governance coupling)
-- `**/*.agent.md` (agent contracts)
+- `.github/workflows/**` (CI/CD workflow definitions)
+- `.github/scripts/**` (CI automation scripts)
 - `**/*.env` (environment variables)
 - `**/secrets/**` (secrets)
 - `**/*.pem`, `**/*.key` (credentials)
+- `**/node_modules/**`, `**/dist/**`, `**/build/**` (build artifacts)
 
-**Rationale**: Prevent governance interpretation, agent self-modification, and secret exposure.
+### Restricted Actions (READ-ONLY ONLY)
+
+CodexAdvisor **CAN READ** but **CANNOT MODIFY**:
+- Governance documents (citation only, no interpretation)
+- Agent contracts (boundary checking only, no modification)
+
+**Rationale**: Enable governance citation and compliance analysis while preventing modification, interpretation, or execution.
 
 ### Cross-Repository Scope
 
