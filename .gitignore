@@ -15,6 +15,7 @@ lib/
 !lib/memory/  # Exception: TypeScript memory client
 !lib/commissioning/  # Exception: TypeScript commissioning controller
 !lib/github/  # Exception: TypeScript GitHub integrations
+!lib/startup/  # Exception: TypeScript startup requirements loader
 lib64/
 parts/
 sdist/
