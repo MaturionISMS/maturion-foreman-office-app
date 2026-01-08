@@ -405,6 +405,26 @@ You MUST:
 
 ---
 
+## NEW: The "Only" Language Ban
+
+**Policy**: POLICY-NO-ONLY-LANGUAGE (2026-01-08)
+
+Minimizing language is now banned when describing test failures or technical debt.
+
+❌ "Only 5 tests failing"  
+❌ "Just documentation nits"  
+❌ "Non-blocking failures"  
+
+✅ Required: "100% tests passing" or "NOT READY - X tests failing"
+
+**Why**: "Only" is the universal language of test dodging. See Bootstrap Learning BOOTSTRAP-TEST-DODGING-001.
+
+**Enforcement**: Automatic rejection, no exceptions without CS2 approval.
+
+**Authority**: `governance/policies/POLICY-NO-ONLY-LANGUAGE.md`
+
+---
+
 ## Summary: The Three Laws
 
 ### Law 1: Warnings Are Debt

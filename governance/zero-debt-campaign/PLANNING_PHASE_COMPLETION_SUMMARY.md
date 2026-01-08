@@ -403,6 +403,23 @@ This campaign enforces and exemplifies:
 
 ---
 
+### New Policy Integration (2026-01-08)
+
+**POLICY-NO-ONLY-LANGUAGE** enacted following PR APGI-cmy/maturion-foreman-office-app#504 test dodging incident.
+
+**Bans**: "only", "just", "minor", "non-blocking" when describing failures  
+**Requires**: "100% tests passing" or "NOT READY - X failing"  
+**Authority**: CS2 decision, constitutional 100% GREEN mandate  
+**Precedent**: PR APGI-cmy/maturion-foreman-office-app#504 rejection (92% pass rate declared "COMPLETE")
+
+See:
+- `governance/policies/POLICY-NO-ONLY-LANGUAGE.md`
+- `bootstrap/learnings/BOOTSTRAP-TEST-DODGING-001.md`
+
+**All builders must acknowledge policy before PR submission.**
+
+---
+
 ## Conclusion
 
 The ZWZDI campaign planning phase is **COMPLETE** and ready for CS2 approval.
