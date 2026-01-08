@@ -43,9 +43,9 @@ class EscalationPriority(Enum):
 
 class EscalationStatus(Enum):
     """Lifecycle states for escalations."""
-    PENDING = "PENDING"
-    PRESENTED = "PRESENTED"
-    RESOLVED = "RESOLVED"
+    PENDING = "Pending"
+    PRESENTED = "Presented"
+    RESOLVED = "Resolved"
 
 
 @dataclass
@@ -91,12 +91,12 @@ class EscalationManager:
         priority: str = "NORMAL",
         context_links: Optional[Dict[str, any]] = None,
         context: Optional[Dict[str, any]] = None
-    ) -> Dict[str, any]:
+    ) -> Escalation:
         """
         QA-097, QA-208: Create escalation with 5 elements.
         
         All 5 elements are mandatory. Validates presence and creates escalation.
-        Returns dict representation for test compatibility.
+        Returns Escalation object.
         
         Args:
             what: What is the issue/situation
@@ -110,7 +110,7 @@ class EscalationManager:
             context: Optional context data (QA-208 format)
             
         Returns:
-            Dict: Created escalation as dict
+            Escalation: Created escalation object
             
         Raises:
             ValueError: If any required element is missing or invalid
@@ -166,19 +166,8 @@ class EscalationManager:
         
         self.escalations[escalation.escalation_id] = escalation
         
-        # Return dict representation for test compatibility (QA-208)
-        return {
-            "escalation_id": escalation.escalation_id,
-            "what": escalation.what,
-            "why": escalation.why,
-            "blocked": escalation.blocked,
-            "decision_needed": escalation.decision,
-            "consequence": escalation.consequence,
-            "priority": escalation.priority.value,
-            "context": all_context,
-            "state": escalation.status.value,
-            "created_at": escalation.created_at.isoformat()
-        }
+        # Return escalation object (QA-097)
+        return escalation
     
     def route_to_johan(self, escalation_id: str) -> Dict[str, any]:
         """
