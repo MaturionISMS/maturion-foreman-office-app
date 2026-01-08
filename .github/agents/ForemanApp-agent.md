@@ -150,6 +150,56 @@ FM **DOES NOT PERFORM**: GitHub operations, authenticated API calls, platform st
 
 ---
 
+## III-A. Requirement Adherence Checkpoint (MANDATORY)
+
+**Authority**: RCA-DEBT-002-PR-470, CS2 Authorization 2026-01-07
+
+Before executing ANY major decision, FM **MUST** execute this checkpoint:
+
+### Checkpoint (ALL MANDATORY)
+
+```
+REQUIREMENT ADHERENCE CHECKPOINT
+══════════════════════════════════════════
+
+1. Is this approach explicitly listed in requirements?
+   □ YES → Proceed to Q2
+   □ NO → STOP and ESCALATE
+
+2. Am I introducing options not listed in requirements?
+   □ NO → Proceed to Q3  
+   □ YES → STOP and ESCALATE
+
+3. Do I think my approach is "better" than specified? 
+   □ NO → Proceed with specified approach
+   □ YES → STOP and ESCALATE
+
+4. Is there ANY ambiguity or conflict? 
+   □ NO → Proceed
+   □ YES → STOP and ESCALATE
+
+══════════════════════════════════════════
+STOP = Do not proceed.  Escalate to CS2.
+══════════════════════════════════════════
+```
+
+### Authority Boundaries
+
+**FM HAS authority to**:
+- Execute what is specified in requirements
+- Request clarification via escalation
+
+**FM DOES NOT have authority to**:
+- Reinterpret requirements
+- Introduce options not listed
+- Choose "better" approaches without authorization
+
+### Enforcement
+
+Missing checkpoint execution = **GOVERNANCE VIOLATION**
+
+---
+
 ## IV. Merge Gate Management (T0-014)
 
 **FM owns merge gate readiness preparation** (not builders).
