@@ -63,13 +63,13 @@ Approved for merge with documented execution debt. FM classified warnings as "ac
 **Origin**: Wave 0 (pre-Wave 1.0 baseline)  
 **Origin Date**: 2025-12-22 or earlier  
 **Builder**: Multiple (core platform team)  
-**Status**: UNRESOLVED (Restored 2026-01-08)  
+**Status**: IMPLEMENTATION APPROVED (CS2 Decision 2026-01-08)  
 **Age**: 17+ days (as of 2026-01-08)
 
 **Debt Description**:
 60 tests written in TDD style (tests before implementation) and moved to RED_QA/ directory. All tests failing due to missing implementations. Tests excluded from CI via pytest.ini. Current active test suite: 100% passing but 60 tests not executed.
 
-**CRITICAL UPDATE (2026-01-08)**: Tests were incorrectly removed in PR #470 as "speculative features never part of Wave 0 requirements." RCA analysis (governance/rca/RCA_WAVE_0_60_TESTS_WITHOUT_ARCHITECTURAL_REQUIREMENT.md) proved ALL 60 tests ARE architecturally grounded and validate specified requirements. Tests restored via PR #478 (revert of PR #470).
+**CRITICAL UPDATE (2026-01-08)**: Tests were incorrectly removed in PR #470 as "speculative features never part of Wave 0 requirements." RCA analysis (governance/rca/RCA_WAVE_0_60_TESTS_WITHOUT_ARCHITECTURAL_REQUIREMENT.md) proved ALL 60 tests ARE architecturally grounded and validate specified requirements. Tests restored via PR #479 (revert of PR #470).
 
 **Test Categories**:
 1. **Decision Determinism** (11 tests) - `test_decision_determinism.py`
@@ -97,20 +97,57 @@ Tests moved to RED_QA/ and excluded from CI. Classified as "intentional TDD RED 
 - Medium-term: HIGH (represents unimplemented functionality, technical debt)
 - Long-term: CRITICAL (TDD without implementation = broken discipline)
 
-**Elimination Plan - Requires Decision**:
-Per RCA analysis, all 60 tests validate architectural requirements. Decision required:
-1. **IMPLEMENT**: Assign builder, freeze architecture, execute Build-to-Green (implements features specified in architecture)
-2. **RE-SCOPE ARCHITECTURE**: If features no longer needed, formally change architecture first, then remove tests with updated traceability
+**CS2 Decision Record**:
 
-**FM Recommendation**:
-- **IMPLEMENT**: Evidence Integrity (20 tests) - critical for audit and governance
-- **DEFER**: Decision Determinism (8 tests), Governance Supremacy (16 tests) - Wave 3.0+
-- **REMOVE**: Evidence Schema Validation (12 tests) - overlaps with Evidence Integrity
-- **REMOVE**: Liveness Continuity (9 tests) - monitoring not core, premature
+**Date**: 2026-01-08  
+**Decision Maker**: Johan Ras (CS2)  
+**Decision**: IMPLEMENT ALL 60 FEATURES (100% BUILD)
 
-**Owner**: TBD (requires architectural decision: implement features OR re-scope architecture)  
-**Deadline**: TBD (pending decision on implementation vs re-scoping)  
-**Escalation**: Decision required before new wave authorization
+**Decision Statement**:
+> "Implement all 60 features. That is 100% build. Nothing else is acceptable."
+
+**Options Considered**: 
+1. Option A: Implement All → **SELECTED**
+2. Option B: Re-scope Architecture → REJECTED
+3. Option C: Phased Implementation → REJECTED
+
+**Justification**:
+- All 60 tests validate architecturally-specified requirements (per RCA)
+- Architecture specifies these features → features must be implemented
+- Zero-tolerance policy: No scope reduction, no deferral, no exceptions
+
+**Implications**:
+- 60 additional tests must turn GREEN
+- 5 architectural subsystems must be fully implemented
+- Final test suite: 93 tests total (33 current + 60 to be implemented)
+
+**Blocking**: No new wave authorized until all 60 features implemented
+
+---
+
+**Implementation Approach**:
+1. Phase 1: Architecture Freeze - Freeze architecture for all 5 feature categories
+2. Phase 2: QA Verification - Verify all 60 tests correctly validate requirements
+3. Phase 3: Builder Assignment - Assign builders per feature category
+4. Phase 4: Build-to-Green Execution - Implement features until all 60 tests pass
+5. Phase 5: Final Verification - Confirm 100% pass rate (93 tests total)
+
+**Feature Implementation Priority**: 
+1. Governance Supremacy (11 tests) - CRITICAL
+2. Evidence Integrity (14 tests) - HIGH
+3. Evidence Schema Validation (15 tests) - HIGH
+4. Decision Determinism (11 tests) - HIGH
+5. Liveness Continuity (9 tests) - MEDIUM
+
+**Success Criteria**: 
+- All 60 tests GREEN (100% pass rate)
+- All features implemented per architecture specifications
+- Zero test debt remaining
+- Tests moved from RED_QA/ to active suite
+- Final test count: 93 tests passing
+
+**Owner**: FM (orchestrator) + assigned builders per category  
+**Next Step**: Create implementation wave plan
 
 **Related Documents**:
 - `governance/incidents/INCIDENT-20251222-TEST-DEBT.md`
@@ -120,13 +157,17 @@ Per RCA analysis, all 60 tests validate architectural requirements. Decision req
 - `governance/incidents/HISTORICAL_WAVE_PR_WARNING_TEST_DEBT_SURVEY_RCA.md`
 
 **Tracking**:
-- [x] Tests restored (PR #478, revert of PR #470)
+- [x] Tests restored (PR #479, revert of PR #470)
 - [x] RCA completed proving tests are architecturally valid
 - [x] RED_QA directory restored with all 60 tests
 - [x] pytest.ini exclusion confirmed in place
-- [ ] Decision required: IMPLEMENT features OR RE-SCOPE architecture
-- [ ] If IMPLEMENT: Architecture frozen, QA-to-Red updated, builder assigned
-- [ ] If RE-SCOPE: Architecture formally changed, traceability updated, then tests removed
+- [x] CS2 DECISION MADE: IMPLEMENT ALL 60 FEATURES (2026-01-08)
+- [ ] Create implementation wave plan (Wave 1.5 or Wave 2.0)
+- [ ] Architecture freeze executed for all 5 feature categories
+- [ ] Builders assigned per category
+- [ ] Build-to-Green execution in progress
+- [ ] All 60 tests GREEN (final verification)
+- [ ] Tests moved to active suite, RED_QA directory removed
 
 ---
 
