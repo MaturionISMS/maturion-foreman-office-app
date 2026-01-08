@@ -11,7 +11,7 @@ Data Contract:
 - Fields: messageId, conversationId, senderId, content, type, state, createdAt, deliveredAt, readAt
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 from sqlalchemy import Column, String, DateTime, Text, ForeignKey, Enum as SQLEnum
 from sqlalchemy.orm import relationship
@@ -124,8 +124,8 @@ class Message(TenantIsolatedModel):
             raise ValueError(f"Message {self.id} is not in PENDING state (current state: {self.state.value})")
         
         self.state = MessageState.DELIVERED
-        self.delivered_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+        self.delivered_at = datetime.now(timezone.utc).replace(tzinfo=None)
+        self.updated_at = datetime.now(timezone.utc).replace(tzinfo=None)
     
     def mark_read(self, read_by: str) -> None:
         """
@@ -143,5 +143,5 @@ class Message(TenantIsolatedModel):
             raise ValueError(f"Message {self.id} is not in DELIVERED state (current state: {self.state.value})")
         
         self.state = MessageState.READ
-        self.read_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+        self.read_at = datetime.now(timezone.utc).replace(tzinfo=None)
+        self.updated_at = datetime.now(timezone.utc).replace(tzinfo=None)

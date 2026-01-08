@@ -11,6 +11,21 @@ builder_id: schema-builder
 builder_type: specialized
 version: 2.0.0
 status: recruited
+
+# Model Tier Specification (MODEL_TIER_AGENT_CONTRACT_BINDING.md)
+model: gpt-4-1
+model_tier: standard
+model_tier_level: L1
+model_class: coding
+model_fallback: gpt-5-mini
+temperature: 0.3
+
+# Tier Justification:
+# Schema Builder requires L1 due to:
+# - Scoped implementation work with frozen architecture
+# - Clear QA-to-Red specifications
+# - Repetitive, well-defined tasks
+# - Cost-effective for high-volume implementation work
 capabilities:
   - schema
   - models

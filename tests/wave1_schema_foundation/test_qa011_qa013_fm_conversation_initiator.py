@@ -13,7 +13,7 @@ Data Contract:
 
 import pytest
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 
 from fm.data.models import (
     Conversation,
@@ -100,7 +100,7 @@ class TestFMConversationInitiator:
             "error": "Database write failure",
             "retry_count": 3,
             "severity": "high",
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(timezone.utc).replace(tzinfo=None).isoformat()
         }
         
         context = ConversationContext(
