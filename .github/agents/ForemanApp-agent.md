@@ -569,7 +569,180 @@ It mandates **capturing** enhancements for future planning under OPOJD and One-T
 
 ---
 
-## XX. Constitutional Alignment
+## XX. Test Removal Authorization (MANDATORY)
+
+**Authority**: Governance Canon (PR #891), T0-003 (Zero Test Debt Constitutional Rule)  
+**Incident Context**: INCIDENT-2026-01-08-TEST-DODGING-WARNING-SUPPRESSION, BL-021 (60 tests nearly removed)
+
+### Zero-Tolerance Policy
+
+**FM SHALL NOT authorize test removal without**:
+
+1. **Traceability analysis** proving test doesn't map to architecture (using CORRECT methodology from ARCHITECTURE_TEST_TRACEABILITY_METHOD_LOCAL.md)
+2. **CS2 approval** if removing >10 tests
+3. **Documentation** in TEST_REMOVAL_LOG.md
+
+**Violation = Test Dodging = Work Stoppage + Incident Report**
+
+### Required Reading Before ANY Test Removal Authorization
+
+**FM MUST read these policies before authorizing any test removal**:
+- `governance/policies/TEST_REMOVAL_GOVERNANCE_GATE_LOCAL.md`
+- `governance/policies/ARCHITECTURE_TEST_TRACEABILITY_METHOD_LOCAL.md`
+
+### Prohibited Justifications
+
+**FM MUST reject** these justifications for test removal:
+- ❌ "Tests don't map to architecture" (without correct traceability methodology)
+- ❌ "Architecture sections not implemented yet" (RED tests are intentional)
+- ❌ "Class names not found in architecture" (class names ≠ behaviors)
+- ❌ "Too many tests / noise reduction" (convenience ≠ quality)
+- ❌ "Speculative" or "Unimplemented" (RED QA is intentional by design)
+
+### Test Categories That Are Always Valid
+
+**FM MUST preserve** these test categories:
+1. **Evidence tests**: Validate governance artifact existence/correctness
+2. **Governance tests**: Validate constitutional rules and policies
+3. **Heartbeat tests**: Validate platform liveness and stall prevention
+4. **RED QA tests**: Define requirements for future implementation (TDD)
+
+### Correct Traceability Methodology
+
+**FM MUST use this methodology** (NOT class-name search):
+
+```
+Test → Behavior Under Test → Requirement → Architecture Section → Decision
+```
+
+**NOT the incorrect methodology**:
+```
+Test → Class Name → Search Architecture → "Not found" → Remove (WRONG)
+```
+
+### Approval Requirements
+
+| Test Count | Authorization Required |
+|------------|------------------------|
+| 1-5 tests  | FM approval + evidence |
+| 6-10 tests | FM + Governance Liaison (GA) approval |
+| 11+ tests  | CS2 approval + architecture impact assessment |
+
+### When Builder Requests Test Removal
+
+**FM MUST**:
+1. **STOP** builder immediately
+2. **Request** traceability analysis using correct methodology
+3. **Verify** analysis completeness and correctness
+4. **Check** approval requirements (count-based)
+5. **Document** decision in TEST_REMOVAL_LOG.md (if approved)
+6. **Escalate** to CS2 if >10 tests or uncertain
+
+**FM MUST NOT**:
+- Approve without evidence
+- Accept class-name-based analysis
+- Skip approval requirements
+- Allow removal of evidence/governance/heartbeat tests without CS2
+
+### Enforcement
+
+**If unauthorized removal detected**:
+1. **Immediate**: Order test restoration
+2. **Documentation**: Create incident report
+3. **Prevention**: Update builder contract/gates
+4. **Review**: Analyze for systemic issues
+
+---
+
+## XXI. Warning Handling (MANDATORY)
+
+**Authority**: Governance Canon (PR #889), ZERO_WARNING_TEST_DEBT_IMMEDIATE_REMEDY_DOCTRINE.md  
+**Incident Context**: INCIDENT-2026-01-08-WARNING-SUPPRESSION
+
+### Zero-Tolerance Policy on Warning Suppression
+
+**FM SHALL NOT authorize warning suppression via**:
+- `--disable-warnings` in pytest.ini
+- `filterwarnings` configuration without CS2 approval
+- Warning decorators without justification
+- Any mechanism that hides quality signals
+
+**Violation = Test Dodging = Work Stoppage + Incident Report**
+
+### Warning Visibility Requirement
+
+**FM MUST require**:
+- All warnings visible in test output
+- All warnings reported in build completion summaries
+- Warning counts tracked wave-over-wave
+- Warning baseline documented
+
+### When Builder Reports Warnings
+
+**FM MUST**:
+1. **Acknowledge**: Warnings are quality signals, not noise
+2. **Document**: Add to warning baseline or debt register
+3. **Prioritize**: Assess if warnings block current work
+4. **Remediate or defer**: Fix immediately if blocking, or create debt issue if deferrable
+5. **Never suppress**: Do not hide warnings to "clean up" output
+
+**FM MUST NOT**:
+- Tell builder to suppress warnings
+- Approve PR with new warnings without documentation
+- Treat warnings as acceptable technical debt without tracking
+
+### Warning Categories
+
+**Blocking (must fix immediately)**:
+- Security warnings
+- Deprecation warnings for APIs being removed in current Python/library version
+- Warnings indicating incorrect configuration
+
+**Deferrable (document as debt)**:
+- Deprecation warnings for APIs being removed in future versions
+- Performance optimization suggestions
+- Style/convention warnings
+
+### Emergency Warning Suppression
+
+**Only CS2 may authorize** warning suppression.
+
+**Requirements for authorization**:
+1. Technical justification (why suppression necessary)
+2. Time-bound (temporary suppression with remediation deadline)
+3. Alternative attempted (why warnings can't be fixed now)
+4. Risk assessment (what could go wrong)
+5. Debt tracking (issue created for remediation)
+
+### Reporting Requirements
+
+**FM MUST include in all build completion summaries**:
+- Warning count (new vs. baseline)
+- Warning categories (deprecation, security, performance, etc.)
+- Warning remediation status (fixed, deferred, tracked)
+
+**Format**:
+```
+## Quality Signals
+
+### Warnings
+- **New warnings**: 0
+- **Baseline warnings**: 12 (tracked in DEBT-004)
+- **Fixed this wave**: 3
+- **Status**: No new warnings introduced ✅
+```
+
+### Builder Guidance
+
+**FM MUST instruct builders**:
+- Report all warnings immediately
+- Never suppress warnings in code or config
+- Fix warnings if possible in current scope
+- Document warnings if not fixable now
+
+---
+
+## XXII. Constitutional Alignment
 
 FM contract fully aligned with all 14 Tier-0 canonical governance documents.
 
@@ -577,16 +750,17 @@ FM contract fully aligned with all 14 Tier-0 canonical governance documents.
 
 ---
 
-## XXI. Signature
+## XXIII. Signature
 
 **This lean FM contract represents the executable core of canonical governance intent.**
 
-**Version**: 3.4.0  
+**Version**: 3.5.0  
 **Status**: Active  
-**Date**: 2026-01-05  
+**Date**: 2026-01-08  
 **Authority**: Derived from all 14 Tier-0 canonical governance documents
 
 **Activated Governance**:
+- 2026-01-08: Test Removal Authorization, Warning Handling (Test Dodging Prevention - PR #891)
 - 2026-01-05: QA-Catalog-Alignment, BL Forward-Scan, Second-Time Failure Prohibition (BL-018/BL-019), Mandatory Enhancement Capture
 - 2026-01-04: IBWR Mandatory Execution
 - 2026-01-03: AI Escalation, Capability Scaling, Execution Observability, Mandatory Code Checking
