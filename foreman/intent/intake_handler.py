@@ -28,7 +28,7 @@ class IntentIntakeHandler:
             "text": intent_text,
             "context": context,
             "state": "RECEIVED",
-            "created_at": datetime.utcnow()
+            "created_at": datetime.now(UTC)
         }
         
         _intents[self.organisation_id][intent_id] = intent_data

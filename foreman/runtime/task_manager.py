@@ -101,7 +101,7 @@ class TaskManager:
         # Update task
         task.state = TaskState.ASSIGNED
         task.assigned_builder_id = builder_id
-        task.updated_at = datetime.utcnow()
+        task.updated_at = datetime.now(UTC)
     
     def start_task(self, task_id: str) -> None:
         """
@@ -132,8 +132,8 @@ class TaskManager:
         
         # Update task
         task.state = TaskState.IN_PROGRESS
-        task.started_at = datetime.utcnow()
-        task.updated_at = datetime.utcnow()
+        task.started_at = datetime.now(UTC)
+        task.updated_at = datetime.now(UTC)
     
     def complete_task(self, task_id: str, qa_results: Optional[Dict[str, Any]] = None) -> None:
         """
@@ -165,8 +165,8 @@ class TaskManager:
         
         # Update task
         task.state = TaskState.COMPLETED
-        task.completed_at = datetime.utcnow()
-        task.updated_at = datetime.utcnow()
+        task.completed_at = datetime.now(UTC)
+        task.updated_at = datetime.now(UTC)
     
     def fail_task(
         self,
@@ -200,8 +200,8 @@ class TaskManager:
         task.state = TaskState.FAILED
         task.failure_reason = reason
         task.diagnostics = diagnostics
-        task.failed_at = datetime.utcnow()
-        task.updated_at = datetime.utcnow()
+        task.failed_at = datetime.now(UTC)
+        task.updated_at = datetime.now(UTC)
         
         # Automatically create blocker (blockers auto-register globally)
         blocker_id = f"blocker-{uuid.uuid4()}"
@@ -227,7 +227,7 @@ class TaskManager:
             'task_id': task_id,
             'severity': severity,
             'message': f"Task {task_id} failed: {reason}",
-            'timestamp': datetime.utcnow().isoformat()
+            'timestamp': datetime.now(UTC).isoformat()
         }
         _notification_registry.append(notification)
         
@@ -268,7 +268,7 @@ class TaskManager:
         self._transition_logs[task_id].append({
             'from_state': from_state.value,
             'to_state': to_state.value,
-            'timestamp': datetime.utcnow().isoformat()
+            'timestamp': datetime.now(UTC).isoformat()
         })
     
     def _classify_failure(self, failure_type: Optional[str], reason: str) -> BlockerClassification:

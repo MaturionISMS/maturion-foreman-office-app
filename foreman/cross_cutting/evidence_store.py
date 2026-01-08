@@ -35,8 +35,8 @@ class EvidenceStore:
             "artifact_type": artifact_type or category,
             "metadata": metadata or {},
             "category": category,
-            "created_at": datetime.utcnow(),
-            "timestamp": datetime.utcnow().isoformat(),
+            "created_at": datetime.now(UTC),
+            "timestamp": datetime.now(UTC).isoformat(),
             "immutable": True
         }
         

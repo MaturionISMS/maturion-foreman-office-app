@@ -63,7 +63,7 @@ class ApprovalManager:
             # Update requirement state to APPROVED
             requirement["state"] = "APPROVED"
             requirement["approved_by"] = approver
-            requirement["approved_at"] = datetime.utcnow().isoformat()
+            requirement["approved_at"] = datetime.now(UTC).isoformat()
             if comments:
                 requirement["approval_comments"] = comments
             
@@ -77,7 +77,7 @@ class ApprovalManager:
             # Update requirement state to REJECTED
             requirement["state"] = "REJECTED"
             requirement["rejected_by"] = approver
-            requirement["rejected_at"] = datetime.utcnow().isoformat()
+            requirement["rejected_at"] = datetime.now(UTC).isoformat()
             if reason:
                 requirement["rejection_reason"] = reason
             

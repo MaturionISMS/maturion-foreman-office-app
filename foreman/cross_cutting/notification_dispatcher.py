@@ -34,7 +34,7 @@ class NotificationDispatcher:
             "channels": channels_list,
             "priority": priority,
             "status": "PENDING",
-            "created_at": datetime.utcnow().isoformat()
+            "created_at": datetime.now(UTC).isoformat()
         }
         
         _notifications[self.organisation_id].append(notification)
@@ -90,7 +90,7 @@ class NotificationDispatcher:
         
         # Successful delivery
         notification["status"] = "DELIVERED"
-        notification["delivered_at"] = datetime.utcnow().isoformat()
+        notification["delivered_at"] = datetime.now(UTC).isoformat()
         
         return {
             "status": "DELIVERED",

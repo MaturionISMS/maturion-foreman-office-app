@@ -129,7 +129,7 @@ class EnhancedDashboard:
             Parsed datetime object
         """
         if not timestamp_str:
-            return datetime.utcnow()
+            return datetime.now(UTC)
         
         if isinstance(timestamp_str, datetime):
             return timestamp_str
@@ -140,4 +140,4 @@ class EnhancedDashboard:
                 timestamp_str = timestamp_str[:-1]
             return datetime.fromisoformat(timestamp_str)
         except (ValueError, AttributeError):
-            return datetime.utcnow()
+            return datetime.now(UTC)

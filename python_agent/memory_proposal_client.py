@@ -104,7 +104,7 @@ class MemoryProposalClient:
                 raise ValueError(f'proposed_memory must have {field}')
         
         # Generate proposal ID
-        timestamp = datetime.utcnow().isoformat() + 'Z'
+        timestamp = datetime.now(UTC).isoformat() + 'Z'
         date_str = timestamp.split('T')[0]
         proposal_id = self._generate_proposal_id(date_str)
         

@@ -54,7 +54,7 @@ class TimeoutManager:
         self._lock_requests[request_key] = LockRequest(
             resource_id=resource_id,
             holder_id=holder_id,
-            requested_at=datetime.utcnow()
+            requested_at=datetime.now(UTC)
         )
     
     def has_timeout_occurred(self, resource_id: str, holder_id: str) -> bool:
@@ -64,7 +64,7 @@ class TimeoutManager:
             return False
         
         request = self._lock_requests[request_key]
-        elapsed = (datetime.utcnow() - request.requested_at).total_seconds()
+        elapsed = (datetime.now(UTC) - request.requested_at).total_seconds()
         return elapsed > self.timeout_seconds
 
 
@@ -95,7 +95,7 @@ class DeadlockRecovery:
         
         Strategy: Release all locks in deadlock cycle
         """
-        recovery_id = f"recovery_{int(datetime.utcnow().timestamp())}"
+        recovery_id = f"recovery_{int(datetime.now(UTC).timestamp())}"
         
         # Release all locks
         for resource_id in resources:
@@ -107,7 +107,7 @@ class DeadlockRecovery:
             "status": "recovered",
             "resources_released": resources,
             "holders_released": holders,
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(UTC).isoformat()
         }
         
         self._recovery_history.append(recovery_record)
@@ -162,7 +162,7 @@ class DeadlockDetector:
                 resource_id=resource_id,
                 holder_id=holder_id,
                 lock_id=lock_id,
-                acquired_at=datetime.utcnow(),
+                acquired_at=datetime.now(UTC),
                 organisation_id=self.organisation_id
             )
             
@@ -269,10 +269,10 @@ class DeadlockDetector:
     def record_unrecoverable_deadlock(self, *resources: str) -> None:
         """Record an unrecoverable deadlock for escalation"""
         escalation = Escalation(
-            escalation_id=f"esc_{self.organisation_id}_{int(datetime.utcnow().timestamp())}",
+            escalation_id=f"esc_{self.organisation_id}_{int(datetime.now(UTC).timestamp())}",
             escalation_type="deadlock_unrecoverable",
             organisation_id=self.organisation_id,
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(UTC),
             details={
                 "resources": list(resources)
             }

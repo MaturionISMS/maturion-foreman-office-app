@@ -142,7 +142,7 @@ class BuildAuthorizationGate:
         return BuildAuthorizationResult(
             build_id=build_id,
             gate_result=gate_result,
-            timestamp=datetime.utcnow().isoformat() + 'Z',
+            timestamp=datetime.now(UTC).isoformat() + 'Z',
             precondition_results=precondition_results,
             summary=summary
         )

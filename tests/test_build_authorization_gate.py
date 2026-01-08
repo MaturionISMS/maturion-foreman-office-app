@@ -161,7 +161,7 @@ class TestBuildAuthorizationGate:
         (evidence_dir / "environment-compatibility-matrix.md").write_text("Valid")
         (evidence_dir / "deployment-test-results.md").write_text("Valid")
         (evidence_dir / "architecture-validation-checklist.md").write_text("- [x] All items")
-        (evidence_dir / "freeze-timestamp.txt").write_text(datetime.utcnow().isoformat())
+        (evidence_dir / "freeze-timestamp.txt").write_text(datetime.now(UTC).isoformat())
         (evidence_dir / "IMMUTABLE").write_text("")
         (evidence_dir / "test-debt-scan-report.md").write_text("ZERO")
         
@@ -229,7 +229,7 @@ class TestGateResolution:
         (evidence_dir / "environment-compatibility-matrix.md").write_text("Valid")
         (evidence_dir / "deployment-test-results.md").write_text("Valid")
         (evidence_dir / "architecture-validation-checklist.md").write_text("- [x] All")
-        (evidence_dir / "freeze-timestamp.txt").write_text(datetime.utcnow().isoformat())
+        (evidence_dir / "freeze-timestamp.txt").write_text(datetime.now(UTC).isoformat())
         (evidence_dir / "IMMUTABLE").write_text("")
         # Missing test-debt-scan-report.md - this should cause failure
         

@@ -72,7 +72,7 @@ class UsageAnalyzer:
         _build_completions[self.organisation_id].append({
             "build_id": build_id,
             "status": status,
-            "timestamp": datetime.utcnow()
+            "timestamp": datetime.now(UTC)
         })
     
     def record_build_time(self, build_id: str, wave: str, duration_minutes: float):
@@ -88,7 +88,7 @@ class UsageAnalyzer:
             "build_id": build_id,
             "wave": wave,
             "duration_minutes": duration_minutes,
-            "timestamp": datetime.utcnow()
+            "timestamp": datetime.now(UTC)
         })
     
     def record_build_cost(self, build_id: str, cost_usd: float, qa_components: int):
@@ -104,7 +104,7 @@ class UsageAnalyzer:
             "build_id": build_id,
             "cost_usd": cost_usd,
             "qa_components": qa_components,
-            "timestamp": datetime.utcnow()
+            "timestamp": datetime.now(UTC)
         })
     
     def get_build_details_for_period(self, time_period: str, organisation_id: str = None) -> List[Dict]:

@@ -31,7 +31,7 @@ class AuditLogger:
         
         log_entry = {
             "entry_id": entry_id,
-            "timestamp": datetime.utcnow(),
+            "timestamp": datetime.now(UTC),
             "actor": actor,
             "action": action,
             "target": target or resource,
@@ -48,7 +48,7 @@ class AuditLogger:
                   resource: str = None, metadata: Dict = None) -> Dict[str, Any]:
         """Log governance event. QA-169"""
         event = {
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "actor": actor,
             "action": action,
             "outcome": outcome,

@@ -74,7 +74,7 @@ class UpdateNotificationManager:
             "message": message,
             "priority": priority,
             "type": notification_type,
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(UTC).isoformat()
         }
         
         self.active_notifications.append(notification)

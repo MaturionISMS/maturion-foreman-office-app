@@ -85,7 +85,7 @@ def create_qa_evidence():
         evidence = {
             "qa_id": qa_id,
             "status": status,
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "details": details
         }
         return evidence
