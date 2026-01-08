@@ -1,0 +1,159 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.2, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app
+configfile: pytest.ini
+plugins: cov-7.0.0, asyncio-1.3.0, mock-3.15.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 90 items
+
+tests/wave1_ui/test_build_visibility_and_escalation_ui.py::TestBuildVisibilityUI::test_qa_089_render_build_progress PASSED [  1%]
+tests/wave1_ui/test_build_visibility_and_escalation_ui.py::TestBuildVisibilityUI::test_qa_090_render_builder_status PASSED [  2%]
+tests/wave1_ui/test_build_visibility_and_escalation_ui.py::TestBuildVisibilityUI::test_qa_091_render_qa_status_grid PASSED [  3%]
+tests/wave1_ui/test_build_visibility_and_escalation_ui.py::TestBuildVisibilityUI::test_qa_092_build_visibility_ui_updates PASSED [  4%]
+tests/wave1_ui/test_build_visibility_and_escalation_ui.py::TestEscalationUI::test_qa_110_render_escalation_inbox PASSED [  5%]
+tests/wave1_ui/test_build_visibility_and_escalation_ui.py::TestEscalationUI::test_qa_111_render_escalation_detail PASSED [  6%]
+tests/wave1_ui/test_build_visibility_and_escalation_ui.py::TestEscalationUI::test_qa_112_escalation_action_buttons PASSED [  7%]
+tests/wave1_ui/test_build_visibility_and_escalation_ui.py::TestEscalationUI::test_qa_113_escalation_resolution_ui PASSED [  8%]
+tests/wave1_ui/test_build_visibility_and_escalation_ui.py::TestEscalationUI::test_qa_114_escalation_priority_indicators PASSED [ 10%]
+tests/wave1_ui/test_build_visibility_and_escalation_ui.py::TestEscalationUI::test_qa_115_escalation_context_display PASSED [ 11%]
+tests/wave1_ui/test_build_visibility_and_escalation_ui.py::TestEscalationUI::test_qa_116_escalation_ui_error_handling PASSED [ 12%]
+tests/wave1_ui/test_conversation_ui.py::TestConversationUIRenderer::test_qa_019_render_conversation_ui PASSED [ 13%]
+tests/wave1_ui/test_conversation_ui.py::TestConversationUIRenderer::test_qa_020_update_conversation_ui_realtime PASSED [ 14%]
+tests/wave1_ui/test_conversation_ui.py::TestConversationUIRenderer::test_qa_021_render_conversation_state_indicators PASSED [ 15%]
+tests/wave1_ui/test_conversation_ui.py::TestConversationUIRenderer::test_qa_022_conversation_ui_error_handling PASSED [ 16%]
+tests/wave1_ui/test_dashboard_renderer.py::TestExecutiveViewController::test_qa_033_default_to_executive_view PASSED [ 17%]
+tests/wave1_ui/test_dashboard_renderer.py::TestExecutiveViewController::test_qa_034_navigate_to_analytics_section PASSED [ 18%]
+tests/wave1_ui/test_dashboard_renderer.py::TestExecutiveViewController::test_qa_035_executive_view_controller_failure_modes PASSED [ 20%]
+tests/wave1_ui/test_dashboard_renderer.py::TestDashboardUIRenderer::test_qa_036_render_rag_status_visualization PASSED [ 21%]
+tests/wave1_ui/test_dashboard_renderer.py::TestDashboardUIRenderer::test_qa_037_render_domain_grouping PASSED [ 22%]
+tests/wave1_ui/test_dashboard_renderer.py::TestDashboardUIRenderer::test_qa_038_update_dashboard_in_realtime PASSED [ 23%]
+tests/wave1_ui/test_dashboard_renderer.py::TestDashboardUIRenderer::test_qa_039_render_historical_status PASSED [ 24%]
+tests/wave1_ui/test_dashboard_renderer.py::TestDashboardUIRenderer::test_qa_040_dashboard_accessibility PASSED [ 25%]
+tests/wave1_ui/test_dashboard_renderer.py::TestDashboardUIRenderer::test_qa_041_dashboard_responsiveness PASSED [ 26%]
+tests/wave1_ui/test_dashboard_renderer.py::TestDashboardUIRenderer::test_qa_042_dashboard_ui_failure_modes PASSED [ 27%]
+tests/wave1_ui/test_dashboard_ui.py::TestDomainStatusManagerUI::test_qa_023_initialize_domain_statuses_ui PASSED [ 28%]
+tests/wave1_ui/test_dashboard_ui.py::TestDomainStatusManagerUI::test_qa_024_update_domain_status_to_amber_ui PASSED [ 30%]
+tests/wave1_ui/test_dashboard_ui.py::TestDomainStatusManagerUI::test_qa_025_update_domain_status_to_red_ui PASSED [ 31%]
+tests/wave1_ui/test_dashboard_ui.py::TestDomainStatusManagerUI::test_qa_026_query_domain_status_ui PASSED [ 32%]
+tests/wave1_ui/test_dashboard_ui.py::TestDomainStatusManagerUI::test_qa_027_domain_status_manager_failure_modes_ui PASSED [ 33%]
+tests/wave1_ui/test_dashboard_ui.py::TestDrillDownNavigatorUI::test_qa_028_navigate_from_red_status_to_root_cause_ui PASSED [ 34%]
+tests/wave1_ui/test_dashboard_ui.py::TestDrillDownNavigatorUI::test_qa_029_navigate_from_amber_status_to_reason_ui PASSED [ 35%]
+tests/wave1_ui/test_dashboard_ui.py::TestDrillDownNavigatorUI::test_qa_030_navigate_to_evidence_artifacts_ui PASSED [ 36%]
+tests/wave1_ui/test_dashboard_ui.py::TestDrillDownNavigatorUI::test_qa_031_multi_level_drill_down_ui PASSED [ 37%]
+tests/wave1_ui/test_dashboard_ui.py::TestDrillDownNavigatorUI::test_qa_032_drill_down_navigator_failure_modes_ui PASSED [ 38%]
+tests/wave1_ui/test_parking_station_ui.py::TestParkingStationUI::test_qa_054_render_parked_items_list PASSED [ 40%]
+tests/wave1_ui/test_parking_station_ui.py::TestParkingStationUI::test_qa_055_park_unpark_item_actions PASSED [ 41%]
+tests/wave1_ui/test_parking_station_ui.py::TestParkingStationUI::test_qa_056_parking_reason_display PASSED [ 42%]
+tests/wave1_ui/test_parking_station_ui.py::TestParkingStationUI::test_qa_057_parking_station_ui_error_handling PASSED [ 43%]
+tests/test_commissioning_wizard_spec.py::TestCommissioningWizardSpec::test_spec_file_exists PASSED [ 44%]
+tests/test_commissioning_wizard_spec.py::TestCommissioningWizardSpec::test_spec_includes_purpose PASSED [ 45%]
+tests/test_commissioning_wizard_spec.py::TestUXPrinciples::test_linear_flow_principle PASSED [ 46%]
+tests/test_commissioning_wizard_spec.py::TestUXPrinciples::test_clear_instructions_principle PASSED [ 47%]
+tests/test_commissioning_wizard_spec.py::TestUXPrinciples::test_validation_feedback_principle PASSED [ 48%]
+tests/test_commissioning_wizard_spec.py::TestUXPrinciples::test_no_silent_progress_principle PASSED [ 50%]
+tests/test_commissioning_wizard_spec.py::TestStepDefinitions::test_minimum_step_count PASSED [ 51%]
+tests/test_commissioning_wizard_spec.py::TestStepDefinitions::test_memory_validation_step PASSED [ 52%]
+tests/test_commissioning_wizard_spec.py::TestStepDefinitions::test_governance_validation_step PASSED [ 53%]
+tests/test_commissioning_wizard_spec.py::TestStepDefinitions::test_final_check_step PASSED [ 54%]
+tests/test_commissioning_wizard_spec.py::TestStepDefinitions::test_completion_step PASSED [ 55%]
+tests/test_commissioning_wizard_spec.py::TestUIComponents::test_progress_bar_component PASSED [ 56%]
+tests/test_commissioning_wizard_spec.py::TestUIComponents::test_status_card_component PASSED [ 57%]
+tests/test_commissioning_wizard_spec.py::TestUIComponents::test_blocker_modal_component PASSED [ 58%]
+tests/test_commissioning_wizard_spec.py::TestNavigationRules::test_prohibited_navigation_defined PASSED [ 60%]
+tests/test_commissioning_wizard_spec.py::TestNavigationRules::test_forced_redirection_defined PASSED [ 61%]
+tests/test_commissioning_wizard_spec.py::TestBatch2Constraints::test_no_auto_activation PASSED [ 62%]
+tests/test_commissioning_wizard_spec.py::TestBatch2Constraints::test_no_auto_advance PASSED [ 63%]
+tests/test_commissioning_wizard_spec.py::TestBatch2Constraints::test_explicit_human_action_required PASSED [ 64%]
+tests/test_commissioning_wizard_spec.py::TestBatch2Constraints::test_critical_statement_present PASSED [ 65%]
+tests/test_commissioning_wizard_spec.py::TestIntegrationPoints::test_requirement_loader_integration PASSED [ 66%]
+tests/test_commissioning_wizard_spec.py::TestIntegrationPoints::test_commissioning_controller_integration PASSED [ 67%]
+tests/test_commissioning_wizard_spec.py::TestAccessibility::test_keyboard_navigation PASSED [ 68%]
+tests/test_commissioning_wizard_spec.py::TestAccessibility::test_screen_reader_support PASSED [ 70%]
+tests/test_commissioning_wizard_spec.py::TestAcceptanceCriteria::test_ac_linear_steps_only PASSED [ 71%]
+tests/test_commissioning_wizard_spec.py::TestAcceptanceCriteria::test_ac_clear_instructions PASSED [ 72%]
+tests/test_commissioning_wizard_spec.py::TestAcceptanceCriteria::test_ac_status_visible PASSED [ 73%]
+tests/test_commissioning_wizard_spec.py::TestAcceptanceCriteria::test_ac_forced_redirects PASSED [ 74%]
+tests/test_commissioning_controller.py::TestCommissioningControllerStructure::test_controller_file_exists PASSED [ 75%]
+tests/test_commissioning_controller.py::TestCommissioningControllerStructure::test_index_file_exists PASSED [ 76%]
+tests/test_commissioning_controller.py::TestCommissioningControllerStructure::test_readme_exists PASSED [ 77%]
+tests/test_commissioning_controller.py::TestCommissioningControllerStructure::test_runtime_directory_exists PASSED [ 78%]
+tests/test_commissioning_controller.py::TestCommissioningControllerStructure::test_runtime_gitignore_exists PASSED [ 80%]
+tests/test_commissioning_controller.py::TestCommissioningControllerImplementation::test_exports_commissioning_state_enum PASSED [ 81%]
+tests/test_commissioning_controller.py::TestCommissioningControllerImplementation::test_exports_controller_class PASSED [ 82%]
+tests/test_commissioning_controller.py::TestCommissioningControllerImplementation::test_has_initialize_method PASSED [ 83%]
+tests/test_commissioning_controller.py::TestCommissioningControllerImplementation::test_has_is_commissioned_method PASSED [ 84%]
+tests/test_commissioning_controller.py::TestCommissioningControllerImplementation::test_has_check_access_method PASSED [ 85%]
+tests/test_commissioning_controller.py::TestCommissioningControllerImplementation::test_has_validate_access_method PASSED [ 86%]
+tests/test_commissioning_controller.py::TestCommissioningControllerImplementation::test_has_get_commissioning_route_method PASSED [ 87%]
+tests/test_commissioning_controller.py::TestCommissioningControllerImplementation::test_exports_singleton_instance PASSED [ 88%]
+tests/test_commissioning_controller.py::TestCommissioningControllerDocumentation::test_readme_has_purpose PASSED [ 90%]
+tests/test_commissioning_controller.py::TestCommissioningControllerDocumentation::test_readme_has_usage_examples PASSED [ 91%]
+tests/test_commissioning_controller.py::TestCommissioningControllerDocumentation::test_readme_has_api_reference PASSED [ 92%]
+tests/test_commissioning_controller.py::TestCommissioningControllerDocumentation::test_readme_documents_constraints PASSED [ 93%]
+tests/test_commissioning_controller.py::TestCommissioningControllerCompliance::test_enforces_commissioned_requirement PASSED [ 94%]
+tests/test_commissioning_controller.py::TestCommissioningControllerCompliance::test_no_ui_implementation PASSED [ 95%]
+tests/test_commissioning_controller.py::TestCommissioningControllerCompliance::test_no_memory_activation PASSED [ 96%]
+tests/test_commissioning_controller.py::TestCommissioningControllerCompliance::test_state_persistence_is_read_only PASSED [ 97%]
+tests/test_commissioning_controller.py::TestCommissioningControllerIntegration::test_example_state_file_is_valid_json PASSED [ 98%]
+tests/test_commissioning_controller.py::TestCommissioningControllerIntegration::test_module_exports_are_complete PASSED [100%]
+
+=============================== warnings summary ===============================
+tests/test_commissioning_wizard_spec.py:32
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/test_commissioning_wizard_spec.py:32: PytestUnknownMarkWarning: Unknown pytest.mark.ui - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.ui
+
+tests/test_commissioning_wizard_spec.py:69
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/test_commissioning_wizard_spec.py:69: PytestUnknownMarkWarning: Unknown pytest.mark.ui - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.ui
+
+tests/test_commissioning_wizard_spec.py:137
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/test_commissioning_wizard_spec.py:137: PytestUnknownMarkWarning: Unknown pytest.mark.ui - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.ui
+
+tests/test_commissioning_wizard_spec.py:207
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/test_commissioning_wizard_spec.py:207: PytestUnknownMarkWarning: Unknown pytest.mark.ui - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.ui
+
+tests/test_commissioning_wizard_spec.py:251
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/test_commissioning_wizard_spec.py:251: PytestUnknownMarkWarning: Unknown pytest.mark.ui - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.ui
+
+tests/test_commissioning_wizard_spec.py:289
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/test_commissioning_wizard_spec.py:289: PytestUnknownMarkWarning: Unknown pytest.mark.ui - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.ui
+
+tests/test_commissioning_wizard_spec.py:349
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/test_commissioning_wizard_spec.py:349: PytestUnknownMarkWarning: Unknown pytest.mark.ui - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.ui
+
+tests/test_commissioning_wizard_spec.py:381
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/test_commissioning_wizard_spec.py:381: PytestUnknownMarkWarning: Unknown pytest.mark.ui - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.ui
+
+tests/test_commissioning_wizard_spec.py:413
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/test_commissioning_wizard_spec.py:413: PytestUnknownMarkWarning: Unknown pytest.mark.ui - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.ui
+
+tests/test_commissioning_controller.py:29
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/test_commissioning_controller.py:29: PytestUnknownMarkWarning: Unknown pytest.mark.commissioning - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.commissioning
+
+tests/test_commissioning_controller.py:90
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/test_commissioning_controller.py:90: PytestUnknownMarkWarning: Unknown pytest.mark.commissioning - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.commissioning
+
+tests/test_commissioning_controller.py:207
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/test_commissioning_controller.py:207: PytestUnknownMarkWarning: Unknown pytest.mark.commissioning - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.commissioning
+
+tests/test_commissioning_controller.py:263
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/test_commissioning_controller.py:263: PytestUnknownMarkWarning: Unknown pytest.mark.commissioning - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.commissioning
+
+tests/test_commissioning_controller.py:355
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/test_commissioning_controller.py:355: PytestUnknownMarkWarning: Unknown pytest.mark.commissioning - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.commissioning
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 90 passed, 14 warnings in 0.21s ========================
