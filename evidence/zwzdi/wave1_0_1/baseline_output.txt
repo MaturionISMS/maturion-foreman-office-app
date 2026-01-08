@@ -1,0 +1,85 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.2, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app
+configfile: pytest.ini
+plugins: cov-7.0.0, asyncio-1.3.0, mock-3.15.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 36 items
+
+tests/wave1_schema_foundation/test_qa001_qa005_conversation_manager.py::TestConversationManager::test_qa001_create_conversation PASSED [  2%]
+tests/wave1_schema_foundation/test_qa001_qa005_conversation_manager.py::TestConversationManager::test_qa002_retrieve_conversation PASSED [  5%]
+tests/wave1_schema_foundation/test_qa001_qa005_conversation_manager.py::TestConversationManager::test_qa003_archive_conversation PASSED [  8%]
+tests/wave1_schema_foundation/test_qa001_qa005_conversation_manager.py::TestConversationManager::test_qa003_archive_conversation_already_archived PASSED [ 11%]
+tests/wave1_schema_foundation/test_qa001_qa005_conversation_manager.py::TestConversationManager::test_qa004_resume_conversation PASSED [ 13%]
+tests/wave1_schema_foundation/test_qa001_qa005_conversation_manager.py::TestConversationManager::test_qa004_resume_conversation_not_archived PASSED [ 16%]
+tests/wave1_schema_foundation/test_qa001_qa005_conversation_manager.py::TestConversationManager::test_qa005_conversation_manager_failure_database_write PASSED [ 19%]
+tests/wave1_schema_foundation/test_qa001_qa005_conversation_manager.py::TestConversationManager::test_qa005_conversation_manager_failure_state_conflict PASSED [ 22%]
+tests/wave1_schema_foundation/test_qa006_qa010_message_handler.py::TestMessageHandler::test_qa006_send_message PASSED [ 25%]
+tests/wave1_schema_foundation/test_qa006_qa010_message_handler.py::TestMessageHandler::test_qa007_deliver_message PASSED [ 27%]
+tests/wave1_schema_foundation/test_qa006_qa010_message_handler.py::TestMessageHandler::test_qa007_deliver_message_invalid_state PASSED [ 30%]
+tests/wave1_schema_foundation/test_qa006_qa010_message_handler.py::TestMessageHandler::test_qa008_mark_message_read PASSED [ 33%]
+tests/wave1_schema_foundation/test_qa006_qa010_message_handler.py::TestMessageHandler::test_qa008_mark_message_read_invalid_state PASSED [ 36%]
+tests/wave1_schema_foundation/test_qa006_qa010_message_handler.py::TestMessageHandler::test_qa009_message_validation_empty_content PASSED [ 38%]
+tests/wave1_schema_foundation/test_qa006_qa010_message_handler.py::TestMessageHandler::test_qa009_message_validation_invalid_conversation PASSED [ 41%]
+tests/wave1_schema_foundation/test_qa006_qa010_message_handler.py::TestMessageHandler::test_qa009_message_validation_max_length PASSED [ 44%]
+tests/wave1_schema_foundation/test_qa006_qa010_message_handler.py::TestMessageHandler::test_qa010_message_handler_failure_persistence PASSED [ 47%]
+tests/wave1_schema_foundation/test_qa006_qa010_message_handler.py::TestMessageHandler::test_qa010_message_handler_failure_intent_processing PASSED [ 50%]
+tests/wave1_schema_foundation/test_qa011_qa013_fm_conversation_initiator.py::TestFMConversationInitiator::test_qa011_fm_initiates_conversation PASSED [ 52%]
+tests/wave1_schema_foundation/test_qa011_qa013_fm_conversation_initiator.py::TestFMConversationInitiator::test_qa012_attach_context_escalation PASSED [ 55%]
+tests/wave1_schema_foundation/test_qa011_qa013_fm_conversation_initiator.py::TestFMConversationInitiator::test_qa012_attach_context_build PASSED [ 58%]
+tests/wave1_schema_foundation/test_qa011_qa013_fm_conversation_initiator.py::TestFMConversationInitiator::test_qa012_attach_context_evidence PASSED [ 61%]
+tests/wave1_schema_foundation/test_qa011_qa013_fm_conversation_initiator.py::TestFMConversationInitiator::test_qa012_attach_context_validation PASSED [ 63%]
+tests/wave1_schema_foundation/test_qa011_qa013_fm_conversation_initiator.py::TestFMConversationInitiator::test_qa013_fm_urgent_conversation PASSED [ 66%]
+tests/wave1_schema_foundation/test_qa011_qa013_fm_conversation_initiator.py::TestFMConversationInitiator::test_qa013_priority_validation PASSED [ 69%]
+tests/wave1_schema_foundation/test_qa011_qa013_fm_conversation_initiator.py::TestFMConversationInitiator::test_qa013_urgent_conversation_ordering PASSED [ 72%]
+tests/wave1_schema_foundation/test_qa014_qa018_clarification_engine.py::TestClarificationEngine::test_qa014_detect_ambiguity PASSED [ 75%]
+tests/wave1_schema_foundation/test_qa014_qa018_clarification_engine.py::TestClarificationEngine::test_qa014_ambiguity_score_validation PASSED [ 77%]
+tests/wave1_schema_foundation/test_qa014_qa018_clarification_engine.py::TestClarificationEngine::test_qa015_generate_clarifying_questions PASSED [ 80%]
+tests/wave1_schema_foundation/test_qa014_qa018_clarification_engine.py::TestClarificationEngine::test_qa016_resolve_clarification PASSED [ 83%]
+tests/wave1_schema_foundation/test_qa014_qa018_clarification_engine.py::TestClarificationEngine::test_qa017_clarification_loop_limits_iteration_count PASSED [ 86%]
+tests/wave1_schema_foundation/test_qa014_qa018_clarification_engine.py::TestClarificationEngine::test_qa017_clarification_loop_check_stalled PASSED [ 88%]
+tests/wave1_schema_foundation/test_qa014_qa018_clarification_engine.py::TestClarificationEngine::test_qa017_clarification_structured_capture PASSED [ 91%]
+tests/wave1_schema_foundation/test_qa014_qa018_clarification_engine.py::TestClarificationEngine::test_qa018_clarification_engine_failure_ambiguity_detection PASSED [ 94%]
+tests/wave1_schema_foundation/test_qa014_qa018_clarification_engine.py::TestClarificationEngine::test_qa018_clarification_engine_failure_storage PASSED [ 97%]
+tests/wave1_schema_foundation/test_qa014_qa018_clarification_engine.py::TestClarificationEngine::test_qa018_clarification_engine_failure_timeout PASSED [100%]
+
+=============================== warnings summary ===============================
+fm/data/models/base.py:15
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/fm/data/models/base.py:15: MovedIn20Warning: The ``declarative_base()`` function is now available as sqlalchemy.orm.declarative_base(). (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    Base = declarative_base()
+
+tests/wave1_schema_foundation/test_qa001_qa005_conversation_manager.py:25
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/wave1_schema_foundation/test_qa001_qa005_conversation_manager.py:25: PytestUnknownMarkWarning: Unknown pytest.mark.wave1 - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.wave1
+
+tests/wave1_schema_foundation/test_qa001_qa005_conversation_manager.py:26
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/wave1_schema_foundation/test_qa001_qa005_conversation_manager.py:26: PytestUnknownMarkWarning: Unknown pytest.mark.schema - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.schema
+
+tests/wave1_schema_foundation/test_qa006_qa010_message_handler.py:28
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/wave1_schema_foundation/test_qa006_qa010_message_handler.py:28: PytestUnknownMarkWarning: Unknown pytest.mark.wave1 - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.wave1
+
+tests/wave1_schema_foundation/test_qa006_qa010_message_handler.py:29
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/wave1_schema_foundation/test_qa006_qa010_message_handler.py:29: PytestUnknownMarkWarning: Unknown pytest.mark.schema - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.schema
+
+tests/wave1_schema_foundation/test_qa011_qa013_fm_conversation_initiator.py:28
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/wave1_schema_foundation/test_qa011_qa013_fm_conversation_initiator.py:28: PytestUnknownMarkWarning: Unknown pytest.mark.wave1 - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.wave1
+
+tests/wave1_schema_foundation/test_qa011_qa013_fm_conversation_initiator.py:29
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/wave1_schema_foundation/test_qa011_qa013_fm_conversation_initiator.py:29: PytestUnknownMarkWarning: Unknown pytest.mark.schema - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.schema
+
+tests/wave1_schema_foundation/test_qa014_qa018_clarification_engine.py:24
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/wave1_schema_foundation/test_qa014_qa018_clarification_engine.py:24: PytestUnknownMarkWarning: Unknown pytest.mark.wave1 - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.wave1
+
+tests/wave1_schema_foundation/test_qa014_qa018_clarification_engine.py:25
+  /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app/tests/wave1_schema_foundation/test_qa014_qa018_clarification_engine.py:25: PytestUnknownMarkWarning: Unknown pytest.mark.schema - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.schema
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 36 passed, 9 warnings in 0.50s ========================
