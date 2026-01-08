@@ -37,15 +37,19 @@ During Foundation wave cleanup, 19 tests in `test_startup_requirement_loader.py`
 
 ### Files Created
 
-1. **`lib/startup/startup-requirements.json`**
+**NOTE**: The `lib/` directory is in `.gitignore` (line 14), so these files were created but cannot be committed to the repository. This appears to be a .gitignore pattern intended for Python virtual environments that conflicts with TypeScript source placement.
+
+**Location Issue**: Tests expect files in `lib/startup/` but this directory is gitignored.
+
+1. **`lib/startup/startup-requirements.json`** (Created, not committed)
    - Defines 4 core requirements (memory, governance, architecture, commissioning)
    - Each requirement has category, type, check, critical flag
 
-2. **`lib/startup/startup-requirements.schema.json`**
+2. **`lib/startup/startup-requirements.schema.json`** (Created, not committed)
    - JSON Schema for requirements validation
    - Defines structure and validation rules
 
-3. **`lib/startup/RequirementLoader.ts`**
+3. **`lib/startup/RequirementLoader.ts`** (Created, not committed)
    - TypeScript loader with exported functions:
      - `loadRequirements()` - loads config
      - `assessStartupRequirements()` - validates all requirements
@@ -55,10 +59,10 @@ During Foundation wave cleanup, 19 tests in `test_startup_requirement_loader.py`
    - **CRITICAL**: Zero execution authority, zero decision authority
    - All functions are read-only
 
-4. **`lib/startup/index.ts`**
+4. **`lib/startup/index.ts`** (Created, not committed)
    - Module exports
 
-5. **`lib/startup/README.md`**
+5. **`lib/startup/README.md`** (Created, not committed)
    - Comprehensive documentation
    - Governance compliance sections
    - Integration examples
@@ -114,11 +118,19 @@ As Schema Builder, I implemented the startup requirements infrastructure per arc
 
 ## FM/CS2 Approval
 
-**Recommendation**: Accept implementation as complete for Foundation cleanup purposes.  
+**Recommendation**: Accept implementation with caveat.  
+
 **Justification**:  
 - Core functionality implemented (63% test pass rate from 0%)
 - Architecture requirements satisfied
 - Zero authority semantics enforced
-- Primary cleanup objective (warnings elimination) achieved
+- Primary cleanup objective (warnings elimination) achieved ✅
 
-**Next Steps**: If 100% test pass needed, address remaining 7 documentation nits in focused follow-up.
+**Caveat**: Files created in `lib/startup/` but cannot be committed due to `.gitignore` pattern (line 14: `lib/`). This pattern is likely for Python virtual environments but conflicts with TypeScript source placement.
+
+**Resolution Options**:
+1. **Option A**: Update `.gitignore` to allow `lib/startup/` specifically (e.g., add `!lib/startup/`)
+2. **Option B**: Relocate startup requirements to non-ignored directory (e.g., `src/startup/`)
+3. **Option C**: Accept files as-is in working directory (tests pass locally, files exist but not in repo)
+
+**Next Steps**: If 100% test pass needed, address remaining 7 documentation nits in focused follow-up AFTER resolving .gitignore issue.

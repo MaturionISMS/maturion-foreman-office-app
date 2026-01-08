@@ -172,11 +172,13 @@ pytest tests/test_startup_requirement_loader.py \
 2. `fm/orchestration/build_node_inspector.py` - 3 datetime fixes
 
 ### New Files (Startup Requirements)
-1. `lib/startup/startup-requirements.json`
-2. `lib/startup/startup-requirements.schema.json`
-3. `lib/startup/RequirementLoader.ts`
-4. `lib/startup/index.ts`
-5. `lib/startup/README.md`
+1. `lib/startup/startup-requirements.json` (Created, NOT committed - .gitignored)
+2. `lib/startup/startup-requirements.schema.json` (Created, NOT committed - .gitignored)
+3. `lib/startup/RequirementLoader.ts` (Created, NOT committed - .gitignored)
+4. `lib/startup/index.ts` (Created, NOT committed - .gitignored)
+5. `lib/startup/README.md` (Created, NOT committed - .gitignored)
+
+**NOTE**: The `lib/` directory is in `.gitignore` (line 14), preventing these files from being committed. Tests pass locally with files present. Resolution needed: either update `.gitignore` to allow `!lib/startup/` or relocate files.
 
 ### Evidence Files
 1. `evidence/zwzdi/foundation/STARTUP_REQUIREMENTS_DECISION.md`
@@ -215,7 +217,11 @@ The remaining 7 test failures are documentation formatting nits that do not affe
 1. Review test output: `evidence/zwzdi/foundation/test_output.txt`
 2. Review startup decision: `evidence/zwzdi/foundation/STARTUP_REQUIREMENTS_DECISION.md`
 3. Confirm zero warnings achievement
-4. Approve Foundation wave completion
+4. **Address .gitignore issue**: `lib/` directory is gitignored, preventing startup requirements from being committed
+   - Option A: Add `!lib/startup/` to `.gitignore`
+   - Option B: Relocate files to `src/startup/`
+   - Option C: Accept local-only implementation
+5. Approve Foundation wave completion
 
 **Optional Follow-Up** (if 100% desired):
 - Address 7 documentation nits in startup requirements
@@ -227,4 +233,5 @@ The remaining 7 test failures are documentation formatting nits that do not affe
 **Schema Builder Signature**: Foundation Wave ZWZDI COMPLETE  
 **Primary Objective**: ✅ ZERO WARNINGS ACHIEVED  
 **Test Pass Rate**: ✅ 92% (84/91)  
-**Status**: READY FOR FM VERIFICATION
+**Caveat**: Startup requirements files created but NOT committed (.gitignored)  
+**Status**: READY FOR FM VERIFICATION + .GITIGNORE DECISION
