@@ -54,35 +54,43 @@ Approved for merge with documented execution debt. FM classified warnings as "ac
 
 ---
 
-### DEBT-002: Wave 0 RED QA Tests
+### DEBT-002: Wave 0 RED QA Tests — RESTORED
 
 **Debt ID**: DEBT-002  
 **Type**: Unimplemented Tests  
 **Severity**: HIGH  
-**Debt Size**: 65 RED tests across 5 categories  
+**Debt Size**: 60 RED tests across 5 categories  
 **Origin**: Wave 0 (pre-Wave 1.0 baseline)  
 **Origin Date**: 2025-12-22 or earlier  
 **Builder**: Multiple (core platform team)  
-**Status**: UNRESOLVED  
-**Age**: 16+ days (as of 2026-01-07)
+**Status**: UNRESOLVED (Restored 2026-01-08)  
+**Age**: 17+ days (as of 2026-01-08)
 
 **Debt Description**:
-65 tests written in TDD style (tests before implementation) and moved to RED_QA/ directory. All tests failing due to missing implementations. Tests excluded from CI via pytest.ini. Current active test suite: 100% passing (33/33) but 65 tests not executed.
+60 tests written in TDD style (tests before implementation) and moved to RED_QA/ directory. All tests failing due to missing implementations. Tests excluded from CI via pytest.ini. Current active test suite: 100% passing but 60 tests not executed.
+
+**CRITICAL UPDATE (2026-01-08)**: Tests were incorrectly removed in PR #470 as "speculative features never part of Wave 0 requirements." RCA analysis (governance/rca/RCA_WAVE_0_60_TESTS_WITHOUT_ARCHITECTURAL_REQUIREMENT.md) proved ALL 60 tests ARE architecturally grounded and validate specified requirements. Tests restored via PR #478 (revert of PR #470).
 
 **Test Categories**:
-1. **Decision Determinism** (8 tests) - `test_decision_determinism.py`
+1. **Decision Determinism** (11 tests) - `test_decision_determinism.py`
    - DecisionTracker, decision replay, trace recording
-2. **Evidence Integrity** (20 tests) - `test_evidence_integrity.py`
+2. **Evidence Integrity** (14 tests) - `test_evidence_integrity.py`
    - EvidenceGenerator, automatic evidence generation, schema validation
-3. **Evidence Schema Validation** (12 tests) - `test_evidence_schema_validation.py`
+3. **Evidence Schema Validation** (15 tests) - `test_evidence_schema_validation.py`
    - JSON schema validation infrastructure
-4. **Governance Supremacy** (16 tests) - `test_governance_supremacy.py`
+4. **Governance Supremacy** (11 tests) - `test_governance_supremacy.py`
    - ArchitectureFreezeManager, QAEnforcementManager, governance enforcement
 5. **Liveness Continuity** (9 tests) - `test_liveness_continuity.py`
    - HeartbeatMonitor, RecoveryManager, runtime monitoring
 
+**Total**: 60 tests (11 + 14 + 15 + 11 + 9)
+
 **Gate Decision at Discovery**:
-Tests moved to RED_QA/ and excluded from CI. Classified as "intentional TDD RED tests awaiting implementation". Resolution: proper classification, not elimination.
+Tests moved to RED_QA/ and excluded from CI. Classified as "intentional TDD RED tests awaiting implementation". 
+
+**PR #470 Incident**: Tests incorrectly removed as "speculative" based on wrong traceability methodology (looked for class names instead of architectural requirements). RCA proved tests ARE architecturally valid.
+
+**Restoration**: All 60 tests restored via revert of PR #470 (2026-01-08).
 
 **Impact**:
 - Immediate: LOW (active suite 100% GREEN, excluded tests not running)
@@ -90,10 +98,9 @@ Tests moved to RED_QA/ and excluded from CI. Classified as "intentional TDD RED 
 - Long-term: CRITICAL (TDD without implementation = broken discipline)
 
 **Elimination Plan - Requires Decision**:
-Three options per category:
-1. **IMPLEMENT**: Assign builder, freeze architecture, execute Build-to-Green
-2. **DEFER**: Move to `tests/future/`, document in FUTURE_FUNCTIONALITY.md, create Wave 3.0+ issue
-3. **REMOVE**: Delete tests, document rationale, justify as speculative
+Per RCA analysis, all 60 tests validate architectural requirements. Decision required:
+1. **IMPLEMENT**: Assign builder, freeze architecture, execute Build-to-Green (implements features specified in architecture)
+2. **RE-SCOPE ARCHITECTURE**: If features no longer needed, formally change architecture first, then remove tests with updated traceability
 
 **FM Recommendation**:
 - **IMPLEMENT**: Evidence Integrity (20 tests) - critical for audit and governance
@@ -101,22 +108,25 @@ Three options per category:
 - **REMOVE**: Evidence Schema Validation (12 tests) - overlaps with Evidence Integrity
 - **REMOVE**: Liveness Continuity (9 tests) - monitoring not core, premature
 
-**Owner**: TBD (depends on IMPLEMENT/DEFER/REMOVE decision)  
-**Deadline**: 2026-01-28 (21 days from registration)  
-**Escalation**: If deadline missed, HALT all new work and escalate to Johan
+**Owner**: TBD (requires architectural decision: implement features OR re-scope architecture)  
+**Deadline**: TBD (pending decision on implementation vs re-scoping)  
+**Escalation**: Decision required before new wave authorization
 
 **Related Documents**:
 - `governance/incidents/INCIDENT-20251222-TEST-DEBT.md`
 - `tests/wave0_minimum_red/RED_QA/README.md`
 - `tests/wave0_minimum_red/RED_QA/IMPLEMENTATION_TRACKING.md`
+- `governance/rca/RCA_WAVE_0_60_TESTS_WITHOUT_ARCHITECTURAL_REQUIREMENT.md` (proves tests ARE valid)
 - `governance/incidents/HISTORICAL_WAVE_PR_WARNING_TEST_DEBT_SURVEY_RCA.md`
 
 **Tracking**:
-- [ ] IMPLEMENT/DEFER/REMOVE decision made per category
-- [ ] If IMPLEMENT: Architecture frozen, QA-to-Red defined, builder assigned
-- [ ] If DEFER: Tests moved to tests/future/, issues created for Wave 3.0+
-- [ ] If REMOVE: Tests deleted, rationale documented
-- [ ] Verification: RED_QA/ directory empty or properly scoped
+- [x] Tests restored (PR #478, revert of PR #470)
+- [x] RCA completed proving tests are architecturally valid
+- [x] RED_QA directory restored with all 60 tests
+- [x] pytest.ini exclusion confirmed in place
+- [ ] Decision required: IMPLEMENT features OR RE-SCOPE architecture
+- [ ] If IMPLEMENT: Architecture frozen, QA-to-Red updated, builder assigned
+- [ ] If RE-SCOPE: Architecture formally changed, traceability updated, then tests removed
 
 ---
 
@@ -184,20 +194,21 @@ During resolution, discovered 244 DeprecationWarnings in other test suites (date
 
 ## Debt Statistics
 
-**Total Active Debt Items**: 3  
-**Total Warnings**: 195 (194 + 1)  
-**Total Unimplemented Tests**: 65  
-**Oldest Debt Age**: 16+ days (DEBT-002)  
-**Average Debt Age**: ~9 days  
+**Total Active Debt Items**: 2  
+**Total Resolved Debt Items**: 1 (DEBT-003)  
+**Total Warnings**: 194 (DEBT-001)  
+**Total Unimplemented Tests**: 60 (DEBT-002 - RESTORED)  
+**Oldest Debt Age**: 17+ days (DEBT-002)  
+**Average Debt Age**: ~11 days  
 
-**By Severity**:
+**By Severity (Active)**:
 - HIGH: 1 (DEBT-002)
 - MEDIUM: 1 (DEBT-001)
 - LOW: 0 (DEBT-003 ✅ RESOLVED)
 
 **By Builder**:
 - schema-builder: 1 debt item (DEBT-001)
-- api-builder: 1 debt item (DEBT-003)
+- Multiple/TBD: 1 debt item (DEBT-002)
 - Multiple/TBD: 1 debt item (DEBT-002)
 
 ---
@@ -226,13 +237,15 @@ During resolution, discovered 244 DeprecationWarnings in other test suites (date
 
 **2026-01-07**: Debt register created, 3 items registered  
 **2026-01-08**: DEBT-003 resolved (Wave 1.0.4 warning eliminated)  
+**2026-01-08**: DEBT-002 tests incorrectly removed in PR #470, then restored via revert PR #478  
 **Next Audit**: 2026-02-07
 
 ---
 
 **Maintained By**: FM Agent  
 **Last Updated**: 2026-01-08  
-**Status**: Active (2 unresolved items, 1 resolved)
+**Status**: Active (2 unresolved items, 1 resolved)  
+**Latest Update**: DEBT-002 tests restored after incorrect removal
 
 ---
 
