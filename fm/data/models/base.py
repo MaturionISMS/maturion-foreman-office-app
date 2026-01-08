@@ -8,8 +8,7 @@ Tenant Isolation: Mandatory organisation_id on all tables
 from datetime import datetime, timezone
 from typing import Optional
 from sqlalchemy import Column, String, DateTime, create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 
 Base = declarative_base()
