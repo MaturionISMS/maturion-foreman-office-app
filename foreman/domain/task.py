@@ -73,8 +73,8 @@ class Task:
         self.diagnostics: Optional[Dict[str, Any]] = None
         
         # Metadata
-        self.created_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+        self.created_at = datetime.now(UTC)
+        self.updated_at = datetime.now(UTC)
         
         # Auto-register in global registry
         _task_registry[self.id] = self

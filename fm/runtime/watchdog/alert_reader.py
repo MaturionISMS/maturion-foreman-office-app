@@ -203,7 +203,7 @@ class AlertReader:
             'by_status': {},
             'escalated_count': len([a for a in alerts if a.get('escalation', {}).get('escalated', False)]),
             'organisation_id': organisation_id,
-            'generated_at': datetime.utcnow().isoformat()
+            'generated_at': datetime.now(UTC).isoformat()
         }
         
         # Count by severity

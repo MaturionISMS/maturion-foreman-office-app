@@ -41,9 +41,9 @@ class TestMetricsEngine:
         data_source = MetricsDataSource(organisation_id=test_organisation_id)
         
         # Add test data
-        data_source.add_metric("builds_completed", 10, timestamp=datetime.utcnow())
-        data_source.add_metric("builds_failed", 2, timestamp=datetime.utcnow())
-        data_source.add_metric("qa_components_passed", 500, timestamp=datetime.utcnow())
+        data_source.add_metric("builds_completed", 10, timestamp=datetime.now(UTC))
+        data_source.add_metric("builds_failed", 2, timestamp=datetime.now(UTC))
+        data_source.add_metric("qa_components_passed", 500, timestamp=datetime.now(UTC))
         
         # Calculate aggregate metrics
         aggregates = engine.calculate_aggregates(time_period="1d")
@@ -68,14 +68,14 @@ class TestMetricsEngine:
         
         # Verify cache efficiency
         # First call - should compute
-        start_time = datetime.utcnow()
+        start_time = datetime.now(UTC)
         result1 = engine.calculate_aggregates(time_period="1d")
-        first_call_duration = (datetime.utcnow() - start_time).total_seconds()
+        first_call_duration = (datetime.now(UTC) - start_time).total_seconds()
         
         # Second call - should use cache
-        start_time = datetime.utcnow()
+        start_time = datetime.now(UTC)
         result2 = engine.calculate_aggregates(time_period="1d")
-        second_call_duration = (datetime.utcnow() - start_time).total_seconds()
+        second_call_duration = (datetime.now(UTC) - start_time).total_seconds()
         
         assert result1 == result2, \
             "Cached result must match computed result"
@@ -111,7 +111,7 @@ class TestMetricsEngine:
         storage = MetricHistoryStorage(organisation_id=test_organisation_id)
         
         # Add time-series data
-        base_time = datetime.utcnow()
+        base_time = datetime.now(UTC)
         for i in range(30):
             timestamp = base_time - timedelta(days=i)
             engine.record_metric("daily_builds", 5 + i, timestamp=timestamp)
@@ -135,9 +135,9 @@ class TestMetricsEngine:
             "Old metrics should be archived per retention policy"
         
         # Verify retrieval efficiency
-        start_time = datetime.utcnow()
+        start_time = datetime.now(UTC)
         result = storage.get_metric_history("daily_builds", days=30)
-        retrieval_duration = (datetime.utcnow() - start_time).total_seconds()
+        retrieval_duration = (datetime.now(UTC) - start_time).total_seconds()
         
         assert retrieval_duration < 1.0, \
             "Metric history retrieval should take less than 1 second"
@@ -616,7 +616,7 @@ class TestCostTracker:
         forecaster = CostForecaster(organisation_id=test_organisation_id)
         
         # Add historical data with trend
-        base_time = datetime.utcnow()
+        base_time = datetime.now(UTC)
         for i in range(30):
             timestamp = base_time - timedelta(days=29-i)
             # Gradually increasing cost trend

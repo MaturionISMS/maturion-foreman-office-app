@@ -74,7 +74,7 @@ class CostTracker:
     def record_build_cost(self, build_id: str, cost_usd: float, builder_id: str = None, timestamp: datetime = None):
         """Record a build cost directly. QA-143, QA-144"""
         if timestamp is None:
-            timestamp = datetime.utcnow()
+            timestamp = datetime.now(UTC)
         _build_costs[self.organisation_id][build_id] = {
             "cost": cost_usd,
             "builder_id": builder_id,

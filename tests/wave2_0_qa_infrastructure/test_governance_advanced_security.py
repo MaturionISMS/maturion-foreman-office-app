@@ -14,7 +14,7 @@ Build-to-Green Status: IN PROGRESS
 
 import pytest
 from typing import Dict, Any, List
-from datetime import datetime
+from datetime import datetime, UTC
 
 # Import security failure handler module
 from fm.runtime.security_failure_handler import (
@@ -67,7 +67,7 @@ class TestSecurityFailureModes:
             user_id="unauthorized-user-001",
             resource="protected-resource",
             organisation_id=test_organisation_id,
-            timestamp=datetime.utcnow()
+            timestamp=datetime.now(UTC)
         )
 
         # Act: Process unauthorized access attempt
@@ -113,7 +113,7 @@ class TestSecurityFailureModes:
             attempted_role="admin",
             current_role="builder",
             organisation_id=test_organisation_id,
-            timestamp=datetime.utcnow()
+            timestamp=datetime.now(UTC)
         )
 
         # Act: Process escalation abuse attempt
@@ -170,7 +170,7 @@ class TestSecurityFailureModes:
             data=tampered_data,
             expected_hash=integrity_hash,
             organisation_id=test_organisation_id,
-            timestamp=datetime.utcnow()
+            timestamp=datetime.now(UTC)
         )
         result = security_handler.handle_event(tampering_event)
 
@@ -212,7 +212,7 @@ class TestSecurityFailureModes:
             bypassed_rule="BUILD_PHILOSOPHY.md Section III",
             action_attempted="skip_test",
             organisation_id=test_organisation_id,
-            timestamp=datetime.utcnow()
+            timestamp=datetime.now(UTC)
         )
 
         # Act: Process bypass attempt
@@ -256,7 +256,7 @@ class TestSecurityFailureModes:
             memory_scope="restricted-scope",
             write_attempted=True,
             organisation_id=test_organisation_id,
-            timestamp=datetime.utcnow()
+            timestamp=datetime.now(UTC)
         )
 
         # Act: Process unauthorized write attempt

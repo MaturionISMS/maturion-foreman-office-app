@@ -87,11 +87,11 @@ def test_valid_builder_qa():
     
     if exit_code == 0 and "ALL AGENT BOUNDARIES RESPECTED" in output:
         print("  ✅ PASS: Valid builder QA report accepted")
-        return True
+        assert True
     else:
         print(f"  ❌ FAIL: Valid builder QA report rejected (exit code: {exit_code})")
         print(f"  Output: {output}")
-        return False
+        assert False, "Valid builder QA report was rejected"
 
 
 def test_valid_fm_qa():
@@ -146,11 +146,11 @@ def test_valid_fm_qa():
     
     if exit_code == 0 and "ALL AGENT BOUNDARIES RESPECTED" in output:
         print("  ✅ PASS: Valid FM QA report accepted")
-        return True
+        assert True
     else:
         print(f"  ❌ FAIL: Valid FM QA report rejected (exit code: {exit_code})")
         print(f"  Output: {output}")
-        return False
+        assert False, "Valid FM QA report was rejected"
 
 
 def test_valid_governance_qa():
@@ -204,11 +204,11 @@ def test_valid_governance_qa():
     
     if exit_code == 0 and "ALL AGENT BOUNDARIES RESPECTED" in output:
         print("  ✅ PASS: Valid Governance QA report accepted")
-        return True
+        assert True
     else:
         print(f"  ❌ FAIL: Valid Governance QA report rejected (exit code: {exit_code})")
         print(f"  Output: {output}")
-        return False
+        assert False, "Valid Governance QA report was rejected"
 
 
 def test_cross_agent_violation_builder_to_governance():
@@ -251,11 +251,11 @@ def test_cross_agent_violation_builder_to_governance():
     
     if exit_code == 1 and "CROSS_AGENT_QA_EXECUTION" in output and "CATASTROPHIC" in output:
         print("  ✅ PASS: Violation correctly detected and blocked")
-        return True
+        assert True
     else:
         print(f"  ❌ FAIL: Violation not detected (exit code: {exit_code})")
         print(f"  Output: {output}")
-        return False
+        assert False, "Builder→Governance violation was not detected"
 
 
 def test_cross_agent_violation_fm_to_builder():
@@ -298,11 +298,11 @@ def test_cross_agent_violation_fm_to_builder():
     
     if exit_code == 1 and "CROSS_AGENT_QA_EXECUTION" in output and "CATASTROPHIC" in output:
         print("  ✅ PASS: Violation correctly detected and blocked")
-        return True
+        assert True
     else:
         print(f"  ❌ FAIL: Violation not detected (exit code: {exit_code})")
         print(f"  Output: {output}")
-        return False
+        assert False, "FM→Builder violation was not detected"
 
 
 def test_missing_metadata():
@@ -337,11 +337,11 @@ def test_missing_metadata():
     
     if exit_code == 1 and "MISSING_AGENT_ATTRIBUTION" in output:
         print("  ✅ PASS: Missing metadata correctly detected")
-        return True
+        assert True
     else:
         print(f"  ❌ FAIL: Missing metadata not detected (exit code: {exit_code})")
         print(f"  Output: {output}")
-        return False
+        assert False, "Missing metadata was not detected"
 
 
 def test_no_reports():
@@ -353,11 +353,11 @@ def test_no_reports():
     
     if exit_code == 0 and "No QA report files found" in output:
         print("  ✅ PASS: No reports handled correctly (non-blocking)")
-        return True
+        assert True
     else:
         print(f"  ❌ FAIL: No reports scenario failed (exit code: {exit_code})")
         print(f"  Output: {output}")
-        return False
+        assert False, "No reports scenario was not handled correctly"
 
 
 def main():

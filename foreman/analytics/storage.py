@@ -24,14 +24,14 @@ class MetricHistoryStorage:
     
     def get_metric_history(self, metric_name: str, days: int) -> List[Dict]:
         """Get metric history for specified days."""
-        cutoff = datetime.utcnow() - timedelta(days=days)
+        cutoff = datetime.now(UTC) - timedelta(days=days)
         
         # Get from _metrics_data which is the authoritative source
         history = _metrics_data.get(self.organisation_id, [])
         
         filtered = [
             h for h in history
-            if h.get("metric") == metric_name and h.get("timestamp", datetime.utcnow()) >= cutoff
+            if h.get("metric") == metric_name and h.get("timestamp", datetime.now(UTC)) >= cutoff
         ]
         
         # Sort newest first

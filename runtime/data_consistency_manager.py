@@ -67,7 +67,7 @@ class ConsistencyValidator:
             "status": status,
             "record_id": record_id,
             "differences": differences,
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(UTC).isoformat()
         }
         
         self._validation_history.append(result)
@@ -147,7 +147,7 @@ class ReconciliationEngine:
             "record_id": record_id,
             "resolved_data": resolved_data,
             "strategy": strategy,
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(UTC).isoformat()
         }
         
         self._reconciliation_history.append(result)
@@ -187,13 +187,13 @@ class DataConsistencyManager:
         details: Optional[Dict[str, Any]] = None
     ) -> str:
         """Escalate a reconciliation failure"""
-        escalation_id = f"esc_{self.organisation_id}_{int(datetime.utcnow().timestamp())}"
+        escalation_id = f"esc_{self.organisation_id}_{int(datetime.now(UTC).timestamp())}"
         
         escalation = Escalation(
             escalation_id=escalation_id,
             escalation_type="data_consistency_failure",
             organisation_id=self.organisation_id,
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(UTC),
             details={
                 "record_id": record_id,
                 "reason": reason,

@@ -48,7 +48,7 @@ class SystemHealthWatchdog:
         """Register component for monitoring. QA-195"""
         _registered_components[self.organisation_id][component_name] = {
             "heartbeat_interval": heartbeat_interval,
-            "registered_at": datetime.utcnow(),
+            "registered_at": datetime.now(UTC),
             "last_heartbeat": None,
             "responsive": False
         }
@@ -60,13 +60,13 @@ class SystemHealthWatchdog:
             _heartbeats[self.organisation_id][component_id] = []
         
         _heartbeats[self.organisation_id][component_id].append({
-            "timestamp": datetime.utcnow(),
+            "timestamp": datetime.now(UTC),
             "component_id": component_id
         })
         
         # Update component responsive status
         if component_id in _registered_components[self.organisation_id]:
-            _registered_components[self.organisation_id][component_id]["last_heartbeat"] = datetime.utcnow()
+            _registered_components[self.organisation_id][component_id]["last_heartbeat"] = datetime.now(UTC)
             _registered_components[self.organisation_id][component_id]["responsive"] = True
     
     def check_health(self) -> Dict[str, Any]:
@@ -100,7 +100,7 @@ class SystemHealthWatchdog:
             "status": "HEALTHY",
             "components": components_status,
             "resource_usage": resource_usage,
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(UTC).isoformat()
         }
         
         return health_status
@@ -111,7 +111,7 @@ class SystemHealthWatchdog:
             "status": "HEALTHY",
             "components_checked": len(_registered_components.get(self.organisation_id, {})),
             "components_healthy": len(_registered_components.get(self.organisation_id, {})),
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(UTC).isoformat()
         }
         
         _health_checks[self.organisation_id].append(health_status)
@@ -133,7 +133,7 @@ class SystemHealthWatchdog:
                 continue
             
             # Check if heartbeat is stale (using very short timeout for testing)
-            time_since_heartbeat = (datetime.utcnow() - last_heartbeat).total_seconds()
+            time_since_heartbeat = (datetime.now(UTC) - last_heartbeat).total_seconds()
             timeout_threshold = heartbeat_interval * timeout_multiplier
             
             if time_since_heartbeat > timeout_threshold:
@@ -189,7 +189,7 @@ class SystemHealthWatchdog:
         components = _registered_components.get(self.organisation_id, {})
         
         return {
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "overall_status": "HEALTHY",
             "components": {comp_id: {
                 "status": "HEALTHY",
@@ -213,7 +213,7 @@ class SystemHealthWatchdog:
                     "severity": "CRITICAL",
                     "type": "MISSING_HEARTBEAT",
                     "message": f"Component {comp_id} has not sent any heartbeat",
-                    "timestamp": datetime.utcnow().isoformat()
+                    "timestamp": datetime.now(UTC).isoformat()
                 })
         
         return alerts
@@ -227,7 +227,7 @@ class SystemHealthWatchdog:
                 "target": "ESCALATION_MANAGER",
                 "priority": alert.get("severity", "HIGH"),
                 "alert": alert,
-                "routed_at": datetime.utcnow().isoformat()
+                "routed_at": datetime.now(UTC).isoformat()
             }
             routed.append(routed_alert)
         
@@ -235,12 +235,12 @@ class SystemHealthWatchdog:
     
     def check_self_health(self) -> Dict[str, Any]:
         """Check watchdog self-health. QA-199"""
-        self.last_self_check = datetime.utcnow()
+        self.last_self_check = datetime.now(UTC)
         
         return {
             "status": "HEALTHY",
             "self_check_passed": True,
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "last_check": self.last_self_check.isoformat()
         }
     

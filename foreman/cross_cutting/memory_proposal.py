@@ -17,7 +17,7 @@ class MemoryWriteProposal:
         self.author = author
         self.source = source
         self.status = "PENDING"
-        self.created_at = datetime.utcnow()
+        self.created_at = datetime.now(UTC)
     
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dict. QA-149"""

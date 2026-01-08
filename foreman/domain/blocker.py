@@ -64,8 +64,8 @@ class Blocker:
         self.status = "open"  # or "in_progress", "resolved", "closed"
         
         # Metadata
-        self.created_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+        self.created_at = datetime.now(UTC)
+        self.updated_at = datetime.now(UTC)
         self.resolved_at: Optional[datetime] = None
         self.resolution: Optional[str] = None
         

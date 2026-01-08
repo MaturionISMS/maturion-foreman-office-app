@@ -15,14 +15,14 @@ class FlowExecutor:
         
         # Simulate flow execution through all states
         state_history = [
-            {"state": "INTENT_RECEIVED", "timestamp": datetime.utcnow()},
-            {"state": "CLARIFYING", "timestamp": datetime.utcnow()},
-            {"state": "REQUIREMENT_GENERATED", "timestamp": datetime.utcnow()},
-            {"state": "PENDING_APPROVAL", "timestamp": datetime.utcnow()},
-            {"state": "APPROVED", "timestamp": datetime.utcnow()},
-            {"state": "BUILD_INITIATED", "timestamp": datetime.utcnow()},
-            {"state": "IN_PROGRESS", "timestamp": datetime.utcnow()},
-            {"state": "COMPLETED", "timestamp": datetime.utcnow()}
+            {"state": "INTENT_RECEIVED", "timestamp": datetime.now(UTC)},
+            {"state": "CLARIFYING", "timestamp": datetime.now(UTC)},
+            {"state": "REQUIREMENT_GENERATED", "timestamp": datetime.now(UTC)},
+            {"state": "PENDING_APPROVAL", "timestamp": datetime.now(UTC)},
+            {"state": "APPROVED", "timestamp": datetime.now(UTC)},
+            {"state": "BUILD_INITIATED", "timestamp": datetime.now(UTC)},
+            {"state": "IN_PROGRESS", "timestamp": datetime.now(UTC)},
+            {"state": "COMPLETED", "timestamp": datetime.now(UTC)}
         ]
         
         # Generate evidence trail

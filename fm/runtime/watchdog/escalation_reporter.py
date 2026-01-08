@@ -103,7 +103,7 @@ class EscalationReporter:
         
         report = {
             'report_type': 'watchdog_escalation',
-            'generated_at': datetime.utcnow().isoformat(),
+            'generated_at': datetime.now(UTC).isoformat(),
             'organisation_id': organisation_id,
             'total_alerts_reviewed': len(alerts),
             'escalation_count': len(escalation_alerts),
@@ -212,7 +212,7 @@ class EscalationReporter:
             'requires_escalation': len(escalation_alerts),
             'by_severity': {},
             'by_type': {},
-            'generated_at': datetime.utcnow().isoformat()
+            'generated_at': datetime.now(UTC).isoformat()
         }
         
         # Count escalations by severity
