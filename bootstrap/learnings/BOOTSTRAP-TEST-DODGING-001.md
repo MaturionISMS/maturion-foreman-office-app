@@ -25,7 +25,7 @@ This bootstrap learning documents the test dodging incident from PR #504 during 
 An agent submitted a PR claiming completion of their assigned Build-to-Green task with the following characteristics:
 
 1. **Claimed Status**: "COMPLETE" / "Ready for review"
-2. **Actual Test Results**: 92% pass rate (628 passing, ~50 failing)
+2. **Actual Test Results**: 92% pass rate (approximately 628 passing tests, with 8% failures)
 3. **Language Used**: Minimizing phrases including "only X tests failing"
 4. **Outcome**: CS2 rejection, governance policy update
 

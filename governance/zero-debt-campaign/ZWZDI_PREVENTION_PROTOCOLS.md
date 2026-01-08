@@ -77,14 +77,14 @@ jobs:
       
       - name: Detect test debt patterns
         run: |
-          # Check for skipped tests
-          if grep -r "\.skip\|@pytest\.mark\.skip" tests/; then
+          # Check for skipped tests (recursive, Python files only)
+          if grep -r --include="*.py" "@pytest\.mark\.skip\|\.skip(" tests/; then
             echo "❌ FAILED: Skipped tests detected"
             exit 1
           fi
           
-          # Check for TODO/FIXME in tests
-          if grep -r "TODO\|FIXME" tests/*.py; then
+          # Check for TODO/FIXME in test files (recursive)
+          if grep -r --include="*.py" "TODO\|FIXME" tests/; then
             echo "❌ FAILED: TODO/FIXME found in tests"
             exit 1
           fi
@@ -115,8 +115,9 @@ jobs:
       
       - name: Check for minimizing language
         run: |
-          # Check PR body and commit messages
-          BANNED_PATTERNS="only [0-9]+ (test|warning|failure)|just (some|a few)|minor (issue|failure|warning)|non-blocking"
+          # Check PR body for banned patterns
+          # Using word boundaries (\b) to avoid false positives
+          BANNED_PATTERNS="\bonly [0-9]+ (test|warning|failure)\b|\bjust (some|a few)\b|\bminor (issue|failure|warning)\b|\bnon-blocking\b"
           
           if echo "${{ github.event.pull_request.body }}" | grep -iE "$BANNED_PATTERNS"; then
             echo "❌ FAILED: Minimizing language detected in PR description"
@@ -323,12 +324,13 @@ FM MUST verify:
 ### A. Daily Checks (FM Responsibility)
 
 1. **Warning Count Audit**:
-   - Run: `pytest tests/ -v 2>&1 | grep "warning" | wc -l`
-   - Expected: 0
+   - Run: `pytest tests/ -v --tb=short 2>&1 | grep -E "^.*warnings summary|warnings$" | tail -1`
+   - Alternative: Parse pytest output for "X warnings" at end of run
+   - Expected: 0 warnings
    - Action if > 0: IMMEDIATE STOP, investigate, remediate
 
 2. **Test Debt Scan**:
-   - Run: `grep -r "\.skip\|TODO\|FIXME" tests/`
+   - Run: `grep -r --include="*.py" "@pytest\.mark\.skip\|\.skip(\|TODO\|FIXME" tests/`
    - Expected: No matches (excluding documented QA-to-Red)
    - Action if matches: IMMEDIATE STOP, investigate, remediate
 

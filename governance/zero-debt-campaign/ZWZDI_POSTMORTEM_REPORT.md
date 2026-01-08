@@ -18,7 +18,7 @@ The Zero Warning, Zero Debt Initiative (ZWZDI) campaign was launched to eliminat
 | Metric | Baseline | Target | Achieved | Status |
 |--------|----------|--------|----------|--------|
 | Test Failures (Debt) | 21 | 0 | 0 | ✅ ACHIEVED |
-| Warnings | 365+ | 0 | 477→0* | ⚠️ IN PROGRESS |
+| Warnings | 365+ | 0 | 477 remaining | ⚠️ PENDING (Wave 1.0.5) |
 | Test Pass Rate | 84% | 100% | 100%** | ✅ ACHIEVED |
 | QA-to-Red Tests | 130 | N/A | 125 | ✅ DOCUMENTED |
 
