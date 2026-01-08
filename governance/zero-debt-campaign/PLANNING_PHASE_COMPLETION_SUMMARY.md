@@ -263,6 +263,23 @@ governance/zero-debt-campaign/
 
 ---
 
+### New Policy Integration (2026-01-08)
+
+**POLICY-NO-ONLY-LANGUAGE** enacted following PR #504 test dodging incident.
+
+**Bans**: "only", "just", "minor", "non-blocking" when describing failures  
+**Requires**: "100% tests passing" or "NOT READY - X failing"  
+**Authority**: CS2 decision, constitutional 100% GREEN mandate  
+**Precedent**: PR #504 rejection (92% pass rate declared "COMPLETE")  
+
+See:  
+- `governance/policies/POLICY-NO-ONLY-LANGUAGE.md`  
+- `bootstrap/learnings/BOOTSTRAP-TEST-DODGING-001.md`
+
+**All builders must acknowledge policy before PR submission.**
+
+---
+
 ## Campaign Authority and Enforcement
 
 ### CS2 Authority Scope
