@@ -54,7 +54,7 @@ class GlobalMemoryManager:
         seed_file = self.memory_path / "global" / "seed.json"
         seed_data = {
             "version": "1.0.0",
-            "created_at": datetime.utcnow().isoformat()
+            "created_at": datetime.now(UTC).isoformat()
         }
         seed_file.write_text(json.dumps(seed_data, indent=2))
         
@@ -75,7 +75,7 @@ class GlobalMemoryManager:
             "content": content,
             "organisation_id": organisation_id,
             "version": version,
-            "timestamp": datetime.utcnow(),
+            "timestamp": datetime.now(UTC),
             "references": references or [],
             "conflicts_with": conflicts_with or []
         }
@@ -186,7 +186,7 @@ class GlobalMemoryManager:
             "action": "WRITE",
             "proposal_id": proposal_id,
             "approver": getattr(proposal, 'approver', 'unknown'),
-            "timestamp": datetime.utcnow()
+            "timestamp": datetime.now(UTC)
         })
         
         return {

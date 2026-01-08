@@ -147,13 +147,13 @@ class RaceEscalator:
         details: Optional[Dict[str, Any]] = None
     ) -> str:
         """Create an escalation"""
-        escalation_id = f"esc_{organisation_id}_{int(datetime.utcnow().timestamp())}"
+        escalation_id = f"esc_{organisation_id}_{int(datetime.now(UTC).timestamp())}"
         
         escalation = Escalation(
             escalation_id=escalation_id,
             escalation_type=escalation_type,
             organisation_id=organisation_id,
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(UTC),
             details=details or {}
         )
         
@@ -211,7 +211,7 @@ class RaceConditionHandler:
             resource_id=resource_id,
             accessor_id=accessor_id,
             operation=operation,
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(UTC),
             organisation_id=self.organisation_id
         )
         

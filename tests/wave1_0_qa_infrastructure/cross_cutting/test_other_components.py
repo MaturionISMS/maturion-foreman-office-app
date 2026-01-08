@@ -220,7 +220,7 @@ class TestEvidenceStore:
             content={
                 "qa_id": "QA-001",
                 "status": "PASS",
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(UTC).isoformat(),
                 "details": {"assertions": 10, "passed": 10, "failed": 0}
             },
             metadata={

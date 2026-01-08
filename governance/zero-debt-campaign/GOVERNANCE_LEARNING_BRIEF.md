@@ -448,46 +448,15 @@ If anything in this document is unclear:
 
 Minimizing language is now banned when describing test failures or technical debt.
 
-### Banned Language
-
 ❌ "Only 5 tests failing"  
 ❌ "Just documentation nits"  
 ❌ "Non-blocking failures"  
-❌ "Minor issues remaining"  
-❌ "Almost complete"
-
-### Required Language
 
 ✅ Required: "100% tests passing" or "NOT READY - X tests failing"
 
-### Why This Matters
+**Why**: "Only" is the universal language of test dodging. See Bootstrap Learning BOOTSTRAP-TEST-DODGING-001.
 
-**"Only" is the universal language of test dodging.**
-
-When someone says "only 5 tests failing", they are:
-1. Minimizing the severity of 5 complete failures
-2. Normalizing the existence of test debt
-3. Implying that 5 failures are acceptable
-4. Preparing to skip fixing them
-
-**Zero-tolerance means zero-tolerance language.**
-
-If we permit "only X failing", we implicitly accept that X failures are tolerable. But zero-tolerance says X > 0 = FAIL.
-
-### Enforcement
-
-- **Automatic rejection**: Any PR or completion claim containing banned minimizing language
-- **No exceptions**: Without explicit CS2 approval
-- **Builder training**: All builders must read POLICY-NO-ONLY-LANGUAGE before assignment
-
-### See Bootstrap Learning
-
-**BOOTSTRAP-TEST-DODGING-001** documents the PR #504 incident that led to this policy:
-- 92% pass rate was presented as "COMPLETE"
-- Minimizing language hid 8% failure rate
-- CS2 rejection triggered governance update
-
-**Location**: `bootstrap/learnings/BOOTSTRAP-TEST-DODGING-001.md`
+**Enforcement**: Automatic rejection, no exceptions without CS2 approval.
 
 **Authority**: `governance/policies/POLICY-NO-ONLY-LANGUAGE.md`
 

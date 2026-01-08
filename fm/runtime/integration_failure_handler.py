@@ -10,7 +10,7 @@ Tenant Isolation: All operations require organisation_id
 """
 
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 from enum import Enum
 from typing import Dict, Any, List, Optional
 
@@ -69,7 +69,7 @@ class IntegrationHandlerResult:
     notification_sent: bool = False
     notification_type: Optional[str] = None
     escalation_reason: Optional[str] = None
-    timestamp: datetime = field(default_factory=datetime.utcnow)
+    timestamp: datetime = field(default_factory=lambda: datetime.now(UTC))
 
 
 @dataclass

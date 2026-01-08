@@ -81,7 +81,7 @@ class MetricsEngine:
     def record_metric(self, metric_name: str, value: float, timestamp: datetime = None):
         """Record a metric. QA-138, QA-139"""
         if timestamp is None:
-            timestamp = datetime.utcnow()
+            timestamp = datetime.now(UTC)
         
         # Use storage helper only (don't duplicate)
         store_metric_data(self.organisation_id, metric_name, value, timestamp)

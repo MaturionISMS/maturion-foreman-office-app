@@ -58,8 +58,8 @@ class Wave:
         self.progress_percentage = 0.0
         
         # Metadata
-        self.created_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+        self.created_at = datetime.now(UTC)
+        self.updated_at = datetime.now(UTC)
         
         # Auto-register
         _wave_registry[self.id] = self

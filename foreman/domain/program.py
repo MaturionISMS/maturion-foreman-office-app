@@ -55,8 +55,8 @@ class Program:
         self.progress_percentage = 0.0
         
         # Metadata
-        self.created_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+        self.created_at = datetime.now(UTC)
+        self.updated_at = datetime.now(UTC)
         self.evidence_location: Optional[str] = None
         
         # Auto-register

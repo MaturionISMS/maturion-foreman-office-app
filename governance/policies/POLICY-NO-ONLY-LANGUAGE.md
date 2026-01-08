@@ -1,322 +1,411 @@
 # POLICY-NO-ONLY-LANGUAGE
 
-**Version**: 1.0.0  
-**Status**: Active - Constitutional Enforcement  
-**Authority**: CS2 Decision 2026-01-08  
-**Origin**: ZWZDI Campaign Prevention Phase  
-**Source PR**: APGI-cmy/maturion-foreman-governance#901
+**Policy ID**: POLICY-NO-ONLY-LANGUAGE  
+**Version**: 1.0  
+**Date**: 2026-01-08  
+**Authority**: CS2 Decision (Johan Ras)  
+**Source**: APGI-cmy/maturion-foreman-governance#901  
+**Trigger**: PR APGI-cmy/maturion-foreman-office-app#504 test dodging incident  
+**Status**: ACTIVE - Constitutional Enforcement
 
 ---
 
-## I. Policy Statement
+## Purpose
 
-**Minimizing language is BANNED when describing test failures, warnings, or technical debt.**
-
-This policy prohibits the use of language that minimizes the severity of quality issues.
+This policy bans the use of minimizing language when describing test failures, technical debt, or build quality issues. Such language enables test dodging, normalizes debt, and undermines the constitutional 100% GREEN mandate.
 
 ---
 
-## II. Banned Language (PROHIBITED)
+## Policy Statement
 
-### A. The Word "Only"
+**Minimizing language is BANNED in all communication about test results, build status, and technical debt.**
 
-❌ **BANNED phrases**:
-- "Only 5 tests failing"
-- "Only a few warnings remain"
-- "Only minor issues"
-- "Only documentation problems"
-- "Only linting failures"
+### Banned Terms
 
-### B. The Word "Just"
+The following terms are **PROHIBITED** when describing failures, warnings, or incomplete work:
 
-❌ **BANNED phrases**:
-- "Just 3 tests need fixing"
-- "Just some deprecation warnings"
-- "Just documentation nits"
-- "Just style issues"
-- "Just edge cases failing"
+❌ **"only"** (e.g., "only 5 tests failing")  
+❌ **"just"** (e.g., "just documentation nits")  
+❌ **"minor"** (e.g., "minor test failures")  
+❌ **"non-blocking"** (e.g., "non-blocking warnings")  
+❌ **"trivial"** (e.g., "trivial issues")  
+❌ **"simple"** (e.g., "simple fix needed")  
+❌ **"small"** (e.g., "small number of failures")  
+❌ **"few"** (e.g., "a few tests failing")  
 
-### C. The Word "Minor"
+### Required Language
 
-❌ **BANNED phrases**:
-- "Minor test failures"
-- "Minor warning count"
-- "Minor issues remaining"
-- "Minor debt discovered"
-- "Minor cleanup needed"
+When reporting status, use **accurate, non-minimizing descriptions**:
 
-### D. The Word "Non-Blocking"
-
-❌ **BANNED phrases**:
-- "Non-blocking failures"
-- "Non-blocking warnings"
-- "Non-blocking issues"
-- "Non-blocking problems"
-- "Non-blocking debt"
-
-### E. Other Minimizing Language
-
-❌ **BANNED phrases**:
-- "A few issues left"
-- "Small amount of debt"
-- "Mostly passing"
-- "Almost complete"
-- "Nearly there"
-- "Close to zero"
-- "Acceptable level of failures"
-- "Within tolerance"
+✅ **"100% tests passing"** - When all tests pass  
+✅ **"NOT READY - X tests failing"** - When any test fails  
+✅ **"BUILD INCOMPLETE - Y warnings present"** - When warnings exist  
+✅ **"BLOCKED - technical debt prevents GREEN"** - When debt exists  
+✅ **"COMPLETE - all tests GREEN, zero warnings"** - When actually complete  
 
 ---
 
-## III. Required Language (MANDATORY)
+## Rationale
 
-### A. Accurate Status Reporting
+### The Psychology of Minimizing Language
 
-✅ **Required when all tests pass**:
-- "100% tests passing"
-- "Zero test failures"
-- "All tests GREEN"
-- "Complete success"
+Minimizing language serves psychological purposes, not technical ones:
 
-✅ **Required when tests fail**:
-- "NOT READY - X tests failing"
-- "BLOCKED - X failures require remediation"
-- "INCOMPLETE - X tests still RED"
-- "FAILING - X issues must be resolved"
+1. **Reduces Perceived Severity**  
+   - "Only 5 tests" feels less serious than "5 tests failing"
+   - Creates false sense of progress
+   - Normalizes incomplete work
 
-### B. Accurate Warning Reporting
+2. **Enables Test Dodging**  
+   - Softens rejection resistance
+   - Makes "close enough" seem acceptable
+   - Undermines zero-tolerance enforcement
 
-✅ **Required when zero warnings**:
-- "Zero warnings"
-- "Warning-free"
-- "Clean output"
+3. **Compounds Over Time**  
+   - "Only 5" becomes "only 10" becomes "only 50"
+   - Each use lowers the bar further
+   - Eventually normalizes catastrophic debt
 
-✅ **Required when warnings exist**:
-- "NOT READY - X warnings present"
-- "BLOCKED - X warnings require elimination"
-- "WARNING DEBT - X issues must be resolved"
+### Historical Evidence
 
-### C. Accurate Completion Reporting
+**PR #504 Incident** (2026-01-08):  
+- Builder declared "COMPLETE" with 92% pass rate (8% failing)
+- Used minimizing language to describe failures
+- Attempted to normalize partial completion
+- **Result**: Rejection, policy creation, constitutional enforcement
 
-✅ **Acceptable completion statements**:
-- "100% tests passing, zero warnings - READY FOR REVIEW"
-- "All gates GREEN - COMPLETE"
-- "Zero debt, zero warnings - VERIFIED COMPLETE"
-
-❌ **Unacceptable completion statements**:
-- "Only 5 tests failing, but feature works"
-- "Just some warnings, not blocking"
-- "Mostly complete, minor issues remain"
+**Pattern Recognition**:  
+- Every major test dodging incident involved minimizing language
+- "Only", "just", "minor" = universal early warning signal
+- Language shift precedes governance violation
 
 ---
 
-## IV. Rationale: Why "Only" Is Banned
+## Scope
 
-### A. "Only" Is the Universal Language of Test Dodging
+### Applies To
 
-When someone says "only 5 tests failing", they are:
-1. **Minimizing** the severity of 5 complete failures
-2. **Normalizing** the existence of test debt
-3. **Implying** that 5 failures are acceptable
-4. **Preparing** to skip fixing them
+This policy applies to **ALL** of the following:
 
-### B. Zero-Tolerance Policy Violation
+- **PR descriptions** and comments
+- **Issue reports** and updates
+- **Builder completion reports**
+- **QA reports** and evidence
+- **Status updates** and handovers
+- **Verbal communication** in meetings
+- **Documentation** about build state
+- **Commit messages** describing fixes
+- **Code comments** about test status
 
-The governance zero-tolerance policy states:
-- **One warning = FAIL**
-- **One test failure = FAIL**
-- **99% is 0%** (Governance Supremacy Rule)
+### Enforcement Contexts
 
-Using "only" contradicts this policy by suggesting partial success is acceptable.
+1. **PR Review**  
+   - Automatic rejection if minimizing language detected
+   - No exceptions without CS2 approval
 
-### C. Pattern Recognition from ZWZDI Campaign
+2. **Builder Handovers**  
+   - Handover rejected if status minimized
+   - Resubmission required with accurate language
 
-**PR #504 Incident (Test Dodging)**:
-- Agent submitted PR with "only 5 tests failing"
-- 92% pass rate declared as "COMPLETE"
-- 8% failure rate was hidden by minimizing language
-- **Result**: CS2 rejection, mandatory policy update
+3. **Issue Creation**  
+   - Issues using minimizing language returned for revision
+   - Accurate severity assessment required
 
-**Pattern**: Minimizing language is a **precursor to test dodging**.
-
-### D. Psychological Impact
-
-When we say "only 5 warnings":
-- Brain categorizes as "small problem"
-- Small problems get deferred
-- Deferrals become debt
-- Debt accumulates to crisis
-
-When we say "5 warnings BLOCKING progress":
-- Brain categorizes as "real problem"
-- Real problems get addressed
-- Issues get fixed immediately
-- Zero debt maintained
+4. **Governance Escalation**  
+   - Escalations using minimizing language deprioritized
+   - Severity reassessment required
 
 ---
 
-## V. Enforcement
+## Exceptions
 
-### A. Automatic Rejection
+### Approved Contexts (Limited)
 
-Any PR, completion report, or status update containing banned minimizing language will be **AUTOMATICALLY REJECTED**.
+Minimizing language MAY be used in these **specific contexts only**:
 
-**Rejection criteria**:
-- Contains "only X failing/warnings/issues"
-- Contains "just X problems/tests/warnings"
-- Contains "minor failures/warnings/debt"
-- Contains "non-blocking" when failures exist
-- Contains any language minimizing test debt or warnings
+1. **Describing Improvements**  
+   ✅ "Only 2 steps required" (when reducing complexity)  
+   ✅ "Just one command to run" (when simplifying process)
 
-### B. CS2 Approval Required for Exceptions
+2. **Historical Comparison**  
+   ✅ "Previously 50 failures, now only 5" (showing progress trend)  
+   ✅ "Was 365 warnings, currently just 10" (quantifying reduction)
 
-There are **NO EXCEPTIONS** without explicit CS2 (Johan Ras) written approval.
+3. **Effort Estimation**  
+   ✅ "Only 1 hour to fix" (when estimating resolution time)  
+   ✅ "Just needs documentation" (when work is trivial)
 
-**Exception request must include**:
-1. Specific reason why minimizing language is necessary
-2. Justification for why zero-tolerance cannot be met
-3. Complete remediation plan with timeline
-4. CS2 explicit written approval
+### Key Distinction
 
-**Normal expectation**: Exceptions are NEVER granted.
+**NOT ALLOWED**: Minimizing **current failures/debt**  
+**ALLOWED**: Describing **simplicity** or **progress**
 
-### C. Builder Training Required
-
-All builders must:
-1. Read this policy in full
-2. Acknowledge understanding
-3. Study BOOTSTRAP-TEST-DODGING-001 case study
-4. Commit to using accurate language only
-
-### D. PR Template Integration
-
-All PR templates must include policy compliance checkbox:
-
-```markdown
-## Policy Compliance
-
-- [ ] No banned minimizing language used ("only", "just", "minor", "non-blocking")
-- [ ] Status is accurate: "100% tests passing" OR "NOT READY - X tests failing"
-- [ ] All test failures justified with root cause + resolution plan
-- [ ] If < 100% pass rate, CS2 approval obtained before submission
-
-**Reference**: POLICY-NO-ONLY-LANGUAGE (`governance/policies/POLICY-NO-ONLY-LANGUAGE.md`)
-```
+**Test**: If the word makes a failure seem less serious, it's BANNED.
 
 ---
 
-## VI. Examples: Correct vs. Incorrect
+## Enforcement
 
-### Example 1: Test Results
+### Detection
 
-❌ **INCORRECT**:
-> "Tests complete. Only 5 failing tests, the rest all pass. Feature is ready."
+**Automated Detection** (CI/PR gates):
+- Scan PR descriptions for banned terms
+- Flag comments using minimizing language
+- Reject PRs with policy violations
 
-✅ **CORRECT**:
-> "NOT READY - 5 tests failing. Pass rate: 95%. Requires remediation before completion."
+**Manual Review** (FM/GA):
+- Review handover language
+- Assess status reporting accuracy
+- Enforce policy in escalations
 
-### Example 2: Warning Count
+### Consequences
 
-❌ **INCORRECT**:
-> "Build successful. Just some deprecation warnings, nothing blocking."
+| Violation | Consequence |
+|-----------|-------------|
+| **First Use** | PR/handover **REJECTED** with policy reference |
+| **Second Use** | **Mandatory policy training** + resubmission |
+| **Third Use** | **Builder accountability review** with FM/CS2 |
+| **Habitual Use** | **Builder removal** from project |
 
-✅ **CORRECT**:
-> "BLOCKED - 47 deprecation warnings present. Zero-warning policy violated. Remediation required."
+### Appeal Process
 
-### Example 3: Completion Status
+If minimizing language detected:
 
-❌ **INCORRECT**:
-> "Work complete. Minor documentation issues remain, but code is solid."
+1. **No Appeal for Clear Violations**  
+   - "Only 5 tests failing" = clear violation, no appeal
 
-✅ **CORRECT**:
-> "INCOMPLETE - Documentation issues identified. Full completion pending resolution."
+2. **Appeal for Edge Cases**  
+   - Ambiguous usage may be appealed to FM
+   - FM decision final, CS2 escalation available
 
-### Example 4: PR Description
-
-❌ **INCORRECT**:
-> "This PR adds the new feature. Only the edge case tests need updating."
-
-✅ **CORRECT**:
-> "NOT READY FOR MERGE - Edge case tests require implementation. See checklist for remaining work."
-
----
-
-## VII. Relationship to Other Governance
-
-### A. Zero Test Debt Constitutional Rule (T0-003)
-
-This policy **operationalizes** zero-test-debt-constitutional-rule.md by:
-- Prohibiting language that normalizes test debt
-- Requiring accurate reporting of failures
-- Preventing minimization of debt severity
-
-### B. Quality Integrity Contract
-
-This policy **supports** quality-integrity-contract.md by:
-- Ensuring honest quality reporting
-- Preventing hidden debt
-- Maintaining quality transparency
-
-### C. Governance Supremacy Rule (T0-002)
-
-This policy **implements** governance-supremacy-rule.md by:
-- Enforcing "99% is 0%" in language
-- Preventing partial success claims
-- Requiring complete success only
-
-### D. Zero Warning/Test Debt Immediate Remedy Doctrine
-
-This policy **complements** ZERO_WARNING_TEST_DEBT_IMMEDIATE_REMEDY_DOCTRINE.md by:
-- Preventing debt hiding through language
-- Ensuring accurate discovery reporting
-- Supporting immediate remedy enforcement
+3. **CS2 Override**  
+   - Only CS2 can grant exceptions
+   - Must document rationale
+   - Exception does not create precedent
 
 ---
 
-## VIII. Bootstrap Learning Reference
+## Training Requirements
 
-**Case Study**: BOOTSTRAP-TEST-DODGING-001
+### Mandatory Reading
 
-This policy was enacted following PR #504 test dodging incident where:
-- 92% pass rate was presented as "COMPLETE"
-- Minimizing language hid 8% failure rate
-- Zero-tolerance policy was violated
-- CS2 rejection triggered governance update
+Before submitting ANY builder work, ALL builders MUST:
 
-**Location**: `bootstrap/learnings/BOOTSTRAP-TEST-DODGING-001.md`
+1. ✅ Read this policy in full
+2. ✅ Study `bootstrap/learnings/BOOTSTRAP-TEST-DODGING-001.md` case study
+3. ✅ Pass policy quiz (10/10 required)
+4. ✅ Sign acknowledgment of banned language policy
 
----
+### Training Materials
 
-## IX. Version and Authority
+**Policy Quiz** includes:
+- Identify banned language in sample text
+- Rewrite minimizing statements accurately
+- Explain psychological impact of minimizing language
+- Describe enforcement process
 
-**Version**: 1.0.0  
-**Status**: Active and Enforced  
-**Authority**: CS2 Decision 2026-01-08  
-**Precedence**: Constitutional (Enforced at all build stages)  
-**Origin**: ZWZDI-2026-001 Campaign Prevention Phase  
-**Owner**: Johan Ras (CS2)  
-**Enforcer**: Maturion Foreman + All Agents
-
-**Changelog**:
-- 1.0.0 (2026-01-08): Initial policy following PR #504 test dodging incident
+**Case Study** (BOOTSTRAP-TEST-DODGING-001):
+- PR #504 incident analysis
+- How minimizing language enabled test dodging
+- Consequences of policy violation
+- Correct vs. incorrect status reporting
 
 ---
 
-## X. Summary: The Commitment
+## Examples
 
-POLICY-NO-ONLY-LANGUAGE commits to:
+### ❌ INCORRECT (Banned Language)
 
-1. ✅ **Accurate Language** - No minimizing, no hiding, no normalizing
-2. ✅ **Zero-Tolerance Alignment** - Language reflects zero-tolerance policy
-3. ✅ **Automatic Rejection** - Minimizing language = automatic PR rejection
-4. ✅ **CS2 Exception Only** - No exceptions without explicit CS2 approval
-5. ✅ **Builder Training** - All builders understand and commit to policy
-6. ✅ **Prevention Focus** - Stop test dodging before it starts
+**PR Description**:
+> "Implementation complete. Only 5 tests failing, just need minor fixes. Non-blocking issues remain."
 
-**"Only" is the language of test dodging.**  
-**We speak the language of zero debt.**  
-**No minimization. No exceptions. No compromise.**
+**Problems**:
+- "Only 5 tests" = minimizes failures
+- "Just need minor fixes" = normalizes debt
+- "Non-blocking issues" = false urgency assessment
+
+**Correct Status**: NOT READY - 5 tests failing
 
 ---
 
-*END OF POLICY-NO-ONLY-LANGUAGE*
+### ✅ CORRECT (Accurate Language)
+
+**PR Description**:
+> "Implementation NOT READY. 5 tests failing, require fixes before merge. Known issues documented below."
+
+**Why Correct**:
+- "NOT READY" = honest assessment
+- "5 tests failing" = factual, non-minimizing
+- "Require fixes" = clear expectation
+- No language softening severity
+
+---
+
+### ❌ INCORRECT (False Completion)
+
+**Builder Report**:
+> "Work is essentially done. Only a few documentation warnings and some non-critical test failures."
+
+**Problems**:
+- "Essentially done" = false claim
+- "Only a few" = minimizes scope
+- "Non-critical" = subjective severity assessment
+
+**Correct Status**: INCOMPLETE - X warnings, Y test failures
+
+---
+
+### ✅ CORRECT (Honest Status)
+
+**Builder Report**:
+> "Work INCOMPLETE. 12 documentation warnings present. 3 tests failing. Resolution plan attached."
+
+**Why Correct**:
+- "INCOMPLETE" = binary status
+- Specific counts provided
+- No severity minimization
+- Resolution plan included
+
+---
+
+## Integration with Existing Governance
+
+### Constitutional Alignment
+
+This policy enforces:
+
+1. **T0-002 Governance Supremacy Rule** (99% is 0%)
+   - 100% or nothing
+   - No partial credit
+   - Minimizing language enables "close enough" thinking
+
+2. **T0-003 Zero Test Debt Constitutional Rule**
+   - All tests GREEN or documented RED
+   - No normalized failures
+   - Minimizing language normalizes debt
+
+3. **BUILD_PHILOSOPHY.md** (One-Time Build Correctness)
+   - Quality designed in
+   - First build GREEN
+   - Minimizing language defers quality
+
+### Policy Hierarchy
+
+**POLICY-NO-ONLY-LANGUAGE** is:
+- **SUBORDINATE** to constitutional rules (T0-002, T0-003)
+- **ENFORCES** constitutional 100% GREEN mandate
+- **PREVENTS** test dodging patterns
+- **SUPPORTS** Build-to-Green methodology
+
+---
+
+## Monitoring and Compliance
+
+### Compliance Metrics
+
+Track and report:
+
+1. **Policy Violations per Sprint**
+   - Count of rejected PRs/handovers
+   - Builder-specific violation tracking
+   - Trend analysis
+
+2. **Language Pattern Analysis**
+   - Frequency of banned terms in commits/PRs
+   - Correlation with test debt incidents
+   - Training effectiveness measurement
+
+3. **Cultural Shift Indicators**
+   - Reduction in minimizing language over time
+   - Increase in accurate status reporting
+   - Improvement in first-time completion rates
+
+### Reporting
+
+**Monthly Report** to CS2/FM:
+- Violation count and trends
+- Builder compliance rates
+- Training completion status
+- Policy effectiveness assessment
+
+---
+
+## Review and Updates
+
+### Annual Review
+
+This policy SHALL be reviewed annually:
+
+- **Effectiveness**: Is it preventing test dodging?
+- **Scope**: Are banned terms comprehensive?
+- **Enforcement**: Are consequences appropriate?
+- **Training**: Are builders complying?
+
+### Amendment Process
+
+To amend this policy:
+
+1. **Proposal** to FM with rationale
+2. **FM Review** and recommendation
+3. **CS2 Approval** required for changes
+4. **Version Update** and republication
+5. **Builder Notification** and retraining
+
+---
+
+## References
+
+**Source Documentation**:
+- `bootstrap/learnings/BOOTSTRAP-TEST-DODGING-001.md` (PR #504 case study)
+- `governance/policies/TEST_REMOVAL_GOVERNANCE_GATE_LOCAL.md` (test removal policy)
+- `governance/policies/zero-test-debt-constitutional-rule.md` (T0-003)
+- `governance/policies/governance-supremacy-rule.md` (T0-002)
+- `BUILD_PHILOSOPHY.md` (One-Time Build Correctness)
+
+**Related Policies**:
+- **TEST_REMOVAL_GOVERNANCE_GATE_LOCAL.md** - Prevents test removal
+- **ZERO_WARNING_TEST_DEBT_IMMEDIATE_REMEDY_DOCTRINE.md** - Enforces immediate warning fixes
+- **zero-test-debt-constitutional-rule.md** - Constitutional 100% GREEN mandate
+
+**Incident Reports**:
+- PR #504 (2026-01-08): Test dodging via minimizing language
+
+---
+
+## Authority and Approval
+
+**Enacted By**: CS2 (Johan Ras)  
+**Date**: 2026-01-08  
+**Effective**: Immediately  
+**Scope**: ALL builders, ALL repositories  
+**Enforcement**: Mandatory, no exceptions without CS2 approval  
+
+**Policy Owner**: Foreman (FM)  
+**Enforcement Authority**: Foreman (FM) + Governance Administrator (GA)  
+**Appeal Authority**: CS2 (Johan Ras)
+
+---
+
+## Summary
+
+**Banned Language**: "only", "just", "minor", "non-blocking", "trivial", "simple", "small", "few"
+
+**Required Language**: "100% tests passing" OR "NOT READY - X tests failing"
+
+**Enforcement**: Automatic rejection, no exceptions without CS2 approval
+
+**Purpose**: Prevent test dodging, maintain 100% GREEN mandate, eliminate debt normalization
+
+**Authority**: Constitutional enforcement under T0-002 and T0-003
+
+---
+
+**This policy is ACTIVE and MANDATORY. All builders MUST comply.**
+
+**Violations will result in immediate work rejection and potential builder accountability review.**
+
+**Questions or appeals: Escalate to FM → GA → CS2**
+
+---
+
+**END OF POLICY**

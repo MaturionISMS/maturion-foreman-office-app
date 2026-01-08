@@ -39,7 +39,7 @@ class GracefulShutdown:
         """
         self._shutdown_initiated = True
         self._shutdown_reason = reason
-        self._shutdown_time = datetime.utcnow()
+        self._shutdown_time = datetime.now(UTC)
         
         return {
             "status": "initiated",
@@ -96,7 +96,7 @@ class StatePreserver:
         
         self._preserved_states[organisation_id][state_type] = {
             "data": state_data,
-            "preserved_at": datetime.utcnow().isoformat(),
+            "preserved_at": datetime.now(UTC).isoformat(),
             "count": state_count
         }
         
@@ -199,11 +199,11 @@ class RecoveryCoordinator:
         total_duration = sum(step["estimated_duration_minutes"] for step in steps)
         
         recovery_plan = {
-            "plan_id": f"recovery_{int(datetime.utcnow().timestamp())}",
+            "plan_id": f"recovery_{int(datetime.now(UTC).timestamp())}",
             "failure_reason": failure_reason,
             "steps": steps,
             "estimated_duration_minutes": total_duration,
-            "created_at": datetime.utcnow().isoformat()
+            "created_at": datetime.now(UTC).isoformat()
         }
         
         self._recovery_plans.append(recovery_plan)
@@ -247,14 +247,14 @@ class SystemFailureHandler:
         details: Optional[Dict[str, Any]] = None
     ) -> str:
         """Escalate system-wide failure"""
-        escalation_id = f"esc_{self.organisation_id}_{int(datetime.utcnow().timestamp())}"
+        escalation_id = f"esc_{self.organisation_id}_{int(datetime.now(UTC).timestamp())}"
         
         escalation = Escalation(
             escalation_id=escalation_id,
             escalation_type="system_wide_failure",
             severity="critical",
             organisation_id=self.organisation_id,
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(UTC),
             details={
                 "reason": reason,
                 **(details or {})

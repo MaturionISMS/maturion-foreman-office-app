@@ -132,7 +132,7 @@ class RealtimeDashboardConnection:
         
         # Update sequence and timestamp
         self.message_sequence += 1
-        self.last_message_timestamp = datetime.utcnow()
+        self.last_message_timestamp = datetime.now(UTC)
     
     def _generate_id(self) -> str:
         """Generate unique connection ID."""
@@ -258,7 +258,7 @@ class EnhancedDashboard:
             Parsed datetime object
         """
         if not timestamp_str:
-            return datetime.utcnow()
+            return datetime.now(UTC)
         
         try:
             # Remove 'Z' suffix if present
@@ -266,7 +266,7 @@ class EnhancedDashboard:
                 timestamp_str = timestamp_str[:-1]
             return datetime.fromisoformat(timestamp_str)
         except ValueError:
-            return datetime.utcnow()
+            return datetime.now(UTC)
 
 
 class UpdateNotificationManager:
@@ -312,7 +312,7 @@ class UpdateNotificationManager:
             "message": message,
             "priority": priority,
             "type": notification_type,
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(UTC).isoformat()
         }
         
         self.active_notifications.append(notification)

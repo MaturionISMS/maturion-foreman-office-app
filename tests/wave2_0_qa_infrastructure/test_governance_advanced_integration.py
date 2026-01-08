@@ -14,7 +14,7 @@ Build-to-Green Status: IN PROGRESS
 
 import pytest
 from typing import Dict, Any, List
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 
 # Import integration failure handler module
 from fm.runtime.integration_failure_handler import (
@@ -84,9 +84,9 @@ class TestIntegrationFailureModes:
             event_type=IntegrationEventType.GITHUB_API_RATE_LIMIT,
             service="github",
             remaining_requests=0,
-            reset_time=datetime.utcnow() + timedelta(minutes=5),
+            reset_time=datetime.now(UTC) + timedelta(minutes=5),
             organisation_id=test_organisation_id,
-            timestamp=datetime.utcnow()
+            timestamp=datetime.now(UTC)
         )
 
         # Act: Process rate limit event
@@ -133,7 +133,7 @@ class TestIntegrationFailureModes:
             webhook_id="webhook-001",
             failure_reason="connection_timeout",
             organisation_id=test_organisation_id,
-            timestamp=datetime.utcnow()
+            timestamp=datetime.now(UTC)
         )
 
         # Act: Process webhook failure
@@ -176,7 +176,7 @@ class TestIntegrationFailureModes:
             service="external-api",
             health_status="down",
             organisation_id=test_organisation_id,
-            timestamp=datetime.utcnow()
+            timestamp=datetime.now(UTC)
         )
 
         # Act: Process service unavailability
@@ -221,7 +221,7 @@ class TestIntegrationFailureModes:
             sync_id="sync-001",
             failure_reason="network_error",
             organisation_id=test_organisation_id,
-            timestamp=datetime.utcnow()
+            timestamp=datetime.now(UTC)
         )
 
         # Act: Process sync failure
@@ -270,7 +270,7 @@ class TestIntegrationFailureModes:
             contract_name="integration-contract-v1",
             payload=invalid_payload,
             organisation_id=test_organisation_id,
-            timestamp=datetime.utcnow()
+            timestamp=datetime.now(UTC)
         )
 
         # Act: Validate contract and process violation
