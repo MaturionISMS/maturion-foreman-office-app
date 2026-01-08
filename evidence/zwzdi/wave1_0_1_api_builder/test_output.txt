@@ -1,0 +1,60 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.2, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app
+configfile: pytest.ini
+plugins: cov-7.0.0, asyncio-1.3.0, mock-3.15.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 49 items
+
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildOrchestrator::test_qa_078_initiate_build PASSED [  2%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildOrchestrator::test_qa_079_assign_builder_to_qa_range PASSED [  4%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildOrchestrator::test_qa_080_monitor_build_progress PASSED [  6%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildOrchestrator::test_qa_081_handle_build_blocking PASSED [  8%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildOrchestrator::test_qa_082_complete_build_success PASSED [ 10%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildOrchestrator::test_qa_082_complete_build_incomplete PASSED [ 12%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildOrchestrator::test_qa_083_handle_builder_unavailable PASSED [ 14%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildOrchestrator::test_qa_083_handle_orchestration_corruption PASSED [ 16%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildStateManager::test_qa_084_track_state_transition PASSED [ 18%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildStateManager::test_qa_084_invalid_state_transition PASSED [ 20%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildStateManager::test_qa_085_update_progress_metrics PASSED [ 22%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildStateManager::test_qa_086_detect_stall_no_heartbeat PASSED [ 24%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildStateManager::test_qa_086_detect_stall_threshold_exceeded PASSED [ 26%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildStateManager::test_qa_087_persist_build_state PASSED [ 28%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildStateManager::test_qa_088_handle_state_corruption PASSED [ 30%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildStateManager::test_qa_088_handle_conflicting_updates PASSED [ 32%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildProgressTracker::test_qa_089_get_progress_data PASSED [ 34%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildProgressTracker::test_qa_090_get_build_details PASSED [ 36%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildProgressTracker::test_qa_091_push_realtime_update PASSED [ 38%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildProgressTracker::test_qa_092_handle_update_push_failure PASSED [ 40%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestBuildProgressTracker::test_qa_092_handle_ui_desync PASSED [ 42%]
+tests/wave1_api_builder/test_execution_orchestration.py::TestIntegration::test_complete_build_flow PASSED [ 44%]
+tests/wave1_api_builder/test_intent_processing.py::TestIntentIntakeHandler::test_qa_058_accept_informal_intent PASSED [ 46%]
+tests/wave1_api_builder/test_intent_processing.py::TestIntentIntakeHandler::test_qa_058_empty_content_rejection PASSED [ 48%]
+tests/wave1_api_builder/test_intent_processing.py::TestIntentIntakeHandler::test_qa_059_validate_intent_input PASSED [ 51%]
+tests/wave1_api_builder/test_intent_processing.py::TestIntentIntakeHandler::test_qa_059_validation_missing_context PASSED [ 53%]
+tests/wave1_api_builder/test_intent_processing.py::TestIntentIntakeHandler::test_qa_060_route_to_clarification PASSED [ 55%]
+tests/wave1_api_builder/test_intent_processing.py::TestIntentIntakeHandler::test_qa_061_handle_unparseable_input PASSED [ 57%]
+tests/wave1_api_builder/test_intent_processing.py::TestIntentIntakeHandler::test_qa_061_handle_context_loss PASSED [ 59%]
+tests/wave1_api_builder/test_intent_processing.py::TestClarificationLoopManager::test_qa_062_manage_clarification_iterations PASSED [ 61%]
+tests/wave1_api_builder/test_intent_processing.py::TestClarificationLoopManager::test_qa_062_timeout_detection PASSED [ 63%]
+tests/wave1_api_builder/test_intent_processing.py::TestClarificationLoopManager::test_qa_063_detect_sufficient_clarification PASSED [ 65%]
+tests/wave1_api_builder/test_intent_processing.py::TestClarificationLoopManager::test_qa_064_handle_clarification_timeout PASSED [ 67%]
+tests/wave1_api_builder/test_intent_processing.py::TestClarificationLoopManager::test_qa_065_preserve_clarification_history PASSED [ 69%]
+tests/wave1_api_builder/test_intent_processing.py::TestClarificationLoopManager::test_qa_066_infinite_loop_prevention PASSED [ 71%]
+tests/wave1_api_builder/test_intent_processing.py::TestClarificationLoopManager::test_qa_066_resolution_failure_handling PASSED [ 73%]
+tests/wave1_api_builder/test_intent_processing.py::TestRequirementGenerator::test_qa_067_generate_requirement PASSED [ 75%]
+tests/wave1_api_builder/test_intent_processing.py::TestRequirementGenerator::test_qa_068_include_approval_metadata PASSED [ 77%]
+tests/wave1_api_builder/test_intent_processing.py::TestRequirementGenerator::test_qa_069_link_to_intent PASSED [ 79%]
+tests/wave1_api_builder/test_intent_processing.py::TestRequirementGenerator::test_qa_070_handle_generation_failure PASSED [ 81%]
+tests/wave1_api_builder/test_intent_processing.py::TestApprovalManager::test_qa_071_present_for_approval PASSED [ 83%]
+tests/wave1_api_builder/test_intent_processing.py::TestApprovalManager::test_qa_072_handle_approval_accept PASSED [ 85%]
+tests/wave1_api_builder/test_intent_processing.py::TestApprovalManager::test_qa_073_handle_rejection PASSED [ 87%]
+tests/wave1_api_builder/test_intent_processing.py::TestApprovalManager::test_qa_074_handle_conditional_approval PASSED [ 89%]
+tests/wave1_api_builder/test_intent_processing.py::TestApprovalManager::test_qa_075_detect_timeout PASSED [ 91%]
+tests/wave1_api_builder/test_intent_processing.py::TestApprovalManager::test_qa_076_memory_proposal_approval PASSED [ 93%]
+tests/wave1_api_builder/test_intent_processing.py::TestApprovalManager::test_qa_076_invalid_proposal_format PASSED [ 95%]
+tests/wave1_api_builder/test_intent_processing.py::TestApprovalManager::test_qa_077_handle_notification_failure PASSED [ 97%]
+tests/wave1_api_builder/test_intent_processing.py::TestApprovalManager::test_qa_077_handle_state_consistency_failure PASSED [100%]
+
+============================== 49 passed in 0.10s ==============================
