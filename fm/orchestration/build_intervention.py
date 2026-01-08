@@ -14,7 +14,7 @@ Core Principles:
 import logging
 from typing import Dict, Any, List, Optional
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 import uuid
 
@@ -77,7 +77,7 @@ class BuildInterventionController:
         
         # Generate unique alert ID
         alert_id = f"alert-{uuid.uuid4().hex[:12]}"
-        timestamp = datetime.utcnow().isoformat() + "Z"
+        timestamp = datetime.now(timezone.utc).isoformat() + "Z"
         
         # Determine routing based on scope
         routing = self._determine_alert_routing(scope_level)
@@ -157,7 +157,7 @@ class BuildInterventionController:
         
         # Generate unique stop ID
         stop_id = f"stop-{uuid.uuid4().hex[:12]}"
-        timestamp = datetime.utcnow().isoformat() + "Z"
+        timestamp = datetime.now(timezone.utc).isoformat() + "Z"
         
         # Determine affected nodes
         affected_nodes = self._determine_affected_nodes(scope_level, target_node_id)
@@ -295,7 +295,7 @@ class BuildInterventionController:
         if not self._verify_resumption_authority(authorized_by, required_auth):
             raise PermissionError(f"User {authorized_by} not authorized to resume {required_auth}")
         
-        timestamp = datetime.utcnow().isoformat() + "Z"
+        timestamp = datetime.now(timezone.utc).isoformat() + "Z"
         
         # Update stop record
         stop['status'] = 'resumed'
@@ -473,7 +473,7 @@ class BuildInterventionController:
     def _log_intervention_audit(self, intervention_id: str, action: str, data: Dict[str, Any]) -> None:
         """Log intervention action to audit trail."""
         audit_entry = {
-            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "timestamp": datetime.now(timezone.utc).isoformat() + "Z",
             "intervention_id": intervention_id,
             "action": action,
             "data_summary": {

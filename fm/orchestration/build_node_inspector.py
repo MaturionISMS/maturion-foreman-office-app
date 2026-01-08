@@ -11,7 +11,7 @@ Every status, state, or indicator must be fully explainable through inspection.
 import logging
 from typing import Dict, Any, List, Optional
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 
 logger = logging.getLogger(__name__)
@@ -68,7 +68,7 @@ class BuildNodeInspector:
         inspection_data = {
             "node_id": node_id,
             "node_type": node_type,
-            "last_inspected_at": datetime.utcnow().isoformat() + "Z"
+            "last_inspected_at": datetime.now(timezone.utc).isoformat() + "Z"
         }
         
         # Level 1: Quick Status View (always included)
@@ -395,11 +395,11 @@ class BuildNodeInspector:
             user_agent: Optional user agent string
         """
         log_entry = {
-            "log_id": f"inspect-{datetime.utcnow().timestamp()}",
+            "log_id": f"inspect-{datetime.now(timezone.utc).timestamp()}",
             "node_id": node_id,
             "node_type": node_type,
             "inspected_by": inspected_by,
-            "inspected_at": datetime.utcnow().isoformat() + "Z",
+            "inspected_at": datetime.now(timezone.utc).isoformat() + "Z",
             "inspection_depth": inspection_depth,
             "ip_address": ip_address,
             "user_agent": user_agent
