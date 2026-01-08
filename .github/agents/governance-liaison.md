@@ -31,6 +31,7 @@ change_policy:
   never_weaken_governance: true
   never_disable_gates: true
 ...
+
 # GOVERNANCE LIAISON (FM REPO) — MINIMAL CONTRACT
 
 **Version**: 2.0.0 | **Date**: 2026-01-08 | **Status**: Active
