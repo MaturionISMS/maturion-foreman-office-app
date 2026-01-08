@@ -233,23 +233,90 @@ During resolution, discovered 244 DeprecationWarnings in other test suites (date
 
 ---
 
+### DEBT-004: Warning Baseline Remediation (Pytest Markers)
+
+**Debt ID**: DEBT-004  
+**Type**: Warnings (Configuration/Registration)  
+**Severity**: LOW to MEDIUM  
+**Debt Size**: 64 warnings (PytestUnknownMarkWarning)  
+**Origin**: Test dodging prevention governance (INCIDENT-2026-01-08-WARNING-SUPPRESSION)  
+**Origin Date**: 2026-01-08  
+**Builder**: qa-builder  
+**Status**: UNRESOLVED  
+**Age**: 0 days (as of 2026-01-08)
+
+**Debt Description**:
+64 `PytestUnknownMarkWarning` warnings revealed after removing `--disable-warnings` from pytest.ini. Warnings indicate custom pytest markers used in tests but not registered in pytest.ini. Eight unregistered markers identified: chp, commissioning, governance_sync, guard, lifecycle, memory, startup, ui.
+
+**Discovery Context**:
+Warnings were hidden by `--disable-warnings` in pytest.ini (test dodging violation). After emergency remediation removing warning suppression, established warning baseline documenting all exposed warnings.
+
+**Root Cause**:
+- Custom pytest markers added to tests without registering in pytest.ini
+- No marker registration process established
+- Tests written before governance enforcement of marker registration
+
+**Affected Markers**:
+1. `chp` (7 occurrences) - CHP memory integration tests
+2. `commissioning` (5 occurrences) - Commissioning controller tests
+3. `governance_sync` (12 occurrences) - Governance memory sync tests
+4. `guard` (count unknown) - Guard/validation tests
+5. `lifecycle` (9 occurrences) - Memory lifecycle tests
+6. `memory` (multiple) - Memory subsystem tests
+7. `startup` (count unknown) - Startup/initialization tests
+8. `ui` (9 occurrences) - UI component/wizard tests
+
+**Impact**:
+- Immediate: LOW (tests run correctly, functional impact zero)
+- Medium-term: LOW-MEDIUM (noise in test output, potential typo masking)
+- Long-term: MEDIUM (reduces test categorization reliability)
+
+**Remediation Options**:
+1. **Register markers** (recommended): Add all 8 markers to pytest.ini with descriptions
+2. **Remove markers**: Delete marker decorators, use existing markers
+3. **Consolidate markers**: Map to existing markers where overlap exists
+
+**Elimination Plan**:
+- **Phase 1**: Analyze marker usage patterns and test categorization strategy
+- **Phase 2**: Decide registration vs. consolidation for each marker
+- **Phase 3**: Update pytest.ini or remove/replace markers in tests
+- **Phase 4**: Verification (confirm ZERO PytestUnknownMarkWarning)
+
+**Owner**: qa-builder  
+**Deadline**: 2026-01-22 (14 days from registration)  
+**Escalation**: If deadline missed, document reason and extend deadline (non-blocking debt)
+
+**Related Documents**:
+- `governance/warning-baseline.md` (detailed inventory)
+- `governance/incidents/INCIDENT-2026-01-08-WARNING-SUPPRESSION.md`
+- `governance/policies/ZERO_WARNING_TEST_DEBT_IMMEDIATE_REMEDY_DOCTRINE.md`
+
+**Tracking**:
+- [x] Warning baseline documented
+- [ ] Phase 1: Usage analysis complete
+- [ ] Phase 2: Remediation strategy defined
+- [ ] Phase 3: Implementation complete
+- [ ] Phase 4: Verification complete (ZERO marker warnings)
+
+---
+
 ## Debt Statistics
 
-**Total Active Debt Items**: 2  
+**Total Active Debt Items**: 3  
 **Total Resolved Debt Items**: 1 (DEBT-003)  
-**Total Warnings**: 194 (DEBT-001)  
+**Total Warnings**: 258 (DEBT-001: 194, DEBT-004: 64)  
 **Total Unimplemented Tests**: 60 (DEBT-002 - RESTORED)  
 **Oldest Debt Age**: 17+ days (DEBT-002)  
-**Average Debt Age**: ~11 days  
+**Average Debt Age**: ~8 days  
 
 **By Severity (Active)**:
 - HIGH: 1 (DEBT-002)
 - MEDIUM: 1 (DEBT-001)
-- LOW: 0 (DEBT-003 ✅ RESOLVED)
+- LOW-MEDIUM: 1 (DEBT-004)
 
 **By Builder**:
 - schema-builder: 1 debt item (DEBT-001)
-- Multiple/TBD: 1 debt item (DEBT-002)
+- qa-builder: 1 debt item (DEBT-004)
 - Multiple/TBD: 1 debt item (DEBT-002)
 
 ---
@@ -279,14 +346,15 @@ During resolution, discovered 244 DeprecationWarnings in other test suites (date
 **2026-01-07**: Debt register created, 3 items registered  
 **2026-01-08**: DEBT-003 resolved (Wave 1.0.4 warning eliminated)  
 **2026-01-08**: DEBT-002 tests incorrectly removed in PR #470, then restored via revert PR #478  
+**2026-01-08**: DEBT-004 registered (64 pytest marker warnings revealed after warning suppression removed)  
 **Next Audit**: 2026-02-07
 
 ---
 
 **Maintained By**: FM Agent  
 **Last Updated**: 2026-01-08  
-**Status**: Active (2 unresolved items, 1 resolved)  
-**Latest Update**: DEBT-002 tests restored after incorrect removal
+**Status**: Active (3 unresolved items, 1 resolved)  
+**Latest Update**: DEBT-004 registered after warning baseline established
 
 ---
 

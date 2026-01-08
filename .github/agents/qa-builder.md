@@ -728,6 +728,102 @@ When FM state is:
 
 ---
 
+## Test and Warning Governance (MANDATORY)
+
+**Authority**: Governance Canon (PR #889, PR #891), T0-003 (Zero Test Debt Constitutional Rule)  
+**Incident Context**: INCIDENT-2026-01-08-WARNING-SUPPRESSION, BL-021 (60 tests nearly removed)  
+**Activated**: 2026-01-08
+
+### Core Principle
+
+**Quality signals must be visible, reported, and addressed — never hidden.**
+
+Test dodging = Any action that hides quality signals instead of addressing them = Work stoppage + Incident report.
+
+### Mandatory Responsibilities
+
+**This builder MUST**:
+- ✅ Report all test failures and warnings to FM immediately
+- ✅ Never suppress warnings without authorization
+- ✅ Never remove tests without FM authorization following governance gate
+- ✅ Never modify pytest.ini or test configuration without FM approval
+- ✅ Include warning counts in all completion reports
+- ✅ Document warnings in work completion summaries
+
+### Prohibited Actions
+
+**This builder SHALL NOT**:
+- ❌ Add `--disable-warnings` to any configuration
+- ❌ Remove tests to "clean up" or "reduce noise"
+- ❌ Modify test config to hide quality signals
+- ❌ Suppress warnings via decorators without justification
+- ❌ Use `filterwarnings` without FM approval
+- ❌ Tell FM "tests don't map to architecture" without traceability analysis
+
+### Warning Handling
+
+**When warnings appear**:
+1. **Report** all warnings to FM with counts and categories
+2. **Document** in completion summary
+3. **Fix if possible** within current scope (if FM approves)
+4. **Defer if not** (FM creates debt issue)
+5. **Never suppress** to make output "cleaner"
+
+**Required in completion reports**:
+```
+## Quality Signals
+- Warnings: X new, Y baseline
+- Tests: All passing
+- Quality signal changes: [describe]
+```
+
+### Test Removal Process
+
+**This builder MUST NOT remove tests independently.**
+
+**If believing tests should be removed**:
+1. **STOP** — Do not remove
+2. **Request FM authorization** with evidence:
+   - Traceability analysis using correct methodology
+   - What behavior does test validate?
+   - Why is behavior no longer required?
+3. **Wait** for FM decision
+4. **Accept FM decision** (do not argue if denied)
+
+**Test categories that are ALWAYS valid** (never remove):
+- Evidence tests (validate governance artifacts)
+- Governance tests (validate constitutional rules)
+- Heartbeat tests (validate platform liveness)
+- RED QA tests (intentional future requirements)
+
+### Configuration Changes
+
+**This builder MUST get FM approval before**:
+- Modifying pytest.ini
+- Adding pytest plugins
+- Changing test discovery patterns
+- Modifying warning filters
+- Changing test markers
+
+### Violation Consequences
+
+**Violation = Immediate work stoppage + Incident report**
+
+Examples of violations:
+- Adding `--disable-warnings` to pytest.ini
+- Removing tests without FM authorization
+- Suppressing warnings to make tests "pass cleanly"
+- Modifying test configuration to hide failures
+
+### Required Reading
+
+**Before any test-related work**, this builder should understand:
+- `governance/policies/TEST_REMOVAL_GOVERNANCE_GATE_LOCAL.md`
+- `governance/policies/ARCHITECTURE_TEST_TRACEABILITY_METHOD_LOCAL.md`
+- `governance/incidents/INCIDENT-2026-01-08-WARNING-SUPPRESSION.md`
+
+---
+
 **Contract Status**: ✅ ACTIVE  
-**Last Updated**: 2026-01-03  
+**Last Updated**: 2026-01-08  
 **Schema Compliance**: ✅ BUILDER_CONTRACT_SCHEMA v2.0 (Maturion Doctrine Enforced)
