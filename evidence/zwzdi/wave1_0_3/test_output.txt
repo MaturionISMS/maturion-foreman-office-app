@@ -1,0 +1,43 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.2, pluggy-1.6.0 -- /usr/bin/python
+cachedir: .pytest_cache
+rootdir: /home/runner/work/maturion-foreman-office-app/maturion-foreman-office-app
+configfile: pytest.ini
+plugins: cov-7.0.0, asyncio-1.3.0, mock-3.15.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collecting ... collected 32 items
+
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestPingGenerator::test_qa_093_generate_ping_for_attention_required PASSED [  3%]
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestPingGenerator::test_qa_094_route_ping_to_notification_service PASSED [  6%]
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestPingGenerator::test_qa_095_track_ping_lifecycle PASSED [  9%]
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestPingGenerator::test_qa_096_ping_generator_failure_modes PASSED [ 12%]
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestEscalationManager::test_qa_097_create_escalation_with_5_elements PASSED [ 15%]
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestEscalationManager::test_qa_098_route_escalation_to_johan PASSED [ 18%]
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestEscalationManager::test_qa_099_present_escalation_in_ui PASSED [ 21%]
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestEscalationManager::test_qa_100_handle_escalation_decision PASSED [ 25%]
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestEscalationManager::test_qa_101_track_escalation_lifecycle PASSED [ 28%]
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestEscalationManager::test_qa_102_escalation_priority_handling PASSED [ 31%]
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestEscalationManager::test_qa_103_escalation_context_linking PASSED [ 34%]
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestEscalationManager::test_qa_104_escalation_manager_failure_modes PASSED [ 37%]
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestSilenceDetector::test_qa_105_monitor_build_heartbeat PASSED [ 40%]
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestSilenceDetector::test_qa_106_detect_silence PASSED [ 43%]
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestSilenceDetector::test_qa_107_differentiate_silence_types PASSED [ 46%]
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestSilenceDetector::test_qa_108_silence_recovery PASSED [ 50%]
+tests/wave1_integration_builder/test_escalation_subsystem.py::TestSilenceDetector::test_qa_109_silence_detector_failure_modes PASSED [ 53%]
+tests/wave1_integration_builder/test_governance_subsystem.py::TestGovernanceLoader::test_qa_117_load_governance_repository_at_startup PASSED [ 56%]
+tests/wave1_integration_builder/test_governance_subsystem.py::TestGovernanceLoader::test_qa_118_parse_governance_rules PASSED [ 59%]
+tests/wave1_integration_builder/test_governance_subsystem.py::TestGovernanceLoader::test_qa_119_cache_governance_in_memory PASSED [ 62%]
+tests/wave1_integration_builder/test_governance_subsystem.py::TestGovernanceLoader::test_qa_120_governance_loader_failure_modes PASSED [ 65%]
+tests/wave1_integration_builder/test_governance_subsystem.py::TestGovernanceValidator::test_qa_121_validate_against_governance_rules PASSED [ 68%]
+tests/wave1_integration_builder/test_governance_subsystem.py::TestGovernanceValidator::test_qa_122_detect_governance_violations PASSED [ 71%]
+tests/wave1_integration_builder/test_governance_subsystem.py::TestGovernanceValidator::test_qa_123_generate_violation_report PASSED [ 75%]
+tests/wave1_integration_builder/test_governance_subsystem.py::TestGovernanceValidator::test_qa_124_log_governance_validation_events PASSED [ 78%]
+tests/wave1_integration_builder/test_governance_subsystem.py::TestGovernanceValidator::test_qa_125_governance_validator_failure_modes PASSED [ 81%]
+tests/wave1_integration_builder/test_governance_subsystem.py::TestGovernanceSupremacyEnforcer::test_qa_126_enforce_hard_governance_violations PASSED [ 84%]
+tests/wave1_integration_builder/test_governance_subsystem.py::TestGovernanceSupremacyEnforcer::test_qa_127_enforce_soft_governance_violations PASSED [ 87%]
+tests/wave1_integration_builder/test_governance_subsystem.py::TestGovernanceSupremacyEnforcer::test_qa_128_prevent_governance_weakening PASSED [ 90%]
+tests/wave1_integration_builder/test_governance_subsystem.py::TestGovernanceSupremacyEnforcer::test_qa_129_audit_governance_overrides PASSED [ 93%]
+tests/wave1_integration_builder/test_governance_subsystem.py::TestGovernanceSupremacyEnforcer::test_qa_130_governance_update_handling PASSED [ 96%]
+tests/wave1_integration_builder/test_governance_subsystem.py::TestGovernanceSupremacyEnforcer::test_qa_131_governance_supremacy_failure_modes PASSED [100%]
+
+============================== 32 passed in 0.09s ==============================
