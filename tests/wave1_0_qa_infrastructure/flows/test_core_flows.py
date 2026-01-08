@@ -676,27 +676,27 @@ class TestEscalationResolutionFlow:
         )
         
         # Verify 5-element structure
-        assert escalation["what"] == "Build stalled on QA-042 failure", \
+        assert escalation.what == "Build stalled on QA-042 failure", \
             "Escalation must include WHAT element"
-        assert escalation["why"] == "Test infrastructure not yet implemented", \
+        assert escalation.why == "Test infrastructure not yet implemented", \
             "Escalation must include WHY element"
-        assert escalation["blocked"] == "Build cannot proceed to merge", \
+        assert escalation.blocked == "Build cannot proceed to merge", \
             "Escalation must include BLOCKED element"
-        assert "decision_needed" in escalation, \
+        assert escalation.decision is not None, \
             "Escalation must include DECISION NEEDED element"
-        assert "consequence" in escalation, \
+        assert escalation.consequence is not None, \
             "Escalation must include CONSEQUENCE element"
         
         # Verify priority assignment
-        assert escalation["priority"] == "HIGH", \
+        assert escalation.priority.value == "HIGH", \
             "Priority must be assigned"
-        assert escalation["priority"] in ["CRITICAL", "HIGH", "NORMAL"], \
+        assert escalation.priority.value in ["CRITICAL", "HIGH", "NORMAL"], \
             "Priority must be valid value"
         
         # Verify context attachment
-        assert escalation["context"]["build_id"] == "build-001", \
+        assert escalation.context_links["build_id"] == "build-001", \
             "Context must be attached"
-        assert escalation["context"]["qa_component"] == "QA-042", \
+        assert escalation.context_links["qa_component"] == "QA-042", \
             "Context must include relevant details"
         
         # Create evidence artifact
@@ -705,7 +705,7 @@ class TestEscalationResolutionFlow:
             "PASS",
             {
                 "escalation_created": True,
-                "escalation_id": escalation["escalation_id"],
+                "escalation_id": escalation.escalation_id,
                 "five_elements_present": True,
                 "priority_assigned": True,
                 "context_attached": True
@@ -744,7 +744,7 @@ class TestEscalationResolutionFlow:
         
         # Route escalation
         routing_result = escalation_mgr.route_escalation(
-            escalation_id=escalation["escalation_id"],
+            escalation_id=escalation.escalation_id,
             target=test_user_id
         )
         
@@ -807,7 +807,7 @@ class TestEscalationResolutionFlow:
         
         # Resolve escalation
         resolution_result = escalation_mgr.resolve_escalation(
-            escalation_id=escalation["escalation_id"],
+            escalation_id=escalation.escalation_id,
             resolver=test_user_id,
             decision="Approve and proceed with implementation",
             action="PROCEED_WITH_BUILD",
@@ -830,10 +830,10 @@ class TestEscalationResolutionFlow:
         
         # Verify state update
         updated_escalation = escalation_mgr.get_escalation(
-            escalation_id=escalation["escalation_id"]
+            escalation_id=escalation.escalation_id
         )
         
-        assert updated_escalation["state"] == "RESOLVED", \
+        assert updated_escalation["state"] == "Resolved", \
             "Escalation state must be RESOLVED"
         assert updated_escalation["resolution"]["decision"] == resolution_result["decision"], \
             "Resolution must be persisted"
@@ -845,6 +845,6 @@ class TestEscalationResolutionFlow:
             {
                 "decision_captured": True,
                 "action_triggered": True,
-                "state_updated": updated_escalation["state"] == "RESOLVED"
+                "state_updated": updated_escalation["state"] == "Resolved"
             }
         )
