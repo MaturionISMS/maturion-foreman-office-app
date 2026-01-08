@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://maturion.com/schemas/startup-requirements.json",
+  "title": "Startup Requirements Schema",
+  "description": "Schema for startup requirement definitions",
+  "type": "object",
+  "required": ["version", "requirements"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of requirements schema"
+    },
+    "requirements": {
+      "type": "array",
+      "description": "Array of startup requirements",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "category", "type", "check", "critical", "description"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the requirement"
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable name"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["memory", "file", "config", "environment"],
+            "description": "Category of requirement"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of validation check"
+          },
+          "check": {
+            "type": "string",
+            "description": "Name of the check to perform"
+          },
+          "critical": {
+            "type": "boolean",
+            "description": "Whether this requirement is critical for startup"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of what is validated"
+          }
+        }
+      }
+    }
+  }
+}
