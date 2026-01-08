@@ -1,0 +1,336 @@
+name: Agent Contract Governance Enforcement
+
+# CI CLASSIFICATION: Hard Gate
+# Purpose: Enforces Agent Contract Minimalism Framework (line limits, pattern detection, bindings validation)
+# Failure Semantics:
+#   - Contract >300 lines → Block merge + escalation
+#   - Forbidden patterns (doctrine duplication) → Block merge + escalation
+#   - Missing governance.bindings → Advisory warning
+# Timeout: 5 minutes (validation only)
+# Authority: CS2, Agent Contract Minimalism Framework (PR #895 maturion-foreman-governance)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - '.github/agents/**/*.md'
+      - '!.github/agents/_archive/**'
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - '.github/agents/**/*.md'
+      - '!.github/agents/_archive/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  enforce-contract-minimalism:
+    name: Enforce Agent Contract Minimalism
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Validate Contract Line Counts
+        id: line-count
+        run: |
+          echo "🔍 Validating agent contract line counts..."
+          
+          VIOLATIONS=()
+          WARNINGS=()
+          
+          # Find all agent contract files (excluding archives and schema docs)
+          for contract in .github/agents/*.md; do
+            # Skip if doesn't exist or is archive/schema
+            [[ ! -f "$contract" ]] && continue
+            [[ "$contract" == *"_archive"* ]] && continue
+            [[ "$contract" == *"SCHEMA"* ]] && continue
+            
+            filename=$(basename "$contract")
+            
+            # Count total lines
+            total_lines=$(wc -l < "$contract")
+            
+            # Count lines excluding YAML frontmatter
+            content_lines=$(awk '/^---$/{if(++count==2) flag=1; next} flag' "$contract" | wc -l)
+            
+            echo "📄 $filename: $total_lines total lines, $content_lines content lines"
+            
+            # Hard gate: >400 total lines = violation
+            if [ "$total_lines" -gt 400 ]; then
+              VIOLATIONS+=("❌ $filename: $total_lines lines (limit: 400)")
+              echo "::error file=$contract::Contract exceeds 400 line limit: $total_lines lines"
+            # Advisory: >300 total lines = warning
+            elif [ "$total_lines" -gt 300 ]; then
+              WARNINGS+=("⚠️  $filename: $total_lines lines (target: 150-250)")
+              echo "::warning file=$contract::Contract exceeds recommended 300 line limit: $total_lines lines"
+            else
+              echo "✅ $filename: Within limits"
+            fi
+          done
+          
+          # Report violations
+          if [ ${#VIOLATIONS[@]} -gt 0 ]; then
+            echo "has_violations=true" >> $GITHUB_OUTPUT
+            echo "violations<<EOF" >> $GITHUB_OUTPUT
+            printf '%s\n' "${VIOLATIONS[@]}" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "has_violations=false" >> $GITHUB_OUTPUT
+          fi
+          
+          # Report warnings
+          if [ ${#WARNINGS[@]} -gt 0 ]; then
+            echo "has_warnings=true" >> $GITHUB_OUTPUT
+            echo "warnings<<EOF" >> $GITHUB_OUTPUT
+            printf '%s\n' "${WARNINGS[@]}" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "has_warnings=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Detect Forbidden Patterns
+        id: patterns
+        run: |
+          echo "🔍 Detecting forbidden patterns (doctrine duplication)..."
+          
+          VIOLATIONS=()
+          
+          # Forbidden patterns that indicate doctrine duplication
+          PATTERNS=(
+            "^## Constitutional Principles$"
+            "^## Primary Responsibilities$"
+            "^## Authority Hierarchy$"
+            "^doctrine:$"
+          )
+          
+          for contract in .github/agents/*.md; do
+            [[ ! -f "$contract" ]] && continue
+            [[ "$contract" == *"_archive"* ]] && continue
+            [[ "$contract" == *"SCHEMA"* ]] && continue
+            
+            filename=$(basename "$contract")
+            
+            for pattern in "${PATTERNS[@]}"; do
+              if grep -qE "$pattern" "$contract"; then
+                VIOLATIONS+=("❌ $filename: Contains forbidden pattern: $pattern")
+                echo "::error file=$contract::Contains forbidden pattern indicating doctrine duplication: $pattern"
+              fi
+            done
+          done
+          
+          if [ ${#VIOLATIONS[@]} -gt 0 ]; then
+            echo "has_violations=true" >> $GITHUB_OUTPUT
+            echo "violations<<EOF" >> $GITHUB_OUTPUT
+            printf '%s\n' "${VIOLATIONS[@]}" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "has_violations=false" >> $GITHUB_OUTPUT
+            echo "✅ No forbidden patterns detected"
+          fi
+      
+      - name: Validate Governance Bindings
+        id: bindings
+        run: |
+          echo "🔍 Validating governance.bindings sections..."
+          
+          WARNINGS=()
+          
+          for contract in .github/agents/*.md; do
+            [[ ! -f "$contract" ]] && continue
+            [[ "$contract" == *"_archive"* ]] && continue
+            [[ "$contract" == *"SCHEMA"* ]] && continue
+            
+            filename=$(basename "$contract")
+            
+            # Check for governance.bindings section
+            if ! grep -q "governance:" "$contract" || ! grep -q "bindings:" "$contract"; then
+              WARNINGS+=("⚠️  $filename: Missing governance.bindings section")
+              echo "::warning file=$contract::Contract missing governance.bindings section"
+            else
+              echo "✅ $filename: Has governance.bindings"
+            fi
+          done
+          
+          if [ ${#WARNINGS[@]} -gt 0 ]; then
+            echo "has_warnings=true" >> $GITHUB_OUTPUT
+            echo "warnings<<EOF" >> $GITHUB_OUTPUT
+            printf '%s\n' "${WARNINGS[@]}" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "has_warnings=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Check Validation Results
+        if: steps.line-count.outputs.has_violations == 'true' || steps.patterns.outputs.has_violations == 'true'
+        run: |
+          echo "❌ Agent Contract Governance Enforcement FAILED"
+          echo ""
+          echo "Violations detected:"
+          echo "${{ steps.line-count.outputs.violations }}"
+          echo "${{ steps.patterns.outputs.violations }}"
+          exit 1
+      
+      - name: Report Success
+        if: success() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const warnings = [];
+            
+            if ('${{ steps.line-count.outputs.has_warnings }}' === 'true') {
+              warnings.push('**Line Count Warnings:**\n${{ steps.line-count.outputs.warnings }}');
+            }
+            
+            if ('${{ steps.bindings.outputs.has_warnings }}' === 'true') {
+              warnings.push('**Governance Bindings Warnings:**\n${{ steps.bindings.outputs.warnings }}');
+            }
+            
+            const warningSection = warnings.length > 0 
+              ? `\n\n## ⚠️ Advisory Warnings\n\n${warnings.join('\n\n')}\n\nThese are advisory and do not block merge.`
+              : '';
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ✅ **Agent Contract Governance Enforcement PASSED**
+              
+              All agent contracts comply with Agent Contract Minimalism Framework:
+              - ✅ All contracts under 400 line hard limit
+              - ✅ No forbidden patterns (doctrine duplication) detected
+              - ✅ Agent Contract Minimalism Framework (CS2) compliance${warningSection}
+              
+              **Authority**: CS2, PR #895 (maturion-foreman-governance)
+              **Framework**: Agent Contract Minimalism (150-300 line target)
+              **Enforcement**: 400 line hard gate, pattern detection, bindings validation
+              
+              **Gatekeeper 1 approves contract governance compliance.**
+              `
+            });
+      
+      - name: Report Failure
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const violations = [];
+            
+            if ('${{ steps.line-count.outputs.has_violations }}' === 'true') {
+              violations.push('**Line Count Violations:**\n```\n${{ steps.line-count.outputs.violations }}\n```');
+            }
+            
+            if ('${{ steps.patterns.outputs.has_violations }}' === 'true') {
+              violations.push('**Forbidden Pattern Violations:**\n```\n${{ steps.patterns.outputs.violations }}\n```');
+            }
+            
+            // Create catastrophic failure issue
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: "🚨 CATASTROPHIC: Agent Contract Governance Violation",
+              labels: ['catastrophic-failure', 'governance-violation', 'requires-escalation'],
+              body: `
+              # CATASTROPHIC GOVERNANCE VIOLATION
+              
+              **Type**: Agent Contract Minimalism Framework Violation  
+              **PR**: #${context.issue.number}  
+              **Commit**: ${context.sha}  
+              **Detected**: ${new Date().toISOString()}
+              
+              ---
+              
+              ## Violations
+              
+              ${violations.join('\n\n')}
+              
+              ---
+              
+              ## Agent Contract Minimalism Framework
+              
+              **Authority**: CS2, PR #895 (maturion-foreman-governance)
+              
+              **Requirements**:
+              - Contracts MUST be under 400 lines (hard gate)
+              - Contracts SHOULD be 150-250 lines (target)
+              - Contracts MUST reference canonical governance (no duplication)
+              - Contracts MUST have governance.bindings section
+              
+              **Rationale**:
+              - Contracts >700 lines exceeded Claude Sonnet 3.5 capacity
+              - Prevented agent recruitment and contributed to governance failures
+              - Solution: Reference canonical governance instead of duplicating
+              
+              ---
+              
+              ## REQUIRED ACTIONS (Mandatory)
+              
+              1. ⛔ **HALT** work on violating contracts
+              2. 🔍 **REVIEW** governance/AGENT_CONTRACT_MIGRATION_GUIDE.md
+              3. 📝 **MIGRATE** contracts using minimal format
+              4. ✅ **VERIFY** line counts under 400
+              5. 🔗 **ENSURE** governance.bindings present
+              6. ⬆️ **ESCALATE** to @JohanRas788 if uncertain
+              
+              ---
+              
+              ## References
+              
+              - [Agent Contract Migration Guide](../governance/AGENT_CONTRACT_MIGRATION_GUIDE.md)
+              - [Agent Onboarding](../governance/AGENT_ONBOARDING.md)
+              - [Agent Contract Template](../governance/templates/AGENT_CONTRACT.template.md)
+              
+              ---
+              
+              **Authority**: CS2 (Agent Contract Minimalism Framework)  
+              **Enforcement**: Automatic (no override permitted)  
+              **Escalation**: Mandatory to CS2
+              `
+            });
+            
+            // Comment on PR
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              🚨 **CATASTROPHIC GOVERNANCE VIOLATION**
+              
+              Agent Contract Minimalism Framework violation detected.
+              
+              ${violations.join('\n\n')}
+              
+              This is a **catastrophic governance violation** requiring immediate action.
+              
+              **Catastrophic Failure Issue Created**: #${issue.data.number}
+              
+              ---
+              
+              ## REQUIRED ACTIONS
+              
+              1. ⛔ HALT work on violating contracts
+              2. 🔍 Review governance/AGENT_CONTRACT_MIGRATION_GUIDE.md
+              3. 📝 Migrate contracts to minimal format
+              4. ✅ Verify compliance (line counts, no duplication, bindings present)
+              5. ⬆️ Escalate to @JohanRas788 if uncertain
+              
+              ---
+              
+              **Merge BLOCKED until violation resolved.**
+              
+              See issue #${issue.data.number} for full details.
+              `
+            });
