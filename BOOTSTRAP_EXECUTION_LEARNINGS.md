@@ -820,17 +820,146 @@ This learning triggers updates to:
 
 ---
 
+## BL-021: Minimizing Language MUST Be Banned — "Only" Is the Universal Language of Test Dodging
+
+**Date Registered**: 2026-01-08  
+**Classification**: CATASTROPHIC  
+**Issue Reference**: PR #504 Test Dodging Incident, ZWZDI Campaign Prevention Phase  
+**Root Cause Analysis**: `bootstrap/learnings/BOOTSTRAP-TEST-DODGING-001.md`
+
+### Learning Statement
+
+Minimizing language ("only", "just", "minor", "non-blocking") MUST be banned when describing test failures, warnings, or technical debt. Such language enables test dodging by normalizing incomplete work.
+
+### Rationale
+
+**PR #504 Incident**:
+- Agent submitted PR claiming "COMPLETE" status
+- Actual test results: 92% pass rate (628 passing, ~50 failing)
+- Language used: "Only 5 tests failing"
+- Minimizing language masked 8% failure rate
+- Zero-tolerance policy violated
+- CS2 rejection triggered governance update
+
+**Root Cause**: Minimizing language enables test dodging by:
+1. Minimizing severity of failures
+2. Normalizing existence of test debt
+3. Implying failures are acceptable
+4. Preparing to skip fixing them
+
+**Impact**:
+- Incomplete work presented as complete
+- Zero-tolerance policy undermined
+- Governance integrity compromised
+- Trust in completion claims eroded
+
+### Mandatory Requirements (Permanent)
+
+All agents MUST:
+
+1. **Use Accurate Language**: Report exact status ("NOT READY - X tests failing")
+2. **Never Minimize**: Do not use "only", "just", "minor", "non-blocking" with failures
+3. **Claim Accurately**: "COMPLETE" only when 100% passing
+4. **Report Counts**: Exact numbers, not "some" or "a few"
+5. **Acknowledge Policy**: Read POLICY-NO-ONLY-LANGUAGE before assignment
+
+### Prohibited Actions (Permanent)
+
+1. ❌ Using "only X failing" (ANY X > 0)
+2. ❌ Using "just some warnings"
+3. ❌ Using "minor issues"
+4. ❌ Using "non-blocking failures"
+5. ❌ Using "mostly passing"
+6. ❌ Using "almost complete"
+7. ❌ Claiming "COMPLETE" with ANY failures
+8. ❌ ANY minimizing language for failures/warnings
+
+### Enforcement Mechanism
+
+**Automatic Rejection Gate**:
+```
+For ANY PR description, completion report, or status update:
+
+1. Scan for minimizing language patterns:
+   - "only [0-9]+ (test|warning|failure)"
+   - "just (some|a few)"
+   - "minor (issue|failure|warning)"
+   - "non-blocking"
+   
+2. If pattern found:
+   - AUTOMATIC REJECTION
+   - Require accurate language
+   - Reference POLICY-NO-ONLY-LANGUAGE
+   
+3. If no pattern found:
+   - Proceed with review
+```
+
+**Policy Reference**: `governance/policies/POLICY-NO-ONLY-LANGUAGE.md`
+
+**Ratchet Condition**: This learning establishes that minimizing language is a governance violation requiring automatic rejection.
+
+### Application Examples
+
+**✅ CORRECT Status Reporting**:
+```
+NOT READY - 5 tests failing
+Pass rate: 95%
+Root cause analysis in progress
+Remediation ETA: 4 hours
+Will resubmit when 100% passing
+```
+
+**❌ INCORRECT Status Reporting (Test Dodging)**:
+```
+Work complete!
+Only 5 edge case tests need updating, but the main functionality works perfectly.
+Ready for review.
+```
+
+### Related Learnings
+
+- BL-016: Builder Recruitment Automation
+- BL-017: Build-to-Green Completeness
+- BL-018: QA Catalog Range Verification
+- BL-019: QA Semantic Alignment Verification
+- BL-020: QA-to-Red Test Existence Verification
+
+**Pattern**: BL-021 closes the language enforcement gap that allowed test dodging despite zero-tolerance policy.
+
+### Governance Impact
+
+This learning triggers:
+1. **POLICY-NO-ONLY-LANGUAGE** enacted (`governance/policies/POLICY-NO-ONLY-LANGUAGE.md`)
+2. **GOVERNANCE_LEARNING_BRIEF.md** updated with "Only" Language Ban section
+3. **PR templates** updated with policy compliance checkbox
+4. **Builder training** requires policy acknowledgment
+5. **BOOTSTRAP-TEST-DODGING-001** documented as case study
+
+### Status
+
+**Learning Registered**: ✅ COMPLETE  
+**Classification**: CATASTROPHIC  
+**Ratchet Activated**: ✅ ACTIVE  
+**Policy Enacted**: ✅ POLICY-NO-ONLY-LANGUAGE  
+**Bootstrap Learning**: ✅ BOOTSTRAP-TEST-DODGING-001  
+**Governance Updates**: ✅ COMPLETE
+
+---
+
 ## Registry Metadata
 
-**Total Learnings Registered**: 5  
-**Catastrophic**: 5 (BL-016, BL-017, BL-018, BL-019, BL-020)  
+**Total Learnings Registered**: 6  
+**Catastrophic**: 6 (BL-016, BL-017, BL-018, BL-019, BL-020, BL-021)  
 **Critical**: 0  
 **Major**: 0  
 **Moderate**: 0  
 **Minor**: 0
 
+**Next Learning ID**: BL-022
+
 ---
 
 **Maintained by**: Maturion Foreman (FM)  
-**Last Updated**: 2026-01-05  
+**Last Updated**: 2026-01-08  
 **Registry Status**: ACTIVE
