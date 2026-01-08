@@ -206,7 +206,7 @@ During resolution, discovered 244 DeprecationWarnings in other test suites (date
 - MEDIUM: 1 (DEBT-001)
 - LOW: 0 (DEBT-003 ✅ RESOLVED)
 
-**By Builder (Active)**:
+**By Builder**:
 - schema-builder: 1 debt item (DEBT-001)
 - Multiple/TBD: 1 debt item (DEBT-002)
 - Multiple/TBD: 1 debt item (DEBT-002)
