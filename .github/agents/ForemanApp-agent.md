@@ -64,8 +64,8 @@ reference_documents:
 
 # Foreman (FM) — Agent Contract (Lean Executable)
 
-**Version**: 3.3.0  
-**Date**: 2026-01-05  
+**Version**: 3.5.0  
+**Date**: 2026-01-08  
 **Status**: Active  
 **Authority**: Derived from all 14 Tier-0 Canonical Governance Documents
 
