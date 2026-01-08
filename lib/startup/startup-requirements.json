@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "requirements": [
+    {
+      "id": "MEM-LIFECYCLE-INIT",
+      "name": "Memory Fabric Lifecycle Initialization",
+      "category": "memory",
+      "type": "memory",
+      "check": "memory-fabric-exists",
+      "validator": "validateMemoryFabricExists",
+      "critical": true,
+      "description": "Verify that the memory fabric has been initialized and is accessible"
+    },
+    {
+      "id": "GOV-FILES-PRESENT",
+      "name": "Governance Files Present",
+      "category": "governance",
+      "type": "file",
+      "check": "governance-directory-exists",
+      "validator": "validateGovernanceDirectory",
+      "critical": true,
+      "description": "Verify that governance directory and essential files are present"
+    },
+    {
+      "id": "ARCH-INDEX-EXISTS",
+      "name": "Architecture Indexed",
+      "category": "architecture",
+      "type": "file",
+      "check": "architecture-index-exists",
+      "validator": "validateArchitectureIndex",
+      "critical": false,
+      "description": "Verify that architecture has been indexed"
+    },
+    {
+      "id": "CFG-COMM-READY",
+      "name": "Commissioning System Ready",
+      "category": "configuration",
+      "type": "config",
+      "check": "commissioning-config-valid",
+      "validator": "validateCommissioningConfig",
+      "critical": true,
+      "description": "Verify that commissioning system configuration is valid"
+    }
+  ]
+}
