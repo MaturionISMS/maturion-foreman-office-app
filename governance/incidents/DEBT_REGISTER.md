@@ -54,19 +54,17 @@ Approved for merge with documented execution debt. FM classified warnings as "ac
 
 ---
 
-### DEBT-002: Wave 0 RED QA Tests ✅ RESOLVED
+### DEBT-002: Wave 0 RED QA Tests
 
 **Debt ID**: DEBT-002  
 **Type**: Unimplemented Tests  
 **Severity**: HIGH  
-**Debt Size**: 60 RED tests across 5 categories (corrected from 65)  
+**Debt Size**: 65 RED tests across 5 categories  
 **Origin**: Wave 0 (pre-Wave 1.0 baseline)  
 **Origin Date**: 2025-12-22 or earlier  
 **Builder**: Multiple (core platform team)  
-**Status**: ✅ **RESOLVED**  
-**Resolution Date**: 2026-01-07  
-**Resolution Method**: REMOVE (all 60 tests)  
-**Age at Resolution**: 16 days
+**Status**: UNRESOLVED  
+**Age**: 16+ days (as of 2026-01-07)
 
 **Debt Description**:
 65 tests written in TDD style (tests before implementation) and moved to RED_QA/ directory. All tests failing due to missing implementations. Tests excluded from CI via pytest.ini. Current active test suite: 100% passing (33/33) but 65 tests not executed.
@@ -113,20 +111,12 @@ Three options per category:
 - `tests/wave0_minimum_red/RED_QA/IMPLEMENTATION_TRACKING.md`
 - `governance/incidents/HISTORICAL_WAVE_PR_WARNING_TEST_DEBT_SURVEY_RCA.md`
 
-**Resolution Summary**:
-All 60 tests individually assessed and removed with governance-recorded justification.
-
-**Resolution Evidence**:
-- ✅ Test-by-test assessment: `governance/decisions/DEBT_002_TEST_BY_TEST_DECISIONS.md`
-- ✅ All 60 tests removed from `tests/wave0_minimum_red/RED_QA/`
-- ✅ Directory deleted: `tests/wave0_minimum_red/RED_QA/`
-- ✅ Configuration updated: `pytest.ini` (RED_QA exclusion removed)
-- ✅ Zero RED tests remain in repository
-
 **Tracking**:
-- [x] REMOVE decision made for all 60 tests (individual assessment)
-- [x] Tests deleted with documented rationale
-- [x] Verification: RED_QA/ directory removed, zero RED tests remain
+- [ ] IMPLEMENT/DEFER/REMOVE decision made per category
+- [ ] If IMPLEMENT: Architecture frozen, QA-to-Red defined, builder assigned
+- [ ] If DEFER: Tests moved to tests/future/, issues created for Wave 3.0+
+- [ ] If REMOVE: Tests deleted, rationale documented
+- [ ] Verification: RED_QA/ directory empty or properly scoped
 
 ---
 
@@ -194,44 +184,27 @@ During resolution, discovered 244 DeprecationWarnings in other test suites (date
 
 ## Debt Statistics
 
-**Total Active Debt Items**: 2 (down from 3)  
-**Total Resolved Debt Items**: 1  
+**Total Active Debt Items**: 3  
 **Total Warnings**: 195 (194 + 1)  
-**Total Unimplemented Tests**: 0 (down from 60)  
-**Oldest Debt Age**: 5 days (DEBT-001, DEBT-003)  
-**Average Debt Age**: 5 days  
+**Total Unimplemented Tests**: 65  
+**Oldest Debt Age**: 16+ days (DEBT-002)  
+**Average Debt Age**: ~9 days  
 
-**By Severity (Active)**:
-- HIGH: 0 (DEBT-002 resolved)
+**By Severity**:
+- HIGH: 1 (DEBT-002)
 - MEDIUM: 1 (DEBT-001)
 - LOW: 0 (DEBT-003 ✅ RESOLVED)
 
-**By Builder (Active)**:
+**By Builder**:
 - schema-builder: 1 debt item (DEBT-001)
 - api-builder: 1 debt item (DEBT-003)
+- Multiple/TBD: 1 debt item (DEBT-002)
 
 ---
 
 ## Debt Resolution History
 
-### DEBT-002: Wave 0 RED QA Tests - RESOLVED 2026-01-07
-
-**Resolution Method**: REMOVE (all 60 tests)  
-**Resolution Time**: 16 days from registration  
-**Resolved By**: FM Agent (Claude 3.5 Sonnet)  
-**Decision Authority**: Issue #469 + CS2 model authorization
-
-**Summary**: 
-All 60 RED tests individually assessed per CS2 requirement. All classified as obsolete/invalid - tests for speculative features never part of Wave 0 requirements. System operates successfully without these features.
-
-**Evidence**:
-- Test-by-test assessment: `governance/decisions/DEBT_002_TEST_BY_TEST_DECISIONS.md`
-- All tests removed with documented justification
-- RED_QA directory deleted
-- pytest.ini updated
-- Zero RED tests remain
-
-**Outcome**: DEBT-002 eliminated, zero test debt accumulated
+*(No resolved debt items yet)*
 
 ---
 
