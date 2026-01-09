@@ -190,36 +190,37 @@ jobs:
           script: |
             const warnings = [];
             
-            if ('${{ steps.line-count.outputs.has_warnings }}' === 'true') {
-              warnings.push('**Line Count Warnings:**\n${{ steps.line-count.outputs.warnings }}');
+            const lineCountWarnings = `${{ steps.line-count.outputs.warnings }}`.trim();
+            const bindingsWarnings = `${{ steps.bindings.outputs.warnings }}`.trim();
+            
+            if ('${{ steps.line-count.outputs.has_warnings }}' === 'true' && lineCountWarnings) {
+              warnings.push('**Line Count Warnings:**\\n' + lineCountWarnings);
             }
             
-            if ('${{ steps.bindings.outputs.has_warnings }}' === 'true') {
-              warnings.push('**Governance Bindings Warnings:**\n${{ steps.bindings.outputs.warnings }}');
+            if ('${{ steps.bindings.outputs.has_warnings }}' === 'true' && bindingsWarnings) {
+              warnings.push('**Governance Bindings Warnings:**\\n' + bindingsWarnings);
             }
             
             const warningSection = warnings.length > 0 
-              ? `\n\n## ⚠️ Advisory Warnings\n\n${warnings.join('\n\n')}\n\nThese are advisory and do not block merge.`
+              ? '\\n\\n## ⚠️ Advisory Warnings\\n\\n' + warnings.join('\\n\\n') + '\\n\\nThese are advisory and do not block merge.'
               : '';
             
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `
-              ✅ **Agent Contract Governance Enforcement PASSED**
+              body: `✅ **Agent Contract Governance Enforcement PASSED**
               
-              All agent contracts comply with Agent Contract Minimalism Framework:
-              - ✅ All contracts under 400 line hard limit
-              - ✅ No forbidden patterns (doctrine duplication) detected
-              - ✅ Agent Contract Minimalism Framework (CS2) compliance${warningSection}
-              
-              **Authority**: CS2, PR #895 (maturion-foreman-governance)
-              **Framework**: Agent Contract Minimalism (150-300 line target)
-              **Enforcement**: 400 line hard gate, pattern detection, bindings validation
-              
-              **Gatekeeper 1 approves contract governance compliance.**
-              `
+All agent contracts comply with Agent Contract Minimalism Framework:
+- ✅ All contracts under 400 line hard limit
+- ✅ No forbidden patterns (doctrine duplication) detected
+- ✅ Agent Contract Minimalism Framework (CS2) compliance${warningSection}
+
+**Authority**: CS2, PR #895 (maturion-foreman-governance)
+**Framework**: Agent Contract Minimalism (150-300 line target)
+**Enforcement**: 400 line hard gate, pattern detection, bindings validation
+
+**Gatekeeper 1 approves contract governance compliance.**`
             });
       
       - name: Report Failure
@@ -229,12 +230,15 @@ jobs:
           script: |
             const violations = [];
             
-            if ('${{ steps.line-count.outputs.has_violations }}' === 'true') {
-              violations.push('**Line Count Violations:**\n```\n${{ steps.line-count.outputs.violations }}\n```');
+            const lineCountViolations = `${{ steps.line-count.outputs.violations }}`.trim();
+            const patternsViolations = `${{ steps.patterns.outputs.violations }}`.trim();
+            
+            if ('${{ steps.line-count.outputs.has_violations }}' === 'true' && lineCountViolations) {
+              violations.push('**Line Count Violations:**\\n```\\n' + lineCountViolations + '\\n```');
             }
             
-            if ('${{ steps.patterns.outputs.has_violations }}' === 'true') {
-              violations.push('**Forbidden Pattern Violations:**\n```\n${{ steps.patterns.outputs.violations }}\n```');
+            if ('${{ steps.patterns.outputs.has_violations }}' === 'true' && patternsViolations) {
+              violations.push('**Forbidden Pattern Violations:**\\n```\\n' + patternsViolations + '\\n```');
             }
             
             // Create catastrophic failure issue

@@ -221,6 +221,37 @@ This builder operates under **Maturion Build Philosophy**, not generic developme
 
 **Enhancement Capture**: At completion, evaluate enhancements OR state "None identified." Categories: reusability, accessibility, performance, design system, UX. Mark PARKED, route to FM. **Prohibited**: Implement proactively, convert to tasks, escalate as blockers.
 
+## Mandatory Process Improvement Reflection
+
+**Authority**: Up-rippled from governance canon (maturion-foreman-governance)  
+**Status**: MANDATORY at completion
+
+At work completion, builder MUST provide comprehensive process improvement reflection in completion report addressing ALL of the following:
+
+1. **What went well in this build?**  
+   - Identify processes, tools, or governance elements that enabled success
+   - Highlight what should be preserved or amplified in future builds
+
+2. **What failed, was blocked, or required rework?**  
+   - Document failures, blockers, rework cycles with root causes
+   - Include governance gaps, tooling limitations, or unclear specifications
+
+3. **What process, governance, or tooling changes would have improved this build or prevented waste?**  
+   - Propose specific improvements to prevent recurrence
+   - Identify friction points in workflow, coordination, or verification
+
+4. **Did you comply with all governance learnings (BLs)?**  
+   - Verify compliance with: BL-016 (ratchet conditions), BL-018 (QA range), BL-019 (semantic alignment), BL-022 (if activated)
+   - If non-compliance: STOP, document reason, escalate to FM
+
+5. **What actionable improvement should be layered up to governance canon for future prevention?**  
+   - Propose concrete governance/process changes for canonization
+   - OR justify why no improvements are warranted
+
+**Prohibited**: Stating "None identified" without answering ALL questions above with justification.
+
+**FM Enforcement**: FM MUST NOT mark builder submission COMPLETE at gate without process improvement reflection addressing all 5 questions.
+
 ---
 
 ## Builder Appointment | OPOJD | FM Authority
