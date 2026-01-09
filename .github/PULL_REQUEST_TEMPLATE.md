@@ -65,6 +65,8 @@ Warnings: 0
 - [ ] Code review: All generated code reviewed for correctness
 - [ ] No test removal without proper governance authorization
 - [ ] No warning suppression without FM approval
+- [ ] Constitutional compliance: All Tier-1 requirements preserved (BL-024)
+- [ ] If procedural guidance adapted: Documented with justification (BL-024)
 
 ### Documentation
 
@@ -105,6 +107,8 @@ Warnings: 0
 - [ ] I have read POLICY-NO-ONLY-LANGUAGE and comply
 - [ ] I have not used minimizing language in this PR
 - [ ] I acknowledge the 100% GREEN mandate (99% = 0%)
+- [ ] I understand Constitutional Sandbox Pattern (BL-024): Tier-1 vs Tier-2
+- [ ] If I adapted procedural guidance: I documented my judgment with rationale
 
 ## Status Declaration
 
@@ -144,6 +148,8 @@ Warnings: 0
 - [ ] Changes align with architecture
 - [ ] No governance violations detected
 - [ ] No test dodging patterns observed
+- [ ] Constitutional compliance verified (BL-024): Tier-1 requirements preserved
+- [ ] If procedural adaptations made: Justification is documented
 
 ### Approval Criteria
 
@@ -163,6 +169,7 @@ Warnings: 0
 ## References
 
 **Governance Policies**:
+- [Constitutional Sandbox Pattern (BL-024)](https://github.com/APGI-cmy/maturion-foreman-governance/blob/main/governance/canon/CONSTITUTIONAL_SANDBOX_PATTERN.md)
 - [POLICY-NO-ONLY-LANGUAGE](governance/policies/POLICY-NO-ONLY-LANGUAGE.md)
 - [Zero Test Debt Rule](governance/policies/zero-test-debt-constitutional-rule.md)
 - [Governance Supremacy Rule](governance/policies/governance-supremacy-rule.md)
@@ -178,7 +185,7 @@ Warnings: 0
 
 **By submitting this PR, I acknowledge:**
 
-I have read and comply with POLICY-NO-ONLY-LANGUAGE. I understand that use of minimizing language or submission of work with warnings/debt will result in immediate PR rejection. I acknowledge the 100% GREEN mandate is non-negotiable.
+I have read and comply with POLICY-NO-ONLY-LANGUAGE and Constitutional Sandbox Pattern (BL-024). I understand that use of minimizing language or submission of work with warnings/debt will result in immediate PR rejection. I acknowledge the 100% GREEN mandate is non-negotiable. I understand Tier-1 constitutional requirements are immutable, and any Tier-2 procedural adaptations are documented with justification.
 
 **Builder Signature**: @[username]  
 **Date**: [YYYY-MM-DD]

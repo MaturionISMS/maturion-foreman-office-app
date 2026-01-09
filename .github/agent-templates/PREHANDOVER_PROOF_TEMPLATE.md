@@ -77,6 +77,8 @@ I, **[Agent Name]**, attest that:
 - [x] All gates returned GREEN (exit code 0)
 - [x] All logs were inspected
 - [x] This evidence is accurate and complete
+- [x] Constitutional compliance verified (BL-024): All Tier-1 requirements preserved
+- [x] If procedural guidance adapted: Adaptations documented with justification
 
 **Handover is authorized based on local verification.**
 
