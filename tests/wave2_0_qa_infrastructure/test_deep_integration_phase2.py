@@ -22,6 +22,11 @@ from runtime.integration.consistency_manager import (
     ConsistencyStatus,
     ConflictResolutionStrategy
 )
+from runtime.integration.testing_framework import (
+    IntegrationTestingFramework,
+    IntegrationTestStatus,
+    FailureCategory
+)
 
 
 @pytest.mark.wave2
@@ -342,20 +347,207 @@ class TestIntegrationTestingFramework:
 
     def test_qa_486_fixture_setup(self):
         """QA-486: Test fixture setup"""
-        raise NotImplementedError("QA-486: To be implemented by integration-builder")
+        framework = IntegrationTestingFramework()
+        org_id = "test_org_486"
+        
+        # Set up test fixture
+        fixture = framework.setup_fixture(
+            organisation_id=org_id,
+            name="integration_test_fixture",
+            setup_actions=[
+                {"action": "create_database"},
+                {"action": "seed_data"},
+                {"action": "start_services"}
+            ],
+            cleanup_actions=[
+                {"action": "stop_services"},
+                {"action": "clear_data"},
+                {"action": "drop_database"}
+            ],
+            resources={"database": "test_db", "port": 5432}
+        )
+        
+        # Verify fixture set up
+        assert fixture.fixture_id is not None
+        assert fixture.organisation_id == org_id
+        assert fixture.name == "integration_test_fixture"
+        assert len(fixture.setup_actions) == 3
+        assert len(fixture.cleanup_actions) == 3
+        assert fixture.setup_completed
+        assert not fixture.cleanup_completed
+        assert fixture.is_ready()
+        
+        # Verify fixture can be retrieved
+        retrieved = framework.get_fixture(fixture.fixture_id)
+        assert retrieved is not None
+        assert retrieved.is_ready()
 
     def test_qa_487_test_execution(self):
         """QA-487: Integration test execution"""
-        raise NotImplementedError("QA-487: To be implemented by integration-builder")
+        framework = IntegrationTestingFramework()
+        org_id = "test_org_487"
+        
+        # Set up fixture
+        fixture = framework.setup_fixture(
+            organisation_id=org_id,
+            name="test_fixture",
+            setup_actions=[{"action": "setup"}],
+            cleanup_actions=[{"action": "cleanup"}]
+        )
+        
+        # Execute test
+        execution = framework.execute_test(
+            organisation_id=org_id,
+            fixture_id=fixture.fixture_id,
+            test_name="test_integration_scenario"
+        )
+        
+        # Verify execution completed
+        assert execution.execution_id is not None
+        assert execution.organisation_id == org_id
+        assert execution.fixture_id == fixture.fixture_id
+        assert execution.test_name == "test_integration_scenario"
+        assert execution.status == IntegrationTestStatus.PASSED
+        assert execution.completed_at is not None
+        assert execution.duration_ms is not None
+        assert execution.duration_ms >= 0
+        
+        # Verify execution can be retrieved
+        retrieved = framework.get_execution(execution.execution_id)
+        assert retrieved is not None
+        assert retrieved.status == IntegrationTestStatus.PASSED
 
     def test_qa_488_test_cleanup(self):
         """QA-488: Test cleanup"""
-        raise NotImplementedError("QA-488: To be implemented by integration-builder")
+        framework = IntegrationTestingFramework()
+        org_id = "test_org_488"
+        
+        # Set up fixture
+        fixture = framework.setup_fixture(
+            organisation_id=org_id,
+            name="test_fixture",
+            setup_actions=[{"action": "setup"}],
+            cleanup_actions=[
+                {"action": "stop_services"},
+                {"action": "clear_data"}
+            ]
+        )
+        
+        # Execute test
+        execution = framework.execute_test(
+            organisation_id=org_id,
+            fixture_id=fixture.fixture_id,
+            test_name="test_scenario"
+        )
+        
+        # Clean up after test
+        cleanup = framework.cleanup_test(
+            organisation_id=org_id,
+            execution_id=execution.execution_id
+        )
+        
+        # Verify cleanup completed
+        assert cleanup.cleanup_id is not None
+        assert cleanup.organisation_id == org_id
+        assert cleanup.execution_id == execution.execution_id
+        assert len(cleanup.cleanup_actions) == 2
+        assert cleanup.cleanup_status == "completed"
+        assert cleanup.completed_at is not None
+        
+        # Verify fixture marked as cleaned up
+        retrieved_fixture = framework.get_fixture(fixture.fixture_id)
+        assert retrieved_fixture.cleanup_completed
 
     def test_qa_489_coverage_metrics(self):
         """QA-489: Integration test coverage"""
-        raise NotImplementedError("QA-489: To be implemented by integration-builder")
+        framework = IntegrationTestingFramework()
+        org_id = "test_org_489"
+        
+        # Create test executions
+        fixture = framework.setup_fixture(
+            organisation_id=org_id,
+            name="test_fixture",
+            setup_actions=[{"action": "setup"}],
+            cleanup_actions=[{"action": "cleanup"}]
+        )
+        
+        executions = []
+        for i in range(5):
+            exec_record = framework.execute_test(
+                organisation_id=org_id,
+                fixture_id=fixture.fixture_id,
+                test_name=f"test_{i}"
+            )
+            executions.append(exec_record)
+        
+        # Calculate coverage metrics
+        metrics = framework.calculate_coverage(
+            organisation_id=org_id,
+            test_results=executions,
+            subsystems_covered=["subsystem_a", "subsystem_b", "subsystem_c"],
+            integration_points_tested=10
+        )
+        
+        # Verify metrics calculated
+        assert metrics.metrics_id is not None
+        assert metrics.organisation_id == org_id
+        assert metrics.total_tests == 5
+        assert metrics.passed_tests == 5
+        assert metrics.failed_tests == 0
+        assert metrics.skipped_tests == 0
+        assert metrics.coverage_percentage == 100.0
+        assert len(metrics.subsystems_covered) == 3
+        assert metrics.integration_points_tested == 10
+        assert metrics.calculate_pass_rate() == 100.0
+        
+        # Verify metrics can be retrieved
+        retrieved = framework.get_metrics(metrics.metrics_id)
+        assert retrieved is not None
+        assert retrieved.coverage_percentage == 100.0
 
     def test_qa_490_failure_analysis(self):
         """QA-490: Integration test failure analysis"""
-        raise NotImplementedError("QA-490: To be implemented by integration-builder")
+        framework = IntegrationTestingFramework()
+        org_id = "test_org_490"
+        
+        # Create a failed execution
+        fixture = framework.setup_fixture(
+            organisation_id=org_id,
+            name="test_fixture",
+            setup_actions=[{"action": "setup"}],
+            cleanup_actions=[{"action": "cleanup"}]
+        )
+        
+        def failing_test():
+            raise AssertionError("Test assertion failed")
+        
+        execution = framework.execute_test(
+            organisation_id=org_id,
+            fixture_id=fixture.fixture_id,
+            test_name="test_failure",
+            test_func=failing_test
+        )
+        
+        # Analyze failure
+        analysis = framework.analyze_failure(
+            organisation_id=org_id,
+            execution_id=execution.execution_id,
+            failure_category=FailureCategory.ASSERTION,
+            root_cause="Expected value mismatch in subsystem integration",
+            affected_subsystems=["subsystem_a", "subsystem_b"]
+        )
+        
+        # Verify analysis completed
+        assert analysis.analysis_id is not None
+        assert analysis.organisation_id == org_id
+        assert analysis.execution_id == execution.execution_id
+        assert analysis.failure_category == FailureCategory.ASSERTION
+        assert analysis.root_cause == "Expected value mismatch in subsystem integration"
+        assert len(analysis.affected_subsystems) == 2
+        assert len(analysis.recommended_actions) > 0
+        assert "Verify expected behavior" in analysis.recommended_actions
+        
+        # Verify analysis can be retrieved
+        retrieved = framework.get_analysis(analysis.analysis_id)
+        assert retrieved is not None
+        assert retrieved.failure_category == FailureCategory.ASSERTION
