@@ -9,7 +9,7 @@ Tenant Isolation: All operations scoped by organisation_id
 from enum import Enum
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 
 class CircuitState(Enum):
@@ -42,7 +42,7 @@ class CircuitBreaker:
     def record_failure(self) -> None:
         """Record a failure and update state"""
         self.failure_count += 1
-        self.last_failure_time = datetime.now(UTC)
+        self.last_failure_time = datetime.now(timezone.utc)
         
         if self.failure_count >= self.failure_threshold:
             self.state = CircuitState.OPEN
@@ -55,7 +55,7 @@ class CircuitBreaker:
         if self.state == CircuitState.OPEN:
             # Check if timeout elapsed for half-open attempt
             if self.last_failure_time:
-                elapsed = (datetime.now(UTC) - self.last_failure_time).total_seconds()
+                elapsed = (datetime.now(timezone.utc) - self.last_failure_time).total_seconds()
                 if elapsed >= self.reset_timeout_seconds:
                     self.state = CircuitState.HALF_OPEN
                     return True
@@ -80,7 +80,7 @@ class ComponentIsolationManager:
     
     def isolate_component(self, component_id: str) -> None:
         """Isolate a component"""
-        self._isolated_components[component_id] = datetime.now(UTC)
+        self._isolated_components[component_id] = datetime.now(timezone.utc)
     
     def is_component_isolated(self, component_id: str) -> bool:
         """Check if component is isolated"""
@@ -121,14 +121,14 @@ class FailureEscalator:
         details: Optional[Dict[str, Any]] = None
     ) -> str:
         """Create an escalation"""
-        escalation_id = f"esc_{organisation_id}_{int(datetime.now(UTC).timestamp())}"
+        escalation_id = f"esc_{organisation_id}_{int(datetime.now(timezone.utc).timestamp())}"
         
         escalation = Escalation(
             escalation_id=escalation_id,
             escalation_type=escalation_type,
             severity=severity,
             organisation_id=organisation_id,
-            timestamp=datetime.now(UTC),
+            timestamp=datetime.now(timezone.utc),
             details=details or {}
         )
         
@@ -178,7 +178,7 @@ class CascadingFailureHandler:
         record = FailureRecord(
             component_id=component_id,
             failure_message=failure_message,
-            timestamp=datetime.now(UTC),
+            timestamp=datetime.now(timezone.utc),
             organisation_id=self.organisation_id
         )
         self._failure_records.append(record)
@@ -197,7 +197,7 @@ class CascadingFailureHandler:
         record = FailureRecord(
             component_id=component_id,
             failure_message=failure_message,
-            timestamp=datetime.now(UTC),
+            timestamp=datetime.now(timezone.utc),
             organisation_id=self.organisation_id,
             caused_by=caused_by
         )

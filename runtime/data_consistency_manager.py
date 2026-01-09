@@ -9,7 +9,7 @@ Tenant Isolation: All operations scoped by organisation_id
 from enum import Enum
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 class ConsistencyStatus(Enum):
@@ -67,7 +67,7 @@ class ConsistencyValidator:
             "status": status,
             "record_id": record_id,
             "differences": differences,
-            "timestamp": datetime.now(UTC).isoformat()
+            "timestamp": datetime.now(timezone.utc).isoformat()
         }
         
         self._validation_history.append(result)
@@ -147,7 +147,7 @@ class ReconciliationEngine:
             "record_id": record_id,
             "resolved_data": resolved_data,
             "strategy": strategy,
-            "timestamp": datetime.now(UTC).isoformat()
+            "timestamp": datetime.now(timezone.utc).isoformat()
         }
         
         self._reconciliation_history.append(result)
@@ -187,13 +187,13 @@ class DataConsistencyManager:
         details: Optional[Dict[str, Any]] = None
     ) -> str:
         """Escalate a reconciliation failure"""
-        escalation_id = f"esc_{self.organisation_id}_{int(datetime.now(UTC).timestamp())}"
+        escalation_id = f"esc_{self.organisation_id}_{int(datetime.now(timezone.utc).timestamp())}"
         
         escalation = Escalation(
             escalation_id=escalation_id,
             escalation_type="data_consistency_failure",
             organisation_id=self.organisation_id,
-            timestamp=datetime.now(UTC),
+            timestamp=datetime.now(timezone.utc),
             details={
                 "record_id": record_id,
                 "reason": reason,

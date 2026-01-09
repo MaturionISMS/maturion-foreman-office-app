@@ -9,7 +9,7 @@ Tenant Isolation: All operations scoped by organisation_id
 from enum import Enum
 from typing import Dict, List, Optional, Set, Any
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import threading
 
 
@@ -54,7 +54,7 @@ class TimeoutManager:
         self._lock_requests[request_key] = LockRequest(
             resource_id=resource_id,
             holder_id=holder_id,
-            requested_at=datetime.now(UTC)
+            requested_at=datetime.now(timezone.utc)
         )
     
     def has_timeout_occurred(self, resource_id: str, holder_id: str) -> bool:
@@ -64,7 +64,7 @@ class TimeoutManager:
             return False
         
         request = self._lock_requests[request_key]
-        elapsed = (datetime.now(UTC) - request.requested_at).total_seconds()
+        elapsed = (datetime.now(timezone.utc) - request.requested_at).total_seconds()
         return elapsed > self.timeout_seconds
 
 
@@ -95,7 +95,7 @@ class DeadlockRecovery:
         
         Strategy: Release all locks in deadlock cycle
         """
-        recovery_id = f"recovery_{int(datetime.now(UTC).timestamp())}"
+        recovery_id = f"recovery_{int(datetime.now(timezone.utc).timestamp())}"
         
         # Release all locks
         for resource_id in resources:
@@ -107,7 +107,7 @@ class DeadlockRecovery:
             "status": "recovered",
             "resources_released": resources,
             "holders_released": holders,
-            "timestamp": datetime.now(UTC).isoformat()
+            "timestamp": datetime.now(timezone.utc).isoformat()
         }
         
         self._recovery_history.append(recovery_record)
@@ -162,7 +162,7 @@ class DeadlockDetector:
                 resource_id=resource_id,
                 holder_id=holder_id,
                 lock_id=lock_id,
-                acquired_at=datetime.now(UTC),
+                acquired_at=datetime.now(timezone.utc),
                 organisation_id=self.organisation_id
             )
             
@@ -269,10 +269,10 @@ class DeadlockDetector:
     def record_unrecoverable_deadlock(self, *resources: str) -> None:
         """Record an unrecoverable deadlock for escalation"""
         escalation = Escalation(
-            escalation_id=f"esc_{self.organisation_id}_{int(datetime.now(UTC).timestamp())}",
+            escalation_id=f"esc_{self.organisation_id}_{int(datetime.now(timezone.utc).timestamp())}",
             escalation_type="deadlock_unrecoverable",
             organisation_id=self.organisation_id,
-            timestamp=datetime.now(UTC),
+            timestamp=datetime.now(timezone.utc),
             details={
                 "resources": list(resources)
             }

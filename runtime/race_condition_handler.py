@@ -9,7 +9,7 @@ Tenant Isolation: All operations scoped by organisation_id
 from enum import Enum
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 import threading
 
 
@@ -147,13 +147,13 @@ class RaceEscalator:
         details: Optional[Dict[str, Any]] = None
     ) -> str:
         """Create an escalation"""
-        escalation_id = f"esc_{organisation_id}_{int(datetime.now(UTC).timestamp())}"
+        escalation_id = f"esc_{organisation_id}_{int(datetime.now(timezone.utc).timestamp())}"
         
         escalation = Escalation(
             escalation_id=escalation_id,
             escalation_type=escalation_type,
             organisation_id=organisation_id,
-            timestamp=datetime.now(UTC),
+            timestamp=datetime.now(timezone.utc),
             details=details or {}
         )
         
@@ -211,7 +211,7 @@ class RaceConditionHandler:
             resource_id=resource_id,
             accessor_id=accessor_id,
             operation=operation,
-            timestamp=datetime.now(UTC),
+            timestamp=datetime.now(timezone.utc),
             organisation_id=self.organisation_id
         )
         
