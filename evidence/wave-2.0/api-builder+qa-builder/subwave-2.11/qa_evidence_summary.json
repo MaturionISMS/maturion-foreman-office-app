@@ -1,0 +1,246 @@
+{
+  "subwave": "2.11",
+  "subwave_name": "Complex Failure Modes Phase 1",
+  "qa_range": "QA-241 to QA-255",
+  "builders": ["api-builder", "qa-builder"],
+  "organisation_id": "maturion-foreman",
+  "timestamp": "2026-01-09T11:35:00Z",
+  "status": "COMPLETE",
+  "test_results": {
+    "total_tests": 15,
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0,
+    "coverage_percent": 100.0,
+    "zero_test_debt": true,
+    "zero_warnings": true
+  },
+  "qa_components": {
+    "recovery_workflows": {
+      "range": "QA-241 to QA-245",
+      "count": 5,
+      "status": "GREEN",
+      "tests": [
+        {
+          "qa_id": "QA-241",
+          "name": "Multi-level drill-down recovery",
+          "status": "PASSED",
+          "verifications": [
+            "Nested failure recovery levels work",
+            "State preserved at each level",
+            "Recovery workflow handles complex failures",
+            "Nested levels tracked"
+          ]
+        },
+        {
+          "qa_id": "QA-242",
+          "name": "Drill-down error handling recovery",
+          "status": "PASSED",
+          "verifications": [
+            "Evidence not found error handled",
+            "Broken links recovered",
+            "Recovery UX maintained",
+            "Error handling complete"
+          ]
+        },
+        {
+          "qa_id": "QA-243",
+          "name": "Intent state transition recovery (RECEIVED → CLARIFYING)",
+          "status": "PASSED",
+          "verifications": [
+            "Ambiguity trigger handled",
+            "State change recovered",
+            "Clarification start managed",
+            "Context preserved"
+          ]
+        },
+        {
+          "qa_id": "QA-244",
+          "name": "Intent clarification completion recovery (CLARIFYING → CLARIFIED)",
+          "status": "PASSED",
+          "verifications": [
+            "Sufficient clarification detection",
+            "State change recovered",
+            "Requirement generation trigger handled",
+            "Context maintained"
+          ]
+        },
+        {
+          "qa_id": "QA-245",
+          "name": "Intent rejection recovery (CLARIFYING → REJECTED)",
+          "status": "PASSED",
+          "verifications": [
+            "Rejection trigger handled",
+            "Reason captured",
+            "Cleanup performed",
+            "Recovery complete"
+          ]
+        }
+      ]
+    },
+    "timeout_handling": {
+      "range": "QA-246 to QA-250",
+      "count": 5,
+      "status": "GREEN",
+      "tests": [
+        {
+          "qa_id": "QA-246",
+          "name": "Intent rework timeout (CLARIFIED → RECEIVED)",
+          "status": "PASSED",
+          "verifications": [
+            "Rework trigger with timeout",
+            "Context preservation during timeout",
+            "Iteration tracking",
+            "Timeout handled gracefully"
+          ]
+        },
+        {
+          "qa_id": "QA-247",
+          "name": "Requirement approval timeout (DRAFT → PENDING_APPROVAL)",
+          "status": "PASSED",
+          "verifications": [
+            "Completion trigger timeout",
+            "Validation timeout",
+            "Approval presentation timeout",
+            "Escalation on timeout"
+          ]
+        },
+        {
+          "qa_id": "QA-248",
+          "name": "Requirement approval decision timeout (PENDING_APPROVAL → APPROVED)",
+          "status": "PASSED",
+          "verifications": [
+            "Approval decision timeout",
+            "Freeze handling on timeout",
+            "Build initiation trigger timeout",
+            "Escalation triggered"
+          ]
+        },
+        {
+          "qa_id": "QA-249",
+          "name": "Requirement rejection timeout (PENDING_APPROVAL → REJECTED)",
+          "status": "PASSED",
+          "verifications": [
+            "Rejection decision timeout",
+            "Reason capture timeout",
+            "Intent availability timeout",
+            "Handled gracefully"
+          ]
+        },
+        {
+          "qa_id": "QA-250",
+          "name": "Conditional approval timeout (PENDING_APPROVAL → CONDITIONAL)",
+          "status": "PASSED",
+          "verifications": [
+            "Conditional approval timeout",
+            "Conditions capture timeout",
+            "Gated progression timeout",
+            "Escalation or extension"
+          ]
+        }
+      ]
+    },
+    "error_cascade_management": {
+      "range": "QA-251 to QA-255",
+      "count": 5,
+      "status": "GREEN",
+      "tests": [
+        {
+          "qa_id": "QA-251",
+          "name": "Requirement freeze immutability (APPROVED → frozen)",
+          "status": "PASSED",
+          "verifications": [
+            "Immutability enforced",
+            "No further changes allowed",
+            "Audit log maintained",
+            "Freeze timestamp recorded"
+          ]
+        },
+        {
+          "qa_id": "QA-252",
+          "name": "Build initiation cascade (INITIATED → IN_PROGRESS)",
+          "status": "PASSED",
+          "verifications": [
+            "Builder assignment cascade",
+            "Task creation cascade",
+            "Monitoring start cascade",
+            "State transition handled"
+          ]
+        },
+        {
+          "qa_id": "QA-253",
+          "name": "Build blocking cascade (IN_PROGRESS → BLOCKED)",
+          "status": "PASSED",
+          "verifications": [
+            "Blocker detection",
+            "Escalation triggered",
+            "Pause propagated",
+            "Cascade contained"
+          ]
+        },
+        {
+          "qa_id": "QA-254",
+          "name": "Build unblocking cascade (BLOCKED → IN_PROGRESS)",
+          "status": "PASSED",
+          "verifications": [
+            "Blocker resolution",
+            "Resume triggered",
+            "State restored",
+            "Cascade resolved"
+          ]
+        },
+        {
+          "qa_id": "QA-255",
+          "name": "Build completion cascade (IN_PROGRESS → COMPLETED)",
+          "status": "PASSED",
+          "verifications": [
+            "100% GREEN validation",
+            "Deliverable creation",
+            "Handover triggered",
+            "Cascade resolved"
+          ]
+        }
+      ]
+    }
+  },
+  "implementation_artifacts": {
+    "api_modules": [
+      "runtime/failure_recovery_handler.py",
+      "runtime/timeout_handler.py",
+      "runtime/error_cascade_manager.py"
+    ],
+    "test_modules": [
+      "tests/wave2_0_qa_infrastructure/test_failure_modes_phase1.py"
+    ],
+    "lines_of_code": {
+      "failure_recovery_handler": 548,
+      "timeout_handler": 552,
+      "error_cascade_manager": 736,
+      "test_failure_modes_phase1": 692,
+      "total": 2528
+    }
+  },
+  "governance_compliance": {
+    "bl_016_compliance": true,
+    "bl_018_compliance": true,
+    "bl_019_compliance": true,
+    "bl_022_compliance": true,
+    "bl_023_compliance": true,
+    "zero_test_debt": true,
+    "zero_warnings": true,
+    "build_philosophy_adherence": "One-Time Build Correctness achieved",
+    "architecture_alignment": "Fully aligned with Wave 2.0 specification",
+    "tenant_isolation": "All operations scoped by organisation_id"
+  },
+  "checkpoint_1": {
+    "status": "COMPLETED",
+    "timestamp": "2026-01-09T11:35:00Z",
+    "progress_percent": 100,
+    "qa_completed": 15,
+    "qa_total": 15,
+    "on_track": true,
+    "note": "All 15 QA completed - checkpoint exceeded 50% requirement"
+  },
+  "evidence_artifacts_complete": true,
+  "fm_gate_ready": true
+}
