@@ -1,9 +1,10 @@
 # Builder Training Checklist
 
 **Document**: Builder Training and Policy Acknowledgment Checklist  
-**Version**: 1.1 (Updated 2026-01-08)  
+**Version**: 1.2 (Updated 2026-01-09)  
 **Authority**: CS2 (Johan Ras) + FM  
-**Status**: MANDATORY - All Builders
+**Status**: MANDATORY - All Builders  
+**Change**: Added BL-024 Constitutional Sandbox Pattern training
 
 ---
 
@@ -25,6 +26,15 @@ All builders MUST read and acknowledge understanding of:
 - [ ] **governance/policies/governance-supremacy-rule.md** (T0-002) - 99% is 0% rule
 - [ ] **governance/policies/zero-test-debt-constitutional-rule.md** (T0-003) - 100% GREEN mandate
 - [ ] **governance/zero-debt-campaign/GOVERNANCE_LEARNING_BRIEF.md** - Why warnings are debt
+
+### A2. Constitutional Sandbox Pattern (MANDATORY - NEW 2026-01-09)
+
+All builders MUST understand judgment framework:
+
+- [ ] **Read CONSTITUTIONAL_SANDBOX_PATTERN.md** ([governance repo](https://github.com/APGI-cmy/maturion-foreman-governance/blob/main/governance/canon/CONSTITUTIONAL_SANDBOX_PATTERN.md))
+- [ ] **Understand Tier-1 vs Tier-2 distinction** - Constitutional (immutable) vs Procedural (adaptable)
+- [ ] **Recognize builder judgment authority** - May adapt procedural guidance within constitutional boundaries
+- [ ] **Commit to documenting adaptations** - All judgment/optimization decisions must be documented with rationale
 
 ### B. Test Dodging Prevention (MANDATORY - NEW 2026-01-08)
 
@@ -68,10 +78,14 @@ All builders MUST commit to:
 5. ✅ Understand the zero-tolerance policy (no warnings, no debt tests)
 6. ✅ Understand the 100% GREEN mandate (99% = 0%)
 7. ✅ Commit to using accurate, non-minimizing language
-8. ✅ Understand consequences of policy violations (PR rejection, accountability review)
+8. ✅ Understand Constitutional Sandbox Pattern (BL-024): Tier-1 vs Tier-2
+9. ✅ Understand consequences of policy violations (PR rejection, accountability review)
 
 **I understand that:**
 
+- **Constitutional requirements** (Tier-1) are ABSOLUTE: Zero Test Debt, 100% GREEN, One-Time Build, etc.
+- **Procedural guidance** (Tier-2) may be adapted when justified, with documentation
+- **Judgment authority** exists within constitutional boundaries
 - **Minimizing language** ("only", "just", "minor", "non-blocking") is **BANNED**
 - **Status reporting** must be binary: "100% tests passing" OR "NOT READY - X failing"
 - **Test dodging** will result in immediate work rejection
@@ -85,6 +99,8 @@ All builders MUST commit to:
 - **Write complete tests** (GREEN or documented RED)
 - **Report status accurately** without minimizing language
 - **Maintain 100% GREEN** as mandatory standard
+- **Document judgment decisions** when adapting procedural guidance
+- **Preserve constitutional requirements** at all times
 
 ---
 
@@ -129,6 +145,7 @@ All builders MUST commit to:
 | Item | Status | Date | FM Verification |
 |------|--------|------|-----------------|
 | Core Governance Documents | ☐ COMPLETE | _____ | _____ |
+| Constitutional Sandbox (BL-024) | ☐ COMPLETE | _____ | _____ |
 | POLICY-NO-ONLY-LANGUAGE | ☐ COMPLETE | _____ | _____ |
 | BOOTSTRAP-TEST-DODGING-001 | ☐ COMPLETE | _____ | _____ |
 | Policy Quiz (10/10) | ☐ COMPLETE | _____ | _____ |
@@ -243,6 +260,7 @@ Refresher training REQUIRED if:
 **Version**: 1.1 (2026-01-08)
 
 **Recent Updates**:
+- **2026-01-09**: Added Constitutional Sandbox Pattern (BL-024) training requirement
 - **2026-01-08**: Added POLICY-NO-ONLY-LANGUAGE training requirement
 - **2026-01-08**: Added BOOTSTRAP-TEST-DODGING-001 case study requirement
 - **2026-01-08**: Enhanced acknowledgment section with banned language
@@ -254,11 +272,12 @@ Refresher training REQUIRED if:
 **Before ANY task assignment, ALL builders MUST:**
 
 1. ✅ Read mandatory governance documents
-2. ✅ Complete POLICY-NO-ONLY-LANGUAGE training
-3. ✅ Study BOOTSTRAP-TEST-DODGING-001 case study
-4. ✅ Pass policy quiz (10/10)
-5. ✅ Sign policy acknowledgment
-6. ✅ Receive FM verification
+2. ✅ Complete Constitutional Sandbox Pattern (BL-024) training
+3. ✅ Complete POLICY-NO-ONLY-LANGUAGE training
+4. ✅ Study BOOTSTRAP-TEST-DODGING-001 case study
+5. ✅ Pass policy quiz (10/10)
+6. ✅ Sign policy acknowledgment
+7. ✅ Receive FM verification
 
 **Zero exceptions. Zero tolerance. 100% compliance required.**
 

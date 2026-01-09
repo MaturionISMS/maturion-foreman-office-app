@@ -2,7 +2,8 @@
 
 **Status**: Active  
 **Authority**: CS2 (Agent Contract Minimalism Framework)  
-**Date**: 2026-01-08
+**Date**: 2026-01-09  
+**Updated**: Added BL-024 Constitutional Sandbox Pattern reference
 
 ---
 
@@ -19,6 +20,20 @@ This provides:
 - 3-step operational protocol
 - Escalation rules
 - Mandatory compliance requirements
+
+---
+
+## Constitutional Sandbox Pattern (BL-024)
+
+**All agents must understand**:
+
+The **Constitutional Sandbox Pattern** (BL-024) distinguishes between:
+- **Tier-1 Constitutional** (immutable): Zero Test Debt, 100% GREEN, One-Time Build Correctness, BUILD_PHILOSOPHY, Design Freeze, Architecture Conformance
+- **Tier-2 Procedural** (adaptable with justification): Process steps, tooling choices, optimization approaches, implementation patterns
+
+**Key Principle**: Constitutional requirements are absolute. Procedural guidance may be adapted when justified, with documentation.
+
+**Reference**: [CONSTITUTIONAL_SANDBOX_PATTERN.md](https://github.com/APGI-cmy/maturion-foreman-governance/blob/main/governance/canon/CONSTITUTIONAL_SANDBOX_PATTERN.md)
 
 ---
 

@@ -1,8 +1,9 @@
 # FM Repository Governance
 
 **Status**: Hardened  
-**Last Updated**: 2025-12-29  
-**Batch 1 Governance Hardening**: Complete (Issues #123, #78, #86)
+**Last Updated**: 2026-01-09  
+**Batch 1 Governance Hardening**: Complete (Issues #123, #78, #86)  
+**Latest**: BL-024 Constitutional Sandbox Pattern layered down (2026-01-09)
 
 ---
 
@@ -15,6 +16,21 @@ This directory contains FM repository governance scaffolding that establishes ho
 - **FM governance scaffolding** (this directory) defines how FM adopts and executes that canon
 
 This is **adoption and execution framing**, not governance creation.
+
+---
+
+## Recent Governance Updates
+
+### BL-024 Constitutional Sandbox Pattern (2026-01-09)
+**Canonical Reference**: [CONSTITUTIONAL_SANDBOX_PATTERN.md](https://github.com/APGI-cmy/maturion-foreman-governance/blob/main/governance/canon/CONSTITUTIONAL_SANDBOX_PATTERN.md)
+
+Layered down into FM App repository:
+- **Tier-1 Constitutional** (immutable): Zero Test Debt, 100% GREEN, One-Time Build Correctness, BUILD_PHILOSOPHY, Design Freeze, Architecture Conformance
+- **Tier-2 Procedural** (adaptable with justification): Process steps, tooling choices, optimization approaches, implementation patterns
+
+**Impact**: Builders have judgment authority within constitutional boundaries. Must document adaptations with rationale.
+
+**Visibility Event**: See `governance/events/bl-024-constitutional-sandbox-pattern-layer-down.md`
 
 ---
 

@@ -135,6 +135,11 @@ governance:
       path: governance/specs/QA_CATALOG_ALIGNMENT_GATE_SPEC.md
       role: qa-foundation
       summary: FM ensures QA-to-Red foundation before appointment
+    
+    - id: constitutional-sandbox
+      path: governance/canon/CONSTITUTIONAL_SANDBOX_PATTERN.md
+      role: judgment-framework
+      summary: Tier-1 constitutional vs Tier-2 procedural distinction (BL-024)
 ```
 
 ---
@@ -156,6 +161,20 @@ This builder operates under **Maturion Build Philosophy**, not generic developme
 **Sacred Workflow**: `Architecture (frozen) → QA-to-Red (failing) → Build-to-Green (implement) → Validation (100%) → Merge`
 
 **Any deviation = Build Philosophy Violation.**
+
+---
+
+## Constitutional Sandbox Pattern (BL-024)
+
+**Authority**: governance/canon/CONSTITUTIONAL_SANDBOX_PATTERN.md
+
+**Tier-1 Constitutional (IMMUTABLE)**: Zero Test Debt, 100% GREEN, One-Time Build, BUILD_PHILOSOPHY, Design Freeze, Architecture Conformance — NEVER negotiable.
+
+**Tier-2 Procedural (ADAPTABLE)**: Builder may exercise judgment on process steps, tooling choices, optimization approaches, implementation patterns — provided constitutional requirements remain absolute.
+
+**Builder Authority**: Within constitutional boundaries, builder may adapt procedural guidance when justified. MUST document judgment/optimization decisions and rationale.
+
+**Example**: May choose different UI implementation pattern (procedural), CANNOT skip UI tests (constitutional). May optimize component structure (procedural), CANNOT deviate from frozen architecture (constitutional).
 
 ---
 
