@@ -6,7 +6,8 @@
   "passed": 10,
   "failed": 0,
   "test_debt": 0,
-  "timestamp": "2026-01-05T16:30:00Z",
+  "warnings": 0,
+  "timestamp": "2026-01-09T06:00:00Z",
   "test_categories": {
     "security_failure_modes": {
       "qa_range": "QA-386 to QA-390",
@@ -88,5 +89,16 @@
     "performed": true,
     "obvious_defects": "none",
     "self_review_complete": true
+  },
+  "process_improvement_reflection": {
+    "completed": true,
+    "questions_answered": 5,
+    "actionable_improvements_identified": 1
+  },
+  "warnings_remediation": {
+    "initial_warnings": 1,
+    "warnings_fixed": 1,
+    "final_warnings": 0,
+    "fix_description": "Removed invalid pytest.ini option: asyncio_default_fixture_loop_scope"
   }
 }
