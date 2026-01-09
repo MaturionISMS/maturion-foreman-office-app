@@ -636,7 +636,55 @@ At completion of ANY work unit, builder MUST evaluate:
 
 ---
 
-### 6. Ripple Boundary Acknowledgment (## Ripple Boundary Acknowledgment — MANDATORY)
+### 6. Mandatory Process Improvement Reflection (## Mandatory Process Improvement Reflection — MANDATORY)
+
+**Content**: Required comprehensive process improvement reflection addressing governance learnings and continuous improvement
+
+**Required Elements**:
+- All 5 mandatory questions must be addressed
+- BL compliance verification (BL-016, BL-018, BL-019, BL-022)
+- Prohibition of "None identified" without justified answers
+- FM enforcement clause
+
+**Example**:
+```markdown
+## Mandatory Process Improvement Reflection
+
+**Authority**: Up-rippled from governance canon (maturion-foreman-governance)  
+**Status**: MANDATORY at completion
+
+At work completion, builder MUST provide comprehensive process improvement reflection in completion report addressing ALL of the following:
+
+1. **What went well in this build?**  
+   - Identify processes, tools, or governance elements that enabled success
+   - Highlight what should be preserved or amplified in future builds
+
+2. **What failed, was blocked, or required rework?**  
+   - Document failures, blockers, rework cycles with root causes
+   - Include governance gaps, tooling limitations, or unclear specifications
+
+3. **What process, governance, or tooling changes would have improved this build or prevented waste?**  
+   - Propose specific improvements to prevent recurrence
+   - Identify friction points in workflow, coordination, or verification
+
+4. **Did you comply with all governance learnings (BLs)?**  
+   - Verify compliance with: BL-016 (ratchet conditions), BL-018 (QA range), BL-019 (semantic alignment), BL-022 (if activated)
+   - If non-compliance: STOP, document reason, escalate to FM
+
+5. **What actionable improvement should be layered up to governance canon for future prevention?**  
+   - Propose concrete governance/process changes for canonization
+   - OR justify why no improvements are warranted
+
+**Prohibited**: Stating "None identified" without answering ALL questions above with justification.
+
+**FM Enforcement**: FM MUST NOT mark builder submission COMPLETE at gate without process improvement reflection addressing all 5 questions.
+```
+
+**Validation**: Must include all 5 mandatory questions, BL compliance verification, prohibition clause, and FM enforcement clause
+
+---
+
+### 7. Ripple Boundary Acknowledgment (## Ripple Boundary Acknowledgment — MANDATORY)
 
 **Content**: Explicit acknowledgment of ripple awareness vs. ripple authority boundary
 
@@ -681,7 +729,7 @@ This builder acknowledges the **Builder Ripple Intelligence Boundary**.
 
 ## Standard Sections (REQUIRED)
 
-### 7. Purpose (## Purpose)
+### 8. Purpose (## Purpose)
 
 **Content**: Brief description of why this builder exists and its role in the ecosystem
 
@@ -693,7 +741,7 @@ The UI Builder is responsible for implementing all user interface components,
 layouts, and interactive wizards in the Foreman Office App.
 ```
 
-### 8. Responsibilities (## Responsibilities)
+### 9. Responsibilities (## Responsibilities)
 
 **Content**: Detailed list of what this builder is responsible for
 
