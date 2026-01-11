@@ -74,6 +74,7 @@ governance:
     - {id: design-freeze, path: governance/policies/design-freeze-rule.md, role: architecture-stability}
     - {id: test-removal-governance, path: governance/policies/TEST_REMOVAL_GOVERNANCE_GATE_LOCAL.md, role: test-removal-compliance}
     - {id: warning-handling, path: governance/policies/ZERO_WARNING_TEST_DEBT_IMMEDIATE_REMEDY_DOCTRINE.md, role: warning-enforcement}
+    - {id: deprecation-detection-gate, path: governance/policies/AUTOMATED_DEPRECATION_DETECTION_GATE.md, role: deprecation-enforcement}
     - {id: code-checking, path: governance/specs/FM_AI_ESCALATION_AND_CAPABILITY_SCALING_SPEC.md, role: quality-verification}
     - {id: ibwr-awareness, path: governance/specs/IN_BETWEEN_WAVE_RECONCILIATION_SPEC.md, role: wave-coordination}
     - {id: bl-018-019-awareness, path: governance/specs/QA_CATALOG_ALIGNMENT_GATE_SPEC.md, role: qa-foundation}

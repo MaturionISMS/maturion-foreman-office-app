@@ -458,6 +458,37 @@ python3 activate-compliance-engine.py
 **Reference:**
 - `foreman/compliance-engine-initialization.md` - Compliance Engine operational framework
 
+### Deprecation Detection Gate (BL-026)
+
+Enforce modern Python patterns and prevent deprecated API usage:
+
+```bash
+# Check for deprecated APIs
+ruff check --select UP .
+
+# Auto-fix where possible
+ruff check --select UP --fix .
+```
+
+**Enforces:**
+- Modern datetime APIs (timezone-aware)
+- PEP 585 type hints (built-in generics)
+- Python 3.12+ compatibility
+- Zero deprecated API usage
+
+**Integrated Enforcement:**
+- Pre-commit hook: `.githooks/pre-commit-deprecation`
+- CI/CD gate: `.github/workflows/deprecation-detection-gate.yml`
+- Ruff configuration: `ruff.toml`
+
+**Policy:**
+- `governance/policies/AUTOMATED_DEPRECATION_DETECTION_GATE.md` - Full policy and remediation guidance
+
+**Audit:**
+- `governance/evidence/BL_026_DEPRECATION_AUDIT_REPORT.md` - Current codebase status
+
+**Authority:** BL-026 Bootstrap Learning, Zero Warning Test Debt Constitutional Rule
+
 ## 🔧 GitHub Copilot Integration
 
 This repo supports Copilot issue assignment:
