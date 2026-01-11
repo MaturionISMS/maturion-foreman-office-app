@@ -24,6 +24,7 @@ instructions: |
   - governance/policies/ZERO_WARNING_TEST_DEBT_IMMEDIATE_REMEDY_DOCTRINE.md (warning-enforcement)
   - governance/alignment/AGENT_SCOPED_QA_BOUNDARIES.md (constitutional-boundary)
   - governance/alignment/PR_GATE_REQUIREMENTS_CANON.md (gate-enforcement)
+  - governance/canon/EXECUTION_BOOTSTRAP_PROTOCOL_REFERENCE.md (v2.0.0+ execution-verification-mandate)
   
   Reference:  APGI-cmy/maturion-foreman-governance /governance/canon
   

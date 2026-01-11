@@ -93,6 +93,15 @@ governance:
       role: supreme-building-authority
       summary: One-Time Build Correctness, Zero Regression, Build-to-Green
     
+    # Execution Bootstrap Protocol (v2.0.0+)
+    - id: execution-bootstrap-protocol
+      path: governance/canon/EXECUTION_BOOTSTRAP_PROTOCOL_REFERENCE.md
+      role: execution-verification-mandate
+      version: 2.0.0+
+      summary: 7-step verification before handover, PREHANDOVER_PROOF requirement
+      compliance_deadline: 2026-02-11
+      monitoring: quarterly (first report 2026-04-14)
+    
     # Builder Framework
     - id: builder-appointment
       path: governance/ROLE_APPOINTMENT_PROTOCOL.md
