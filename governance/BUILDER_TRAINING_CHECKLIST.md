@@ -1,10 +1,10 @@
 # Builder Training Checklist
 
 **Document**: Builder Training and Policy Acknowledgment Checklist  
-**Version**: 1.2 (Updated 2026-01-09)  
+**Version**: 1.3 (Updated 2026-01-11)  
 **Authority**: CS2 (Johan Ras) + FM  
 **Status**: MANDATORY - All Builders  
-**Change**: Added BL-024 Constitutional Sandbox Pattern training
+**Change**: Added BL-026 Automated Deprecation Detection Gate training
 
 ---
 
@@ -35,6 +35,17 @@ All builders MUST understand judgment framework:
 - [ ] **Understand Tier-1 vs Tier-2 distinction** - Constitutional (immutable) vs Procedural (adaptable)
 - [ ] **Recognize builder judgment authority** - May adapt procedural guidance within constitutional boundaries
 - [ ] **Commit to documenting adaptations** - All judgment/optimization decisions must be documented with rationale
+
+### A3. Automated Deprecation Detection Gate (MANDATORY - NEW 2026-01-11)
+
+All builders writing Python code MUST understand BL-026:
+
+- [ ] **Read AUTOMATED_DEPRECATION_DETECTION_GATE.md** (`governance/policies/AUTOMATED_DEPRECATION_DETECTION_GATE.md`)
+- [ ] **Understand deprecated API patterns** - datetime.utcnow(), typing.Dict, typing.List, etc.
+- [ ] **Know modern replacements** - datetime.now(timezone.utc), dict[], list[], etc.
+- [ ] **Understand auto-fix capability** - Run `ruff check --select UP --fix .` for most fixes
+- [ ] **Understand exception process** - Requires FM approval, quarterly review, code comments
+- [ ] **Commit to zero deprecated APIs** - All code must pass deprecation gate before merge
 
 ### B. Test Dodging Prevention (MANDATORY - NEW 2026-01-08)
 
@@ -79,7 +90,8 @@ All builders MUST commit to:
 6. ✅ Understand the 100% GREEN mandate (99% = 0%)
 7. ✅ Commit to using accurate, non-minimizing language
 8. ✅ Understand Constitutional Sandbox Pattern (BL-024): Tier-1 vs Tier-2
-9. ✅ Understand consequences of policy violations (PR rejection, accountability review)
+9. ✅ Understand Automated Deprecation Detection Gate (BL-026): Zero deprecated APIs
+10. ✅ Understand consequences of policy violations (PR rejection, accountability review)
 
 **I understand that:**
 
