@@ -187,6 +187,95 @@ If deviations are identified in the future, they will be documented here with:
 | 2026-01-05 | PR gate validation completed | GovernanceLiaison_FM | All 8 PR gate workflows validated for canonical alignment |
 | 2026-01-05 | Layer-down evidence documented | GovernanceLiaison_FM | Layer-down completion evidence created in docs/commissioning/ |
 | 2026-01-05 | Layer-down locally complete | GovernanceLiaison_FM | All layer-down steps complete, ready for CI validation |
+| 2026-01-11 | Execution Bootstrap Protocol layer-down | GovernanceLiaison_FM | Protocol v2.0.0+ requirements implemented repository-wide |
+
+---
+
+## Execution Bootstrap Protocol (2026) - NEW
+
+**Status**: ACTIVE - Layer-Down Complete  
+**Version**: 2.0.0+  
+**Compliance Deadline**: 2026-02-11  
+**Authority**: maturion-foreman-governance/governance/canon/EXECUTION_BOOTSTRAP_PROTOCOL.md
+
+### Protocol Summary
+
+The **Execution Bootstrap Protocol** mandates 7-step verification before handover for ALL agents (FM + Builders) when creating or modifying execution artifacts (workflows, scripts, gates, configs).
+
+**7-Step Process**:
+1. Identify execution artifacts
+2. Execute locally
+3. Validate exit codes (all must be 0)
+4. Collect complete evidence
+5. Remediate any failures
+6. Attest: "All checks GREEN"
+7. Authorize handover with PREHANDOVER_PROOF
+
+**Hard Rule**: CI is confirmation, NOT diagnostic. No handover relying on CI to discover failures.
+
+### Implementation Status
+
+**Repository Compliance**: ✅ COMPLETE (as of 2026-01-11)
+
+| Component | Status | Location | Notes |
+|-----------|--------|----------|-------|
+| Protocol Reference | ✅ COMPLETE | `governance/canon/EXECUTION_BOOTSTRAP_PROTOCOL_REFERENCE.md` | Links to canonical source |
+| PREHANDOVER_PROOF Template | ✅ COMPLETE | `.github/agent-templates/PREHANDOVER_PROOF_TEMPLATE.md` | Updated with Category 0 |
+| Agent Onboarding | ✅ COMPLETE | `governance/AGENT_ONBOARDING.md` | Protocol training added |
+| Builder Training | ✅ COMPLETE | `governance/BUILDER_TRAINING_CHECKLIST.md` | Protocol acknowledgment added |
+| ForemanApp Contract | ✅ COMPLETE | `.github/agents/ForemanApp-agent.md` | Protocol binding added |
+| All Builder Contracts | ✅ COMPLETE | `.github/agents/[builder].md` | Protocol binding added (5 builders) |
+| Governance Liaison Contract | ✅ COMPLETE | `.github/agents/governance-liaison.md` | Protocol enforcement added |
+| Builder PR Checklist | ✅ COMPLETE | `governance/checklists/BUILDER_PR_RELEASE_CHECKLIST.md` | Category 0 + Category 8 |
+| FM PR Checklist | ✅ COMPLETE | `governance/checklists/FM_PR_RELEASE_CHECKLIST.md` | Category 0 + Category 4 |
+| Checklist Reference | ✅ COMPLETE | `governance/alignment/PR_GATE_RELEASE_CHECKLISTS_REFERENCE.md` | Protocol references added |
+| Validation Script | ✅ COMPLETE | `governance/scripts/validate_prehandover_proof.py` | Automated validation |
+| Incident Tracking | ✅ COMPLETE | `governance/incidents/protocol-violations/` | README + template |
+| Monitoring Template | ✅ COMPLETE | `governance/templates/EXECUTION_BOOTSTRAP_PROTOCOL_QUARTERLY_MONITORING_REPORT.md` | Quarterly reports |
+| Visibility Event | ✅ COMPLETE | `governance/events/EXECUTION_BOOTSTRAP_PROTOCOL_VISIBILITY.md` | FM and builder notification |
+
+### Monitoring & Enforcement
+
+**Quarterly Monitoring**:
+- Q1 2026 (Jan-Mar): First report due 2026-04-14
+- Q2 2026 (Apr-Jun): Report due 2026-07-14
+- Q3 2026 (Jul-Sep): Report due 2026-10-14
+- Q4 2026 (Oct-Dec): Report due 2027-01-14
+
+**Incident Tracking**:
+- Location: `governance/incidents/protocol-violations/`
+- Template: `TRACKING_TEMPLATE.md`
+- Violations logged and reviewed quarterly
+
+**Enforcement**:
+- PR gates require PREHANDOVER_PROOF for execution artifacts
+- Agent contracts bind all agents to protocol
+- Training checklist includes protocol acknowledgment
+- Violations tracked and escalated per severity
+
+### Canonical References
+
+- **Protocol Specification**: maturion-foreman-governance/governance/canon/EXECUTION_BOOTSTRAP_PROTOCOL.md
+- **Monitoring & Enforcement**: maturion-foreman-governance/governance/canon/EXECUTION_BOOTSTRAP_PROTOCOL_MONITORING_AND_ENFORCEMENT.md
+- **PREHANDOVER_PROOF Template**: maturion-foreman-governance/governance/templates/PREHANDOVER_PROOF_TEMPLATE.md
+- **Quarterly Report Template**: maturion-foreman-governance/governance/templates/EXECUTION_BOOTSTRAP_PROTOCOL_QUARTERLY_MONITORING_REPORT.template.md
+- **Reference Implementation**: maturion-foreman-governance/governance/templates/EXECUTION_BOOTSTRAP_PROTOCOL_REFERENCE_IMPLEMENTATION.md
+
+### Compliance Verification
+
+**All Requirements Met**:
+- [x] All FM/Builder contracts reference protocol (v2.0.0+)
+- [x] All onboarding materials include protocol training
+- [x] All PR checklists include Category 0
+- [x] PREHANDOVER_PROOF required for execution PRs
+- [x] Incident tracking directory and template in place
+- [x] GOVERNANCE_ALIGNMENT.md entry created
+- [x] Quarterly monitoring scheduled
+- [x] Validation tooling in place
+
+**Compliance Status**: ✅ READY (pre-deadline compliance achieved)  
+**Enforcement Date**: 2026-02-11 (deadline)  
+**First Monitoring**: 2026-04-14 (Q1 2026 report)
 
 ---
 
@@ -208,6 +297,7 @@ If deviations are identified in the future, they will be documented here with:
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
 | 1.0.0 | 2026-01-05 | GovernanceLiaison_FM | Initial creation - governance layer-down corrections |
+| 1.1.0 | 2026-01-11 | GovernanceLiaison_FM | Added Execution Bootstrap Protocol (v2.0.0+) compliance documentation |
 
 ---
 

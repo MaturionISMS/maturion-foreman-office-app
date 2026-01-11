@@ -52,6 +52,7 @@ Governance Constraints:
 - Zero Test Debt: MANDATORY
 - 100% QA Pass: REQUIRED
 - Gate Compliance: MANDATORY
+- Execution Bootstrap Protocol: MANDATORY (v2.0.0+ - PREHANDOVER_PROOF required for execution artifacts)
 - Escalation Path: → Foreman → Johan
 
 Success Criteria:
@@ -60,6 +61,7 @@ Success Criteria:
 - Zero warnings
 - Evidence trail complete
 - Foreman validation passed
+- PREHANDOVER_PROOF provided (if execution artifacts created/modified)
 
 Ripple Intelligence Alignment Confirmation:
 
