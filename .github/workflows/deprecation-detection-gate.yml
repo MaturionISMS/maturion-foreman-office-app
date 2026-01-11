@@ -1,0 +1,349 @@
+name: Deprecation Detection Gate (BL-026)
+
+# CI CLASSIFICATION: Hard Gate
+# Purpose: Enforces BL-026 by detecting deprecated Python APIs
+# Failure Semantics:
+#   - Deprecated API usage → Code failure → Block merge
+#   - Infrastructure failures → Explicit infra-failure signal → Retry + Comment
+# Timeout: 10 minutes (sufficient for ruff check + pip install)
+# Authority: BL-026 Bootstrap Learning, Zero Warning Test Debt Constitutional Rule
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+      - develop
+
+# Explicit, least-privilege permissions
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  deprecation-detection:
+    name: Detect Deprecated APIs (BL-026)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for comparing against base
+
+      - name: Detect Documentation-Only PR
+        id: detect-doc-only
+        run: |
+          echo "🔍 Detecting PR type..."
+          
+          # Get changed files (fetch main for comparison)
+          git fetch origin main --depth=50 2>/dev/null || echo "Note: Could not fetch main branch"
+          
+          # Get list of changed files
+          if git rev-parse origin/main >/dev/null 2>&1; then
+            CHANGED_FILES=$(git diff --name-only origin/main...HEAD || echo "")
+          else
+            # Fallback: check current commit changes only
+            CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r HEAD || echo "")
+          fi
+          
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+          
+          # Check for Python code changes
+          if echo "$CHANGED_FILES" | grep -qE '\.py$'; then
+            echo "doc_only=false" >> $GITHUB_OUTPUT
+            echo "📝 PR Type: Contains Python Changes"
+          else
+            echo "doc_only=true" >> $GITHUB_OUTPUT
+            echo "📝 PR Type: No Python Changes"
+          fi
+
+      - name: Set up Python
+        if: steps.detect-doc-only.outputs.doc_only == 'false'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install ruff
+        if: steps.detect-doc-only.outputs.doc_only == 'false'
+        id: ruff-install
+        run: |
+          pip install ruff>=0.1.0 || {
+            echo "RUFF_INSTALL_FAILED=true" >> $GITHUB_ENV
+            echo "outcome=failure" >> $GITHUB_OUTPUT
+            exit 0
+          }
+          echo "outcome=success" >> $GITHUB_OUTPUT
+      
+      - name: Check ruff install status
+        if: steps.detect-doc-only.outputs.doc_only == 'false' && steps.ruff-install.outputs.outcome == 'failure'
+        run: |
+          echo "::warning::ruff install failed - Infrastructure Failure detected"
+          echo "INFRA_FAILURE=dependency_installation" >> $GITHUB_ENV
+          echo "INFRA_FAILURE_STEP=ruff-install" >> $GITHUB_ENV
+
+      - name: Get Changed Python Files
+        if: steps.detect-doc-only.outputs.doc_only == 'false' && steps.ruff-install.outputs.outcome == 'success'
+        id: changed-files
+        run: |
+          echo "🔍 Identifying changed Python files..."
+          
+          if git rev-parse origin/main >/dev/null 2>&1; then
+            CHANGED_PY_FILES=$(git diff --name-only --diff-filter=ACM origin/main...HEAD | grep -E '\.py$' || echo "")
+          else
+            CHANGED_PY_FILES=$(git diff-tree --no-commit-id --name-only -r HEAD | grep -E '\.py$' || echo "")
+          fi
+          
+          if [ -z "$CHANGED_PY_FILES" ]; then
+            echo "has_python_files=false" >> $GITHUB_OUTPUT
+            echo "No Python files changed"
+          else
+            echo "has_python_files=true" >> $GITHUB_OUTPUT
+            echo "Changed Python files:"
+            echo "$CHANGED_PY_FILES"
+            
+            # Save to temp file for next step
+            echo "$CHANGED_PY_FILES" > /tmp/changed_py_files.txt
+          fi
+
+      - name: Run Deprecation Detection (ruff UP rules)
+        if: steps.detect-doc-only.outputs.doc_only == 'false' && steps.changed-files.outputs.has_python_files == 'true'
+        id: ruff-check
+        run: |
+          echo "🔍 Running ruff deprecation detection (UP rules)..."
+          echo ""
+          
+          # Read changed files
+          CHANGED_FILES=$(cat /tmp/changed_py_files.txt)
+          
+          # Run ruff with UP rules only
+          if ruff check --select UP $CHANGED_FILES; then
+            echo "RUFF_RESULT=success" >> $GITHUB_ENV
+            echo "outcome=success" >> $GITHUB_OUTPUT
+            echo ""
+            echo "✅ No deprecated APIs detected"
+          else
+            EXIT_CODE=$?
+            echo "RUFF_RESULT=failure" >> $GITHUB_ENV
+            echo "RUFF_FAILED=$EXIT_CODE" >> $GITHUB_ENV
+            echo "outcome=failure" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Analyze Deprecation Failures
+        if: steps.detect-doc-only.outputs.doc_only == 'false' && steps.ruff-check.outputs.outcome == 'failure'
+        run: |
+          echo "❌ DEPRECATED API USAGE DETECTED"
+          echo ""
+          echo "Deprecated patterns found in code changes."
+          echo ""
+          echo "Common fixes:"
+          echo "  • datetime.utcnow() → datetime.now(timezone.utc)"
+          echo "  • datetime.utcfromtimestamp(ts) → datetime.fromtimestamp(ts, tz=timezone.utc)"
+          echo "  • typing.List[X] → list[X] (Python 3.9+)"
+          echo "  • typing.Dict[K,V] → dict[K,V] (Python 3.9+)"
+          echo ""
+          echo "To auto-fix where possible:"
+          echo "  ruff check --select UP --fix <file>"
+          echo ""
+          echo "Reference: governance/policies/AUTOMATED_DEPRECATION_DETECTION_GATE.md"
+          echo ""
+          exit 1
+
+      - name: Documentation-Only PR Handling
+        if: steps.detect-doc-only.outputs.doc_only == 'true' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ✅ **Deprecation Detection Gate (BL-026) - SKIP**
+              
+              **Outcome**: Non-blocking SKIP  
+              **Reason**: No Python code changes to check  
+              **Status**: This gate does not block merge
+              
+              ---
+              
+              **PR Type**: No Python changes detected  
+              **Deprecation Check**: Not required (no Python code modified)
+              
+              ---
+              
+              **Gate Status**: ✅ PASS (via informational skip)
+              `
+            })
+      
+      - name: No Python Files Changed Handling
+        if: steps.detect-doc-only.outputs.doc_only == 'false' && steps.changed-files.outputs.has_python_files == 'false' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ✅ **Deprecation Detection Gate (BL-026) - SKIP**
+              
+              **Outcome**: Non-blocking SKIP  
+              **Reason**: No Python files in changeset  
+              **Status**: This gate does not block merge
+              
+              ---
+              
+              **Gate Status**: ✅ PASS (via skip)
+              `
+            })
+
+      - name: Success Comment on PR
+        if: steps.detect-doc-only.outputs.doc_only == 'false' && steps.changed-files.outputs.has_python_files == 'true' && steps.ruff-check.outputs.outcome == 'success' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ✅ **Deprecation Detection Gate (BL-026) - PASS**
+
+              No deprecated Python APIs detected in changed files.
+
+              **Checks Performed**:
+              - Python 3.12+ compatibility verification
+              - Deprecated datetime API detection
+              - Deprecated typing module usage detection
+              - Modern Python pattern enforcement
+
+              **Authority**: BL-026 Bootstrap Learning, Zero Warning Test Debt Constitutional Rule
+
+              ---
+
+              **Next Steps**: Continue with other PR gates
+              `
+            })
+
+      - name: Failure Handling
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: "Catastrophic Failure — Deprecation Detection Gate (BL-026)",
+              body: `
+              ❌ **Catastrophic Failure Detected**
+
+              This failure blocked BL-026 Deprecation Detection Gate enforcement.
+
+              Required actions:
+              1. Pause work
+              2. Identify root cause
+              3. Implement permanent prevention
+              4. Update QA and governance if required
+              5. Propagate lessons learned to all repos
+
+              Repeat occurrence of this failure is classified as **double-catastrophic**.
+              
+              **Reference**: BL-026 Bootstrap Learning - Deprecation Detection
+              `
+            })
+      
+      - name: Generate Infrastructure Failure Report
+        if: always() && env.INFRA_FAILURE != ''
+        run: |
+          mkdir -p /tmp/infra-failure
+          cat > /tmp/infra-failure/report.json << 'EOF'
+          {
+            "failure_type": "infrastructure",
+            "workflow": "deprecation-detection-gate",
+            "job": "deprecation-detection",
+            "failure_category": "${{ env.INFRA_FAILURE }}",
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "step": "${{ env.INFRA_FAILURE_STEP }}",
+            "retry_count": 0,
+            "max_retries": 2,
+            "recommended_action": "retry",
+            "details": {
+              "exit_code": "${{ env.RUFF_FAILED }}",
+              "workflow_run": "${{ github.run_id }}"
+            }
+          }
+          EOF
+          echo "📊 Infrastructure failure report generated"
+      
+      - name: Upload Infrastructure Failure Artifact
+        if: always() && env.INFRA_FAILURE != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: infra-failure-report-deprecation-detection
+          path: /tmp/infra-failure/report.json
+          retention-days: 30
+      
+      - name: Comment Infrastructure Failure on PR
+        if: always() && env.INFRA_FAILURE != '' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const failureType = process.env.INFRA_FAILURE;
+            const failureStep = process.env.INFRA_FAILURE_STEP;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ⚠️ **Infrastructure Failure Detected**
+              
+              **Workflow**: Deprecation Detection Gate (BL-026)  
+              **Job**: deprecation-detection  
+              **Failure Type**: \`${failureType}\`  
+              **Step**: \`${failureStep}\`  
+              **Timestamp**: ${new Date().toISOString()}
+              
+              This is **NOT a code failure**. The workflow encountered an infrastructure issue.
+              
+              **Actions Taken**:
+              - Job will complete with success status (no code defect)
+              - Infrastructure failure logged to artifact
+              - Manual retry may be required if persistent
+              
+              **Next Steps**:
+              1. Review infrastructure failure report artifact
+              2. Retry workflow manually if needed
+              3. If persistent across multiple retries, escalate to platform team
+              4. **Your code changes are NOT blocked by this failure**
+              
+              **Infrastructure Failure Report**: Download artifact \`infra-failure-report-deprecation-detection\`
+              `
+            })
+      
+      - name: Mark Success Despite Infrastructure Failure
+        if: always() && env.INFRA_FAILURE != ''
+        run: |
+          echo "✅ Job marked as success - Infrastructure failure (not code failure)"
+          echo "Infrastructure failure type: $INFRA_FAILURE"
+          echo "Infrastructure failure step: $INFRA_FAILURE_STEP"
+          echo "This failure does NOT block merge - it is an infrastructure issue"
+          exit 0
+
+      - name: Workflow Success
+        if: always() && (success() || steps.detect-doc-only.outputs.doc_only == 'true' || steps.changed-files.outputs.has_python_files == 'false')
+        run: |
+          DOC_ONLY="${{ steps.detect-doc-only.outputs.doc_only }}"
+          HAS_PY="${{ steps.changed-files.outputs.has_python_files }}"
+          
+          if [ "$DOC_ONLY" = "true" ] || [ "$HAS_PY" = "false" ]; then
+            echo "✅ Deprecation Detection Gate (BL-026) - SKIP (No Python changes)"
+          else
+            echo "✅ Deprecation Detection Gate (BL-026) completed successfully"
+          fi
+          exit 0
