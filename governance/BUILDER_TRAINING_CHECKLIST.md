@@ -1,10 +1,10 @@
 # Builder Training Checklist
 
 **Document**: Builder Training and Policy Acknowledgment Checklist  
-**Version**: 1.3 (Updated 2026-01-11)  
+**Version**: 1.4 (Updated 2026-01-11)  
 **Authority**: CS2 (Johan Ras) + FM  
 **Status**: MANDATORY - All Builders  
-**Change**: Added BL-026 Automated Deprecation Detection Gate training
+**Change**: Added Execution Bootstrap Protocol (v2.0.0+) training requirement
 
 ---
 
@@ -46,6 +46,21 @@ All builders writing Python code MUST understand BL-026:
 - [ ] **Understand auto-fix capability** - Run `ruff check --select UP --fix .` for most fixes
 - [ ] **Understand exception process** - Requires FM approval, quarterly review, code comments
 - [ ] **Commit to zero deprecated APIs** - All code must pass deprecation gate before merge
+
+### A4. Execution Bootstrap Protocol (MANDATORY - NEW 2026-01-11)
+
+All builders MUST understand v2.0.0+ protocol requirements:
+
+- [ ] **Read EXECUTION_BOOTSTRAP_PROTOCOL_REFERENCE.md** (`governance/canon/EXECUTION_BOOTSTRAP_PROTOCOL_REFERENCE.md`)
+- [ ] **Understand 7-step verification process** - Identify, execute, validate, collect, remediate, attest, authorize
+- [ ] **Know PREHANDOVER_PROOF requirement** - All execution-related PRs require proof
+- [ ] **Understand local execution mandate** - All artifacts must execute locally before handover
+- [ ] **Know hard rule** - CI is confirmation, NOT diagnostic
+- [ ] **Understand evidence requirements** - Logs, exit codes, outputs all documented
+- [ ] **Commit to protocol compliance** - All handovers include complete PREHANDOVER_PROOF
+
+**Compliance Deadline**: 2026-02-11  
+**Monitoring**: Quarterly reports required, first due 2026-04-14
 
 ### B. Test Dodging Prevention (MANDATORY - NEW 2026-01-08)
 
@@ -91,7 +106,8 @@ All builders MUST commit to:
 7. ✅ Commit to using accurate, non-minimizing language
 8. ✅ Understand Constitutional Sandbox Pattern (BL-024): Tier-1 vs Tier-2
 9. ✅ Understand Automated Deprecation Detection Gate (BL-026): Zero deprecated APIs
-10. ✅ Understand consequences of policy violations (PR rejection, accountability review)
+10. ✅ Understand Execution Bootstrap Protocol (v2.0.0+): 7-step verification and PREHANDOVER_PROOF
+11. ✅ Understand consequences of policy violations (PR rejection, accountability review)
 
 **I understand that:**
 
@@ -103,6 +119,9 @@ All builders MUST commit to:
 - **Test dodging** will result in immediate work rejection
 - **Policy violations** may result in builder removal from project
 - **Zero tolerance** means NO exceptions without CS2 approval
+- **Execution Bootstrap Protocol** (v2.0.0+) is MANDATORY: 7-step verification before handover
+- **PREHANDOVER_PROOF** is required for ALL execution-related PRs
+- **CI is confirmation, NOT diagnostic** - All failures must be discovered locally
 
 **I commit to:**
 
@@ -113,6 +132,9 @@ All builders MUST commit to:
 - **Maintain 100% GREEN** as mandatory standard
 - **Document judgment decisions** when adapting procedural guidance
 - **Preserve constitutional requirements** at all times
+- **Execute locally before handover** - All artifacts verified in my environment
+- **Provide PREHANDOVER_PROOF** for all execution-related PRs
+- **Never rely on CI to discover failures** - CI confirms only
 
 ---
 
@@ -158,6 +180,8 @@ All builders MUST commit to:
 |------|--------|------|-----------------|
 | Core Governance Documents | ☐ COMPLETE | _____ | _____ |
 | Constitutional Sandbox (BL-024) | ☐ COMPLETE | _____ | _____ |
+| Automated Deprecation Gate (BL-026) | ☐ COMPLETE | _____ | _____ |
+| Execution Bootstrap Protocol (v2.0.0+) | ☐ COMPLETE | _____ | _____ |
 | POLICY-NO-ONLY-LANGUAGE | ☐ COMPLETE | _____ | _____ |
 | BOOTSTRAP-TEST-DODGING-001 | ☐ COMPLETE | _____ | _____ |
 | Policy Quiz (10/10) | ☐ COMPLETE | _____ | _____ |
@@ -272,6 +296,8 @@ Refresher training REQUIRED if:
 **Version**: 1.1 (2026-01-08)
 
 **Recent Updates**:
+- **2026-01-11**: Added Execution Bootstrap Protocol (v2.0.0+) training requirement
+- **2026-01-11**: Added Automated Deprecation Detection Gate (BL-026) training requirement
 - **2026-01-09**: Added Constitutional Sandbox Pattern (BL-024) training requirement
 - **2026-01-08**: Added POLICY-NO-ONLY-LANGUAGE training requirement
 - **2026-01-08**: Added BOOTSTRAP-TEST-DODGING-001 case study requirement
@@ -285,11 +311,13 @@ Refresher training REQUIRED if:
 
 1. ✅ Read mandatory governance documents
 2. ✅ Complete Constitutional Sandbox Pattern (BL-024) training
-3. ✅ Complete POLICY-NO-ONLY-LANGUAGE training
-4. ✅ Study BOOTSTRAP-TEST-DODGING-001 case study
-5. ✅ Pass policy quiz (10/10)
-6. ✅ Sign policy acknowledgment
-7. ✅ Receive FM verification
+3. ✅ Complete Automated Deprecation Detection Gate (BL-026) training  
+4. ✅ Complete Execution Bootstrap Protocol (v2.0.0+) training
+5. ✅ Complete POLICY-NO-ONLY-LANGUAGE training
+6. ✅ Study BOOTSTRAP-TEST-DODGING-001 case study
+7. ✅ Pass policy quiz (10/10)
+8. ✅ Sign policy acknowledgment
+9. ✅ Receive FM verification
 
 **Zero exceptions. Zero tolerance. 100% compliance required.**
 

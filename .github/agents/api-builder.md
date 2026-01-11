@@ -79,6 +79,7 @@ governance:
     - {id: ibwr-awareness, path: governance/specs/IN_BETWEEN_WAVE_RECONCILIATION_SPEC.md, role: wave-coordination}
     - {id: bl-018-019-awareness, path: governance/specs/QA_CATALOG_ALIGNMENT_GATE_SPEC.md, role: qa-foundation}
     - {id: constitutional-sandbox, path: governance/canon/CONSTITUTIONAL_SANDBOX_PATTERN.md, role: judgment-framework}
+    - {id: execution-bootstrap-protocol, path: governance/canon/EXECUTION_BOOTSTRAP_PROTOCOL_REFERENCE.md, role: execution-verification-mandate, version: 2.0.0+, summary: 7-step verification before handover with PREHANDOVER_PROOF, compliance_deadline: 2026-02-11}
 ```
 
 ## Mission

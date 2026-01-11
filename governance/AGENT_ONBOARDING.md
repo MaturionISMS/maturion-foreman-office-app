@@ -3,7 +3,7 @@
 **Status**: Active  
 **Authority**: CS2 (Agent Contract Minimalism Framework)  
 **Date**: 2026-01-11  
-**Updated**: Added BL-026 Automated Deprecation Detection Gate reference
+**Updated**: Added Execution Bootstrap Protocol (v2.0.0+) requirement
 
 ---
 
@@ -42,6 +42,36 @@ The **Automated Deprecation Detection Gate** (BL-026) enforces:
 **Reference**: `governance/policies/AUTOMATED_DEPRECATION_DETECTION_GATE.md`
 
 **Auto-Fix**: Run `ruff check --select UP --fix .` to auto-fix most violations
+
+---
+
+## Execution Bootstrap Protocol (2026)
+
+**MANDATORY for all agents (FM + Builders)**:
+
+The **Execution Bootstrap Protocol** (v2.0.0+) enforces:
+- 7-step verification before handover
+- Local execution of all artifacts (workflows, scripts, gates)
+- PREHANDOVER_PROOF documentation requirement
+- Zero reliance on CI for failure discovery
+
+**Key Requirements**:
+1. Identify all execution artifacts
+2. Execute locally in agent environment
+3. Validate exit codes (all must be 0)
+4. Collect complete evidence
+5. Remediate any failures before handover
+6. Attest: "All checks GREEN"
+7. Authorize handover with evidence
+
+**Hard Rule**: CI is confirmation, NOT diagnostic. No handover relying on CI to discover failures.
+
+**Reference**: `governance/canon/EXECUTION_BOOTSTRAP_PROTOCOL_REFERENCE.md`  
+**Template**: `.github/agent-templates/PREHANDOVER_PROOF_TEMPLATE.md`  
+**Canonical Source**: maturion-foreman-governance/governance/canon/EXECUTION_BOOTSTRAP_PROTOCOL.md
+
+**Compliance Deadline**: 2026-02-11  
+**First Monitoring Report**: 2026-04-14
 
 ---
 

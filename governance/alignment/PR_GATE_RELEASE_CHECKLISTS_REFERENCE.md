@@ -2,7 +2,9 @@
 
 **Status**: Canonical Reference  
 **Authority**: Corporate Governance Canon (`maturion-foreman-governance`)  
-**FM Scope**: Enforcement-Only (No Modification)
+**FM Scope**: Enforcement-Only (No Modification)  
+**Protocol Version**: 2.0.0+  
+**Updated**: 2026-01-11 - Added Execution Bootstrap Protocol (Category 0)
 
 ---
 
@@ -10,17 +12,69 @@
 
 This document references the **canonical** PR Gate Release Checklists from the governance repository and ensures FM enforcement aligns with checklist-driven predictability.
 
+**Major Update (2026-01-11)**: All checklists now include **Category 0: Execution Bootstrap Protocol (v2.0.0+)** as MANDATORY for PRs with execution artifacts.
+
+---
+
+## Local FM App Checklists
+
+**Local Implementation** (maturion-foreman-office-app):
+
+- **Builder PR Checklist**: `governance/checklists/BUILDER_PR_RELEASE_CHECKLIST.md`
+  - Version: 2.0.0+
+  - Includes: Category 0 (Execution Bootstrap Protocol) + Category 8 (Builder-Specific Requirements)
+  - Applies to: UI Builder, API Builder, Schema Builder, Integration Builder, QA Builder
+
+- **FM PR Checklist**: `governance/checklists/FM_PR_RELEASE_CHECKLIST.md`
+  - Version: 2.0.0+
+  - Includes: Category 0 (Execution Bootstrap Protocol) + Category 4 (FM Execution Quality) + FM-specific categories
+  - Applies to: Foreman (FM) Agent
+
+**Compliance Deadline**: 2026-02-11  
+**First Monitoring Report**: 2026-04-14
+
 ---
 
 ## Canonical Source
 
 **Repository**: `maturion-foreman-governance`  
 **Documents**:
-- `PR_GATE_RELEASE_CHECKLIST_BUILDER.md`
-- `PR_GATE_RELEASE_CHECKLIST_GOVERNANCE_ADMIN.md`
-- `PR_GATE_RELEASE_CHECKLIST_FM.md`
+- `PR_GATE_RELEASE_CHECKLIST_BUILDER.md` (canonical)
+- `PR_GATE_RELEASE_CHECKLIST_GOVERNANCE_ADMIN.md` (canonical)
+- `PR_GATE_RELEASE_CHECKLIST_FM.md` (canonical)
+- `EXECUTION_BOOTSTRAP_PROTOCOL.md` (v2.0.0+ - Category 0)
+- `EXECUTION_BOOTSTRAP_PROTOCOL_MONITORING_AND_ENFORCEMENT.md`
 
 These checklists are **authoritative** and define exactly what must be satisfied for PR gates to pass.
+
+**Local Implementations**:
+- `governance/checklists/BUILDER_PR_RELEASE_CHECKLIST.md` (this repo)
+- `governance/checklists/FM_PR_RELEASE_CHECKLIST.md` (this repo)
+
+---
+
+## Category 0: Execution Bootstrap Protocol (NEW 2026)
+
+**MANDATORY for all PRs with execution artifacts (workflows, scripts, gates, configs)**
+
+All agents (FM + Builders) must complete 7-step verification before handover:
+
+1. Identify execution artifacts
+2. Execute locally
+3. Validate exit codes
+4. Collect evidence
+5. Remediate failures
+6. Attest: "All checks GREEN"
+7. Authorize handover
+
+**Hard Rule**: CI is confirmation, NOT diagnostic. No handover relying on CI to discover failures.
+
+**Template**: `.github/agent-templates/PREHANDOVER_PROOF_TEMPLATE.md`  
+**Reference**: `governance/canon/EXECUTION_BOOTSTRAP_PROTOCOL_REFERENCE.md`  
+**Canonical**: maturion-foreman-governance/governance/canon/EXECUTION_BOOTSTRAP_PROTOCOL.md
+
+**Compliance Deadline**: 2026-02-11  
+**Monitoring**: Quarterly reports (first due 2026-04-14)
 
 ---
 
@@ -38,13 +92,15 @@ If a gate blocks compliant work, it is a governance alignment defect.
 
 Each agent role has a specific release checklist:
 
-| Agent Role         | Checklist Document                              |
-|--------------------|-------------------------------------------------|
-| Builder            | `PR_GATE_RELEASE_CHECKLIST_BUILDER.md`          |
-| Governance Admin   | `PR_GATE_RELEASE_CHECKLIST_GOVERNANCE_ADMIN.md` |
-| FM Agent           | `PR_GATE_RELEASE_CHECKLIST_FM.md`               |
+| Agent Role         | Checklist Document                              | Version | Category 0 |
+|--------------------|-------------------------------------------------|---------|------------|
+| Builder            | `governance/checklists/BUILDER_PR_RELEASE_CHECKLIST.md` | 2.0.0+ | ✅ INCLUDED |
+| Governance Admin   | `PR_GATE_RELEASE_CHECKLIST_GOVERNANCE_ADMIN.md` (canonical) | TBD | TBD |
+| FM Agent           | `governance/checklists/FM_PR_RELEASE_CHECKLIST.md` | 2.0.0+ | ✅ INCLUDED |
 
 Only the checklist for the **active agent role** applies to a given PR.
+
+**Note**: Builder and FM checklists in this repository (maturion-foreman-office-app) include Category 0 (Execution Bootstrap Protocol v2.0.0+) as of 2026-01-11.
 
 ---
 
@@ -143,6 +199,7 @@ FM must validate that:
 
 ---
 
-**Last Updated**: 2025-12-22  
+**Last Updated**: 2026-01-11  
 **Authority**: Corporate Governance Canon  
-**FM Status**: Enforcement-Only (No Local Modification)
+**FM Status**: Enforcement-Only (No Local Modification)  
+**Protocol Version**: 2.0.0+ (Execution Bootstrap Protocol included)
