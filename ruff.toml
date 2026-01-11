@@ -1,0 +1,27 @@
+# Ruff Configuration for Maturion Foreman Office App
+# Governance Authority: BL-026 Automated Deprecation Detection Gate
+# Purpose: Enforce modern Python patterns and detect deprecated APIs
+
+# Target Python 3.12+ (same as project requirement)
+target-version = "py312"
+
+[lint]
+# Enable pyupgrade rules (UP) for deprecation detection
+select = [
+    "UP",   # pyupgrade - Enforce modern Python patterns and detect deprecated APIs
+    "E",    # pycodestyle errors
+    "F",    # Pyflakes
+    "W",    # pycodestyle warnings
+]
+
+# Ignore specific rules if needed (currently none)
+ignore = []
+
+[lint.pyupgrade]
+# Keep Python 3.12+ compatible code
+# This will flag deprecated APIs like:
+# - datetime.utcnow() -> datetime.now(timezone.utc)
+# - datetime.utcfromtimestamp() -> datetime.fromtimestamp(tz=timezone.utc)
+# - typing.List -> list (PEP 585)
+# - typing.Dict -> dict (PEP 585)
+keep-runtime-typing = true

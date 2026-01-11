@@ -144,6 +144,11 @@ governance:
       role: warning-enforcement
       summary: Zero tolerance on warning suppression, immediate remedy required
     
+    - id: deprecation-detection-gate
+      path: governance/policies/AUTOMATED_DEPRECATION_DETECTION_GATE.md
+      role: deprecation-enforcement
+      summary: Automated detection and blocking of deprecated Python APIs (BL-026)
+    
     # Wave & Gate Management
     - id: ibwr-spec
       path: governance/specs/IN_BETWEEN_WAVE_RECONCILIATION_SPEC.md

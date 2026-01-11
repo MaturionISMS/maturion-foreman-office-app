@@ -120,6 +120,11 @@ governance:
       role: warning-enforcement
       summary: Discovery of prior debt blocks work, escalate to FM
     
+    - id: deprecation-detection-gate
+      path: governance/policies/AUTOMATED_DEPRECATION_DETECTION_GATE.md
+      role: deprecation-enforcement
+      summary: Automated detection and blocking of deprecated Python APIs (BL-026)
+    
     # Builder Execution
     - id: code-checking
       path: governance/specs/FM_AI_ESCALATION_AND_CAPABILITY_SCALING_SPEC.md

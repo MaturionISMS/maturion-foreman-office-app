@@ -2,8 +2,8 @@
 
 **Status**: Active  
 **Authority**: CS2 (Agent Contract Minimalism Framework)  
-**Date**: 2026-01-09  
-**Updated**: Added BL-024 Constitutional Sandbox Pattern reference
+**Date**: 2026-01-11  
+**Updated**: Added BL-026 Automated Deprecation Detection Gate reference
 
 ---
 
@@ -20,6 +20,28 @@ This provides:
 - 3-step operational protocol
 - Escalation rules
 - Mandatory compliance requirements
+
+---
+
+## Automated Deprecation Detection Gate (BL-026)
+
+**MANDATORY for all agents writing Python code**:
+
+The **Automated Deprecation Detection Gate** (BL-026) enforces:
+- Modern Python 3.12+ API patterns
+- Zero deprecated API usage
+- Forward compatibility with future Python versions
+- Automated pre-commit and CI/CD enforcement
+
+**Key Requirements**:
+- Use `datetime.now(timezone.utc)` instead of `datetime.utcnow()`
+- Use built-in generics (`dict`, `list`) instead of `typing.Dict`, `typing.List` (Python 3.9+)
+- All violations block commit and merge
+- Exceptions require FM approval with quarterly review
+
+**Reference**: `governance/policies/AUTOMATED_DEPRECATION_DETECTION_GATE.md`
+
+**Auto-Fix**: Run `ruff check --select UP --fix .` to auto-fix most violations
 
 ---
 
